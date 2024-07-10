@@ -2,7 +2,7 @@ if game.ReplicatedStorage.GameData.LatestRoom.Value == 0 then
 
 loadstring(game:HttpGet("https://pastebin.com/raw/Zwpaw3fu"))()
 
-else then
+if not then
 
 require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("TryHard mode script Not executed",true)
 
