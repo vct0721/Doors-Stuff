@@ -10,6 +10,12 @@ wait(1)
 
 require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("Execute The Script In Door 0")
 
+wait(1)
+
+game.Players.LocalPlayer.Character.Humanoid.Health = -999
+
+wait(1)        
+
 ---====== Load achievement giver ======---
 local achievementGiver = loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Doors/Custom%20Achievements/Source.lua"))()
 
