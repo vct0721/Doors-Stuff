@@ -1,28 +1,24 @@
-if game.ReplicatedStorage.GameData.LatestRoom.Value == 0 then
+-- Check if the mode is being loaded at door 0
+game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
+    local currentRoom = game.ReplicatedStorage.GameData.LatestRoom.Value
 
-loadstring(game:HttpGet("https://pastebin.com/raw/Zwpaw3fu"))()
+    -- If the door is not 0, kill the player
+    if currentRoom > 0 then
+        -- Error message or warning for the player
+        game.StarterGui:SetCore("ChatMakeSystemMessage", {
+            Text = "Mode must be loaded at door 0! You have passed door 0, the game will be terminated.",
+            Color = Color3.fromRGB(255, 0, 0),
+            Font = Enum.Font.SourceSansBold,
+            TextSize = 18,
+        })
 
-if not then
+        -- Set the cause of death (optional)
+        game.ReplicatedStorage.GameStats["Player_" .. game.Players.LocalPlayer.Name].Total.DeathCause.Value = "Mode loaded after door 0"
 
-require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("TryHard mode script Not executed",true)
-
-wait(1)
-
-require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("Execute The Script In Door 0")
-
-wait(1)
-
-game.Players.LocalPlayer.Character.Humanoid.Health = -999
-
-wait(1)        
-
----====== Load achievement giver ======---
-local achievementGiver = loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Doors/Custom%20Achievements/Source.lua"))()
-
----====== Display achievement ======---
-achievementGiver({
-    Title = "Wrong Room",
-    Desc = "TryHard Mode not Executed",
-    Reason = "Tryhard Mode Need To Be Executed In Door 0 Of The Floor",
-    Image = "rbxassetid://12725627723"
-})
+        -- Kill the player
+        game.Players.LocalPlayer.Character.Humanoid.Health = 0
+    else
+        -- Execute TryHard v2 mode
+        loadstring(game:HttpGet("https://pastebin.com/raw/Zwpaw3fu"))()
+    end
+end)
