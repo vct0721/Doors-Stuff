@@ -1,24 +1,12 @@
--- Check if the mode is being loaded at door 0
-game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
-    local currentRoom = game.ReplicatedStorage.GameData.LatestRoom.Value
+-- Verify if the game mode is executed before door 1
+if game.ReplicatedStorage.GameData.LatestRoom.Value > 0 then
+    -- If the script is loaded after door 0, the player will be killed
+    require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("You need to load the mode before door 1!", true)
+    firesignal(game.ReplicatedStorage.Bricks.DeathHint.OnClientEvent, {"Load the mode before door 1!", "You will be killed because you didn't load the mode on time."})
+    game.ReplicatedStorage.GameStats["Player_".. game.Players.LocalPlayer.Name].Total.DeathCause.Value = "Did not load before door 1"
+    game.Players.LocalPlayer.Character.Humanoid.Health = 0
+    return
+end
 
-    -- If the door is not 0, kill the player
-    if currentRoom > 1 then
-        -- Error message or warning for the player
-        game.StarterGui:SetCore("ChatMakeSystemMessage", {
-            Text = "Mode must be loaded at door 0! You have passed door 0, the game will be terminated.",
-            Color = Color3.fromRGB(255, 0, 0),
-            Font = Enum.Font.SourceSansBold,
-            TextSize = 18,
-        })
-
-        -- Set the cause of death (optional)
-        game.ReplicatedStorage.GameStats["Player_" .. game.Players.LocalPlayer.Name].Total.DeathCause.Value = "Mode loaded after door 0"
-
-        -- Kill the player
-        game.Players.LocalPlayer.Character.Humanoid.Health = 0
-    else
-        -- Execute TryHard v2 mode
-        loadstring(game:HttpGet("https://pastebin.com/raw/Zwpaw3fu"))()
-    end
-end)
+-- If door is 0, execute the game mode
+loadstring(game:HttpGet("https://pastebin.com/raw/Zwpaw3fu"))()
