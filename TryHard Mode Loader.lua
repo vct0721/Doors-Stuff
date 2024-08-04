@@ -3,7 +3,7 @@ game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
     local currentRoom = game.ReplicatedStorage.GameData.LatestRoom.Value
 
     -- If the door is not 0, kill the player
-    if currentRoom > 0 then
+    if currentRoom > 1 then
         -- Error message or warning for the player
         game.StarterGui:SetCore("ChatMakeSystemMessage", {
             Text = "Mode must be loaded at door 0! You have passed door 0, the game will be terminated.",
