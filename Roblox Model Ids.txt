@@ -1,0 +1,70 @@
+
+
+
+
+Items:
+
+Flashlight =
+Crucifix =
+GummyFlashlight =
+Lighter =
+
+Entities:
+
+TrollFace = rbxassetid://16187194007
+Rush = rbxassetid://17056744570
+Hardcore Figure = rbxassetid://12668856086
+Figure = rbxassetid://12879888521
+Faster (If Looked it Kills) = rbxassetid://12815662543
+Erie Eye = rbxassetid://12717661067
+Ambush = rbxassetid://13186601085
+Crazy A-60 Prime = rbxassetid://12208757936
+Hardcore Seek = rbxassetid://11664451634
+Seek = rbxassetid://  
+Nightmare Rush = rbxassetid://12011769502
+Smiler = rbxassetid://16618965725
+Whit3 = rbxassetid://16735149732
+Matcher = rbxassetid://15523486937
+Rebound = rbxassetid://13006402203
+Enbound = rbxassetid://15132221973
+Ripper = rbxassetid://12262768551
+Silence = rbxassetid://11535812658
+Frostbite = rbxassetid://12253484202
+Deargod = rbxassetid://12262883448
+Dread = rbxassetid://16834807322
+Rush Catalyst = rbxassetid://16851478452
+Ambush Catalyst = rbxassetid://16925661501
+Hidering = rbxassetid://16864353080
+Shocker = rbxassetid://11547601187
+Torment = rbxassetid:///13208287996
+A-60 Prime = rbxassetid://12797548771
+Detph = rbxassetid://13296774233
+Detph (With Particles) = rbxassetid://17202493676
+Huntering (Ripper Replacement) = rbxassetid://12154179040
+Claim = rbxassetid://11403215085
+Eyes = rbxassetid://17056721835
+Wicked = rbxassetid://15136814441
+Rizer = rbxassetid://12649639386
+A-60 (Doors OG) = rbxassetid://16882972233
+Fatality = rbxassetid://12642335348
+Darker = rbxassetid://12657543944
+Cease =  rbxassetid://12262854624
+Surge = rbxassetid://13404145962
+Run = rbxassetid://11418583873
+Hardcore Rush = rbxassetid://12621332123
+Hungered = rbxassetid://15104414692
+B-60 Prime = rbxassetid://16975789652
+A-200 Remastered = rbxassetid://12578012777
+A-25 = rbxassetid://12430177067
+A-10 = rbxassetid://12643328572
+Death (Fragmented Mode) = rbxassetid://12173209446
+Rate = rbxassetid://12158222955
+Ghost Ambush = rbxassetid://12608066215
+Haste (The Backdoors) = rbxassetid://16858520833
+Agony = rbxassetid://16960554609
+
+
+
+
+
+

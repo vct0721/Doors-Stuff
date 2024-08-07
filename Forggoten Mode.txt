@@ -1,0 +1,623 @@
+require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("Forgotten mode script succesfully loaded and has been updated (version 2.0) [DISCORD I'D: https://discord.com/invite/8582QySH]",true)
+
+-- custom shop (for current candle model)
+
+loadstring(game:HttpGet("https://pastebin.com/raw/DQDWwAiM"))()
+
+-- current candle
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Functions.lua"))()
+LoadCustomInstance("rbxassetid://16465312383").Parent = game:GetService("Players").LocalPlayer.Backpack
+
+-- echo sound
+
+game.SoundService.AmbientReverb = "ConcertHall"
+
+-- ambient fog and horror sound
+
+-- Get services
+local Workspace = game:GetService("Workspace")
+local Lighting = game:GetService("Lighting")
+local SoundService = game:GetService("SoundService")
+
+-- Set up horror atmosphere
+Lighting.Ambient = Color3.new(0, 0, 0)
+Lighting.Brightness = 0.1
+Lighting.FogEnd = 50
+Lighting.FogColor = Color3.new(0, 0, 0)
+
+-- speed sprint
+
+loadstring(game:HttpGet("https://pastebin.com/raw/TiVM7MY9"))()
+
+-- achievement who using in this mode
+
+loadstring(game:HttpGet("https://pastebin.com/raw/GNA4cUHy"))()
+
+-- new the lights bulb sounds
+
+game.ReplicatedStorage.Sounds.BulbCharge.SoundId = "rbxassetid://9125973034"
+game.ReplicatedStorage.Sounds.BulbZap.SoundId = "rbxassetid://4288784832"
+game.ReplicatedStorage.Sounds.BulbBreak.SoundId = "rbxassetid://260496290"
+
+-- timothy new jumpscare sound
+
+game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.RemoteListener.Modules.SpiderJumpscare.Scare.SoundId = "rbxassetid://8080941676"
+
+-- hide monster release scare
+
+game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.RemoteListener.Modules.HideMonster.Scare.SoundId = "rbxassetid://9126213741"
+
+-- goofy darkness
+
+game.Workspace.Ambience_Dark.SoundId = "rbxassetid://6535784827"
+game.Workspace.Ambience_Dark.PlaybackSpeed = 1
+
+-- custom door sounds
+
+loadstring(game:HttpGet("https://pastebin.com/raw/gxKdB7VD"))()
+
+game.ReplicatedStorage.GameData.LatestRoom.Changed:Wait()
+
+require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("Script sync'd according started room",true)
+
+wait(3)
+
+require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("These custom entities v2 and item crucifix v1 from vynixu was failed, but crucifix spawning your item, sorry for it",true)
+
+wait(3)
+
+require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("Anyways, have fun! (Credits by Official_Artemis)",true)
+
+-- Set up horror sound
+local horrorSound = Instance.new("Sound", Workspace)
+horrorSound.SoundId = "rbxassetid://9114625745" -- replace with your own sound id
+horrorSound.Volume = 1
+horrorSound.Looped = true
+
+-- Play the sound
+horrorSound:Play()
+
+-- release screech
+
+game.ReplicatedStorage.Entities.Screech.Top.Eyes.Color = Color3.fromRGB(255, 255, 0)
+game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.RemoteListener.Modules.Screech.Caught.SoundId = "rbxassetid://7492033495"
+game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.RemoteListener.Modules.Screech.Caught.PlaybackSpeed = 1.6
+game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.RemoteListener.Modules.Screech.Attack.SoundId = "rbxassetid://8080941676"
+
+-- a-60
+
+coroutine.wrap(function()
+ 
+while true do
+ 
+wait(250)
+ 
+game.ReplicatedStorage.GameData.LatestRoom.Changed:Wait()
+
+loadstring(game:HttpGet("https://pastebin.com/raw/q0JC9BAt"))()
+
+end
+
+end)()
+
+--
+
+-- a-90
+
+coroutine.wrap(function()
+ 
+while true do
+ 
+local sctm = math.random(90,100)
+ 
+wait(sctm)
+
+loadstring(game:HttpGet("https://pastebin.com/raw/YTBW2f9A"))()
+
+end
+
+end)()
+
+--
+
+-- a-120
+
+coroutine.wrap(function()
+ 
+while true do
+ 
+wait(350)
+ 
+game.ReplicatedStorage.GameData.LatestRoom.Changed:Wait()
+
+loadstring(game:HttpGet("https://pastebin.com/raw/S9KGv5Ce"))()
+
+end
+
+end)()
+
+--
+
+-- glitch
+
+coroutine.wrap(function()
+ 
+while true do
+
+local sctm = math.random(300,999)
+
+local spawn_chance = math.random(1, 2500)
+ 
+wait(sctm)
+
+require(game.ReplicatedStorage.ClientModules.EntityModules.Glitch).stuff(Data, workspace.CurrentRooms[tostring(game.ReplicatedStorage.GameData.LatestRoom.Value)])
+
+end
+
+end)()
+
+--
+
+-- blackout
+
+coroutine.wrap(function()
+ 
+while true do
+ 
+wait(960)
+
+loadstring(game:HttpGet('https://raw.githubusercontent.com/Jahani-john/mayhem-mode/main/mayhemmode-main/ObfuscatedEntities/Blackout-obfuscated.lua'))()
+
+end
+
+end)()
+
+--
+
+-- depth
+
+coroutine.wrap(function()
+
+while true do
+
+wait(850)
+
+game.ReplicatedStorage.GameData.LatestRoom.Changed:Wait()
+
+local cue2 = Instance.new("Sound")
+	cue2.Parent = game.Workspace
+	cue2.Name = "Spawn"
+	cue2.SoundId = "rbxassetid://8627516764"
+	cue2.Volume = 1
+	cue2.PlaybackSpeed = 1
+	cue2:Play()
+game.Lighting.MainColorCorrection.TintColor = Color3.fromRGB(0, 100, 255)
+game.Lighting.MainColorCorrection.Contrast = 5
+local tween = game:GetService("TweenService")
+tween:Create(game.Lighting.MainColorCorrection, TweenInfo.new(2.5), {Contrast = 0}):Play()
+local TweenService = game:GetService("TweenService")
+local TW = TweenService:Create(game.Lighting.MainColorCorrection, TweenInfo.new(5),{TintColor = Color3.fromRGB(255, 255, 255)})
+TW:Play()
+loadstring(game:HttpGet("https://pastebin.com/raw/uyYe9bZQ"))()
+
+end
+
+end)()
+
+--
+
+-- matcher
+
+coroutine.wrap(function()
+
+while true do
+
+wait(150)
+        game.ReplicatedStorage.GameData.LatestRoom.Changed:Wait()
+
+wait(0.3)
+ 
+game.Lighting.MainColorCorrection.TintColor = Color3.fromRGB(212, 255, 212)
+game.Lighting.MainColorCorrection.Contrast = 0.3
+local tween = game:GetService("TweenService")
+tween:Create(game.Lighting.MainColorCorrection, TweenInfo.new(0.5), {Contrast = 0}):Play()
+local TweenService = game:GetService("TweenService")
+local TW = TweenService:Create(game.Lighting.MainColorCorrection, TweenInfo.new(0.5),{TintColor = Color3.fromRGB(255, 255, 255)})
+TW:Play()
+    local roast = Instance.new("Sound")
+    roast.Parent = workspace
+    roast.Name = "roast"
+    roast.SoundId = "rbxassetid://9125936117"
+    roast.Volume = 0.5
+    roast.Pitch = 3
+    roast:Play()
+    wait(0.6)
+    roast:Destroy()
+loadstring(game:HttpGet("https://pastebin.com/raw/XzuW1A1p"))()
+
+end
+
+end)()
+
+--
+
+-- rebound
+
+coroutine.wrap(function()
+
+while true do
+
+wait(450)
+        game.ReplicatedStorage.GameData.LatestRoom.Changed:Wait()
+
+local Reboundcolor = Instance.new("ColorCorrectionEffect",game.Lighting) game.Debris:AddItem(Reboundcolor,24)
+				Reboundcolor.Name = "Warn"
+				Reboundcolor.TintColor = Color3.fromRGB(65, 138, 255) Reboundcolor.Saturation = -0.7 Reboundcolor.Contrast = 0.2
+				game.TweenService:Create(Reboundcolor,TweenInfo.new(15),{TintColor = Color3.fromRGB(61, 171, 98),Saturation = 0, Contrast = 0}):Play()
+local TweenService = game:GetService("TweenService")
+local TW = TweenService:Create(game.Lighting.MainColorCorrection, TweenInfo.new(5),{TintColor = Color3.fromRGB(255, 255, 255)})
+TW:Play()
+local cue1 = Instance.new("Sound")
+cue1.Parent = game.Workspace
+cue1.Name = "Scream"
+cue1.SoundId = "rbxassetid://9114397505"
+local distort = Instance.new("DistortionSoundEffect")
+distort.Parent = cue1
+distort.Level = 1
+local distort2 = Instance.new("DistortionSoundEffect")
+distort2.Parent = cue1
+distort2.Level = 1
+local pitch = Instance.new("PitchShiftSoundEffect")
+pitch.Parent = cue1
+pitch.Octave = 0.5
+local pitch2 = Instance.new("PitchShiftSoundEffect")
+pitch2.Parent = cue1
+pitch2.Octave = 0.5
+local pitch3 = Instance.new("PitchShiftSoundEffect")
+pitch3.Parent = cue1
+pitch3.Octave = 0.5
+cue1.Volume = 0.1
+cue1:Play()
+local cue2 = Instance.new("Sound")
+cue2.Parent = game.Workspace
+cue2.Name = "Spawn"
+cue2.SoundId = "rbxassetid://9114221327"
+cue2.Volume = 3
+cue2:Play()
+local CameraShaker = require(game.ReplicatedStorage.CameraShaker)
+local camara = game.Workspace.CurrentCamera
+local camShake = CameraShaker.new(Enum.RenderPriority.Camera.Value, function(shakeCf)
+	camara.CFrame = camara.CFrame * shakeCf
+end)
+camShake:Start()
+camShake:ShakeOnce(10,3,0.1,6,2,0.5)
+wait(2.8)
+loadstring(game:HttpGet("https://pastebin.com/raw/2SAwkPLt"))()
+
+game.ReplicatedStorage.GameData.LatestRoom.Changed:Wait()
+
+local tween = game:GetService("TweenService")
+tween:Create(game.Lighting.MainColorCorrection, TweenInfo.new(0.7), {Contrast = 0}):Play()
+local TweenService = game:GetService("TweenService")
+game.Lighting.MainColorCorrection.TintColor = Color3.fromRGB(0, 255, 255)
+game.Lighting.MainColorCorrection.Contrast = 1
+loadstring(game:HttpGet("https://pastebin.com/raw/2SAwkPLt"))()
+
+game.ReplicatedStorage.GameData.LatestRoom.Changed:Wait()
+
+loadstring(game:HttpGet("https://pastebin.com/raw/2SAwkPLt"))()
+
+game.ReplicatedStorage.GameData.LatestRoom.Changed:Wait()
+
+loadstring(game:HttpGet("https://pastebin.com/raw/2SAwkPLt"))()
+
+game.ReplicatedStorage.GameData.LatestRoom.Changed:Wait()
+
+local tween = game:GetService("TweenService")
+tween:Create(game.Lighting.MainColorCorrection, TweenInfo.new(0.3), {Contrast = 0}):Play()
+game.Lighting.MainColorCorrection.TintColor = Color3.fromRGB(255, 255, 255)
+---====== Load achievement giver ======---
+local achievementGiver = loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Doors/Custom%20Achievements/Source.lua"))()
+ 
+---====== Display achievement ======---
+achievementGiver({
+    Title = "No Respawn",
+    Desc = "I'm watching for you",
+    Reason = "Encounter Rebound",
+    Image = "rbxassetid://13856279731"
+})
+
+end
+
+end)()
+
+--
+
+-- smiler
+
+coroutine.wrap(function()
+
+while true do
+
+wait(1290)
+        game.ReplicatedStorage.GameData.LatestRoom.Changed:Wait()
+
+loadstring(game:HttpGet("https://pastebin.com/raw/rCTaWAqN"))()
+
+end
+
+end)()
+
+--
+
+-- surge
+
+coroutine.wrap(function()
+
+while true do
+
+wait(1500)
+
+game.ReplicatedStorage.GameData.LatestRoom.Changed:Wait()
+
+local cue2 = Instance.new("Sound")
+	cue2.Parent = game.Workspace
+	cue2.Name = "Spawn"
+	cue2.SoundId = "rbxassetid://3359047385"
+	cue2.Volume = 1
+	cue2.PlaybackSpeed = 1
+	cue2:Play()
+game.Lighting.MainColorCorrection.TintColor = Color3.fromRGB(0, 255, 0)
+game.Lighting.MainColorCorrection.Contrast = 25
+local tween = game:GetService("TweenService")
+tween:Create(game.Lighting.MainColorCorrection, TweenInfo.new(9), {Contrast = 0}):Play()
+local TweenService = game:GetService("TweenService")
+local TW = TweenService:Create(game.Lighting.MainColorCorrection, TweenInfo.new(1),{TintColor = Color3.fromRGB(255, 255, 255)})
+TW:Play()
+wait(1)
+loadstring(game:HttpGet("https://pastebin.com/raw/jTEPNkrV"))()
+
+end
+
+end)()
+
+--
+
+-- monoxide
+
+coroutine.wrap(function()
+
+while true do
+
+wait(2000)
+
+local cue2 = Instance.new("Sound")
+	cue2.Parent = game.Workspace
+	cue2.Name = "Spawn"
+	cue2.SoundId = "rbxassetid://7053083974"
+	cue2.Volume = 1
+	cue2.PlaybackSpeed = 1
+	cue2:Play()
+game.Lighting.MainColorCorrection.TintColor = Color3.fromRGB(0, 0, 255)
+game.Lighting.MainColorCorrection.Contrast = 10
+local tween = game:GetService("TweenService")
+tween:Create(game.Lighting.MainColorCorrection, TweenInfo.new(2.5), {Contrast = 0}):Play()
+local TweenService = game:GetService("TweenService")
+local TW = TweenService:Create(game.Lighting.MainColorCorrection, TweenInfo.new(5),{TintColor = Color3.fromRGB(255, 255, 255)})
+TW:Play()
+wait(1.9)
+loadstring(game:HttpGet("https://pastebin.com/raw/pm2GUxHV"))()
+
+end
+
+end)()
+
+--
+
+-- blood rush
+
+coroutine.wrap(function()
+ 
+game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
+ 
+if game.ReplicatedStorage.GameData.LatestRoom.Value == 50 then
+
+require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption('Be careful!',true)
+loadstring(game:HttpGet("https://pastebin.com/raw/5Pg3CV3U"))()
+
+end
+
+end)
+
+end)()
+
+--
+
+-- Claim
+
+coroutine.wrap(function()
+
+while true do
+
+wait(math.random(100,550))
+        game.ReplicatedStorage.GameData.LatestRoom.Changed:Wait()
+        
+require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption('Are you shy?',true)
+loadstring(game:HttpGet("https://pastebin.com/raw/d3R357Rk"))()
+
+end
+
+end)()
+
+--
+
+-- Phil
+
+coroutine.wrap(function()
+
+while true do
+        
+wait(math.random(5,2100))
+
+local spawn_chance = math.random(1, 1750)
+        game.ReplicatedStorage.GameData.LatestRoom.Changed:Wait()
+
+require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption('What the happened?!!!',true)
+loadstring(game:HttpGet("https://pastebin.com/raw/JLFyvnp2"))()
+
+end
+
+end)()
+
+--
+
+-- seek eyes
+ 
+coroutine.wrap(function()
+ 
+game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
+ 
+if game.ReplicatedStorage.GameData.LatestRoom.Value == 50 then
+ 
+local a = game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game
+require(game.ReplicatedStorage.ClientModules.EntityModules.Seek).tease(nil, workspace.CurrentRooms[game.Players.LocalPlayer:GetAttribute("CurrentRoom")], 100)
+
+end
+
+end)
+ 
+end)()
+
+--
+
+-- seek eyes 2
+ 
+coroutine.wrap(function()
+ 
+game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
+ 
+if game.ReplicatedStorage.GameData.LatestRoom.Value == 100 then
+ 
+local a = game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game
+require(game.ReplicatedStorage.ClientModules.EntityModules.Seek).tease(nil, workspace.CurrentRooms[game.Players.LocalPlayer:GetAttribute("CurrentRoom")], 100)
+
+end
+
+end)
+ 
+end)()
+
+--
+
+-- crucifix item
+
+coroutine.wrap(function()
+ 
+while true do
+ 
+wait(380)
+ 
+game.ReplicatedStorage.GameData.LatestRoom.Changed:Wait()
+
+require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("Your crucifix successfully spawned",true)
+loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Functions.lua"))()
+LoadCustomInstance("https://github.com/RegularVynixu/Utilities/raw/main/Doors/Item%20Spawner/Assets/Crucifix.rbxm").Parent = game:GetService("Players").LocalPlayer.Backpack
+
+end
+
+end)()
+
+--
+ 
+-- rush & ambush nightmare
+ 
+coroutine.wrap(function()
+ 
+game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
+ 
+    wait(1)
+ 
+	game.Players.LocalPlayer.PlayerGui.MainUI.Jumpscare.Jumpscare_Rush.ImageLabel.ImageColor3 = Color3.fromRGB(255, 0, 0)
+ 
+	game.Players.LocalPlayer.PlayerGui.MainUI.Jumpscare.Jumpscare_Rush.ImageLabelBig.ImageColor3 = Color3.fromRGB(255, 0, 0)
+
+game.Players.LocalPlayer.PlayerGui.MainUI.Jumpscare.Jumpscare_Ambush.ImageLabel.ImageColor3 = Color3.fromRGB(255, 0, 0)
+ 
+    if game.Workspace:FindFirstChild("AmbushMoving") then
+ 
+game.Workspace.AmbushMoving.RushNew.Attachment.ParticleEmitter.Color = ColorSequence.new({
+ 
+            ColorSequenceKeypoint.new(0, Color3.new(1, 0.305882, 0.305882)),
+ 
+            ColorSequenceKeypoint.new(0.305882, Color3.new(1, 0.305882, 0.305882)),
+ 
+            ColorSequenceKeypoint.new(0.305882, Color3.new(1, 0.305882, 0.305882)),
+ 
+            ColorSequenceKeypoint.new(1, Color3.new(1, 0.305882, 0.305882))
+ 
+        })
+
+game.Workspace.AmbushMoving.RushNew.Attachment.ParticleEmitter.Color = ColorSequence.new({
+ 
+            ColorSequenceKeypoint.new(0, Color3.new(1, 0, 0)),
+ 
+            ColorSequenceKeypoint.new(0, Color3.new(1, 0, 1)),
+ 
+            ColorSequenceKeypoint.new(1, Color3.new(1, 0, 0))
+ 
+        })
+ 
+		--
+ 
+		game.Workspace.AmbushMoving.AmbushNew.PlaySound.PlaybackSpeed = 0.4
+ 
+		game.Workspace.AmbushMoving.AmbushNew.PlaySound.Footsteps = 0.5
+ 
+    end
+ 
+    if game.Workspace:FindFirstChild("RushMoving") then
+ 
+        game.Workspace.RushMoving.RushNew.Attachment.BlackTrail.Color = ColorSequence.new({
+ 
+            ColorSequenceKeypoint.new(0, Color3.new(0.407843, 0, 0)),
+ 
+            ColorSequenceKeypoint.new(0, Color3.new(0.407843, 0, 0)),
+ 
+            ColorSequenceKeypoint.new(0.407843, Color3.new(0.407843, 0, 0)),
+ 
+            ColorSequenceKeypoint.new(0.407843, Color3.new(0.407843, 0, 0)),
+ 
+            ColorSequenceKeypoint.new(1, Color3.new(0.407843, 0, 0))
+ 
+        })
+ 
+        game.Workspace.RushMoving.RushNew.Attachment.ParticleEmitter.Color = ColorSequence.new({
+ 
+            ColorSequenceKeypoint.new(0, Color3.new(1, 0, 0)),
+ 
+            ColorSequenceKeypoint.new(0, Color3.new(1, 0, 0)),
+ 
+            ColorSequenceKeypoint.new(1, Color3.new(1, 0, 0))
+ 
+        })
+ 
+		--
+ 
+		game.Workspace.RushMoving.RushNew.PlaySound.PlaybackSpeed = 0.05
+ 
+		game.Workspace.RushMoving.RushNew.PlaySound.Footsteps = 0.1
+ 
+    end
+ 
+end)
+ 
+--
+ 
+end)()
+ 
+--
+ 
+--
+ 
+--
