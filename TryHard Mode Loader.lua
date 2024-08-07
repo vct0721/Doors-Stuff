@@ -9,4 +9,4 @@ if game.ReplicatedStorage.GameData.LatestRoom.Value > 0 then
 end
 
 -- If door is 0, execute the game mode
-loadstring(game:HttpGet("https://pastebin.com/raw/Zwpaw3fu"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/vct0721/Doors-Stuff/main/TryHardMode"))()
