@@ -91,13 +91,19 @@ game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.RemoteListener.Mod
 
 -- intro text in the Rooms 
 
+local IntroRoomsLoad = false
+
 coroutine.wrap(function()
+while true do
 
 game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
 
-if game.ReplicatedStorage.GameData.Floor.Value == Rooms then
-
+if IntroRoomsLoad == false and game.ReplicatedStorage.GameData.Floor.Value == Rooms then
 loadstring(game:HttpGet("https://pastebin.com/raw/BsKmjS02"))()
+IntroRoomsLoad = true
+end
+
+wait(1) 
 
 end
 
@@ -107,21 +113,18 @@ end)()
 
 
 -- intro text in the deep hotel 
+local IntroDeepLoad = false
 
 coroutine.wrap(function()
 
-game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
+while true do
 
-if game.ReplicatedStorage.GameData.LatestRoom.Value == 52 then
-
-local spawn_nm = Instance.new("Sound", workspace)
- 
-spawn_nm.SoundId = "https://github.com/Kotyara19k-Doorsspawner/Ping-s-Dumbass-projects-/raw/main/Dark-Depths_Entrencebetter.mp3"
- 
-spawn_nm.Volume = 1
- 
-spawn_nm:Play()
+if IntroDeepLoad == false and game.ReplicatedStorage.GameData.LatestRoom.Value == 52 then
 loadstring(game:HttpGet("https://pastebin.com/raw/LJD6zjyw"))()
+IntroDeepLoad = true
+end
+
+wait(1) 
 
 end
 
