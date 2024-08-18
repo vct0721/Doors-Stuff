@@ -90,46 +90,24 @@ game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.RemoteListener.Mod
 
 
 -- intro text in the Rooms 
-
 local IntroRoomsLoad = false
-
-coroutine.wrap(function()
-while true do
-
 game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
-
 if IntroRoomsLoad == false and game.ReplicatedStorage.GameData.Floor.Value == Rooms then
 loadstring(game:HttpGet("https://pastebin.com/raw/BsKmjS02"))()
 IntroRoomsLoad = true
 end
-
-wait(1) 
-
-end
-
 end)
-
-end)()
-
 
 -- intro text in the deep hotel 
 local IntroDeepLoad = false
-
 coroutine.wrap(function()
-
 while true do
-
 if IntroDeepLoad == false and game.ReplicatedStorage.GameData.LatestRoom.Value == 52 then
 loadstring(game:HttpGet("https://pastebin.com/raw/LJD6zjyw"))()
 IntroDeepLoad = true
 end
-
 wait(1) 
-
 end
-
-end)
-
 end)()
 
 --
