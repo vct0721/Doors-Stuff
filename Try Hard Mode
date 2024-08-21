@@ -1,4 +1,4 @@
-require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("Tryhard Mode script succesfully loaded (version 2.1)",true)
+require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("Tryhard Mode script succesfully loaded (version 2.2)",true)
 
 -- custom shop (for current candle model)
 
@@ -257,8 +257,6 @@ end)()
 coroutine.wrap(function()
  
 while true do
- 
-if game.ReplicatedStorage.GameData.LatestRoom.Value > 52 then 
  
 local sctm = math.random(190,250)
  
