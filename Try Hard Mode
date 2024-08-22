@@ -7,14 +7,6 @@ loadstring(game:HttpGet("https://pastebin.com/raw/DQDWwAiM"))()
 -- New Seek model
 loadstring(game:HttpGet('https://pastefy.app/eLCZEq1N/raw'))()
 
--- Setting up new sounds and lighting
-game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.Health.Music.Blue.SoundId = "rbxassetid://10472612727"
-game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.Health.Music.Blue.Pitch = 0.55
-game.Lighting.FogColor = Color3.fromRGB(0, 0, 0)
-game.Lighting.FogStart = 5
-game.Lighting.FogEnd = 800
-game.ReplicatedStorage.Sounds.BulbZap.SoundId = "rbxassetid://4398878054"
-
 -- Loading current candle model
 loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Functions.lua"))()
 LoadCustomInstance("rbxassetid://16465312383").Parent = game:GetService("Players").LocalPlayer.Backpack
