@@ -223,6 +223,17 @@ coroutine.wrap(function()
     end
 end)()
 
+-- Twister
+coroutine.wrap(function()
+    while true do
+        wait(math.random(30,80))
+		if not IsSeekChase then
+        game.ReplicatedStorage.GameData.LatestRoom.Changed:Wait()
+        wait(2)
+loadstring(game:HttpGet('https://pastefy.app/Fv3m31f9/raw'))()
+    end
+end)()
+
 -- Depth
 coroutine.wrap(function()
     while true do
