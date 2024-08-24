@@ -32,7 +32,7 @@ local IsSeekChase = Workspace:FindFirstChild("SeekMoving")
 loadstring(game:HttpGet("https://pastebin.com/raw/VZ0pV8G3"))()
 
 -- Sprint bar
-loadstring(game:HttpGet("https://pastefy.app/zp6LTE2D/raw"))()
+loadstring(game:HttpGet("https://pastefy.app/UyMlscEd/raw"))()
 
 -- Achievement setup
 loadstring(game:HttpGet("https://pastebin.com/raw/sric3jnY"))()
@@ -116,7 +116,7 @@ coroutine.wrap(function()
         if not IsSeekChase then
             game.ReplicatedStorage.GameData.LatestRoom.Changed:Wait()
             wait(0)
-            loadstring(game:HttpGet("https://pastefy.app/3PgVb5j5/raw"))()
+            loadstring(game:HttpGet("https://pastefy.app/y4qDfUgC/raw"))()
         end
     end
 end)()
@@ -144,14 +144,50 @@ coroutine.wrap(function()
     end
 end)()
 
--- Deer God
+-- Torment
 coroutine.wrap(function()
     while true do
         wait(304)
         if not IsSeekChase then
             game.ReplicatedStorage.GameData.LatestRoom.Changed:Wait()
             wait(0)
-            loadstring(game:HttpGet("https://pastefy.app/blDgT925/raw"))()
+            loadstring(game:HttpGet("https://pastefy.app/JOymYI5l/raw"))()
+        end
+    end
+end)()
+
+-- Rush Catalyst
+coroutine.wrap(function()
+    while true do
+        wait(math.random(150, 390))
+        if not IsSeekChase then
+            game.ReplicatedStorage.GameData.LatestRoom.Changed:Wait()
+            wait(0)
+            loadstring(game:HttpGet("https://pastefy.app/zbCLUIWJ/raw"))()
+        end
+    end
+end)()
+
+-- A-25
+coroutine.wrap(function()
+    while true do
+        wait(math.random(250, 490))
+        if not IsSeekChase then
+            game.ReplicatedStorage.GameData.LatestRoom.Changed:Wait()
+            wait(0)
+            loadstring(game:HttpGet("https://pastefy.app/OGT4bH2R/raw"))()
+        end
+    end
+end)()
+
+-- A-10
+coroutine.wrap(function()
+    while true do
+        wait(math.random(350, 590))
+        if not IsSeekChase then
+            game.ReplicatedStorage.GameData.LatestRoom.Changed:Wait()
+            wait(0)
+            loadstring(game:HttpGet("https://pastefy.app/qtrdHn5c/raw"))()
         end
     end
 end)()
@@ -212,17 +248,6 @@ coroutine.wrap(function()
     end)
 end)()
 
--- Blackout
-coroutine.wrap(function()
-    while true do
-        wait(1290)
-        if not IsSeekChase then
-            game.ReplicatedStorage.GameData.LatestRoom.Changed:Wait()
-            loadstring(game:HttpGet('https://raw.githubusercontent.com/Jahani-john/mayhem-mode/main/mayhemmode-main/ObfuscatedEntities/Blackout-obfuscated.lua'))()
-        end
-    end
-end)()
-
 -- Twister
 coroutine.wrap(function()
     while true do
@@ -230,7 +255,7 @@ coroutine.wrap(function()
 		if not IsSeekChase then
         game.ReplicatedStorage.GameData.LatestRoom.Changed:Wait()
         wait(2)
-loadstring(game:HttpGet('https://pastefy.app/Fv3m31f9/raw'))()
+        loadstring(game:HttpGet('https://pastefy.app/Fv3m31f9/raw'))()
     end
 end)()
 
@@ -475,12 +500,12 @@ coroutine.wrap(function()
     end
 end)()
 
--- Blood Rush
+-- Common Sence
 coroutine.wrap(function()
     game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
         if game.ReplicatedStorage.GameData.LatestRoom.Value == 50 or game.ReplicatedStorage.GameData.LatestRoom.Value == 100 then
             require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption('Be careful!', true)
-            loadstring(game:HttpGet("https://pastebin.com/raw/5Pg3CV3U"))()
+            loadstring(game:HttpGet("https://pastefy.app/qWBnRPkJ/raw"))()
         end
     end)
 end)()
