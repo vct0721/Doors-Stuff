@@ -417,7 +417,7 @@ coroutine.wrap(function()
     end
 end)()
 
--- Stare
+-- Overseer Eyes
 coroutine.wrap(function()
     while true do
         wait(math.random(3, 100))
@@ -426,7 +426,7 @@ coroutine.wrap(function()
             wait(0.5)
             local enableDamage = true
             local currentLoadedRoom = workspace.CurrentRooms[game:GetService("ReplicatedStorage").GameData.LatestRoom.Value]
-            local eyes = game:GetObjects("rbxassetid://13948267630")[1]
+            local eyes = game:GetObjects("rbxassetid://12285389022")[1]
 
             if eyes then end
             game.Workspace.CurrentRooms.ChildAdded:Connect(function()
@@ -445,7 +445,7 @@ coroutine.wrap(function()
                     hum.Health -= 10
                     eyes.Attack:Play()
                     if hum.Health <= 0 then
-                        game:GetService("ReplicatedStorage").GameStats["Player_".. game.Players.LocalPlayer.Name].Total.DeathCause.Value = "Stare"
+                        game:GetService("ReplicatedStorage").GameStats["Player_".. game.Players.LocalPlayer.Name].Total.DeathCause.Value = "Overseer Eyes"
                         local func, setupval, getinfo, typeof, getgc, next = nil, debug.setupvalue or setupvalue, debug.getinfo or getinfo, typeof, getgc, next
 
                         for i,v in next, getgc(false) do
@@ -466,8 +466,8 @@ coroutine.wrap(function()
                         end
 
                         DeathHint({
-                            "You Was Consumed By who you call Stare...",
-                            "look at it or it stuns you!"
+                            "You Was Consumed By who you call Overseer Eyes...",
+                            "look at it or it will kill you!"
                         }, "Blue") -- "Blue" or "Yellow"
                     end
                 end
