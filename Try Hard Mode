@@ -581,28 +581,65 @@ end)()
 coroutine.wrap(function()
     game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
         wait(1)
-        local rushMoving = game.Workspace:FindFirstChild("RushMoving")
-        local ambushMoving = game.Workspace:FindFirstChild("AmbushMoving")
 
+        local rushMoving = game.Workspace:FindFirstChild("RushMoving")
         if rushMoving then
-            rushMoving.RushNew.Attachment.BlackTrail.Color = ColorSequence.new({
-                ColorSequenceKeypoint.new(0, Color3.new(0.407843, 0, 0)),
-                ColorSequenceKeypoint.new(1, Color3.new(0.407843, 0, 0))
-            })
-            rushMoving.RushNew.PlaySound.PlaybackSpeed = 0.05
-            rushMoving.RushNew.Footsteps.PlaybackSpeed = 0.1
+            local assetIdRush = "rbxassetid://12111964011"
+            local successRush, assetRush = pcall(function()
+                return game:GetService("InsertService"):LoadAsset(tonumber(assetIdRush:match("%d+")))
+            end)
+
+            if successRush and assetRush and assetRush:IsA("Model") then
+                local newRush = assetRush:FindFirstChildWhichIsA("Model")
+                if newRush then
+                    local oldRushNew = rushMoving:FindFirstChild("RushNew")
+                    if oldRushNew then
+                        oldRushNew:Destroy()
+                    end
+                    newRush.Name = "RushNew"
+                    newRush.Parent = rushMoving
+
+                    if newRush:FindFirstChild("PlaySound") then
+                        newRush.PlaySound.PlaybackSpeed = 0.05
+                    end
+
+                    if newRush:FindFirstChild("Footsteps") then
+                        newRush.Footsteps.PlaybackSpeed = 0.1
+                    end
+                end
+            end
         end
 
+        local ambushMoving = game.Workspace:FindFirstChild("AmbushMoving")
         if ambushMoving then
-            ambushMoving.RushNew.Attachment.ParticleEmitter.Color = ColorSequence.new({
-                ColorSequenceKeypoint.new(0, Color3.new(1, 0.305882, 0.305882)),
-                ColorSequenceKeypoint.new(1, Color3.new(1, 0.305882, 0.305882))
-            })
-            ambushMoving.RushNew.PlaySound.PlaybackSpeed = 0.4
-            ambushMoving.RushNew.Footsteps.PlaybackSpeed = 0.5
+            local assetIdAmbush = "rbxassetid://12158222955"
+            local successAmbush, assetAmbush = pcall(function()
+                return game:GetService("InsertService"):LoadAsset(tonumber(assetIdAmbush:match("%d+")))
+            end)
+
+            if successAmbush and assetAmbush and assetAmbush:IsA("Model") then
+                local newAmbush = assetAmbush:FindFirstChildWhichIsA("Model")
+                if newAmbush then
+                    local oldAmbushNew = ambushMoving:FindFirstChild("RushNew")
+                    if oldAmbushNew then
+                        oldAmbushNew:Destroy()
+                    end
+                    newAmbush.Name = "RushNew"
+                    newAmbush.Parent = ambushMoving
+
+                    if newAmbush:FindFirstChild("PlaySound") then
+                        newAmbush.PlaySound.PlaybackSpeed = 0.4
+                    end
+
+                    if newAmbush:FindFirstChild("Footsteps") then
+                        newAmbush.Footsteps.PlaybackSpeed = 0.5
+                    end
+                end
+            end
         end
     end)
 end)()
+
 
 -- Deep Hotel Room 52 Spawn
 coroutine.wrap(function()
