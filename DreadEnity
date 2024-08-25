@@ -1,4 +1,3 @@
-
 function GitAud(soundlink, filename)
     local url = soundlink
     local FileName = filename
@@ -8,17 +7,22 @@ function GitAud(soundlink, filename)
     return (getcustomasset or getsynasset)(FileName..".mp3")
 end
 
-function CustomGitSound(soundlink, vol, filename)
+function CustomGitSound(soundlink, vol, filename, duration)
     local DreadSound = Instance.new("Sound")
     DreadSound.SoundId = GitAud(soundlink, filename)
     DreadSound.Parent = workspace
     DreadSound.Volume = vol
+    DreadSound.Looped = true
     DreadSound:Play()
-end
-
-CustomGitSound("https://github.com/Kotyara19k-Doorsspawner/Random-files/raw/main/ClockSounds.mp3", 1, "DreadClock")
+    
+	CustomGitSound("https://github.com/Kotyara19k-Doorsspawner/Random-files/raw/main/ClockSounds.mp3", 1, "DreadClock", 36)
 
 wait(36)
+DreadSound:Stop()
+DreadSound:Destroy()
+
+wait(1)  
+
 ---====== Define spawner ======---
 
 local Spawner = loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Doors/Entity%20Spawner/V1/Source.lua"))()
@@ -51,7 +55,7 @@ local entity = Spawner.createEntity({
     },
     ResistCrucifix = false,
     BreakCrucifix = true,
-    DeathMessage = {"You died to Dread", "Wait...", "How You?..", "Ok..", "...", "Just Hide When The CLock Stops.."},
+    DeathMessage = {"You died to Dread", "Wait...", "How You?..", "Ok..", "...", "Just Hide When The Clock Stops.."},
     IsCuriousLight = false
 })
 
@@ -59,27 +63,25 @@ local entity = Spawner.createEntity({
 
 entity.Debug.OnEntitySpawned = function()
     print("Entity has spawned")
-game.ReplicatedStorage.GameData.StopTime.Value = true
-
+    game.ReplicatedStorage.GameData.StopTime.Value = true
 end
 
 entity.Debug.OnEntityDespawned = function()
     print("Entity has despawned")
 
-  ---====== Load achievement giver ======---
-local achievementGiver = loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Doors/Custom%20Achievements/Source.lua"))()
+    ---====== Load achievement giver ======---
+    local achievementGiver = loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Doors/Custom%20Achievements/Source.lua"))()
 
----====== Display achievement ======---
-achievementGiver({
-    Title = "The Death Of The Night",
-    Desc = "The Time Has Come",
-    Reason = "Encounter Dread",
-    Image = "rbxassetid://12309073114"
-})
+    ---====== Display achievement ======---
+    achievementGiver({
+        Title = "The Death Of The Night",
+        Desc = "The Time Has Come",
+        Reason = "Encounter Dread",
+        Image = "rbxassetid://12309073114"
+    })
 
-wait(1)
-game.ReplicatedStorage.GameData.StopTime.Value = false
-
+    wait(1)
+    game.ReplicatedStorage.GameData.StopTime.Value = false
 end
 
 entity.Debug.OnEntityStartMoving = function()
@@ -101,14 +103,6 @@ end
 entity.Debug.OnDeath = function()
     print("Player has died")
 end
-
---[[
-    NOTE: By overwriting 'OnUseCrucifix', the default crucifixion will be ignored and this function will be called instead
-
-    entity.Debug.OnUseCrucifix = function()
-        print("Custom crucifixion script here")
-    end
-]]--
 
 ---====== Run entity ======---
 
