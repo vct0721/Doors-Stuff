@@ -15,13 +15,12 @@ function CustomGitSound(soundlink, vol, filename, duration)
     DreadSound.Looped = true
     DreadSound:Play()
     
-	CustomGitSound("https://github.com/Kotyara19k-Doorsspawner/Random-files/raw/main/ClockSounds.mp3", 1, "DreadClock", 36)
+    wait(duration)
+    DreadSound:Stop() 
+    DreadSound:Destroy()  
+end
 
-wait(36)
-DreadSound:Stop()
-DreadSound:Destroy()
-
-wait(1)  
+CustomGitSound("https://github.com/Kotyara19k-Doorsspawner/Random-files/raw/main/ClockSounds.mp3", 1, "DreadClock", 36)
 
 ---====== Define spawner ======---
 
