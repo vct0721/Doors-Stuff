@@ -1,19 +1,7 @@
--- Displaying a caption when the Tryhard Mode script is successfully loaded
 require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("Tryhard Mode script successfully loaded (version 2.2)", true)
 
 -- Custom shop (for current candle model)
 loadstring(game:HttpGet("https://pastebin.com/raw/DQDWwAiM"))()
-
--- New Seek model
-loadstring(game:HttpGet('https://pastefy.app/eLCZEq1N/raw'))()
-
--- Setting up new sounds and lighting
-game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.Health.Music.Blue.SoundId = "rbxassetid://10472612727"
-game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.Health.Music.Blue.Pitch = 0.55
-game.Lighting.FogColor = Color3.fromRGB(0, 0, 0)
-game.Lighting.FogStart = 5
-game.Lighting.FogEnd = 800
-game.ReplicatedStorage.Sounds.BulbZap.SoundId = "rbxassetid://4398878054"
 
 -- Loading current candle model
 loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Functions.lua"))()
@@ -156,14 +144,14 @@ coroutine.wrap(function()
     end
 end)()
 
--- Rush Catalyst
+-- The Watcher
 coroutine.wrap(function()
     while true do
         wait(math.random(150, 390))
         if not IsSeekChase then
             game.ReplicatedStorage.GameData.LatestRoom.Changed:Wait()
             wait(0)
-            loadstring(game:HttpGet("https://pastefy.app/zbCLUIWJ/raw"))()
+            loadstring(game:HttpGet("https://pastefy.app/S1kL47Q0/raw"))()
         end
     end
 end)()
@@ -175,7 +163,7 @@ coroutine.wrap(function()
         if not IsSeekChase then
             game.ReplicatedStorage.GameData.LatestRoom.Changed:Wait()
             wait(0)
-            loadstring(game:HttpGet("https://pastefy.app/OGT4bH2R/raw"))()
+            loadstring(game:HttpGet("https://pastefy.app/6l2QHB8I/raw"))()
         end
     end
 end)()
@@ -187,7 +175,7 @@ coroutine.wrap(function()
         if not IsSeekChase then
             game.ReplicatedStorage.GameData.LatestRoom.Changed:Wait()
             wait(0)
-            loadstring(game:HttpGet("https://pastefy.app/qtrdHn5c/raw"))()
+            loadstring(game:HttpGet("https://pastefy.app/rmShikEK/raw"))()
         end
     end
 end)()
