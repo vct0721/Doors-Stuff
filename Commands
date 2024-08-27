@@ -1,0 +1,279 @@
+local command = "/A90"
+local command2 = "/A120"
+local command3 = "/Rebound"
+local command4 = "/Matcher"
+local command5 = "/Claim"
+local command6 = "/A60"
+local command7 = "/Phil"
+local command8 = "/Glitch"
+local command9 = "/Blackout"
+local command10 = "/Depth"
+local command11 = "/Smiler"
+local command12 = "/Surge"
+local command13 = "/Monoxide"
+local command14 = "/BloodRush"
+local command15 = "/Ripper"
+local command16 = "/Dread"
+local command17 = "/Twister"
+local command18 = "/Hunger"
+local command19 = "/Exploit"
+local command20 = "/CSense"
+
+local textChatService = game:GetService("TextChatService")
+local tweenService = game:GetService("TweenService")
+local lighting = game:GetService("Lighting")
+local workspace = game:GetService("Workspace")
+local replicatedStorage = game:GetService("ReplicatedStorage")
+local players = game:GetService("Players")
+
+local mate = false
+
+local function executeRebound()
+    if not mate then
+        mate = true
+
+        mate = false
+    end
+end
+
+local function executeSurge()
+    if not mate then
+        mate = true
+        local cue2 = Instance.new("Sound")
+        cue2.Parent = workspace
+        cue2.Name = "Spawn"
+        cue2.SoundId = "rbxassetid://3359047385"
+        cue2.Volume = 1
+        cue2.PlaybackSpeed = 1
+        cue2:Play()
+        lighting.MainColorCorrection.TintColor = Color3.fromRGB(0, 255, 0)
+        lighting.MainColorCorrection.Contrast = 25
+        tweenService:Create(lighting.MainColorCorrection, TweenInfo.new(9), {Contrast = 0}):Play()
+        local TW = tweenService:Create(lighting.MainColorCorrection, TweenInfo.new(1), {TintColor = Color3.fromRGB(255, 255, 255)})
+        TW:Play()
+        wait(1)
+        loadstring(game:HttpGet("https://pastebin.com/raw/jTEPNkrV"))()
+        mate = false
+    end
+end
+
+local function executeMonoxide()
+    if not mate then
+        mate = true
+        local cue2 = Instance.new("Sound")
+        cue2.Parent = workspace
+        cue2.Name = "Spawn"
+        cue2.SoundId = "rbxassetid://7053083974"
+        cue2.Volume = 1
+        cue2.PlaybackSpeed = 1
+        cue2:Play()
+
+        lighting.MainColorCorrection.TintColor = Color3.fromRGB(0, 0, 255)
+        lighting.MainColorCorrection.Contrast = 10
+
+        tweenService:Create(lighting.MainColorCorrection, TweenInfo.new(2.5), {
+            Contrast = 0
+        }):Play()
+
+        local TW = tweenService:Create(lighting.MainColorCorrection, TweenInfo.new(5), {
+            TintColor = Color3.fromRGB(255, 255, 255)
+        })
+        TW:Play()
+        mate = false
+    end
+end
+
+local function executeMatcher()
+    if not mate then
+        mate = true
+game.Lighting.MainColorCorrection.TintColor = Color3.fromRGB(212, 255, 212)
+        game.Lighting.MainColorCorrection.Contrast = 0.3
+        local tween = game:GetService("TweenService")
+        tween:Create(game.Lighting.MainColorCorrection, TweenInfo.new(0.5), {Contrast = 0}):Play()
+        local TweenService = game:GetService("TweenService")
+        local TW = TweenService:Create(game.Lighting.MainColorCorrection, TweenInfo.new(0.5), {TintColor = Color3.fromRGB(255, 255, 255)})
+        TW:Play()
+        local roast = Instance.new("Sound")
+        roast.Parent = workspace
+        roast.Name = "roast"
+        roast.SoundId = "rbxassetid://9125936117"
+        roast.Volume = 0.5
+        roast.Pitch = 3
+        roast:Play()
+        wait(0.6)
+        roast:Destroy()
+        loadstring(game:HttpGet("https://pastebin.com/raw/XzuW1A1p"))()
+        mate = false
+    end
+end
+
+local function executeDepth()
+    if not mate then
+        mate = true
+        local cue2 = Instance.new("Sound")
+        cue2.Parent = workspace
+        cue2.Name = "Spawn"
+        cue2.SoundId = "rbxassetid://8627516764"
+        cue2.Volume = 1
+        cue2.PlaybackSpeed = 1
+        cue2:Play()
+        lighting.MainColorCorrection.TintColor = Color3.fromRGB(0, 100, 255)
+        lighting.MainColorCorrection.Contrast = 5
+        tweenService:Create(lighting.MainColorCorrection, TweenInfo.new(2.5), {Contrast = 0}):Play()
+        local TW = tweenService:Create(lighting.MainColorCorrection, TweenInfo.new(5), {TintColor = Color3.fromRGB(255, 255, 255)})
+        TW:Play()
+        loadstring(game:HttpGet("https://pastebin.com/raw/uyYe9bZQ"))()
+        mate = false
+    end
+end
+
+while true do
+    local message = textChatService.OnIncomingMessage:Wait()
+    
+    if message.TextSource then
+        local msg = string.lower(message.Text)
+        local player = players:GetPlayerByUserId(message.TextSource.UserId)
+        
+            if msg == command then
+                -- A90 Command
+                if not mate then
+                    mate = true
+                    loadstring(game:HttpGet("https://pastebin.com/raw/YTBW2f9A"))()
+                    mate = false
+                end
+                
+            elseif msg == command2 then
+                -- A120 Command
+                if not mate then
+                    mate = true
+                    loadstring(game:HttpGet("https://pastebin.com/raw/Zf2FtxhA"))()
+                    mate = false
+                end
+                
+            elseif msg == command3 then
+                -- Rebound Command
+                executeRebound()
+                
+            elseif msg == command4 then
+                -- Matcher Command
+                executeMatcher()
+                
+            elseif msg == command5 then
+                -- Claim Command
+                if not mate then
+                    mate = true
+                    loadstring(game:HttpGet("https://pastebin.com/raw/Zi3s2DfK"))()
+                    mate = false
+                end
+                
+            elseif msg == command6 then
+                -- A60 Command
+                if not mate then
+                    mate = true
+                    loadstring(game:HttpGet("https://pastebin.com/raw/AfU4EuUy"))()
+                    mate = false
+                end
+                
+            elseif msg == command7 then
+                -- Phil Command
+                if not mate then
+                    mate = true
+                    loadstring(game:HttpGet("https://pastebin.com/raw/6z9ShFA9"))()
+                    mate = false
+                end
+                
+            elseif msg == command8 then
+                -- Glitch Command
+                if not mate then
+                    mate = true
+                    loadstring(game:HttpGet("https://pastebin.com/raw/9fZejCBs"))()
+                    mate = false
+                end
+                
+            elseif msg == command9 then
+                -- Blackout Command
+                if not mate then
+                    mate = true
+                    loadstring(game:HttpGet("https://pastebin.com/raw/nj8bQ1Rd"))()
+                    mate = false
+                end
+                
+            elseif msg == command10 then
+                -- Depth Command
+                executeDepth()
+                
+            elseif msg == command11 then
+                -- Smiler Command
+                if not mate then
+                    mate = true
+                    loadstring(game:HttpGet("https://pastebin.com/raw/TVE1GdFg"))()
+                    mate = false
+                end
+                
+            elseif msg == command12 then
+                -- Surge Command
+                executeSurge()
+                
+            elseif msg == command13 then
+                -- Monoxide Command
+                executeMonoxide()
+                
+            elseif msg == command14 then
+                -- BloodRush Command
+                if not mate then
+                    mate = true
+                    loadstring(game:HttpGet("https://pastebin.com/raw/4HD8kG7W"))()
+                    mate = false
+                end
+                
+            elseif msg == command15 then
+                -- Ripper Command
+                if not mate then
+                    mate = true
+                    loadstring(game:HttpGet("https://pastefy.app/Mfhh3A8M/raw"))()
+                    mate = false
+                end
+                
+            elseif msg == command16 then
+                -- Dread Command
+                if not mate then
+                    mate = true
+                    loadstring(game:HttpGet("https://raw.githubusercontent.com/vct0721/Doors-Stuff/main/DreadEnity"))()
+                    mate = false
+                end
+                
+            elseif msg == command17 then
+                -- Twister Command
+                if not mate then
+                    mate = true
+                    loadstring(game:HttpGet("https://pastebin.com/raw/GmUWLNME"))()
+                    mate = false
+                end
+                
+            elseif msg == command18 then
+                -- Hunger Command
+                if not mate then
+                    mate = true
+                    loadstring(game:HttpGet("https://pastebin.com/raw/2pjiFwpm"))()
+                    mate = false
+                end
+				
+			elseif msg == command19 then
+                -- Exploit Command
+                   loadstring(game:HttpGet("https://pastebin.com/raw/0Cfcpxgh"))()
+                end
+
+			elseif msg == command20 then
+                -- Common Sense Command
+                if not mate then
+                   mate = true
+                   loadstring(game:HttpGet("https://pastefy.app/qWBnRPkJ/raw"))()
+                   mate = false
+
+                end
+            end
+        end
+    end
+end
+
+
