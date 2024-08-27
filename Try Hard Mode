@@ -1,9 +1,61 @@
-require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("Tryhard Mode script successfully loaded (version 2.2)", true)
+local devadmin = {"victor072134"}
+
+local whitelisteds = {""}
+
+local blacklisteds = {""}
+ 
+if table.find(blacklisteds, game.Players.LocalPlayer.Name) then
+
+local spawn_nm = Instance.new("Sound", workspace)
+ spawn_nm.SoundId = "rbxassetid://7361392680"
+ spawn_nm.Volume = 1
+ spawn_nm:Play()
+local spawn_nm2 = Instance.new("Sound", workspace)
+ spawn_nm2.SoundId = "rbxassetid://5861249932"
+ spawn_nm2.Volume = 1
+ spawn_nm2:Play()
+game.Players.LocalPlayer:Kick("You has been blacklisted from Tryhard Mode for unambiguous use or something 🚫")
+ 
+if table.find(devadmin, game.Players.LocalPlayer.Name) then 
+
+game.TextChatService.TextChannels.RBXSystem:DisplaySystemMessage("Welcome Admin , Admin Features Enabled")
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/vct0721/Doors-Stuff/main/Commands"))()
+
+wait(1)
+
+-- command list
+game.TextChatService.TextChannels.RBXSystem:DisplaySystemMessage("Spawn Command List:")
+game.TextChatService.TextChannels.RBXSystem:DisplaySystemMessage("/A90")
+game.TextChatService.TextChannels.RBXSystem:DisplaySystemMessage("/A120")
+game.TextChatService.TextChannels.RBXSystem:DisplaySystemMessage("/Rebound")
+game.TextChatService.TextChannels.RBXSystem:DisplaySystemMessage("/Matcher")
+game.TextChatService.TextChannels.RBXSystem:DisplaySystemMessage("/Claim")
+game.TextChatService.TextChannels.RBXSystem:DisplaySystemMessage("/A60")
+game.TextChatService.TextChannels.RBXSystem:DisplaySystemMessage("/Phil")
+game.TextChatService.TextChannels.RBXSystem:DisplaySystemMessage("/Blackout")
+game.TextChatService.TextChannels.RBXSystem:DisplaySystemMessage("/Depth")
+game.TextChatService.TextChannels.RBXSystem:DisplaySystemMessage("/Smiler")
+game.TextChatService.TextChannels.RBXSystem:DisplaySystemMessage("/Surge")
+game.TextChatService.TextChannels.RBXSystem:DisplaySystemMessage("/Monoxide")
+game.TextChatService.TextChannels.RBXSystem:DisplaySystemMessage("/BloodRush")
+game.TextChatService.TextChannels.RBXSystem:DisplaySystemMessage("/Ripper")
+game.TextChatService.TextChannels.RBXSystem:DisplaySystemMessage("/Dread")
+game.TextChatService.TextChannels.RBXSystem:DisplaySystemMessage("/Twister")
+game.TextChatService.TextChannels.RBXSystem:DisplaySystemMessage("/Hunger") 
+game.TextChatService.TextChannels.RBXSystem:DisplaySystemMessage("/Exploit")
+game.TextChatService.TextChannels.RBXSystem:DisplaySystemMessage("/CSense")
+ 
+end
+
+game.TextChatService.TextChannels.RBXSystem:DisplaySystemMessage("Wait 3-5 or few seconds this loading and/or to open the door!")
+
+require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("Tryhard Mode script succesfully loaded (version 2.3) ",true)
 
 -- Custom shop (for current candle model)
 loadstring(game:HttpGet("https://pastebin.com/raw/DQDWwAiM"))()
 
--- Loading current candle model
+-- current candle by Official_Artemis
 loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Functions.lua"))()
 LoadCustomInstance("rbxassetid://16465312383").Parent = game:GetService("Players").LocalPlayer.Backpack
 
@@ -11,11 +63,130 @@ LoadCustomInstance("rbxassetid://16465312383").Parent = game:GetService("Players
 game.SoundService.AmbientReverb = "ConcertHall"
 
 -- Setting up Services
+local shockerachiv = false
+local IsHotel = game:GetService("ReplicatedStorage").GameData.Floor.Value == "Hotel"
 local Workspace = game:GetService("Workspace")
 local Lighting = game:GetService("Lighting")
 local SoundService = game:GetService("SoundService")
 local IsSeekChase = Workspace:FindFirstChild("SeekMoving")
+local IsFigure = Workspace:FindFirstChild("FigureMoving")
 
+-- Door New Materials
+
+coroutine.wrap(function()
+
+if game:GetService("ReplicatedStorage").GameData.Floor.Value == "Hotel" then
+
+while true do
+
+    wait(0.0005)
+
+workspace.CurrentRooms[game.ReplicatedStorage.GameData.LatestRoom.Value]:FindFirstChild("Door"):FindFirstChild("Door").Material = "Corroded Metal"
+workspace.CurrentRooms[game.ReplicatedStorage.GameData.LatestRoom.Value]:FindFirstChild("Door"):FindFirstChild("Door"):FindFirstChild("Sign").Material = "Metal"
+
+-- Multiplayer
+
+if game:GetService("ReplicatedStorage"):FindFirstChild("Guis") then
+
+else
+    Visable = Instance.new("Folder")
+    Visable.Name = "Guis"
+    Visable.Parent = game.ReplicatedStorage
+
+end
+function Gui(Name,Amount1,TextSent)
+    if game:GetService("Players").localPlayer.PlayerGui.MainUI.Statistics.Frame:FindFirstChild("!"..Name.."!") then
+        game:GetService("Players").localPlayer.PlayerGui.MainUI.Statistics.Frame["!"..Name.."!"]:Destroy()
+    end
+
+    Visable = Instance.new("BoolValue")
+    Visable.Value = true
+    Visable.Name = Name
+    Visable.Parent = game.ReplicatedStorage.Guis
+
+    game.Players.localPlayer.PlayerGui.MainUI.Statistics.LocksOpened.Visible = true
+    LocksOpened = game.Players.localPlayer.PlayerGui.MainUI.Statistics.LocksOpened:Clone()
+    game.Players.localPlayer.PlayerGui.MainUI.Statistics.LocksOpened.Visible = false
+    LocksOpened.Parent = game.Players.localPlayer.PlayerGui.MainUI.Statistics.Frame
+
+    LocksOpened.Visible = game.ReplicatedStorage.Guis:FindFirstChild(Name).Value
+
+    local Grad = game.Players.localPlayer.PlayerGui.MainUI.Statistics.Frame["Leftover Gold"].UICorner:Clone()
+    Grad.Parent = LocksOpened
+    Grad = game.Players.localPlayer.PlayerGui.MainUI.Statistics.Frame["Leftover Gold"].UIGradient:Clone()
+    Grad.Parent = LocksOpened
+    Grad = game.Players.localPlayer.PlayerGui.MainUI.Statistics.Frame["Leftover Gold"].Amount:Clone()
+    Grad.Parent = LocksOpened
+    Grad.Text = Amount1
+    Grad.Position = Grad.Position - UDim2.new(0.035,0,0,0)
+    Grad = game.Players.localPlayer.PlayerGui.MainUI.Statistics.Frame["Leftover Gold"].Icon:Clone()
+    Grad.Parent = LocksOpened
+    Grad.Position = Grad.Position - UDim2.new(0.035,0,0,0)
+
+    LocksOpened.CloseButton.Position = LocksOpened.CloseButton.Position - UDim2.new(0.021,0,0,0)
+    LocksOpened.CloseButton.ImageColor3 =  Color3.new(0.0313725, 0.854902, 1)
+    LocksOpened.TextColor3 = Color3.new(0.0313725, 0.854902, 1)
+    LocksOpened.TextScaled = false
+    LocksOpened.Name = "!"..Name.."!"
+    LocksOpened.TextSize = game.Players.localPlayer.PlayerGui.MainUI.Statistics.Frame["Leftover Gold"].TextSize + 16
+    LocksOpened.Size = LocksOpened.Parent["Leftover Gold"].Size
+    LocksOpened.BackgroundColor3 = Color3.new(0.0196078, 0.552941, 0.647059)
+    LocksOpened.BackgroundTransparency = 0.5
+
+    LocksOpened.Text = TextSent
+
+
+
+    game.ReplicatedStorage.Guis:FindFirstChild(Name).changed:connect(function()
+
+        LocksOpened.Visible = game.ReplicatedStorage.Guis:FindFirstChild(Name).Value
+    end)
+end
+
+
+
+
+
+
+
+local Creator = loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Doors/Entity%20Spawner/V1/Source.lua"))()
+
+
+-- Run the created entity
+local Message = function(Message,Enable,N)
+    local msg = Instance.new("Message")  
+    msg.Parent = game.Workspace     
+    msg.Text = Message
+    if Enable ~= true then
+        task.wait(0.1)
+        msg:Destroy()
+    end
+end
+
+-- Message("Thank you For Loading Tryhard MultplayerBeta 1.0")
+
+for ii,vv in pairs(game:GetService("Players"):GetChildren()) do
+    PlayersIngame = ii
+end -- Gets All Players
+if TestMultplayer == true then
+    PlayersIngame = 1000 -- TestMultplayer
+end
+
+if PlayersIngame > 1 then -- if more then one then waits for link
+    if game:GetService("ReplicatedStorage").GameData.LatestRoom.Value > 0 then
+        print("Loaded After door 1! Please wait for everyone to die")
+        game.StarterGui:SetCore("ChatMakeSystemMessage", {
+            Text = "Load Before Door 1",
+            Color = Color3.fromRGB(255, 0, 0),
+            Font = Enum.Font.SourceSansBold,
+            TextSize = 18,
+        })
+
+        game.ReplicatedStorage.GameStats["Player_".. game.Players.LocalPlayer.Name].Total.DeathCause.Value = "Not Loading Before Door 1"
+        game.Players.LocalPlayer.Character.Humanoid.Health = -100
+        return false
+    end
+    
 -- Bloodred GUI
 loadstring(game:HttpGet("https://pastebin.com/raw/VZ0pV8G3"))()
 
@@ -43,9 +214,37 @@ game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.RemoteListener.Mod
 game.Workspace.Ambience_Dark.SoundId = "rbxassetid://6535784827"
 game.Workspace.Ambience_Dark.PlaybackSpeed = 1
 
+-- WOW
+
+game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.Health.Death.SoundId = "rbxassetid://16929745437", "DeathNew"
+game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.Health.Death.PlaybackSpeed = 4, "DeathNew"
+
+game.TextChatService.TextChannels.RBXSystem:DisplaySystemMessage("Ok, it's works now, you can finally open the door!")
+
+-- Node's Fixings (Credits to Official_Artemis)
+
+coroutine.wrap(function()
+
+game:GetService("ReplicatedStorage").GameData.LatestRoom.Changed:Connect(function(v)
+
+   W = game:GetService("Workspace").CurrentRooms[v].PathfindNodes:Clone()
+
+W.Parent = game:GetService("Workspace").CurrentRooms[v]
+
+W.Name = 'Nodes'
+
+end)
+
+end)()
+
 -- Sync script with the started room
 game.ReplicatedStorage.GameData.LatestRoom.Changed:Wait()
-require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("Script sync'd according started room, have fun! (Credits by Official_Artemis)", true)
+require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("Script sync'd according started room, have fun!", true)
+
+wait(1)
+
+require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("Credits to Official_Artemis, Kotyara19k For Some Entities And Scripts And Vynixu For the entity spawner", true)
+
 
 -- Intro text
 loadstring(game:HttpGet("https://pastebin.com/raw/kZbzXWz3"))()
@@ -63,6 +262,45 @@ game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.RemoteListener.Mod
 game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.RemoteListener.Modules.Screech.Caught.PlaybackSpeed = 1.6
 game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.RemoteListener.Modules.Screech.Attack.SoundId = "rbxassetid://8080941676"
 
+-- ambience
+
+coroutine.wrap(function()
+ 
+game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
+ 
+    if game.Workspace:FindFirstChild("SeekMoving") then
+ 
+    wait(0.0005)
+
+game.Workspace.SeekMoving.Ambience.SoundId = "rbxassetid://10944333705"
+game.Workspace.SeekMoving.Ambience.Volume = "0.7"
+ 
+    end
+ 
+end)
+
+end)()
+
+--
+
+-- ambience 2
+
+coroutine.wrap(function()
+ 
+game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
+ 
+    wait(0.0005)
+
+game.Workspace.CurrentRooms["50"].FigureSetup.Ambience.SoundId = "rbxassetid://10472612727"
+game.Workspace.CurrentRooms["50"].FigureSetup.Ambience.Volume = "0.7"
+game.Workspace.CurrentRooms["50"].FigureSetup.AmbienceEnd.SoundId = "rbxassetid://4890185640"
+game.Workspace.CurrentRooms["50"].FigureSetup.AmbienceEnd.Volume = "0.5"
+ 
+end)
+
+end)()
+
+
 -- Setting up intro text in the Rooms
 coroutine.wrap(function()
     game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
@@ -72,7 +310,8 @@ coroutine.wrap(function()
     end)
 end)()
 
--- Setting up entities
+-- Entities Section
+
 -- Dread
 coroutine.wrap(function()
     while true do
@@ -80,7 +319,6 @@ coroutine.wrap(function()
         if not IsSeekChase then
             game.ReplicatedStorage.GameData.LatestRoom.Changed:Wait()
             loadstring(game:HttpGet("https://raw.githubusercontent.com/vct0721/Doors-Stuff/main/DreadEnity"))()
-            game.ReplicatedStorage.GameData.LatestRoom.Changed:Wait()
         end
     end
 end)()
@@ -140,30 +378,6 @@ coroutine.wrap(function()
             game.ReplicatedStorage.GameData.LatestRoom.Changed:Wait()
             wait(0)
             loadstring(game:HttpGet("https://pastefy.app/JOymYI5l/raw"))()
-        end
-    end
-end)()
-
--- The Watcher
-coroutine.wrap(function()
-    while true do
-        wait(math.random(150, 390))
-        if not IsSeekChase then
-            game.ReplicatedStorage.GameData.LatestRoom.Changed:Wait()
-            wait(0)
-            loadstring(game:HttpGet("https://pastefy.app/S1kL47Q0/raw"))()
-        end
-    end
-end)()
-
--- A-25
-coroutine.wrap(function()
-    while true do
-        wait(math.random(250, 490))
-        if not IsSeekChase then
-            game.ReplicatedStorage.GameData.LatestRoom.Changed:Wait()
-            wait(0)
-            loadstring(game:HttpGet("https://pastefy.app/6l2QHB8I/raw"))()
         end
     end
 end)()
@@ -299,109 +513,114 @@ coroutine.wrap(function()
     end
 end)()
 
--- Daze
+-- Shocker 
 coroutine.wrap(function()
     while true do
-        wait(math.random(6, 50))
-        if not IsSeekChase then
-            local Players = game:GetService("Players")
-            local Workspace = game:GetService("Workspace")
-            local player = Players.LocalPlayer
-            local character = player.Character or player.CharacterAdded:Wait()
-            local humanoid = character:WaitForChild("Humanoid")
+        wait(math.random(6,50))
+        local Players = game:GetService("Players")
+local Workspace = game:GetService("Workspace")
 
-            local function spawnShocker()
-                local shockerModel = game:GetObjects("rbxassetid://14123016442")[1]
-                shockerModel.PrimaryPart = shockerModel:FindFirstChild("HumanoidRootPart") or shockerModel:FindFirstChildWhichIsA("Part")
-                
-                local camera = Workspace.CurrentCamera
-                shockerModel:SetPrimaryPartCFrame(camera.CFrame * CFrame.new(0, 0, -7))
-                shockerModel.Parent = Workspace
+local player = Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
 
-                local oogaBoogaaPart = shockerModel:WaitForChild("OOGA BOOGAAAA")
-                local horrorScream = shockerModel:WaitForChild("OOGA BOOGAAAA"):WaitForChild("HORROR SCREAM 15")
+local function spawnShocker()
+    local shockerModel = game:GetObjects("rbxassetid://11547803978")[1]
+    shockerModel.PrimaryPart = shockerModel:FindFirstChild("HumanoidRootPart") or shockerModel:FindFirstChildWhichIsA("Part")
+    
+    local camera = Workspace.CurrentCamera
+    shockerModel:SetPrimaryPartCFrame(camera.CFrame * CFrame.new(0, 0, -7))
+    shockerModel.Parent = Workspace
 
-                local lookDuration = 4
-                local startTime = tick()
-                local playerLookingAtShocker = true
+    local oogaBoogaaPart = shockerModel:WaitForChild("OOGA BOOGAAAA")
+    local horrorScream = shockerModel:WaitForChild("OOGA BOOGAAAA"):WaitForChild("HORROR SCREAM 15")
 
-                while playerLookingAtShocker do
+    local lookDuration = 4
+    local startTime = tick()
+    local playerLookingAtShocker = true
+
+    while playerLookingAtShocker do
+        wait(0.1)
+
+        local angle = (oogaBoogaaPart.Position - character.PrimaryPart.Position).unit
+        local direction = camera.CFrame.LookVector
+
+        if (angle:Dot(direction) > 0.9) then
+            if tick() - startTime >= lookDuration then
+                horrorScream:Play()
+                humanoid:TakeDamage(30)
+                playerLookingAtShocker = false
+
+                local speed = 10
+                local targetPosition = character.PrimaryPart.Position
+
+                while oogaBoogaaPart.Position.Y > targetPosition.Y do
+                    local directionToPlayer = (targetPosition - oogaBoogaaPart.Position).unit
+                    oogaBoogaaPart.Position = oogaBoogaaPart.Position + directionToPlayer * speed * 0.1
                     wait(0.1)
-
-                    local angle = (oogaBoogaaPart.Position - character.PrimaryPart.Position).unit
-                    local direction = camera.CFrame.LookVector
-
-                    if (angle:Dot(direction) > 0.9) then
-                        if tick() - startTime >= lookDuration then
-                            horrorScream:Play()
-                            humanoid:TakeDamage(30)
-                            playerLookingAtShocker = false
-
-                            local speed = 10
-                            local targetPosition = character.PrimaryPart.Position
-
-                            while oogaBoogaaPart.Position.Y > targetPosition.Y do
-                                local directionToPlayer = (targetPosition - oogaBoogaaPart.Position).unit
-                                oogaBoogaaPart.Position = oogaBoogaaPart.Position + directionToPlayer * speed * 0.1
-                                wait(0.1)
-                            end
-
-                            oogaBoogaaPart.CanCollide = false
-                            oogaBoogaaPart.Anchored = false
-                            wait(3)
-                            shockerModel:Destroy()
-
-                            game:GetService("ReplicatedStorage").GameStats["Player_".. game.Players.LocalPlayer.Name].Total.DeathCause.Value = "Shocker"
-                            local func, setupval, getinfo, typeof, getgc, next = nil, debug.setupvalue or setupvalue, debug.getinfo or getinfo, typeof, getgc, next
-
-                            for i,v in next, getgc(false) do
-                                if typeof(v) == "function" then
-                                    local info = getinfo(v)
-                                    if info.currentline == 54 and info.nups == 2 and info.is_vararg == 0 then
-                                        func = v
-                                        break
-                                    end
-                                end
-                            end
-
-                            local function DeathHint(hints, type: string)
-                                setupval(func, 1, hints)
-                                if type ~= nil then
-                                    setupval(func, 2, type)
-                                end
-                            end
-
-                            DeathHint({
-                                "You died to who you call Daze...",
-                                "Don't look at it or it stuns you!"
-                            }, "Blue") -- "Blue" or "Yellow"
-
-                            break
-                        end
-                    else
-                        oogaBoogaaPart.CanCollide = false
-                        oogaBoogaaPart.Anchored = false
-                        break
-                    end
                 end
+
                 oogaBoogaaPart.CanCollide = false
                 oogaBoogaaPart.Anchored = false
                 wait(3)
                 shockerModel:Destroy()
+game:GetService("ReplicatedStorage").GameStats["Player_".. game.Players.LocalPlayer.Name].Total.DeathCause.Value = "Shocker"
+local func, setupval, getinfo, typeof, getgc, next = nil, debug.setupvalue or setupvalue, debug.getinfo or getinfo, typeof, getgc, next
 
-                -- Load achievement giver
-                local achievementGiver = loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Doors/Custom%20Achievements/Source.lua"))()
-                -- Display achievement
-                achievementGiver({
-                    Title = "Stay Tuned",
-                    Desc = "Wake Up.",
-                    Reason = "Encounter Daze.",
-                    Image = "rbxassetid://17857830685"
-                })
-            end
-
-            spawnShocker()
+for i,v in next, getgc(false) do
+    if typeof(v) == "function" then
+        local info = getinfo(v)
+        if info.currentline == 54 and info.nups == 2 and info.is_vararg == 0 then
+            func = v
+            break
         end
+    end
+end
+
+local function DeathHint(hints, type: string)
+    setupval(func, 1, hints)
+    if type ~= nil then
+        setupval(func, 2, type)
+    end
+end
+
+DeathHint({
+    "You died to who you call Shocker...",
+    "Dont look at it or it stuns you!"
+}, "Blue") -- "Blue" or "Yellow"
+                break
+            end
+        else
+            
+            oogaBoogaaPart.CanCollide = false
+            oogaBoogaaPart.Anchored = false
+            break
+        end
+    end
+oogaBoogaaPart.CanCollide = false
+oogaBoogaaPart.Anchored = false
+wait(3)
+    shockerModel:Destroy()
+	
+	if shockerachiv == false then
+	
+---====== Load achievement giver ======---
+local achievementGiver = loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Doors/Custom%20Achievements/Source.lua"))()
+
+---====== Display achievement ======---
+achievementGiver({
+    Title = "Shocking Experience",
+    Desc = "Look at me.",
+    Reason = "Encounter Shocker.",
+    Image = "rbxassetid://17857830685"
+})
+
+shockerachiv = true
+
+end
+
+spawnShocker()
+
     end
 end)()
 
@@ -491,9 +710,14 @@ end)()
 -- Common Sence
 coroutine.wrap(function()
     game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
-        if game.ReplicatedStorage.GameData.LatestRoom.Value == 50 or game.ReplicatedStorage.GameData.LatestRoom.Value == 100 then
+        if game.ReplicatedStorage.GameData.LatestRoom.Value == 50 then
             require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption('Be careful!', true)
             loadstring(game:HttpGet("https://pastefy.app/qWBnRPkJ/raw"))()
+			if game.ReplicatedStorage.GameData.LatestRoom.Value == 100 then
+			  wait(15)
+			    require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption('Be careful!', true)
+                loadstring(game:HttpGet("https://pastefy.app/qWBnRPkJ/raw"))()
+			    
         end
     end)
 end)()
@@ -678,6 +902,16 @@ coroutine.wrap(function()
             wait(2.3)
             intro.Visible = false
 
+            -- Lights Remove
+            coroutine.wrap(function()
+                while true do
+				wait(0.0005)
+				game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:WaitForChild("Assets").Chandelier:Destroy()
+                game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:WaitForChild("Assets").Light_Fixtures:Destroy()
+				    end
+                end
+            end)()
+
             -- A-90
             coroutine.wrap(function()
                 while true do
@@ -689,6 +923,30 @@ coroutine.wrap(function()
                     end
                 end
             end)()
+			
+-- The Watcher
+coroutine.wrap(function()
+    while true do
+        wait(math.random(150, 390))
+        if not IsSeekChase then
+            game.ReplicatedStorage.GameData.LatestRoom.Changed:Wait()
+            wait(0)
+            loadstring(game:HttpGet("https://pastefy.app/S1kL47Q0/raw"))()
+        end
+    end
+end)()
+
+-- A-25
+coroutine.wrap(function()
+    while true do
+        wait(math.random(250, 490))
+        if not IsSeekChase then
+            game.ReplicatedStorage.GameData.LatestRoom.Changed:Wait()
+            wait(0)
+            loadstring(game:HttpGet("https://pastefy.app/6l2QHB8I/raw"))()
+        end
+    end
+end)()
 
             -- Surge
             coroutine.wrap(function()
