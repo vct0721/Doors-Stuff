@@ -31,11 +31,11 @@ local Spawner = loadstring(game:HttpGet("https://raw.githubusercontent.com/Regul
 local entity = Spawner.createEntity({
     CustomName = "Dread",
     Model = "rbxassetid://16834807322", -- Your entity's model url here ("rbxassetid://1234567890" or GitHub raw url)
-    Speed = 999,
-    MoveDelay = 2,
+    Speed = 999999,
+    MoveDelay = 1,
     HeightOffset = 0,
     CanKill = true,
-    KillRange = 50,
+    KillRange = 150,
     SpawnInFront = false,
     ShatterLights = true,
     FlickerLights = {
@@ -45,7 +45,7 @@ local entity = Spawner.createEntity({
     Cycles = {
         Min = 1,
         Max = 1,
-        Delay = 2
+        Delay = 0
     },
     CamShake = {
         Enabled = true,
@@ -76,7 +76,7 @@ entity.Debug.OnEntityDespawned = function()
         Title = "The Death Of The Night",
         Desc = "The Time Has Come",
         Reason = "Encounter Dread",
-        Image = "rbxassetid://12309073114"
+        Image = "https://static.wikia.nocookie.net/doors-game/images/9/97/Dead_Of_Night_Badge.png/revision/latest/scale-to-width-down/105?cb=20240830202543"
     })
 
     wait(1)
