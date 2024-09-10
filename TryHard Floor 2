@@ -620,32 +620,6 @@ coroutine.wrap(function()
                     end
                 end
             end)()
-
-            -- Surge
-            coroutine.wrap(function()
-                while true do
-                    local sctm = math.random(900, 2970)
-                    wait(sctm)
-                    if not IsSeekChase or IsFigure then
-                        game.ReplicatedStorage.GameData.LatestRoom.Changed:Wait()
-                        local cue2 = Instance.new("Sound")
-                        cue2.Parent = game.Workspace
-                        cue2.Name = "Spawn"
-                        cue2.SoundId = "rbxassetid://3359047385"
-                        cue2.Volume = 1
-                        cue2.PlaybackSpeed = 1
-                        cue2:Play()
-                        game.Lighting.MainColorCorrection.TintColor = Color3.fromRGB(0, 255, 0)
-                        game.Lighting.MainColorCorrection.Contrast = 25
-                        local tween = game:GetService("TweenService"):Create(game.Lighting.MainColorCorrection, TweenInfo.new(9), {Contrast = 0})
-                        tween:Play()
-                        local TW = game:GetService("TweenService"):Create(game.Lighting.MainColorCorrection, TweenInfo.new(1), {TintColor = Color3.fromRGB(255, 255, 255)})
-                        TW:Play()
-                        wait(1)
-                        loadstring(game:HttpGet("https://pastebin.com/raw/jTEPNkrV"))()
-                    end
-                end
-            end)()
 			
 -- B-60
 coroutine.wrap(function()
@@ -668,7 +642,7 @@ coroutine.wrap(function()
     end
 end)()
 			
-	-- Claim
+-- Claim
 coroutine.wrap(function()
     while true do
         wait(math.random(100, 550))
@@ -677,4 +651,19 @@ coroutine.wrap(function()
             loadstring(game:HttpGet("https://pastebin.com/raw/d3R357Rk"))()
         end
     end
+end)()
+
+-- wh1t3 remade
+ 
+coroutine.wrap(function()
+ 
+while true do
+ 
+wait(1390)
+        game.ReplicatedStorage.GameData.LatestRoom.Changed:Wait()
+ 
+loadstring(game:HttpGet("https://pastebin.com/raw/2LTckSaJ"))()
+ 
+end
+ 
 end)()
