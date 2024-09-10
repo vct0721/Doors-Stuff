@@ -1,0 +1,165 @@
+-- Documentations At: https://github.com/iimateiYT/Custom-Modifiers/blob/main/README.md
+
+local CustomModifiers = loadstring(game:HttpGet('https://raw.githubusercontent.com/iimateiYT/Custom-Modifiers/main/Source.lua'))()
+local FloorsAhead = 1
+
+CustomModifiers:ToggleConnotations(true)
+
+-- Creating a new modifier category
+CustomModifiers:CreateCategory({
+    Title = "Custom Hotel Gameplay",  -- Name of the category
+    Sort = 0,  -- Display order
+    Floor = "Hotel",  -- Floor where this category will appear
+    Color = Color3.fromRGB(255, 50, 50)  -- Custom color for the category
+})
+
+-- Creating a new modifier category
+CustomModifiers:CreateCategory({
+    Title = "Custom Mines Modifiers",  -- Name of the category
+    Sort = 0,  -- Display order
+    Floor = "Mines",  -- Floor where this category will appear
+    Color = Color3.fromRGB(255, 50, 50)  -- Custom color for the category
+})
+
+-- Creating a new modifier category
+CustomModifiers:CreateCategory({
+    Title = "Custom Hotel Modifiers",  -- Name of the category
+    Sort = 0,  -- Display order
+    Floor = "Hotel",  -- Floor where this category will appear
+    Color = Color3.fromRGB(255, 50, 50)  -- Custom color for the category
+})
+
+-- Creating a new modifier category
+CustomModifiers:CreateCategory({
+    Title = "Custom Mines Gameplay",  -- Name of the category
+    Sort = 0,  -- Display order
+    Floor = "Mines",  -- Floor where this category will appear
+    Color = Color3.fromRGB(255, 50, 50)  -- Custom color for the category
+})
+
+CustomModifiers:ReloadModifiers(FloorsAhead)
+
+CustomModifiers:EnableFloor("Mines", true)
+
+CustomModifiers:CreateModifier({
+    Title = "TryHard Mode",  -- Name of the modifier
+    Desc = "Made By victor072134.",  -- Description
+    Color = Color3.fromRGB(255, 100, 100),  -- Modifier color
+    Category = "Custom Hotel Gameplay",  -- Category where the modifier will be placed
+    Sort = 1,  -- Modifier display order
+    Bonus = -50,  -- Score penalty
+    Solo = true,  -- This modifier cannot be combined with others
+    Unlock = "EscapeHotel",  -- Unlocks after escaping the hotel
+    Activation = [[
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/vct0721/Doors-Stuff/main/TryHard%20Mode%20Loader.lua"))()
+    ]]
+})
+
+CustomModifiers:CreateModifier({
+    Title = "Hardcore Mode",  -- Name of the modifier
+    Desc = "Made By Nautic.",  -- Description
+    Color = Color3.fromRGB(255, 100, 100),  -- Modifier color
+    Category = "Custom Hotel Gameplay",  -- Category where the modifier will be placed
+    Sort = 2,  -- Modifier display order
+    Bonus = +500,  -- Score penalty
+    Solo = true,  -- This modifier cannot be combined with others
+    Unlock = "EscapeHotel",  -- Unlocks after escaping the hotel
+    Activation = [[
+        loadstring(game:HttpGet("https://glot.io/snippets/gp5pu59o7f/raw"))()
+    ]]
+})
+
+CustomModifiers:CreateModifier({
+    Title = "Crazy Mode",  -- Name of the modifier
+    Desc = "Made by MuhammadGames And Volta.",  -- Description
+    Color = Color3.fromRGB(255, 100, 100),  -- Modifier color
+    Category = "Custom Hotel Gameplay",  -- Category where the modifier will be placed
+    Sort = 2,  -- Modifier display order
+    Bonus = +400,  -- Score penalty
+    Solo = true,  -- This modifier cannot be combined with others
+    Unlock = "EscapeHotel",  -- Unlocks after escaping the hotel
+    Activation = [[
+        loadstring(game:HttpGet('https://pastebin.com/raw/AgEtQui3'))()
+    ]]
+})
+
+CustomModifiers:CreateModifier({
+    Title = "Forggoten Mode",  -- Name of the modifier
+    Desc = "Made By OFFICIAL_ARTEMIS.",  -- Description
+    Color = Color3.fromRGB(255, 100, 100),  -- Modifier color
+    Category = "Custom Hotel Gameplay",  -- Category where the modifier will be placed
+    Sort = 2,  -- Modifier display order
+    Bonus = +400,  -- Score penalty
+    Solo = true,  -- This modifier cannot be combined with others
+    Unlock = "EscapeHotel",  -- Unlocks after escaping the hotel
+    Activation = [[
+        loadstring(game:HttpGet("https://pastebin.com/raw/Wy7PSxjz"))()
+    ]]
+})
+
+CustomModifiers:CreateModifier({
+    Title = "Always Rebounds",  -- Name of the modifier
+    Desc = "Rebound comes In every room.",  -- Description
+    Color = Color3.fromRGB(255, 100, 100),  -- Modifier color
+    Category = "Custom Hotel Modifiers",  -- Category where the modifier will be placed
+    Sort = 1,  -- Modifier display order
+    Bonus = +150,  -- Score penalty
+    Solo = false,  -- This modifier cannot be combined with others
+    Activation = [[
+game.ReplicatedStorage.GameData.LatestRoom.Changed:Wait()
+
+game.Lighting.MainColorCorrection.TintColor = Color3.fromRGB(61, 98, 171)
+game.Lighting.MainColorCorrection.Contrast = 0.2
+game.Lighting.MainColorCorrection.Saturation = -0.7
+local tween = game:GetService("TweenService")
+tween:Create(game.Lighting.MainColorCorrection, TweenInfo.new(5), {Contrast = 0}):Play()
+tween:Create(game.Lighting.MainColorCorrection, TweenInfo.new(5), {Saturation = 0}):Play()
+local TweenService = game:GetService("TweenService")
+local TW = TweenService:Create(game.Lighting.MainColorCorrection, TweenInfo.new(5),{TintColor = Color3.fromRGB(255, 255, 255)})
+TW:Play()
+local cue1 = Instance.new("Sound")
+cue1.Parent = game.Workspace
+cue1.Name = "Scream"
+cue1.SoundId = "rbxassetid://9114397505"
+local distort = Instance.new("DistortionSoundEffect")
+distort.Parent = cue1
+distort.Level = 1
+local distort2 = Instance.new("DistortionSoundEffect")
+distort2.Parent = cue1
+distort2.Level = 1
+local pitch = Instance.new("PitchShiftSoundEffect")
+pitch.Parent = cue1
+pitch.Octave = 0.5
+local pitch2 = Instance.new("PitchShiftSoundEffect")
+pitch2.Parent = cue1
+pitch2.Octave = 0.5
+local pitch3 = Instance.new("PitchShiftSoundEffect")
+pitch3.Parent = cue1
+pitch3.Octave = 0.5
+cue1.Volume = 0.1
+cue1:Play()
+local cue2 = Instance.new("Sound")
+cue2.Parent = game.Workspace
+cue2.Name = "Spawn"
+cue2.SoundId = "rbxassetid://9114221327"
+cue2.Volume = 3
+cue2:Play()
+local CameraShaker = require(game.ReplicatedStorage.CameraShaker)
+local camara = game.Workspace.CurrentCamera
+local camShake = CameraShaker.new(Enum.RenderPriority.Camera.Value, function(shakeCf)
+	camara.CFrame = camara.CFrame * shakeCf
+end)
+camShake:Start()
+camShake:ShakeOnce(10,3,0.1,6,2,0.5)
+wait(2.8)
+loadstring(game:HttpGet("https://pastebin.com/raw/2SAwkPLt"))()
+
+coroutine.wrap(function()
+
+while true do
+
+game.ReplicatedStorage.GameData.LatestRoom.Changed:Wait()
+
+loadstring(game:HttpGet("https://pastebin.com/raw/2SAwkPLt"))()
+    ]]
+})
