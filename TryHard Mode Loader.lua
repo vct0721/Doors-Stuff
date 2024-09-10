@@ -18,9 +18,9 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/vct0721/Doors-Stuff/m
 elseif game:GetService("ReplicatedStorage").GameData.Floor.Value == "Mines" then 
 loadstring(game:HttpGet("https://raw.githubusercontent.com/vct0721/Doors-Stuff/main/TryHard%20Floor%202"))()
 
-elseif game.ReplicatedStorage.GameData.Floor.Value == Rooms then
+elseif game.ReplicatedStorage.GameData.Floor.Value == "Rooms" then
 loadstring(game:HttpGet("https://raw.githubusercontent.com/vct0721/Doors-Stuff/main/Try%20Hard%20Mode"))()
 
-elseif game.ReplicatedStorage.GameData.Floor.Value == Backdoor then
+elseif game.ReplicatedStorage.GameData.Floor.Value == "Backdoor" then
 loadstring(game:HttpGet("https://raw.githubusercontent.com/vct0721/Doors-Stuff/main/Try%20Hard%20Mode"))()
 
