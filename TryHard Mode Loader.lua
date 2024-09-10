@@ -1,12 +1,26 @@
--- Verify if the game mode is executed before door 1
-if game.ReplicatedStorage.GameData.LatestRoom.Value > 0 then
-    -- If the script is loaded after door 0, the player will be killed
-    game.Players.LocalPlayer.Character.Humanoid.Health = 0
-    require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("You need to load the mode before door 1!", true)
-    firesignal(game.ReplicatedStorage.Bricks.DeathHint.OnClientEvent, {"Load the mode before door 1!", "You will be killed because you didn't load the mode on time."})
+if game.ReplicatedStorage.GameData.LatestRoom.Value > 0 or game.Players.LocalPlayer.Character.Humanoid.Health < 1 then
+    require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("You need to load the mode before door 1 and you need to be alive!", true)
+	wait(1)
+	game.Players.LocalPlayer.Character.Humanoid.Health = -100
     game.ReplicatedStorage.GameStats["Player_".. game.Players.LocalPlayer.Name].Total.DeathCause.Value = "Did not load before door 1"
-    return
+	
 end
 
--- If door is 0, execute the game mode
+if game:GetService("ReplicatedStorage").GameData.Floor.Value == "Retro" then
+
+game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
+
+game.Players.LocalPlayer:Kick("Shoutout for hacking HC Remake")	
+
+elseif game:GetService("ReplicatedStorage").GameData.Floor.Value == "Hotel" then
 loadstring(game:HttpGet("https://raw.githubusercontent.com/vct0721/Doors-Stuff/main/Try%20Hard%20Mode"))()
+
+elseif game:GetService("ReplicatedStorage").GameData.Floor.Value == "Mines" then 
+loadstring(game:HttpGet("https://raw.githubusercontent.com/vct0721/Doors-Stuff/main/TryHard%20Floor%202"))()
+
+elseif game.ReplicatedStorage.GameData.Floor.Value == Rooms then
+loadstring(game:HttpGet("https://raw.githubusercontent.com/vct0721/Doors-Stuff/main/Try%20Hard%20Mode"))()
+
+elseif game.ReplicatedStorage.GameData.Floor.Value == Backdoor then
+loadstring(game:HttpGet("https://raw.githubusercontent.com/vct0721/Doors-Stuff/main/Try%20Hard%20Mode"))()
+
