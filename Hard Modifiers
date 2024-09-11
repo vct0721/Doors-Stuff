@@ -5,11 +5,48 @@ local FloorsAhead = 1
 
 CustomModifiers:ToggleConnotations(true)
 
+CustomModifiers:CreateFloor({
+	Title = "Custom Mines", -- Floor name
+	Destination = "Mines", -- Destination of where the elevator should lead to (Hotel, Mines, Backdoor)
+	Image = "rbxassetid://18992618548", -- Background image for the floor
+	Font = Enum.Font.Oswald, -- Font text for the floor text
+	FontColor = Color3.fromRGB(255, 222, 189), -- Font color for the floor text
+	Theme = Color3.fromRGB(252, 219, 187), -- The stroke and arrow color at the floor picker
+	Sort = 1, -- Sorting order for the floor
+	Requires = {
+		NeedAll = false, -- If it needs all the achievements below
+		Achievements = { -- Achievements, found in the documentations
+			"Join", 
+			"SpecialQATester"
+		}
+	},
+	Moddable = true -- Makes modifiers visible for the floor
+})
+
+
+CustomModifiers:CreateFloor({
+	Title = "Custom Hotel", -- Floor name
+	Destination = "Hotel", -- Destination of where the elevator should lead to (Hotel, Mines, Backdoor)
+	Image = "rbxassetid://18992618548", -- Background image for the floor
+	Font = Enum.Font.Oswald, -- Font text for the floor text
+	FontColor = Color3.fromRGB(255, 222, 189), -- Font color for the floor text
+	Theme = Color3.fromRGB(252, 219, 187), -- The stroke and arrow color at the floor picker
+	Sort = 1, -- Sorting order for the floor
+	Requires = {
+		NeedAll = false, -- If it needs all the achievements below
+		Achievements = { -- Achievements, found in the documentations
+			"Join", 
+			"SpecialQATester"
+		}
+	},
+	Moddable = true -- Makes modifiers visible for the floor
+})
+
 -- Creating a new modifier category
 CustomModifiers:CreateCategory({
     Title = "Custom Hotel Gameplay",  -- Name of the category
     Sort = 0,  -- Display order
-    Floor = "Hotel",  -- Floor where this category will appear
+    Floor = "Custom Hotel",  -- Floor where this category will appear
     Color = Color3.fromRGB(255, 50, 50)  -- Custom color for the category
 })
 
@@ -17,7 +54,7 @@ CustomModifiers:CreateCategory({
 CustomModifiers:CreateCategory({
     Title = "Custom Mines Modifiers",  -- Name of the category
     Sort = 0,  -- Display order
-    Floor = "Mines",  -- Floor where this category will appear
+    Floor = "Custom Mines",  -- Floor where this category will appear
     Color = Color3.fromRGB(255, 50, 50)  -- Custom color for the category
 })
 
@@ -25,7 +62,7 @@ CustomModifiers:CreateCategory({
 CustomModifiers:CreateCategory({
     Title = "Custom Hotel Modifiers",  -- Name of the category
     Sort = 0,  -- Display order
-    Floor = "Hotel",  -- Floor where this category will appear
+    Floor = "Custom Hotel",  -- Floor where this category will appear
     Color = Color3.fromRGB(255, 50, 50)  -- Custom color for the category
 })
 
@@ -33,7 +70,7 @@ CustomModifiers:CreateCategory({
 CustomModifiers:CreateCategory({
     Title = "Custom Mines Gameplay",  -- Name of the category
     Sort = 0,  -- Display order
-    Floor = "Mines",  -- Floor where this category will appear
+    Floor = "Custom Mines",  -- Floor where this category will appear
     Color = Color3.fromRGB(255, 50, 50)  -- Custom color for the category
 })
 
