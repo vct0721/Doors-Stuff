@@ -17,7 +17,6 @@ CustomModifiers:CreateFloor({
 		NeedAll = false, -- If it needs all the achievements below
 		Achievements = { -- Achievements, found in the documentations
 			"Join", 
-			"SpecialQATester"
 		}
 	},
 	Moddable = true -- Makes modifiers visible for the floor
@@ -36,7 +35,6 @@ CustomModifiers:CreateFloor({
 		NeedAll = false, -- If it needs all the achievements below
 		Achievements = { -- Achievements, found in the documentations
 			"Join", 
-			"SpecialQATester"
 		}
 	},
 	Moddable = true -- Makes modifiers visible for the floor
