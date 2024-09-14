@@ -95,8 +95,7 @@ end
 DeathHint({
     "[You Died To Who Call Rush Catalyst]",
     "[His like Rush But He is Faster]",
-	"[And He Resist Crucifix]",
-    "[You Have Reached This Far, Keep Going!]",
+    "[And He Resist Crucifix]",
 }, "Blue") -- "Blue" or "Yellow"
 end
 end
