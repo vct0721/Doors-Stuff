@@ -413,15 +413,6 @@ game.Workspace.Eyes.Core.Ambience.PlaybackSpeed = 0.9
 
 end)
 
--- Setting up intro text in the Rooms
-coroutine.wrap(function()
-    game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
-        if game.ReplicatedStorage.GameData.Floor.Value == Rooms then
-            loadstring(game:HttpGet("https://pastebin.com/raw/BsKmjS02"))()
-        end
-    end)
-end)()
-
 -- Entities Section
 
 --Giggle in Hotel
