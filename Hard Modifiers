@@ -1,30 +1,11 @@
 -- Documentations At: https://github.com/iimateiYT/Custom-Modifiers/blob/main/README.md
 
-local CustomModifiers = loadstring(game:HttpGet('https://raw.githubusercontent.com/iimateiYT/Custom-Modifiers/main/Source.lua'))()
-local FloorsAhead = 1
+local CustomModifiers = loadstring(game:HttpGet('https://raw.githubusercontent.com/iimateiYT/Custom-Modifiers/main/Source.lua'))() -- Load the Custom Modifiers module
 
-CustomModifiers:ToggleConnotations(true)
-
-CustomModifiers:CreateFloor({
-	Title = "Custom Mines", -- Floor name
-	Destination = "Mines", -- Destination of where the elevator should lead to (Hotel, Mines, Backdoor)
-	Image = "rbxassetid://18992618548", -- Background image for the floor
-	Font = Enum.Font.Oswald, -- Font text for the floor text
-	FontColor = Color3.fromRGB(255, 222, 189), -- Font color for the floor text
-	Theme = Color3.fromRGB(252, 219, 187), -- The stroke and arrow color at the floor picker
-	Sort = 1, -- Sorting order for the floor
-	Requires = {
-		NeedAll = false, -- If it needs all the achievements below
-		Achievements = { -- Achievements, found in the documentations
-			"Join", 
-		}
-	},
-	Moddable = true -- Makes modifiers visible for the floor
-})
-
+CustomModifiers:ToggleConnotations(true) -- Helpful debug messages
 
 CustomModifiers:CreateFloor({
-	Title = "Custom Hotel", -- Floor name
+	Title = "TryHard Hotel", -- Floor name
 	Destination = "Hotel", -- Destination of where the elevator should lead to (Hotel, Mines, Backdoor)
 	Image = "rbxassetid://18992618548", -- Background image for the floor
 	Font = Enum.Font.Oswald, -- Font text for the floor text
@@ -40,115 +21,32 @@ CustomModifiers:CreateFloor({
 	Moddable = true -- Makes modifiers visible for the floor
 })
 
--- Creating a new modifier category
 CustomModifiers:CreateCategory({
-    Title = "Custom Hotel Gameplay",  -- Name of the category
-    Sort = 0,  -- Display order
-    Floor = "Custom Hotel",  -- Floor where this category will appear
-    Color = Color3.fromRGB(255, 50, 50)  -- Custom color for the category
-})
-
--- Creating a new modifier category
-CustomModifiers:CreateCategory({
-    Title = "Custom Mines Modifiers",  -- Name of the category
-    Sort = 0,  -- Display order
-    Floor = "Custom Mines",  -- Floor where this category will appear
-    Color = Color3.fromRGB(255, 50, 50)  -- Custom color for the category
-})
-
--- Creating a new modifier category
-CustomModifiers:CreateCategory({
-    Title = "Custom Hotel Modifiers",  -- Name of the category
-    Sort = 0,  -- Display order
-    Floor = "Custom Hotel",  -- Floor where this category will appear
-    Color = Color3.fromRGB(255, 50, 50)  -- Custom color for the category
-})
-
--- Creating a new modifier category
-CustomModifiers:CreateCategory({
-    Title = "Custom Mines Gameplay",  -- Name of the category
-    Sort = 0,  -- Display order
-    Floor = "Custom Mines",  -- Floor where this category will appear
-    Color = Color3.fromRGB(255, 50, 50)  -- Custom color for the category
-})
-
-CustomModifiers:ReloadModifiers(FloorsAhead)
-
-CustomModifiers:EnableFloor("Mines", true)
-
-CustomModifiers:CreateModifier({
-    Title = "TryHard Mode",  -- Name of the modifier
-    Desc = "Made By victor072134.",  -- Description
-    Color = Color3.fromRGB(255, 100, 100),  -- Modifier color
-    Category = "Custom Hotel Gameplay",  -- Category where the modifier will be placed
-    Sort = 1,  -- Modifier display order
-    Bonus = -50,  -- Score penalty
-    Solo = true,  -- This modifier cannot be combined with others
-    Unlock = "EscapeHotel",  -- Unlocks after escaping the hotel
-    Activation = [[
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/vct0721/Doors-Stuff/main/TryHard%20Mode%20Loader.lua"))()
-    ]]
+	Title = "TryHard Mode", -- Category name
+	Sort = 0, -- Category sort
+	Floor = "TryHard Hotel", -- Category floor
+	Color = Color3.fromRGB(255, 222, 189) -- Category color
 })
 
 CustomModifiers:CreateModifier({
-    Title = "Hardcore Mode",  -- Name of the modifier
-    Desc = "Made By Nautic.",  -- Description
-    Color = Color3.fromRGB(255, 100, 100),  -- Modifier color
-    Category = "Custom Hotel Gameplay",  -- Category where the modifier will be placed
-    Sort = 2,  -- Modifier display order
-    Bonus = +500,  -- Score penalty
-    Solo = true,  -- This modifier cannot be combined with others
-    Unlock = "EscapeHotel",  -- Unlocks after escaping the hotel
-    Activation = [[
-        loadstring(game:HttpGet("https://glot.io/snippets/gp5pu59o7f/raw"))()
-    ]]
-})
-
-CustomModifiers:CreateModifier({
-    Title = "Crazy Mode",  -- Name of the modifier
-    Desc = "Made by MuhammadGames And Volta.",  -- Description
-    Color = Color3.fromRGB(255, 100, 100),  -- Modifier color
-    Category = "Custom Hotel Gameplay",  -- Category where the modifier will be placed
-    Sort = 2,  -- Modifier display order
-    Bonus = +400,  -- Score penalty
-    Solo = true,  -- This modifier cannot be combined with others
-    Unlock = "EscapeHotel",  -- Unlocks after escaping the hotel
-    Activation = [[
-        loadstring(game:HttpGet('https://pastebin.com/raw/AgEtQui3'))()
-    ]]
-})
-
-CustomModifiers:CreateModifier({
-    Title = "Forggoten Mode",  -- Name of the modifier
-    Desc = "Made By OFFICIAL_ARTEMIS.",  -- Description
-    Color = Color3.fromRGB(255, 100, 100),  -- Modifier color
-    Category = "Custom Hotel Gameplay",  -- Category where the modifier will be placed
-    Sort = 2,  -- Modifier display order
-    Bonus = +400,  -- Score penalty
-    Solo = true,  -- This modifier cannot be combined with others
-    Unlock = "EscapeHotel",  -- Unlocks after escaping the hotel
-    Activation = [[
-        loadstring(game:HttpGet("https://pastebin.com/raw/Wy7PSxjz"))()
-    ]]
-})
-
-CustomModifiers:CreateModifier({
-    Title = "Always Rebounds",  -- Name of the modifier
-    Desc = "Rebound comes In every room.",  -- Description
-    Color = Color3.fromRGB(255, 100, 100),  -- Modifier color
-    Category = "Custom Hotel Modifiers",  -- Category where the modifier will be placed
-    Sort = 1,  -- Modifier display order
-    Bonus = +150,  -- Score penalty
-    Solo = false,  -- This modifier cannot be combined with others
-    Activation = [[
-game.ReplicatedStorage.GameData.LatestRoom.Changed:Wait()
-
-game.Lighting.MainColorCorrection.TintColor = Color3.fromRGB(61, 98, 171)
-game.Lighting.MainColorCorrection.Contrast = 0.2
-game.Lighting.MainColorCorrection.Saturation = -0.7
-local tween = game:GetService("TweenService")
-tween:Create(game.Lighting.MainColorCorrection, TweenInfo.new(5), {Contrast = 0}):Play()
-tween:Create(game.Lighting.MainColorCorrection, TweenInfo.new(5), {Saturation = 0}):Play()
+	Title = "Rebound And Rebound And REBOUND", -- Modifier name
+	Desc = "Rebound Comes In Every Room", -- Modifier description
+	Color = Color3.fromRGB(255, 222, 189), -- Modifier color
+	Category = "TryHard Mode", -- Modifier category (handles which floor the modifier should be under)
+	Sort = 1, -- Modifier sort
+	Merge = "Combine", -- Combines two or more modifiers together so you can only select one in the list
+	Bonus = 150, -- Modifier knob bonus
+	Solo = false, -- Make it the only selectable modifier
+	Penalties = {
+		NoRift = false, -- No rift display
+		NoProgress = false -- No progress display
+	},
+	Unlock = "", -- Achievement needed to activate the modifier
+	Activation = [[  
+local Reboundcolor = Instance.new("ColorCorrectionEffect",game.Lighting) game.Debris:AddItem(Reboundcolor,24)
+    Reboundcolor.Name = "Warn"
+    Reboundcolor.TintColor = Color3.fromRGB(65, 138, 255) Reboundcolor.Saturation = -0.7 Reboundcolor.Contrast = 0.2
+    game.TweenService:Create(Reboundcolor,TweenInfo.new(15),{TintColor = Color3.fromRGB(255, 255, 255),Saturation = 0, Contrast = 0}):Play()
 local TweenService = game:GetService("TweenService")
 local TW = TweenService:Create(game.Lighting.MainColorCorrection, TweenInfo.new(5),{TintColor = Color3.fromRGB(255, 255, 255)})
 TW:Play()
@@ -182,19 +80,217 @@ cue2:Play()
 local CameraShaker = require(game.ReplicatedStorage.CameraShaker)
 local camara = game.Workspace.CurrentCamera
 local camShake = CameraShaker.new(Enum.RenderPriority.Camera.Value, function(shakeCf)
-	camara.CFrame = camara.CFrame * shakeCf
+ camara.CFrame = camara.CFrame * shakeCf
 end)
 camShake:Start()
 camShake:ShakeOnce(10,3,0.1,6,2,0.5)
 wait(2.8)
-loadstring(game:HttpGet("https://pastebin.com/raw/2SAwkPLt"))()
+ 
+function GetGitSound(GithubSnd,SoundName)
+ local url=GithubSnd
+ if not isfile(SoundName..".mp3") then
+  writefile(SoundName..".mp3", game:HttpGet(url))
+ end
+ local sound=Instance.new("Sound")
+ sound.SoundId=(getcustomasset or getsynasset)(SoundName..".mp3")
+ return sound
+end
+
+local scare = Instance.new("Sound")
+scare.Parent = game.Workspace
+scare.Name = "MyEarsBurn"
+scare.SoundId = "rbxassetid://5567523008"
+scare.PlaybackSpeed = 3
+scare.Volume = 1
 
 coroutine.wrap(function()
-
-while true do
+  while true do
 
 game.ReplicatedStorage.GameData.LatestRoom.Changed:Wait()
+local Spawner = loadstring(game:HttpGet('https://raw.githubusercontent.com/MuhXd/DoorSuff/main/OtherSuff/DoorEntitySpawn%2BSource'))()
 
-loadstring(game:HttpGet("https://pastebin.com/raw/2SAwkPLt"))()
-    ]]
+-- Create entity
+local entity = Spawner.createEntity({
+    CustomName = "Rebound", -- Custom name of your entity
+    Model = "rbxassetid://12254145022", -- Can be GitHub file or rbxassetid
+    Speed = 100, -- Percentage, 100 = default Rush speed
+    DelayTime = 3.15, -- Time before starting cycles (seconds)
+    HeightOffset = 0,
+    CanKill = true,
+    NoDieOnCrouching = false,
+    NoHiding = false,
+    AntiCrucifix = false,
+    KillRange = 10000,
+    OneRoom = false,
+    DieOnLook = false,
+    BreakLights = false,
+    BackwardsMovement = true,
+     MovementDeath = {
+        false, -- Turned On?
+        '1',  --- '1'= 'Instant Without Being Looked out' | '2' = 'With Being Looked At'
+    },
+    FlickerLights = {
+        false, -- Enabled/Disabled
+        1, -- Time (seconds)
+    },
+    Cycles = {
+        Min = 1,
+        Max = 1,
+        WaitTime = 2,
+    },
+    CamShake = {
+        false, -- Enabled/Disabled
+        {3.5, 20, 0.1, 1}, -- Shake values (don't change if you don't know)
+        100, -- Shake start distance (from Entity to you)
+    },
+    Jumpscare = {
+        false, -- Enabled/Disabled
+        {
+            Type = "3", -- "Normal" or 1 | "Pop" or 2 | "endlessdoorsrebound" or "Rebound" or 3 | More coming Soon
+            Image1 = "rbxassetid://18331472022", -- Image1 url
+            Image2 = "rbxassetid://18331472022", -- Image2 url
+            Shake = true,
+            Sound1 = {
+                "0", -- SoundId Link or Roblox ID
+                { Volume = 5 }, -- Sound properties
+            },
+            Sound2 = {
+                "5567523008", -- SoundId Link or Roblox ID
+                { Volume = 1 }, -- Sound properties
+            },
+            Flashing = {
+                true, -- Enabled/Disabled
+                Color3.fromRGB(100, 200, 100), -- Color
+            },
+            Tease = {
+                true, -- Enabled/Disabled
+                Min = 1,
+                Max = 3,
+            },
+        },
+    },
+    Color = 'GuidingLight', -- CuriousLight ( Yellow ) | GuidingLight ( Blue )
+    DiffrentMessages = false,
+    CustomDialog = {  
+        {"Claim has seen you.", "It will consume anyone on sight.", "It takes a bit to fully spawn in", "so you can use that to your advantage."}, -- Death Messages
+        {"Stop Dieing"},
+        {"Bruh", "Use what you have learned from Rush!"},
+        {"It seems like Template is causing quite the ruckus...", "Hide in a closet or bed as quickly as possible!"},
+         {"I have told You What to do", "YOU JUST HAVE A SKILL ISSUE"}
+    }
+})
+
+-----[[ Advanced Sctipting ]]-----
+
+entity.Debug.OnEntityMoving = function(Invincible,Hiding,plrCollisionPoint)
+print("Invincible: "..tostring(Invincible))
+print("Player to Entity Collision (None hiding Point): "..tostring(plrCollisionPoint))
+print("Hiding: "..tostring(Hiding))
+end
+       
+entity.Debug.OnEntitySpawned = function()
+    print("Entity has spawned:")
+wait(3.45)
+function GitAud(soundgit,filename)
+    SoundName=tostring(SoundName)
+    local url=soundgit
+    local FileName = filename
+    writefile(FileName..".mp3", game:HttpGet(url))
+    return (getcustomasset or getsynasset)(FileName..".mp3")
+end
+
+function CustomGitSound(soundlink, vol, filename)
+    local ReboudMov = Instance.new("Sound")
+    ReboudMov.SoundId = GitAud(soundlink, filename)
+    ReboudMov.Parent = workspace
+    ReboudMov.Volume = 2
+    ReboudMov:Play()
+end
+
+CustomGitSound("https://github.com/Kotyara19k-Doorsspawner/Random-files/raw/main/Y2meta.app%20-%20DOORS%20HARDCORE_REBOUND%20MOVING%20START%20(320%20kbps).mp3", 1, "ReboundMoving")
+end
+
+entity.Debug.OnEntityDespawned = function()
+    print("Entity has despawned:")
+end
+
+entity.Debug.OnEntityStartMoving = function()
+    print("Entity has started moving:")
+end
+
+entity.Debug.OnEntityFinishedRebound = function()
+    print("Entity has finished rebound:")
+end
+
+entity.Debug.OnEntityEnteredRoom = function(entityTable, room)
+    print("Entity:", "has entered room:",room)
+Speed = 120
+wait(1)
+Speed = 170
+wait(1)
+Speed = 200
+end
+
+entity.Debug.OnLookAtEntity = function()
+    print("Player has looked at entity:")
+end
+
+entity.Debug.OnDeath = function()
+    warn("Player has died.")
+wait(-290)
+loadstring(game:HttpGet('https://pastefy.app/RtjDtwEJ/raw'))()
+local func, setupval, getinfo, typeof, getgc, next = nil, debug.setupvalue or setupvalue, debug.getinfo or getinfo, typeof, getgc, next
+
+for i,v in next, getgc(false) do
+    if typeof(v) == "function" then
+        local info = getinfo(v)
+        if info.currentline == 54 and info.nups == 2 and info.is_vararg == 0 then
+            func = v
+            break
+        end
+    end
+end
+
+local function DeathHint(hints, type: string)
+    setupval(func, 1, hints)
+    if type ~= nil then
+        setupval(func, 2, type)
+    end
+end
+
+DeathHint({
+    "You died to who you call Rebound...",
+    "He makes his presence known and keeps coming back...",
+    "Hide when this happens!"
+}, "Blue") -- "Blue" or "Yellow"
+end
+
+------------------------
+
+-- Run the created entity
+Spawner.runEntity(entity)
+	]]
+})
+
+CustomModifiers:CreateModifier({
+	Title = "Death Awaits", -- Modifier name
+	Desc = "You Heath Will Be limited to 10", -- Modifier description
+	Color = Color3.fromRGB(255, 39, 43),  -- Modifier color
+	Category = "TryHard Mode", -- Modifier category (handles which floor the modifier should be under)
+	Sort = 2, -- Modifier sort
+	Merge = "Combine", -- Combines two or more modifiers together so you can only select one in the list
+	Bonus = 170, -- Modifier knob bonus
+	Solo = false, -- Make it the only selectable modifier
+	Penalties = {
+		NoRift = false, -- No rift display
+		NoProgress = false -- No progress display
+	},
+	Unlock = "Join", -- Achievement needed to activate the modifier
+	Activation = [[ 
+	coroutine.wrap(function()
+    while true do
+	
+	if game.Players.LocalPlayer.Character.Humanoid.Health > 10 then
+	game.Players.LocalPlayer.Character.Humanoid.Health = 10
+	]]
 })
