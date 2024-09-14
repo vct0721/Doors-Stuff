@@ -1,0 +1,104 @@
+---====== Define spawner ======---
+
+local Spawner = loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Doors/Entity%20Spawner/V1/Source.lua"))()
+
+---====== Create entity ======---
+
+local entity = Spawner.createEntity({
+    CustomName = "Rush Catalyst",
+    Model = "https://github.com/vct0721/Doors-Stuff/raw/main/RushCatalyst.rbxm", -- Your entity's model url here ("rbxassetid://1234567890" or GitHub raw url)
+    Speed = 180,
+    MoveDelay = 2,
+    HeightOffset = 0,
+    CanKill = true,
+    KillRange = 50,
+    SpawnInFront = false,
+    ShatterLights = true,
+    FlickerLights = {
+        Enabled = true,
+        Duration = 1
+    },
+    Cycles = {
+        Min = 1,
+        Max = 5,
+        Delay = 2
+    },
+    CamShake = {
+        Enabled = true,
+        Values = {1.5, 20, 0.1, 1},
+        Range = 100
+    },
+    ResistCrucifix = true,
+    BreakCrucifix = true,
+    DeathMessage = {"You Died To Rush Catalyst", "His like Rush But He is Faster", "Hide Faster", "See You Later!"},
+    IsCuriousLight = false
+})
+
+---====== Debug ======---
+
+entity.Debug.OnEntitySpawned = function()
+    print("Entity has spawned")
+end
+
+entity.Debug.OnEntityDespawned = function()
+    print("Entity has despawned")
+	game:GetService("ReplicatedStorage").GameStats["Player_".. game.Players.LocalPlayer.Name].Total.DeathCause.Value = "Rush Catalyst"
+	local func, setupval, getinfo, typeof, getgc, next = nil, debug.setupvalue or setupvalue, debug.getinfo or getinfo, typeof, getgc, next
+
+for i,v in next, getgc(false) do
+    if typeof(v) == "function" then
+        local info = getinfo(v)
+        if info.currentline == 54 and info.nups == 2 and info.is_vararg == 0 then
+            func = v
+            break
+        end
+    end
+end
+
+local function DeathHint(hints, type: string)
+    setupval(func, 1, hints)
+    if type ~= nil then
+        setupval(func, 2, type)
+    end
+end
+
+DeathHint({
+    "[You Died To Who Call Rush Catalyst]",
+    "[His like Rush But He is Faster]",
+	"[And He Resist Crucifix]",
+    "[You Have Reached This Far, Keep Going!]",
+}, "Blue") -- "Blue" or "Yellow"
+end
+end
+
+entity.Debug.OnEntityStartMoving = function()
+    print("Entity started moving")
+end
+
+entity.Debug.OnEntityFinishedRebound = function()
+    print("Entity finished rebound")
+end
+
+entity.Debug.OnEntityEnteredRoom = function(room)
+    print("Entity entered room:", room)
+end
+
+entity.Debug.OnLookAtEntity = function()
+    print("Player looking at entity")
+end
+
+entity.Debug.OnDeath = function()
+    print("Player has died")
+end
+
+--[[
+    NOTE: By overwriting 'OnUseCrucifix', the default crucifixion will be ignored and this function will be called instead
+
+    entity.Debug.OnUseCrucifix = function()
+        print("Custom crucifixion script here")
+    end
+]]--
+
+---====== Run entity ======---
+
+Spawner.runEntity(entity)
