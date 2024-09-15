@@ -1201,10 +1201,10 @@ game.ReplicatedStorage.GameData.LatestRoom.Changed:Wait()
 local cuew = Instance.new("Sound")
 cuew.Parent = game.Workspace
 cuew.Name = "Spawn"
-cuew.SoundId = "rbxassetid://3359047385"
+cuew.SoundId = "rbxassetid://131489490"
 cuew.Volume = 1
 cuew.PlaybackSpeed = 1
-cuew:Play()
+ cuew:Play()
 game.Lighting.MainColorCorrection.TintColor = Color3.fromRGB(0, 255, 0)
 game.Lighting.MainColorCorrection.Contrast = 25
 local tween = game:GetService("TweenService"):Create(game.Lighting.MainColorCorrection, TweenInfo.new(9), {Contrast = 0})
@@ -1327,7 +1327,7 @@ game.ReplicatedStorage.GameData.LatestRoom.Changed:Wait()
 local cuew = Instance.new("Sound")
 cuew.Parent = game.Workspace
 cuew.Name = "Spawn"
-cuew.SoundId = "rbxassetid://3359047385"
+cuew.SoundId = "rbxassetid://131489490"
 cuew.Volume = 1
 cuew.PlaybackSpeed = 1
  cuew:Play()
