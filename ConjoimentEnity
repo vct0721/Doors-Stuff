@@ -1,113 +1,68 @@
-local Spawner = loadstring(game:HttpGet('https://raw.githubusercontent.com/MuhXd/DoorSuff/main/OtherSuff/DoorEntitySpawn%2BSource'))()
+---====== Define spawner ======---
 
+local Spawner = loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Doors/Entity%20Spawner/V1/Source.lua"))()
 
--- Create entity
+---====== Create entity ======---
+
 local entity = Spawner.createEntity({
-    CustomName = "Conjoiment", -- Custom name of your entity
-    Model = "https://github.com/vct0721/Doors-Stuff/raw/main/Conjoiment.rbxm", -- Can be GitHub file or rbxassetid
-    Speed = 120, -- Percentage, 100 = default Rush speed
-    DelayTime = 10, -- Time before starting cycles (seconds)
-    HeightOffset = 2,
+    CustomName = "Conjoiment"
+    Model = "https://github.com/vct0721/Doors-Stuff/raw/main/Conjoiment.rbxm", -- Your entity's model url here ("rbxassetid://1234567890" or GitHub raw url)
+    Speed = 100,
+    MoveDelay = 2,
+    HeightOffset = 0,
     CanKill = true,
-    NoDieOnCrouching = true,
-    NoHiding = true,
-    AntiCrucifix = false,
-    KillRange = 100,
-    OneRoom = false,
-    DieOnLook = false,
-    BreakLights = true,
-    BackwardsMovement = false,
-     MovementDeath = {
-        true, -- Turned On?
-        '2',  --- '1'= 'Instant Without Being Looked out' | '2' = 'With Being Looked At'
-    },
+    KillRange = 150,
+    SpawnInFront = false,
+    ShatterLights = true,
     FlickerLights = {
-        true, -- Enabled/Disabled
-        10, -- Time (seconds)
+        Enabled = true,
+        Duration = 10
     },
     Cycles = {
         Min = 1,
-        Max = 3,
-        WaitTime = 2,
+        Max = 1,
+        Delay = 2
     },
     CamShake = {
-        false, -- Enabled/Disabled
-        {3.5, 20, 0.1, 1}, -- Shake values (don't change if you don't know)
-        100, -- Shake start distance (from Entity to you)
+        Enabled = true,
+        Values = {1.5, 20, 0.1, 1},
+        Range = 100
     },
-    Jumpscare = {
-        false, -- Enabled/Disabled
-        {
-            Type = "2", -- "Normal" or 1 | "Pop" or 2 | "endlessdoorsrebound" or "Rebound" or 3 | More coming Soon
-            Image1 = "rbxassetid://10483855823", -- Image1 url
-            Image2 = "rbxassetid://10483999903", -- Image2 url
-            Shake = true,
-            Sound1 = {
-                "0", -- SoundId Link or Roblox ID
-                { Volume = 5 }, -- Sound properties
-            },
-            Sound2 = {
-                "0", -- SoundId Link or Roblox ID
-                { Volume = 3 }, -- Sound properties
-            },
-            Flashing = {
-                true, -- Enabled/Disabled
-                Color3.fromRGB(255, 255, 255), -- Color
-            },
-            Tease = {
-                true, -- Enabled/Disabled
-                Min = 1,
-                Max = 3,
-            },
-        },
-    },
-    Color = 'GuidingLight', -- CuriousLight ( Yellow ) | GuidingLight ( Blue )
-    DiffrentMessages = false,
-    CustomDialog = {  
-        {"Claim has seen you.", "It will consume anyone on sight.", "It takes a bit to fully spawn in", "so you can use that to your advantage."}, -- Death Messages
-        {"Stop Dieing"},
-        {"Bruh", "Use what you have learned from Rush!"},
-        {"It seems like Template is causing quite the ruckus...", "Hide in a closet or bed as quickly as possible!"},
-         {"I have told You What to do", "YOU JUST HAVE A SKILL ISSUE"}
-    }
+    ResistCrucifix = false,
+    BreakCrucifix = true,
+    DeathMessage = {"Custom", "death", "message", "goes", "here."},
+    IsCuriousLight = false
 })
 
------[[ Advanced Sctipting ]]-----
+---====== Debug ======---
 
-entity.Debug.OnEntityMoving = function(Invincible,Hiding,plrCollisionPoint)
-print("Invincible: "..tostring(Invincible))
-print("Player to Entity Collision (None hiding Point): "..tostring(plrCollisionPoint))
-print("Hiding: "..tostring(Hiding))
-end
-       
 entity.Debug.OnEntitySpawned = function()
-    print("Entity has spawned:")
+    print("Entity has spawned")
 end
 
 entity.Debug.OnEntityDespawned = function()
-    print("Entity has despawned:")
+    print("Entity has despawned")
 end
 
 entity.Debug.OnEntityStartMoving = function()
-    print("Entity has started moving:")
+    print("Entity started moving")
 end
 
 entity.Debug.OnEntityFinishedRebound = function()
-    print("Entity has finished rebound:")
+    print("Entity finished rebound")
 end
 
-entity.Debug.OnEntityEnteredRoom = function(entityTable, room)
-    print("Entity:", "has entered room:",room)
+entity.Debug.OnEntityEnteredRoom = function(room)
+    print("Entity entered room:", room)
 end
 
 entity.Debug.OnLookAtEntity = function()
-    print("Player has looked at entity:")
-	
+    print("Player looking at entity")
 end
 
 entity.Debug.OnDeath = function()
-    warn("Player has died.")
-	game:GetService("ReplicatedStorage").GameStats["Player_".. game.Players.LocalPlayer.Name].Total.DeathCause.Value = "Conjoiment"
+    print("Player has died")
+game:GetService("ReplicatedStorage").GameStats["Player_".. game.Players.LocalPlayer.Name].Total.DeathCause.Value = "Conjoiment"
 local func, setupval, getinfo, typeof, getgc, next = nil, debug.setupvalue or setupvalue, debug.getinfo or getinfo, typeof, getgc, next
 
 for i,v in next, getgc(false) do
@@ -130,12 +85,20 @@ end
 DeathHint({
     "You died to who you call Conjoiment...",
     "There's no info about them...",
-    "There's just Crouch"
-	"Well, Good Luck!"
+    "There's just Crouch",
+    "Well, Good Luck!"
 }, "Yellow") -- "Blue" or "Yellow"
 end
+end
 
-------------------------
+--[[
+    NOTE: By overwriting 'OnUseCrucifix', the default crucifixion will be ignored and this function will be called instead
 
--- Run the created entity
+    entity.Debug.OnUseCrucifix = function()
+        print("Custom crucifixion script here")
+    end
+]]--
+
+---====== Run entity ======---
+
 Spawner.runEntity(entity)
