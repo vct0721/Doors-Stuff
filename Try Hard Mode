@@ -68,7 +68,7 @@ local IsFigure = Workspace:FindFirstChild("FigureMoving")
  -- Lights Remove
  coroutine.wrap(function()
     while true do
-	if IsHotel and IsMiddleFloor or IsEletrical then
+	if IsHotel and IsMiddleFloor then
 	  wait(1)
 		game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:WaitForChild("Assets").Chandelier:Destroy()
         game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:WaitForChild("Assets").Light_Fixtures:Destroy
