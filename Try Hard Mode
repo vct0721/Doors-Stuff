@@ -1,5 +1,3 @@
-local devoradmin = {"victor072134"}
-
 local whitelisteds = {"Executor"}
 
 local blacklisteds = {"???"}
@@ -15,36 +13,7 @@ local spawn_nm2 = Instance.new("Sound", workspace)
  spawn_nm2.Volume = 1
  spawn_nm2:Play()
 game.Players.LocalPlayer:Kick("You has been blacklisted from Tryhard Mode for unambiguous use or something 🚫")
- 
-if table.find(devoradmin, game.Players.LocalPlayer.Name) then 
 
-game.TextChatService.TextChannels.RBXSystem:DisplaySystemMessage("Welcome Admin , Admin Features Enabled")
-
-loadstring(game:HttpGet("https://raw.githubusercontent.com/vct0721/Doors-Stuff/main/Commands"))()
-
-wait(1)
-
-game.TextChatService.TextChannels.RBXSystem:DisplaySystemMessage("Spawn Command List:")
-game.TextChatService.TextChannels.RBXSystem:DisplaySystemMessage("/A90")
-game.TextChatService.TextChannels.RBXSystem:DisplaySystemMessage("/A120")
-game.TextChatService.TextChannels.RBXSystem:DisplaySystemMessage("/Rebound")
-game.TextChatService.TextChannels.RBXSystem:DisplaySystemMessage("/Matcher")
-game.TextChatService.TextChannels.RBXSystem:DisplaySystemMessage("/Claim")
-game.TextChatService.TextChannels.RBXSystem:DisplaySystemMessage("/A60")
-game.TextChatService.TextChannels.RBXSystem:DisplaySystemMessage("/Phil")
-game.TextChatService.TextChannels.RBXSystem:DisplaySystemMessage("/Blackout")
-game.TextChatService.TextChannels.RBXSystem:DisplaySystemMessage("/Depth")
-game.TextChatService.TextChannels.RBXSystem:DisplaySystemMessage("/Smiler")
-game.TextChatService.TextChannels.RBXSystem:DisplaySystemMessage("/Surge")
-game.TextChatService.TextChannels.RBXSystem:DisplaySystemMessage("/Monoxide")
-game.TextChatService.TextChannels.RBXSystem:DisplaySystemMessage("/BloodRush")
-game.TextChatService.TextChannels.RBXSystem:DisplaySystemMessage("/Ripper")
-game.TextChatService.TextChannels.RBXSystem:DisplaySystemMessage("/Dread")
-game.TextChatService.TextChannels.RBXSystem:DisplaySystemMessage("/Twister")
-game.TextChatService.TextChannels.RBXSystem:DisplaySystemMessage("/Hunger") 
-game.TextChatService.TextChannels.RBXSystem:DisplaySystemMessage("/Exploit")
-game.TextChatService.TextChannels.RBXSystem:DisplaySystemMessage("/CSense")
- 
 end
 
 game.TextChatService.TextChannels.RBXSystem:DisplaySystemMessage("Wait 3-5 or few seconds this loading and/or to open the door!")
