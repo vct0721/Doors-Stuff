@@ -65,7 +65,7 @@ if eyes then
 
         local _, found = workspace.CurrentCamera:WorldToScreenPoint(eyes.Position)
         if not found then
-            hum.Health = hum.Health - 10 -- Corrigido o operador
+            hum.Health = hum.Health - 10
 
             if eyes:FindFirstChild("Attack") then
                 eyes.Attack:Play()
@@ -74,9 +74,9 @@ if eyes then
             if hum.Health <= 0 then
                 game:GetService("ReplicatedStorage").GameStats["Player_" .. game.Players.LocalPlayer.Name].Total.DeathCause.Value = "Overseer Eyes"
                 firesignal(game.ReplicatedStorage.RemotesFolder.DeathHint.OnClientEvent, {
-                    "You've been consumed by the Overseer Eyes.",
+                    "You have been consumed by the Overseer Eyes.",
                     "They want you to obey and look at them.",
-                    "If you don't look at them after teleporting, they will damage."
+                    "If you not look at them after teleporting, they will damage."
                 }, "Blue")
             end
         end
