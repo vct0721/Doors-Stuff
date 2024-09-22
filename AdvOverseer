@@ -1,0 +1,88 @@
+    local function fadeOut(eyes)
+        for i = 0, 1, 0.1 do
+            eyes.Transparency = i
+            task.wait(0.05)
+        end
+    end
+
+    local function fadeIn(eyes)
+        for i = 1, 0, -0.1 do
+            eyes.Transparency = i
+            task.wait(0.05)
+        end
+    end
+
+    local function shouldTeleport()
+        return math.random(1, 100) <= 10
+    end
+
+
+            wait(0.5)
+
+            local enableDamage = true
+            local currentLoadedRoom = workspace.CurrentRooms[game:GetService("ReplicatedStorage").GameData.LatestRoom.Value]
+            local eyes = game:GetObjects("rbxassetid://12285389022")[1]
+
+            if eyes then
+                local num = math.floor(#currentLoadedRoom.PathfindNodes:GetChildren() / 2)
+                eyes.CFrame = (num == 0 and currentLoadedRoom.Base or currentLoadedRoom.PathfindNodes[num]).CFrame + Vector3.new(0, 3, 0)
+                eyes.Parent = workspace
+
+                local doorOpened = false
+                local doorConnect
+                doorConnect = game.Workspace.CurrentRooms.ChildAdded:Connect(function()
+                    if eyes and eyes.Parent then
+                        eyes:Destroy()
+                    end
+                    enableDamage = false
+                    doorOpened = true
+                    doorConnect:Disconnect()
+                end)
+
+                if shouldTeleport() then
+				  wait(3)
+                    local teleportCount = math.random(1, 6)
+                    for i = 1, teleportCount do
+                        if not doorOpened and shouldTeleport() then
+						 enableDamage = false
+                            fadeOut(eyes)
+
+                            local nodes = currentLoadedRoom.PathfindNodes:GetChildren()
+                            if #nodes > 0 then
+                                local randomNode = nodes[math.random(1, #nodes)]
+                                eyes.CFrame = randomNode.CFrame + Vector3.new(0, 3, 0)
+                            end
+
+                            fadeIn(eyes)
+                            wait(0.5)
+							enableDamage = true
+                        end
+                    end
+                end
+
+                local hum = game:GetService("Players").LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
+                while enableDamage and hum and hum.Health > 0 do
+                    if not eyes or not eyes.Parent then break end
+
+                    local _, found = workspace.CurrentCamera:WorldToScreenPoint(eyes.Position)
+                    if not found then
+                        hum.Health -= 10
+                        if eyes:FindFirstChild("Attack") then
+                            eyes.Attack:Play()
+                        end
+
+                        if hum.Health <= 0 then
+                            game:GetService("ReplicatedStorage).GameStats["Player_" .. game.Players.LocalPlayer.Name].Total.DeathCause.Value = "Overseer Eyes"
+                            firesignal(game.ReplicatedStorage.RemotesFolder.DeathHint.OnClientEvent, {
+                                "You've been consumed by the Overseer Eyes.",
+                                "They want you to obey and look at them.",
+                                "If you don't look at them after teleporting, they will damage."
+                            }, "Blue")
+                        end
+                    end
+                    task.wait(0.5)
+                end
+            end
+        end
+    end
+end)()
