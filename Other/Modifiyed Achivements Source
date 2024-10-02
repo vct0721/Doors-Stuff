@@ -1,0 +1,137 @@
+-- Modifiyed Version From Vynixu's Custom Achievement System
+
+-- Custom Asset Loader
+local vynixuModules = {
+    Functions = loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Functions.lua"))()
+}
+
+-- Services
+local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local StarterGui = game:GetService("StarterGui")
+
+-- Variables
+local localPlayer = Players.LocalPlayer
+local playerGui = localPlayer:WaitForChild("PlayerGui")
+
+local moduleScripts = {
+    AchievementUnlock = require(playerGui:FindFirstChild("AchievementUnlock", true)),
+    Achievements = require(ReplicatedStorage.Achievements)
+}
+
+-- Default Achievement Template
+local defaultAchievement = {
+    Title = "Title",
+    Desc = "Description",
+    Reason = "Reason",
+    Image = vynixuModules.Functions.LoadCustomInstance("rbxassetid://12309073114").Image -- Custom image loader
+}
+
+-- Cache for unlocked achievements (memory)
+local unlockedAchievementsCache = {}
+
+-- Save/Load Functions for Achievements
+local function getAchievementFileName(achievementName)
+    return "achievement_" .. achievementName .. "_" .. tostring(game.PlaceId) .. ".txt"
+end
+
+local function hasAchievement(achievementName)
+    -- First check the cache
+    if unlockedAchievementsCache[achievementName] then
+        return true
+    end
+
+    -- Then check the file system
+    local fileName = getAchievementFileName(achievementName)
+    if isfile(fileName) then
+        unlockedAchievementsCache[achievementName] = true
+        return true
+    end
+    return false
+end
+
+local function saveAchievement(achievementName)
+    local fileName = getAchievementFileName(achievementName)
+    writefile(fileName, "unlocked")
+    unlockedAchievementsCache[achievementName] = true -- Add to cache
+end
+
+-- Utility function: Notify player (only if _G.Debug is true)
+local function notifyPlayer(message, isError)
+    if _G.Debug then
+        StarterGui:SetCore("SendNotification", {
+            Title = isError and "Error" or "Notification",
+            Text = message,
+            Duration = 5,
+            Button1 = "OK"
+        })
+    end
+end
+
+-- QoL Improvement: Timer to prevent spamming
+local lastAchievementUnlock = 0
+local achievementCooldown = 10 -- seconds
+
+local function canUnlockAchievement()
+    return tick() - lastAchievementUnlock >= achievementCooldown
+end
+
+-- Main function to handle achievements
+return function(info)
+    info = (type(info) == "table") and info or {}
+
+    -- Merge default achievement data
+    for i, v in pairs(defaultAchievement) do
+        if info[i] == nil then
+            info[i] = v
+        end
+    end
+
+    -- Achievement identifier (can be based on the achievement title or name)
+    local achievementName = info.Title
+
+    -- Check cooldown before unlocking the achievement
+    if not canUnlockAchievement() then
+        notifyPlayer("Please wait a few seconds before unlocking another achievement.", true)
+        return
+    end
+
+    -- Check if the achievement was already unlocked
+    if hasAchievement(achievementName) then
+        notifyPlayer("Achievement '" .. achievementName .. "' already unlocked.", false)
+        return
+    end
+
+    -- Unlock the achievement
+    local success, err = pcall(function()
+        local achievementData = moduleScripts.Achievements.SpecialQATester -- Example achievement category
+        local oldFunction = achievementData.GetInfo
+
+        -- Temporarily override GetInfo function
+        achievementData.GetInfo = newcclosure(function() return info end)
+
+        -- Unlock the achievement
+        moduleScripts.AchievementUnlock(nil, achievementData.Name)
+
+        -- Restore original GetInfo function
+        achievementData.GetInfo = oldFunction
+    end)
+
+    -- Handle errors
+    if not success then
+        if _G.Debug then
+            warn("Failed to unlock achievement '" .. achievementName .. "': " .. tostring(err))
+        end
+        notifyPlayer("Error unlocking achievement '" .. achievementName .. "'. Check logs for details.", true)
+        return
+    end
+
+    -- Save the achievement as unlocked and notify player
+    saveAchievement(achievementName)
+    lastAchievementUnlock = tick() -- Update cooldown timer
+    notifyPlayer("Achievement '" .. achievementName .. "' unlocked!", false)
+
+    if _G.Debug then
+        print("Achievement '" .. achievementName .. "' unlocked and saved.")
+    end
+end
