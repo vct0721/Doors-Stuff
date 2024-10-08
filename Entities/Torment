@@ -1,1 +1,167 @@
+local Spawner = loadstring(game:HttpGet('https://raw.githubusercontent.com/MuhXd/DoorSuff/main/OtherSuff/DoorEntitySpawn%2BSource'))()
 
+
+-- Create entity
+local entity = Spawner.createEntity({
+    CustomName = "Torment", -- Custom name of your entity
+    Model = "rbxassetid://14019230123", -- Can be GitHub file or rbxassetid
+    Speed = 25, -- Percentage, 100 = default Rush speed
+    DelayTime = 0, -- Time before starting cycles (seconds)
+    HeightOffset = 5,
+    CanKill = true,
+    NoDieOnCrouching = false,
+    NoHiding = false,
+    AntiCrucifix = false,
+    KillRange = 100,
+    OneRoom = false,
+    DieOnLook = false,
+    BreakLights = true,
+    BackwardsMovement = false,
+     MovementDeath = {
+        false, -- Turned On?
+        '1',  --- '1'= 'Instant Without Being Looked out' | '2' = 'With Being Looked At'
+    },
+    FlickerLights = {
+        true, -- Enabled/Disabled
+        80 -- Time (seconds)
+    },
+    Cycles = {
+        Min = 1,
+        Max = 1,
+        WaitTime = 5,
+    },
+    CamShake = {
+        false, -- Enabled/Disabled
+        {3.5, 20, 0.1, 1}, -- Shake values (don't change if you don't know)
+        100, -- Shake start distance (from Entity to you)
+    },
+    Jumpscare = {
+        true, -- Enabled/Disabled
+        {
+            Type = "1", -- "Normal" or 1 | "Pop" or 2 | "endlessdoorsrebound" or "Rebound" or 3 | More coming Soon
+            Image1 = "rbxassetid://11394027278", -- Image1 url
+            Image2 = "rbxassetid://11394027278", -- Image2 url
+            Shake = true,
+            Sound1 = {
+                "0", -- SoundId Link or Roblox ID
+                { Volume = 0 }, -- Sound properties
+            },
+            Sound2 = {
+                "10483837590", -- SoundId Link or Roblox ID
+                { Volume = 3 }, -- Sound properties
+            },
+            Flashing = {
+                true, -- Enabled/Disabled
+                Color3.fromRGB(48, 25, 52), -- Color
+            },
+            Tease = {
+                false, -- Enabled/Disabled
+                Min = 1,
+                Max = 1,
+            },
+        },
+    },
+    Color = 'GuidingLight', -- CuriousLight ( Yellow ) | GuidingLight ( Blue )
+    DiffrentMessages = false,
+    CustomDialog = {  
+        {"Claim has seen you.", "It will consume anyone on sight.", "It takes a bit to fully spawn in", "so you can use that to your advantage."}, -- Death Messages
+        {"Stop Dieing"},
+        {"Bruh", "Use what you have learned from Rush!"},
+        {"It seems like Template is causing quite the ruckus...", "Hide in a closet or bed as quickly as possible!"},
+         {"I have told You What to do", "YOU JUST HAVE A SKILL ISSUE"}
+    }
+})
+
+-----[[ Advanced Sctipting ]]-----
+
+entity.Debug.OnEntityMoving = function(Invincible,Hiding,plrCollisionPoint)
+print("Invincible: "..tostring(Invincible))
+print("Player to Entity Collision (None hiding Point): "..tostring(plrCollisionPoint))
+print("Hiding: "..tostring(Hiding))
+end
+       
+entity.Debug.OnEntitySpawned = function()
+    print("Entity has spawned:")
+end
+
+entity.Debug.OnEntityDespawned = function()
+    print("Entity has despawned:")
+	DestroySound(Followed)
+local match = Instance.new("Sound")
+match.PlaybackSpeed = 1
+match.SoundId = "rbxassetid://9043357758"
+match.Volume = 1
+match.Name = "DeerGodEscape"
+match.Parent = workspace
+match:Play()
+
+local match = Instance.new("Sound")
+match.PlaybackSpeed = 0.1
+match.SoundId = "rbxassetid://635822826"
+match.Volume = 0.8
+match.Name = "DeerGodEnd"
+match.Parent = workspace
+match:Play()
+---====== Load achievement giver ======---
+local achievementGiver = loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Doors/Custom%20Achievements/Source.lua"))()
+
+---====== Display achievement ======---
+achievementGiver({
+    Title = "The Last Chance",
+    Desc = "Why You Are Running?",
+    Reason = "Survive the rare Entity Called Torment",
+    Image = "rbxassetid://11395249132"
+})
+Followed:Destroy()
+end
+
+entity.Debug.OnEntityStartMoving = function()
+    print("Entity has started moving:")
+function GitAud(soundgit, filename)
+    filename = tostring(filename)
+    local url = soundgit
+    writefile(filename .. ".mp3", game:HttpGet(url))
+    return (getcustomasset or getsynasset)(filename .. ".mp3")
+end
+
+function CustomGitSound(soundlink, vol, filename)
+    local CustomSound = Instance.new("Sound")  -- Criar o objeto de som
+    CustomSound.SoundId = GitAud(soundlink, filename)
+    CustomSound.Name = filename  -- Nomeia o som com o filename
+    CustomSound.Parent = workspace
+    CustomSound.Volume = vol  -- Usar o volume passado como parâmetro
+    CustomSound:Play()
+end
+
+function DestroySound(filename)
+    local soundObject = workspace:FindFirstChild(filename)
+    if soundObject then
+        soundObject:Stop()
+        soundObject:Destroy()
+    end
+end
+
+CustomGitSound("https://github.com/FranciscoNeto5123/DoorsHardcoreScripts/raw/main/DeerGodChaseTheme.mp3", 1, "Followed")
+end
+
+entity.Debug.OnEntityFinishedRebound = function()
+    print("Entity has finished rebound:")
+end
+
+entity.Debug.OnEntityEnteredRoom = function(entityTable, room)
+    print("Entity:", "has entered room:",room)
+end
+
+entity.Debug.OnLookAtEntity = function()
+    print("Player has looked at entity:")
+end
+
+entity.Debug.OnDeath = function()
+    warn("Player has died.")
+firesignal(game.ReplicatedStorage.RemotesFolder.DeathHint.OnClientEvent, {"You died to who you Call Torment","Closets Wont work! So try running","Its form is incomprehensible to a human upclose...","..-so avoid Eye Contact"},"Blue")
+end
+
+------------------------
+
+-- Run the created entity
+Spawner.runEntity(entity)
