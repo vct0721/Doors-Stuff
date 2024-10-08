@@ -71,6 +71,7 @@ local function HasteAttack()
     if humanoid then
         humanoid.Health = 0
     end
+
     loadstring(game:HttpGet("https://raw.githubusercontent.com/ChronoAcceleration/Hotel-Plus-Plus/refs/heads/main/Backend/MischeviousLight.lua"))()
     ReplicatedStorage.GameStats["Player_" .. lplayer.Name].Total.DeathCause.Value = "Haste"
     firesignal(ReplicatedStorage.RemotesFolder.DeathHint.OnClientEvent, {"You died to who you call Haste", "He will appear after the time is over.", "Don't Hide when this happens it will not work, So the best thing to do is find a lever!"}, "Blue")
