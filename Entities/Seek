@@ -1,0 +1,241 @@
+local runService = game:GetService("RunService")
+local replicatedStorage = game:GetService("ReplicatedStorage")
+local tweenService = game:GetService("TweenService")
+local userInputService = game:GetService("UserInputService")
+local players = game:GetService("Players")
+local localPlayer = players.LocalPlayer
+local DeathHint = replicatedStorage.RemotesFolder:WaitForChild("DeathHint")
+
+-- Initialize GameData
+local gameData = replicatedStorage:WaitForChild("GameData")
+local latestRoom = gameData:WaitForChild("LatestRoom")
+local currentRooms = workspace:WaitForChild("CurrentRooms")
+
+-- Load the Seek model using the assetId
+local assetId = "rbxassetid://12820593373"
+local seekModel = game:GetObjects(assetId)[1] -- Load the model
+seekModel.Name = "SeekMoving"
+seekModel.Parent = workspace
+
+local seekRig = seekModel:WaitForChild("SeekRig")
+local animationController = seekRig:FindFirstChildOfClass("AnimationController")
+
+-- Function to play animation
+local function playAnimation(animName)
+    if animationController then
+        local anim = seekRig:FindFirstChild(animName)
+        if anim and anim:IsA("Animation") then
+            local animationTrack = animationController:LoadAnimation(anim)
+            animationTrack:Play()
+        else
+            warn(animName .. " not found or is not an animation.")
+        end
+    else
+        warn("AnimationController not found in SeekRig.")
+    end
+end
+
+-- Function to check if the player is hiding and simulate pressing the "W" key
+local function simulatePlayerWPress()
+    local character = localPlayer.Character
+    if character and character:GetAttribute("Hiding") then
+        userInputService.InputBegan:Fire({
+            KeyCode = Enum.KeyCode.W
+        })
+    end
+end
+
+-- Function to check Seek's proximity to the player
+local function checkProximityToPlayer()
+    local character = localPlayer.Character
+    if not character or not character:FindFirstChild("HumanoidRootPart") then return end
+
+    local humanoidRootPart = character.HumanoidRootPart
+    local distance = (humanoidRootPart.Position - seekRig.Position).Magnitude
+
+    -- If the player is hiding, simulate pressing the "W" key
+    simulatePlayerWPress()
+
+    -- Optional: Alert about Seek's proximity
+    if distance < 20 then
+        print("Seek is nearby!")
+    end
+end
+
+-- Function to handle player death
+local function handlePlayerDeath()
+    local character = localPlayer.Character
+    if not character or not character:FindFirstChild("Humanoid") then return end
+
+    local humanoid = character.Humanoid
+    humanoid.Health = 0 -- Kill the player
+
+    -- Play the death sound "Kill"
+    local killSound = seekRig:FindFirstChild("Kill")
+    if killSound and killSound:IsA("Sound") then
+        killSound:Play()
+    end
+
+    -- Update the cause of death
+    local gameStats = replicatedStorage.GameStats
+    local playerStats = gameStats[string.format("Player_%s", localPlayer.Name)]
+    local totalStats = playerStats.Total
+    local deathCause = totalStats.DeathCause
+
+     
+    deathCause.Value = "Seek"
+
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/ChronoAcceleration/Hotel-Plus-Plus/refs/heads/main/Backend/MischeviousLight.lua"))()
+    firesignal(DeathHint.OnClientEvent, {
+        "You died to who you call Seek.",
+        "Seek will start chasing you as soon as he spots you.",
+		"You are the biggest loser, Trying to Beat a Eazy One and still dying.",
+        "Just Run away from Seek as fast as possible.",
+		"See You Soon... Loser"
+    }, "Blue")
+end
+
+-- Function to end Seek after 8 room changes
+local function endSeekAfterRooms(roomLimit)
+    local roomChanges = 0
+    
+    -- Connect to room change
+    local connection
+    connection = latestRoom.Changed:Connect(function()
+        roomChanges = roomChanges + 1
+        print("Room change number: " .. roomChanges)
+
+        -- End Seek after reaching the change limit
+        if roomChanges >= roomLimit then
+            print("Seek ended after " .. roomChanges .. " rooms.")
+            seekModel:Destroy() -- Remove the Seek model
+            connection:Disconnect() -- Disconnect the room change event
+        else
+            copyNodesToSeekNodes()
+        end
+    end)
+end
+
+-- Call the function to end Seek after 8 room changes
+endSeekAfterRooms(8)
+
+-- Function to copy nodes from the current and next room to SeekNodes
+local function copyNodesToSeekNodes()
+    local currentRoomValue = tostring(latestRoom.Value)
+    local currentRoom = currentRooms:FindFirstChild(currentRoomValue)
+
+    if currentRoom then
+        -- Create SeekNodes if it doesn't exist
+        local seekNodesFolder = currentRoom:FindFirstChild("SeekNodes")
+        if not seekNodesFolder then
+            seekNodesFolder = Instance.new("Folder")
+            seekNodesFolder.Name = "SeekNodes"
+            seekNodesFolder.Parent = currentRoom
+            print("Created SeekNodes in current room: " .. currentRoom.Name)
+        end
+
+        -- Copy nodes to SeekNodes
+        local pathNodes = currentRoom:FindFirstChild("PathfindNodes") or currentRoom:FindFirstChild("PathNodes") or currentRoom:FindFirstChild("Nodes")
+        if pathNodes then
+            for _, node in ipairs(pathNodes:GetChildren()) do
+                local newNode = node:Clone()
+                newNode.Parent = seekNodesFolder
+                print("Copied node: " .. node.Name .. " to SeekNodes in " .. currentRoom.Name)
+            end
+        else
+            warn("PathfindNodes not found in current room.")
+        end
+
+        -- Check for the next room
+        local nextRoomValue = tostring(latestRoom.Value + 1) -- Assuming rooms are sequential
+        local nextRoom = currentRooms:FindFirstChild(nextRoomValue)
+
+        if nextRoom then
+            -- Create SeekNodes if it doesn't exist
+            local nextSeekNodesFolder = nextRoom:FindFirstChild("SeekNodes")
+            if not nextSeekNodesFolder then
+                nextSeekNodesFolder = Instance.new("Folder")
+                nextSeekNodesFolder.Name = "SeekNodes"
+                nextSeekNodesFolder.Parent = nextRoom
+                print("Created SeekNodes in next room: " .. nextRoom.Name)
+            end
+
+            -- Copy nodes to SeekNodes in the next room
+            local nextPathNodes = nextRoom:FindFirstChild("PathfindNodes")
+            if nextPathNodes then
+                for _, node in ipairs(nextPathNodes:GetChildren()) do
+                    local newNode = node:Clone()
+                    newNode.Parent = nextSeekNodesFolder
+                    print("Copied node: " .. node.Name .. " to SeekNodes in " .. nextRoom.Name)
+                end
+            else
+                warn("PathfindNodes not found in next room.")
+            end
+        else
+            warn("Next room not found.")
+        end
+    else
+        warn("Current room not found.")
+    end
+end
+
+-- Pathfinding and movement of Seek
+local ambienceSound = seekModel:FindFirstChild("Ambience")
+if ambienceSound and ambienceSound:IsA("Sound") then
+    ambienceSound.Played:Connect(function()
+
+        -- First animation: AnimRaise
+        playAnimation("AnimRaise")
+        wait(8.20)
+
+        -- Second animation: AnimRun
+        playAnimation("AnimRun")
+
+        -- Pathfinding
+        spawn(function()
+            while runService.Heartbeat:Wait() do
+                -- Check if Seek is still active
+                if not seekModel or not seekModel:IsDescendantOf(workspace) then
+                    print("Seek has been despawned.")
+                    return
+                end
+
+                -- Getting the latest room
+                local currentRoom = currentRooms:FindFirstChild(tostring(latestRoom.Value))
+                if currentRoom then
+                    -- Find the first PathfindNode (with the smallest number)
+                    local pathNodes = currentRoom:FindFirstChild("PathfindNodes") or currentRoom:FindFirstChild("PathNodes") or currentRoom:FindFirstChild("Nodes")
+                    if pathNodes then
+                        local nodes = pathNodes:GetChildren()
+                        table.sort(nodes, function(a, b) return tonumber(a.Name) < tonumber(b.Name) end) -- Sort by names (numbers)
+
+                        -- Walk between the nodes
+                        for _, node in ipairs(nodes) do
+                            if seekRig and node:IsA("BasePart") then
+                                local goal = { CFrame = node.CFrame }
+                                local tweenInfo = TweenInfo.new(1.5, Enum.EasingStyle.Linear) -- Faster and continuous speed
+                                local tween = tweenService:Create(seekRig.PrimaryPart, tweenInfo, goal)
+                                tween:Play()
+
+                                -- Check proximity to the player during movement
+                                checkProximityToPlayer()
+
+                                -- Check if the player has died
+                                if localPlayer.Character and localPlayer.Character.Humanoid.Health <= 0 then
+                                    handlePlayerDeath()
+                                    return
+                                end
+                            end
+                        end
+                    else
+                        warn("PathfindNodes not found in the room.")
+                    end
+                else
+                    warn("Latest room not found.")
+                end
+            end
+        end)
+    end)
+else
+    warn("Ambience sound not found or is not a Sound instance.")
+end
