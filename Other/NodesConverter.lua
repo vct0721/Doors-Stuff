@@ -12,8 +12,7 @@ local function convertToLegacy(Room: Model): ()
     local PathfindNodes = Room:WaitForChild("PathfindNodes", 10)
 
     if not PathfindNodes then
-        warn("PathfindNodes not found in room: " .. Room.Name)
-        return
+        return -- No PathfindNodes found, exit the function
     end
 
     -- Create a list of new names for the clones
@@ -28,10 +27,6 @@ local function convertToLegacy(Room: Model): ()
 
     -- Tag the room as converted
     Room:AddTag("Converted")
-
-    if _G.DEBUG_HOTELPLUSPLUS then
-        warn("Converted PathfindNodes to Nodes, PathfindNodes, and PathNodes in room: " .. Room.Name)
-    end
 end
 
 -- Function to handle when the LatestRoom changes
@@ -41,8 +36,6 @@ local function onLatestRoomChanged()
 
     if LatestRoomModel then
         convertToLegacy(LatestRoomModel) -- Convert the latest room if it exists
-    else
-        warn("Latest room model not found: " .. roomName)
     end
 end
 
