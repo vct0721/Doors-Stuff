@@ -82,9 +82,9 @@ local function handlePlayerDeath()
         firesignal(DeathHint.OnClientEvent, {
             "You died to who you call Seek.",
             "Seek will start chasing you as soon as he spots you.",
-            "You are the biggest loser, Trying to Beat an Easy One and still dying.",
-            "Just Run away from Seek as fast as possible.",
-            "See You Soon... Loser"
+            "You are the biggest loser, trying to beat an easy one and still dying.",
+            "Just run away from Seek as fast as possible.",
+            "See you soon... loser."
         }, "Blue")
     end
 end
@@ -190,11 +190,54 @@ local function copyNodesToSeekNodes()
     end
 end
 
+-- Function to find the smallest numeric node in SeekNodes
+local function findSmallestNumericNode(seekNodes)
+    local smallestNode = nil
+    local smallestValue = math.huge -- Start with an infinite value
+
+    for _, node in ipairs(seekNodes:GetChildren()) do
+        local value = tonumber(node.Name) -- Assuming the node's name is a number
+        if value and value < smallestValue then
+            smallestValue = value
+            smallestNode = node
+        end
+    end
+
+    return smallestNode
+end
+
+-- Function to initialize Seek
+local function initializeSeek()
+    local currentRoomValue = tostring(latestRoom.Value)
+    local currentRoom = currentRooms:FindFirstChild(currentRoomValue)
+
+    if currentRoom then
+        local seekNodesFolder = currentRoom:FindFirstChild("SeekNodes")
+        if seekNodesFolder then
+            -- Find the smallest node
+            local smallestNode = findSmallestNumericNode(seekNodesFolder)
+
+            if smallestNode then
+                -- Set Seek's initial position at the smallest node
+                seekRig:SetPrimaryPartCFrame(smallestNode.CFrame)
+            else
+                warn("No node found in SeekNodes.")
+            end
+        else
+            warn("SeekNodes not found in current room.")
+        end
+    else
+        warn("Current room not found.")
+    end
+end
+
+-- Call the function to initialize Seek on model load
+initializeSeek()
+
 -- Pathfinding and movement of Seek
 local ambienceSound = seekModel:FindFirstChild("Ambience")
 if ambienceSound and ambienceSound:IsA("Sound") then
     ambienceSound.Played:Connect(function()
-
         -- First animation: AnimRaise
         playAnimation("AnimRaise")
         wait(8.20)
@@ -207,42 +250,40 @@ if ambienceSound and ambienceSound:IsA("Sound") then
             while runService.Heartbeat:Wait() do
                 -- Check if Seek is still active
                 if not seekModel or not seekModel:IsDescendantOf(workspace) then
-                    print("Seek has been despawned.")
+                    print("Seek has been removed.")
                     return
                 end
 
-                -- Getting the latest room
+                -- Get the most recent room
                 local currentRoom = currentRooms:FindFirstChild(tostring(latestRoom.Value))
                 if currentRoom then
-                    -- Find the first PathfindNode (with the smallest number)
-                    local pathNodes = currentRoom:FindFirstChild("PathfindNodes") or currentRoom:FindFirstChild("PathNodes") or currentRoom:FindFirstChild("Nodes")
-                    if pathNodes then
-                        local nodes = pathNodes:GetChildren()
-                        table.sort(nodes, function(a, b) return tonumber(a.Name) < tonumber(b.Name) end) -- Sort by names (numbers)
+                    -- Find the smallest PathfindNode (with the smallest number)
+                    local seekNodes = currentRoom:FindFirstChild("SeekNodes")
+                    if seekNodes then
+                        local smallestNode = findSmallestNumericNode(seekNodes)
 
-                        -- Walk between the nodes
-                        for _, node in ipairs(nodes) do
-                            if seekRig and node:IsA("BasePart") then
-                                local goal = { CFrame = node.CFrame }
-                                local tweenInfo = TweenInfo.new(1.5, Enum.EasingStyle.Linear) -- Faster and continuous speed
-                                local tween = tweenService:Create(seekRig.PrimaryPart, tweenInfo, goal)
-                                tween:Play()
+                        if smallestNode and seekRig then
+                            local goal = { CFrame = smallestNode.CFrame }
+                            local tweenInfo = TweenInfo.new(1.5, Enum.EasingStyle.Linear) -- Faster, continuous movement
+                            local tween = tweenService:Create(seekRig.PrimaryPart, tweenInfo, goal)
+                            tween:Play()
 
-                                -- Check proximity to the player during movement
-                                checkProximityToPlayer()
+                            -- Check proximity to the player during movement
+                            checkProximityToPlayer()
 
-                                -- Check if the player has died
-                                if localPlayer.Character and localPlayer.Character.Humanoid.Health <= 0 then
-                                    handlePlayerDeath()
-                                    return
-                                end
+                            -- Check if the player has died
+                            if localPlayer.Character and localPlayer.Character.Humanoid.Health <= 0 then
+                                handlePlayerDeath()
+                                return
                             end
+                        else
+                            warn("No smallest node found in SeekNodes.")
                         end
                     else
-                        warn("PathfindNodes not found in the room.")
+                        warn("SeekNodes not found in the room.")
                     end
                 else
-                    warn("Latest room not found.")
+                    warn("Most recent room not found.")
                 end
             end
         end)
