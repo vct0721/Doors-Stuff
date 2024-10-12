@@ -1,10 +1,15 @@
+-- Load external utility script
+local IsFools = game:GetService("ReplicatedStorage").GameData.Floor.Value == "Fools" or game:GetService("ReplicatedStorage").GameData.Floor.Value == "Retro"
 local runService = game:GetService("RunService")
 local replicatedStorage = game:GetService("ReplicatedStorage")
 local tweenService = game:GetService("TweenService")
 local userInputService = game:GetService("UserInputService")
 local players = game:GetService("Players")
 local localPlayer = players.LocalPlayer
+if not IsFools then
+local ScriptUtility = loadstring(game:HttpGet("https://raw.githubusercontent.com/ChronoAcceleration/Comet-Development/refs/heads/main/Doors/Utility/DoorsScriptUtility.lua"))()
 local DeathHint = replicatedStorage.RemotesFolder:WaitForChild("DeathHint")
+end
 
 -- Initialize GameData
 local gameData = replicatedStorage:WaitForChild("GameData")
@@ -38,27 +43,12 @@ end
 -- Function to check if the player is hiding and simulate pressing the "W" key
 local function simulatePlayerWPress()
     local character = localPlayer.Character
-    if character and character:GetAttribute("Hiding") then
-        userInputService.InputBegan:Fire({
-            KeyCode = Enum.KeyCode.W
-        })
-    end
-end
-
--- Function to check Seek's proximity to the player
-local function checkProximityToPlayer()
-    local character = localPlayer.Character
-    if not character or not character:FindFirstChild("HumanoidRootPart") then return end
-
-    local humanoidRootPart = character.HumanoidRootPart
-    local distance = (humanoidRootPart.Position - seekRig.Position).Magnitude
-
-    -- If the player is hiding, simulate pressing the "W" key
-    simulatePlayerWPress()
-
-    -- Optional: Alert about Seek's proximity
-    if distance < 20 then
-        print("Seek is nearby!")
+    if character then
+        if character:GetAttribute("Hiding") then
+            userInputService.InputBegan:Fire({
+                KeyCode = Enum.KeyCode.W,
+                UserInputType = Enum.UserInputType.Keyboard
+            })
     end
 end
 
@@ -75,7 +65,8 @@ local function handlePlayerDeath()
     if killSound and killSound:IsA("Sound") then
         killSound:Play()
     end
-
+    
+	if not IsFools then
     -- Update the cause of death
     local gameStats = replicatedStorage.GameStats
     local playerStats = gameStats[string.format("Player_%s", localPlayer.Name)]
@@ -93,6 +84,24 @@ local function handlePlayerDeath()
         "Just Run away from Seek as fast as possible.",
 		"See You Soon... Loser"
     }, "Blue")
+	end
+end
+
+-- Function to check Seek's proximity to the player
+local function checkProximityToPlayer()
+    local character = localPlayer.Character
+    if not character or not character:FindFirstChild("HumanoidRootPart") then return end
+
+    local humanoidRootPart = character.HumanoidRootPart
+    local distance = (humanoidRootPart.Position - seekRig.Position).Magnitude
+
+    -- If the player is hiding, simulate pressing the "W" key
+    simulatePlayerWPress()
+
+    -- Optional: Alert about Seek's proximity
+    if distance < 6 then
+        handlePlayerDeath()
+    end
 end
 
 -- Function to end Seek after 8 room changes
@@ -161,7 +170,7 @@ local function copyNodesToSeekNodes()
             end
 
             -- Copy nodes to SeekNodes in the next room
-            local nextPathNodes = nextRoom:FindFirstChild("PathfindNodes")
+            local nextPathNodes = nextRoom:FindFirstChild("PathfindNodes") or nextRoom:FindFirstChild("PathNodes") or nextRoom:FindFirstChild("Nodes")
             if nextPathNodes then
                 for _, node in ipairs(nextPathNodes:GetChildren()) do
                     local newNode = node:Clone()
