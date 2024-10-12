@@ -6,9 +6,12 @@ local tweenService = game:GetService("TweenService")
 local userInputService = game:GetService("UserInputService")
 local players = game:GetService("Players")
 local localPlayer = players.LocalPlayer
+local DeathHint
+
 if not IsFools then
-local ScriptUtility = loadstring(game:HttpGet("https://raw.githubusercontent.com/ChronoAcceleration/Comet-Development/refs/heads/main/Doors/Utility/DoorsScriptUtility.lua"))()
-local DeathHint = replicatedStorage.RemotesFolder:WaitForChild("DeathHint")
+    -- Load utility script only if not "Fools" or "Retro"
+    local ScriptUtility = loadstring(game:HttpGet("https://raw.githubusercontent.com/ChronoAcceleration/Comet-Development/refs/heads/main/Doors/Utility/DoorsScriptUtility.lua"))()
+    DeathHint = replicatedStorage.RemotesFolder:WaitForChild("DeathHint")
 end
 
 -- Initialize GameData
@@ -40,7 +43,7 @@ local function playAnimation(animName)
     end
 end
 
--- Function to check if the player is hiding and simulate pressing the "W" key
+-- Function to simulate pressing the "W" key if the player is hiding
 local function simulatePlayerWPress()
     local character = localPlayer.Character
     if character then
@@ -49,6 +52,7 @@ local function simulatePlayerWPress()
                 KeyCode = Enum.KeyCode.W,
                 UserInputType = Enum.UserInputType.Keyboard
             })
+        end
     end
 end
 
@@ -65,26 +69,24 @@ local function handlePlayerDeath()
     if killSound and killSound:IsA("Sound") then
         killSound:Play()
     end
-    
-	if not IsFools then
-    -- Update the cause of death
-    local gameStats = replicatedStorage.GameStats
-    local playerStats = gameStats[string.format("Player_%s", localPlayer.Name)]
-    local totalStats = playerStats.Total
-    local deathCause = totalStats.DeathCause
 
-     
-    deathCause.Value = "Seek"
+    if not IsFools then
+        -- Update the cause of death
+        local gameStats = replicatedStorage.GameStats
+        local playerStats = gameStats[string.format("Player_%s", localPlayer.Name)]
+        local totalStats = playerStats.Total
+        local deathCause = totalStats.DeathCause
+        deathCause.Value = "Seek"
 
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/ChronoAcceleration/Hotel-Plus-Plus/refs/heads/main/Backend/MischeviousLight.lua"))()
-    firesignal(DeathHint.OnClientEvent, {
-        "You died to who you call Seek.",
-        "Seek will start chasing you as soon as he spots you.",
-		"You are the biggest loser, Trying to Beat a Eazy One and still dying.",
-        "Just Run away from Seek as fast as possible.",
-		"See You Soon... Loser"
-    }, "Blue")
-	end
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/ChronoAcceleration/Hotel-Plus-Plus/refs/heads/main/Backend/MischeviousLight.lua"))()
+        firesignal(DeathHint.OnClientEvent, {
+            "You died to who you call Seek.",
+            "Seek will start chasing you as soon as he spots you.",
+            "You are the biggest loser, Trying to Beat an Easy One and still dying.",
+            "Just Run away from Seek as fast as possible.",
+            "See You Soon... Loser"
+        }, "Blue")
+    end
 end
 
 -- Function to check Seek's proximity to the player
@@ -95,10 +97,10 @@ local function checkProximityToPlayer()
     local humanoidRootPart = character.HumanoidRootPart
     local distance = (humanoidRootPart.Position - seekRig.Position).Magnitude
 
-    -- If the player is hiding, simulate pressing the "W" key
+    -- Simulate pressing the "W" key if the player is hiding
     simulatePlayerWPress()
 
-    -- Optional: Alert about Seek's proximity
+    -- Check proximity and trigger death if too close
     if distance < 6 then
         handlePlayerDeath()
     end
@@ -107,8 +109,8 @@ end
 -- Function to end Seek after 8 room changes
 local function endSeekAfterRooms(roomLimit)
     local roomChanges = 0
-    
-    -- Connect to room change
+
+    -- Connect to room changes
     local connection
     connection = latestRoom.Changed:Connect(function()
         roomChanges = roomChanges + 1
