@@ -39,12 +39,9 @@ module.LoadCustomInstance = function(url: string)
     end
 end
 
--- Função para spawnar a entidade
 local function spawnEntity(config)
-    -- Lógica para spawnar a entidade com base na configuração
-    local EyeSpawnerConfig = config -- Usar a configuração passada
+    local CustomEyeSpawnerConfig = config
 
-    -- Definições de fading
     local function fadeOut(entity)
         for i = 0, 1, 0.1 do
             entity.Transparency = i
@@ -68,7 +65,6 @@ local function spawnEntity(config)
     local enableDamage = true
     local currentLoadedRoom = workspace.CurrentRooms[game:GetService("ReplicatedStorage").GameData.LatestRoom.Value]
     
-    -- Carregar o modelo usando a função LoadCustomInstance
     local CustomEntity = module.LoadCustomInstance(EyeSpawnerConfig.Model)
 
     if CustomEntity then
@@ -161,5 +157,5 @@ end
 
 return {
     spawnEntity = spawnEntity,
-    EyeSpawnerConfig = EyeSpawnerConfig,
+    CustomEyeSpawnerConfig = CustomEyeSpawnerConfig,
 }
