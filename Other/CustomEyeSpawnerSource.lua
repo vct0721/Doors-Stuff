@@ -65,14 +65,14 @@ local function spawnEntity(config)
     local enableDamage = true
     local currentLoadedRoom = workspace.CurrentRooms[game:GetService("ReplicatedStorage").GameData.LatestRoom.Value]
     
-    local CustomEntity = module.LoadCustomInstance(EyeSpawnerConfig.Model)
+    local CustomEntity = module.LoadCustomInstance(CustomEyeSpawnerConfig.Model)
 
     if CustomEntity then
-        CustomEntity.Name = EyeSpawnerConfig.CustomName
+        CustomEntity.Name = CustomEyeSpawnerConfig.CustomName
         CustomEntity:SetAttribute("Custom Entity", true)
         
         local num = math.floor(#currentLoadedRoom.PathfindNodes:GetChildren() / 2)
-        CustomEntity.CFrame = (num == 0 and currentLoadedRoom.Base or currentLoadedRoom.PathfindNodes[num]).CFrame + Vector3.new(0, EyeSpawnerConfig.HeightOffset, 0)
+        CustomEntity.CFrame = (num == 0 and currentLoadedRoom.Base or currentLoadedRoom.PathfindNodes[num]).CFrame + Vector3.new(0, CustomEyeSpawnerConfig.HeightOffset, 0)
         CustomEntity.Parent = workspace
 
         print(CustomEntity.Name .. " has spawned at position: " .. tostring(CustomEntity.Position))
