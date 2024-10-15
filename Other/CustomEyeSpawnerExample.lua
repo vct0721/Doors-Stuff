@@ -1,4 +1,4 @@
-local spawner
+local spawner = loadstring(game:HttpGet("https://raw.githubusercontent.com/vct0721/Doors-Stuff/main/Other/CustomEyeSpawnerSource.lua"))()
 
 local CustomEyeSpawnerConfig = { 
     CustomName = "Custom Multiple Eyes Entity",
@@ -26,7 +26,7 @@ local CustomEyeSpawnerConfig = {
     },
 
     DeathConfig = { 
-        Type = "Red",
+        Type = "Blue",
         Hints = {
             "You should have looked away...", 
             "Too bad you didn't see that coming!", 
@@ -40,5 +40,4 @@ local CustomEyeSpawnerConfig = {
     }
 }
 
--- Executa a função com a configuração modificada
-spawnEntity(CustomEyeSpawnerConfig)
+spawner.spawnEntity(CustomEyeSpawnerConfig)
