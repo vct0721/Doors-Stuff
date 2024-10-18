@@ -22,22 +22,11 @@ Well...
 I like to play these modes, and they are pretty fun and challenging.
 I appreciate all the work put into these modes.
 I hope you enjoy TryHard Mode. Good luck!!!
-]]--
+--]]
 
 if _G.ExecutedTryHard then
 	return
 end
-
--- Globals
-local SyncHelper = loadstring(game:HttpGet("https://raw.githubusercontent.com/ChronoAcceleration/Comet-Development/refs/heads/main/Doors/Utility/SyncHelper.lua"))()
-_G.wait = function(...)
-    return SyncHelper:deltaWait(...)
-end
-
-_G.math.random = function(...)
-    return SyncHelper:generateFullRandom(...)
-end
-
 
 --Setting Up GetGenvs
 if getgenv().isTrollface == nil then
