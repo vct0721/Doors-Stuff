@@ -6,7 +6,6 @@ local SyncHelper = loadstring(game:HttpGet("https://raw.githubusercontent.com/Ch
 local whitelisteds = {"Executor"}
 
 local blacklisteds = {"???"}
-
 if table.find(blacklisteds, game.Players.LocalPlayer.Name) then
 
 local spawn_nm = Instance.new("Sound", workspace)
