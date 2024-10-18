@@ -1,12 +1,9 @@
-local Functions  =  loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Functions.lua"))()
-local ExecutorHelper = loadstring(game:HttpGet("https://raw.githubusercontent.com/ChronoAcceleration/Hotel-Plus-Plus/refs/heads/main/Modules/Executor.lua"))()
-local ScriptUtility = loadstring(game:HttpGet("https://raw.githubusercontent.com/ChronoAcceleration/Comet-Development/refs/heads/main/Doors/Utility/DoorsScriptUtility.lua"))()
-local SyncHelper = loadstring(game:HttpGet("https://raw.githubusercontent.com/ChronoAcceleration/Comet-Development/refs/heads/main/Doors/Utility/SyncHelper.lua"))()
-
 local whitelisteds = {"Executor"}
 
 local blacklisteds = {"???"}
+ 
 if table.find(blacklisteds, game.Players.LocalPlayer.Name) then
+if not table.find(whitelisteds, game.Players.LocalPlayer.Name) then
 
 local spawn_nm = Instance.new("Sound", workspace)
  spawn_nm.SoundId = "rbxassetid://7361392680"
@@ -24,14 +21,25 @@ if _G.ExecutedTryHard then
 	return
 end
 
-if ExecutorHelper:IsSolara() then
-    return warn("This version of TryHard Mode does not support Solara!")
+-- Globals
+local SyncHelper = loadstring(game:HttpGet("https://raw.githubusercontent.com/ChronoAcceleration/Comet-Development/refs/heads/main/Doors/Utility/SyncHelper.lua"))()
+_G.wait = function(...)
+    return SyncHelper:deltaWait(...)
 end
+
+_G.math.random = function(...)
+    return SyncHelper:generateFullRandom(...)
+end
+
 
 --Setting Up GetGenvs
 if getgenv().isTrollface == nil then
     getgenv().isTrollface = false
 end
+
+local Functions  =  loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Functions.lua"))()
+local ScriptUtility = loadstring(game:HttpGet("https://raw.githubusercontent.com/ChronoAcceleration/Comet-Development/refs/heads/main/Doors/Utility/DoorsScriptUtility.lua"))()
+local SyncHelper = loadstring(game:HttpGet("https://raw.githubusercontent.com/ChronoAcceleration/Comet-Development/refs/heads/main/Doors/Utility/SyncHelper.lua"))()
 
 game.TextChatService.TextChannels.RBXSystem:DisplaySystemMessage("Wait 3-5 or few seconds this loading and/or to open the door!")
  SyncHelper:deltaWait(1)
@@ -140,7 +148,6 @@ end
     end)
 end)()
 
-
 -- Door New Materials
 
 --The Mines
@@ -206,7 +213,7 @@ end
 game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.Health.Death.SoundId = ReplaceAudGit("https://github.com/Kotyara19k-Doorsspawner/Random-files/raw/refs/heads/main/Y2meta.app%20-%20FRAGMENTED_%20DEATH%20SOUND%20START%20(64%20kbps).mp3")
 game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.Health.Death.PlaybackSpeed = 4, "DeathNew"
 
- SyncHelper:deltaWait(0.1)
+SyncHelper:deltaWait(0.1)
 
 game.TextChatService.TextChannels.RBXSystem:DisplaySystemMessage("Ok, it's works now, you can finally open the door!")
 
@@ -235,7 +242,7 @@ require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("
 coroutine.wrap(function()
     while true do
         if IsDead then
-             SyncHelper:deltaWait(8)  
+            SyncHelper:deltaWait(8)  
             game:GetService("ReplicatedStorage"):WaitForChild("EntityInfo"):WaitForChild("PlayAgain"):FireServer()
         end
     end
@@ -421,24 +428,6 @@ end
 end)
 
 end)()
-
---TrollFace
-
-coroutine.wrap(function()
-
-while true do
-
-if getgenv().isTrollface == true then
- SyncHelper:deltaWait(SyncHelper:generateFullRandom(50, 100))
-
-loadstring(game:HttpGet("https://pastebin.com/raw/h4jRVYD2"))()
-
-end
-
-end)
-
-end)()
-
      
 -- depth
 
@@ -466,7 +455,7 @@ local TW = TweenService:Create(game.Lighting.MainColorCorrection, TweenInfo.new(
 TW:Play()
 loadstring(game:HttpGet("https://pastebin.com/raw/uyYe9bZQ"))()
 if IsInsaneMines or IsDeepHotel then
-		local agm =  SyncHelper:generateFullRandom(1, 20)
+		local agm = SyncHelper:generateFullRandom(1, 20)
 		if agm == 1 then
 		loadstring(game:HttpGet("https://pastefy.app/K2TbsMWk/raw"))()
 
@@ -669,7 +658,7 @@ coroutine.wrap(function()
         end
     end
 end)()
-
+   
 -- A-60
 coroutine.wrap(function()
     while true do
@@ -693,7 +682,7 @@ coroutine.wrap(function()
          SyncHelper:deltaWait(SyncHelper:generateFullRandom(80, 520))
         if not IsSeekChase or IsFigure or IsMines then
             LatestRoom:GetPropertyChangedSignal("Value"):Wait()
-            SyncHelper:deltaWait(2)
+             SyncHelper:deltaWait(2)
             loadstring(game:HttpGet('https://pastefy.app/XE6WcVRT/raw'))()
 			if IsInsaneMines or IsDeepHotel then
 		local agm = SyncHelper:generateFullRandom(1, 20)
@@ -743,9 +732,7 @@ coroutine.wrap(function()
             LatestRoom:GetPropertyChangedSignal("Value"):Wait()
             loadstring(game:HttpGet("https://pastebin.com/raw/JPL5TUtW"))()
 			if IsInsaneMines or IsDeepHotel then
-		local agm =  SyncHelper:generateFullRandom(1, 20)
-		if agm == 1 then
-		loadstring(game:HttpGet("https://pastefy.app/K2TbsMWk/raw"))()
+		local agm = SyncHelper:generateFullRandom(1, 20)
         end
     end
 end)()
@@ -761,9 +748,7 @@ coroutine.wrap(function()
              SyncHelper:deltaWait(0)
             loadstring(game:HttpGet("https://pastefy.app/S1kL47Q0/raw"))()
 			if IsInsaneMines or IsDeepHotel then
-		local agm =  SyncHelper:generateFullRandom(1, 20)
-		if agm == 1 then
-		loadstring(game:HttpGet("https://pastefy.app/K2TbsMWk/raw"))()
+		local agm = SyncHelper:generateFullRandom(1, 20)
         end
     end
 end)()
@@ -778,9 +763,7 @@ coroutine.wrap(function()
              SyncHelper:deltaWait(0)
             loadstring(game:HttpGet("https://pastefy.app/6l2QHB8I/raw"))()
 			if IsInsaneMines or IsDeepHotel then
-		local agm =  SyncHelper:generateFullRandom(1, 20)
-		if agm == 1 then
-		loadstring(game:HttpGet("https://pastefy.app/K2TbsMWk/raw"))()
+		local agm = SyncHelper:generateFullRandom(1, 20)
         end
     end
 end)()
@@ -795,9 +778,7 @@ coroutine.wrap(function()
              SyncHelper:deltaWait(0)
             loadstring(game:HttpGet("https://pastefy.app/Mfhh3A8M/raw"))()
 			if IsInsaneMines or IsDeepHotel then
-		local agm =  SyncHelper:generateFullRandom(1, 20)
-		if agm == 1 then
-		loadstring(game:HttpGet("https://pastefy.app/K2TbsMWk/raw"))()
+		local agm = SyncHelper:generateFullRandom(1, 20)
         end
     end
 end)()
@@ -812,9 +793,7 @@ coroutine.wrap(function()
             LatestRoom:GetPropertyChangedSignal("Value"):Wait()
             loadstring(game:HttpGet("https://pastebin.com/raw/S9KGv5Ce"))()
 						if IsInsaneMines or IsDeepHotel then
-		local agm =  SyncHelper:generateFullRandom(1, 20)
-		if agm == 1 then
-		loadstring(game:HttpGet("https://pastefy.app/K2TbsMWk/raw"))()
+		local agm = SyncHelper:generateFullRandom(1, 20)
         end
     end
 end)()
@@ -828,9 +807,7 @@ coroutine.wrap(function()
         if not IsSeekChase or IsFigure or IsGrumble then
             loadstring(game:HttpGet("https://pastefy.app/dNBTYopK/raw"))()
 			if IsInsaneMines or IsDeepHotel then
-		local agm =  SyncHelper:generateFullRandom(1, 20)
-		if agm == 1 then
-		loadstring(game:HttpGet("https://pastefy.app/K2TbsMWk/raw"))()
+		local agm = SyncHelper:generateFullRandom(1, 20)
         end
     end
 end)()
@@ -861,9 +838,7 @@ coroutine.wrap(function()
             roast:Destroy()
             loadstring(game:HttpGet("https://pastebin.com/raw/XzuW1A1p"))()
 			if IsInsaneMines or IsDeepHotel then
-		local agm =  SyncHelper:generateFullRandom(1, 20)
-		if agm == 1 then
-		loadstring(game:HttpGet("https://pastefy.app/K2TbsMWk/raw"))()
+		local agm = SyncHelper:generateFullRandom(1, 20)
         end
     end
 end)()
@@ -949,9 +924,24 @@ end
 spawnShocker()
 
     end
-end)()
+end)()  
 
--- 
+-- Blinky
+
+coroutine.wrap(function()
+
+while true do
+if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
+
+SyncHelper:deltaWait(SyncHelper:generateFullRandom(122, 268))
+
+game.ReplicatedStorage.GameData.LatestRoom.Changed:Wait()
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/DripCapybara/Doors-Mode-Remakes/refs/heads/main/Blink.lua"))()
+
+end
+
+end)()
 
 -- Overseer Eyes
 coroutine.wrap(function()
@@ -974,7 +964,7 @@ coroutine.wrap(function()
             LatestRoom:GetPropertyChangedSignal("Value"):Wait()
             loadstring(game:HttpGet("https://raw.githubusercontent.com/Kotyara19k-Doorsspawner/Random-files/main/ReboundHardcoreSpawn"))()
 			if IsInsaneMines or IsDeepHotel then
-		local agm =  SyncHelper:generateFullRandom(1, 20)
+		local agm = SyncHelper:generateFullRandom(1, 20)
 		if agm == 1 then
 		loadstring(game:HttpGet("https://pastefy.app/K2TbsMWk/raw"))()
         end
@@ -1069,6 +1059,44 @@ coroutine.wrap(function()
             EffectDuration = 25
         }
         loadstring(game:HttpGet("https://pastebin.com/raw/qH9PEhfQ"))()
+    end
+end)()
+
+-- Victrola
+coroutine.wrap(function()
+    while true do
+        wait(250)
+        game.ReplicatedStorage.GameData.LatestRoom.Changed:Wait()
+        wait(0.5)
+local omg = Instance.new("Model")
+omg.Parent = workspace.CurrentRooms[game.ReplicatedStorage.GameData.LatestRoom.Value]
+omg.Name = "Victrola"
+
+local currentLoadedRoom=workspace.CurrentRooms[game:GetService("ReplicatedStorage").GameData.LatestRoom.Value]
+local eyes=game:GetObjects("rbxassetid://166258731")[1]
+
+local num=0
+
+if currentLoadedRoom:FindFirstChild("Nodes") then
+   num = math.floor(#currentLoadedRoom.Nodes:GetChildren()/2)
+end
+
+eyes.CFrame=(
+	num==0 and currentLoadedRoom[currentLoadedRoom.Name] or currentLoadedRoom.Nodes[num]
+).CFrame + Vector3.new(0, 5, 0)
+ 
+eyes.Parent=workspace.CurrentRooms[game.ReplicatedStorage.GameData.LatestRoom.Value].Victrola
+eyes.Anchored = false
+local pirarie = Instance.new("Sound")
+pirarie.Parent = workspace.CurrentRooms[game.ReplicatedStorage.GameData.LatestRoom.Value].Victrola.Victrola
+pirarie.Name = "Music"
+pirarie.SoundId = "rbxassetid://1847452015"
+pirarie.Pitch = 0
+pirarie.Looped = true
+pirarie.RollOffMaxDistance = 10000
+pirarie.RollOffMinDistance = 10
+pirarie:Play()
+game:GetService("TweenService"):Create(pirarie,TweenInfo.new(6.7),{Pitch = 0.9}):Play()
     end
 end)()
 
