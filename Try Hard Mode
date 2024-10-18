@@ -1,21 +1,28 @@
-local whitelisteds = {"Executor"}
+--[
+Let me explain quickly.
+TryHard Mode is a concept that mixes ideas from Doors and famous Doors modes, creating a hard and challenging experience.
+Some of the Doors modes include:
 
-local blacklisteds = {"???"}
- 
-if table.find(blacklisteds, game.Players.LocalPlayer.Name) then
-if not table.find(whitelisteds, game.Players.LocalPlayer.Name) then
+- Horror Mode
+- Endless Mode
+- Mayhem Mode
+- Extreme Mode
+- Hardcore Mode
+- Fragmented Mode
+- Forgotten Mode
+- Impossible Mode
 
-local spawn_nm = Instance.new("Sound", workspace)
- spawn_nm.SoundId = "rbxassetid://7361392680"
- spawn_nm.Volume = 1
- spawn_nm:Play()
-local spawn_nm2 = Instance.new("Sound", workspace)
- spawn_nm2.SoundId = "rbxassetid://5861249932"
- spawn_nm2.Volume = 1
- spawn_nm2:Play()
-game.Players.LocalPlayer:Kick("You has been blacklisted from Tryhard Mode for unambiguous use or something 🚫")
- 
-end
+I know that some of these modes are being remade, such as:
+- Noname/Kotyara19k's Hardcore and Fragmented Mode
+- Nautic's Hardcore Mode Remake
+- Jahani-john's Mayhem Mode Restored
+- Chrono's Horror Mode Re-Created
+
+Well...
+I like to play these modes, and they are pretty fun and challenging.
+I appreciate all the work put into these modes.
+I hope you enjoy TryHard Mode. Good luck!!!
+]--
 
 if _G.ExecutedTryHard then
 	return
