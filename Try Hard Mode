@@ -1,4 +1,4 @@
---[
+--[[
 Let me explain quickly.
 TryHard Mode is a concept that mixes ideas from Doors and famous Doors modes, creating a hard and challenging experience.
 Some of the Doors modes include:
@@ -22,7 +22,7 @@ Well...
 I like to play these modes, and they are pretty fun and challenging.
 I appreciate all the work put into these modes.
 I hope you enjoy TryHard Mode. Good luck!!!
-]--
+]]--
 
 if _G.ExecutedTryHard then
 	return
