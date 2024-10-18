@@ -1,29 +1,3 @@
---[[
-Let me explain quickly.
-TryHard Mode is a concept that mixes ideas from Doors and famous Doors modes, creating a hard and challenging experience.
-Some of the Doors modes include:
-
-- Horror Mode
-- Endless Mode
-- Mayhem Mode
-- Extreme Mode
-- Hardcore Mode
-- Fragmented Mode
-- Forgotten Mode
-- Impossible Mode
-
-I know that some of these modes are being remade, such as:
-- Noname/Kotyara19k's Hardcore and Fragmented Mode
-- Nautic's Hardcore Mode Remake
-- Jahani-john's Mayhem Mode Restored
-- Chrono's Horror Mode Re-Created
-
-Well...
-I like to play these modes, and they are pretty fun and challenging.
-I appreciate all the work put into these modes.
-I hope you enjoy TryHard Mode. Good luck!!!
---]]
-
 if _G.ExecutedTryHard then
 	return
 end
