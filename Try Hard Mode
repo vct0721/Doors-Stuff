@@ -367,7 +367,7 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/DripCapybara/Test/ref
 
 end
 
-end
+end)
 
 end)()
 
@@ -412,7 +412,7 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/DripCapybara/Test/ref
 
 end
 
-end)
+end
 
 end)()
      
@@ -448,7 +448,7 @@ if IsInsaneMines or IsDeepHotel then
 
 end
 
-end)
+end
 
 end)()
 
@@ -604,7 +604,7 @@ loadstring(game:HttpGet('https://raw.githubusercontent.com/Jahani-john/mayhem-mo
  
 end
  
-end)
+end
  
 end)()
 
@@ -905,9 +905,11 @@ if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue 
 
 SyncHelper:deltaWait(SyncHelper:generateFullRandom(122, 268))
 
-game.ReplicatedStorage.GameData.LatestRoom.Changed:Wait()
+LatestRoom:GetPropertyChangedSignal("Value"):Wait()
 
 loadstring(game:HttpGet("https://raw.githubusercontent.com/DripCapybara/Doors-Mode-Remakes/refs/heads/main/Blink.lua"))()
+
+end
 
 end
 
