@@ -1,3 +1,22 @@
+local whitelisteds = {"Executor"}
+
+local blacklisteds = {"???"}
+ 
+if table.find(blacklisteds, game.Players.LocalPlayer.Name) then
+if not table.find(whitelisteds, game.Players.LocalPlayer.Name) then
+
+local spawn_nm = Instance.new("Sound", workspace)
+ spawn_nm.SoundId = "rbxassetid://7361392680"
+ spawn_nm.Volume = 1
+ spawn_nm:Play()
+local spawn_nm2 = Instance.new("Sound", workspace)
+ spawn_nm2.SoundId = "rbxassetid://5861249932"
+ spawn_nm2.Volume = 1
+ spawn_nm2:Play()
+game.Players.LocalPlayer:Kick("You has been blacklisted from Tryhard Mode for unambiguous use or something 🚫")
+ 
+end
+
 if _G.ExecutedTryHard then
 	return
 end
@@ -7,29 +26,11 @@ if getgenv().isTrollface == nil then
     getgenv().isTrollface = false
 end
 
-local Functions  =  loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Functions.lua"))()
-local ScriptUtility = loadstring(game:HttpGet("https://raw.githubusercontent.com/ChronoAcceleration/Comet-Development/refs/heads/main/Doors/Utility/DoorsScriptUtility.lua"))()
-local SyncHelper = loadstring(game:HttpGet("https://raw.githubusercontent.com/ChronoAcceleration/Comet-Development/refs/heads/main/Doors/Utility/SyncHelper.lua"))()
 
 game.TextChatService.TextChannels.RBXSystem:DisplaySystemMessage("Wait 3-5 or few seconds this loading and/or to open the door!")
- SyncHelper:deltaWait(1)
 
-require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("Tryhard Mode script succesfully executed (version 3.0)",true)
-
-
--- New Seek Model
-if IsHotel then
-    loadstring(game:HttpGet('https://pastefy.app/eLCZEq1N/raw'))()
-
-    game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.Health.Music.Blue.SoundId = "rbxassetid://10472612727"
-    game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.Health.Music.Blue.Pitch = 0.55
-
-    game.Lighting.FogColor = Color3.fromRGB(0, 0, 0)
-    game.Lighting.FogStart = 5
-    game.Lighting.FogEnd = 800
-end
-
-game.ReplicatedStorage.Sounds.BulbZap.SoundId = "rbxassetid://4398878054"
+require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("Tryhard Mode script succesfully executed (version 2.0)",true)
+-- "Why not V1?" Because V1 was released before, but it was too broken to be announced.
 
 -- current candle by Official_Artemis
 
@@ -40,11 +41,9 @@ LoadCustomInstance("rbxassetid://16465312383").Parent = game:GetService("Players
 game.SoundService.AmbientReverb = "ConcertHall"
 
 -- Setting up Locals
-local GameData: Folder = ReplicatedStorage:WaitForChild("GameData")
-local LatestRoom: NumberValue = GameData:WaitForChild("LatestRoom")
-local StarterGui = game:GetService("StarterGui")
-local Debris = game:GetService("Debris")
-local Players = game:GetService("Players")
+local Functions  =  loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Functions.lua"))()
+local ScriptUtility = loadstring(game:HttpGet("https://raw.githubusercontent.com/ChronoAcceleration/Comet-Development/refs/heads/main/Doors/Utility/DoorsScriptUtility.lua"))()
+local SyncHelper = loadstring(game:HttpGet("https://raw.githubusercontent.com/ChronoAcceleration/Comet-Development/refs/heads/main/Doors/Utility/SyncHelper.lua"))()
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local RunService = game:GetService("RunService")
 local SoundService = game:GetService("SoundService")
@@ -53,27 +52,33 @@ local Lighting = game:GetService("Lighting")
 local TextChatService = game:GetService("TextChatService")
 local PathfindingService = game:GetService("PathfindingService")
 local Workspace = game:GetService("Workspace")
+local workspace = game:GetService("Workspace")
 local CurrentRooms = Workspace:WaitForChild("CurrentRooms")
+local GameData: Folder = ReplicatedStorage:WaitForChild("GameData")
+local LatestRoom: NumberValue = GameData:WaitForChild("LatestRoom")
+local StarterGui = game:GetService("StarterGui")
+local Debris = game:GetService("Debris")
+local Players = game:GetService("Players")
 local IsInsaneMines = false
 local IsDeepHotel = false
 local roomValue = game.ReplicatedStorage.GameData.LatestRoom.Value
-local IsRetro = game:GetService("ReplicatedStorage").GameData.Floor.Value == "Retro"
-local IsMines = game:GetService("ReplicatedStorage").GameData.Floor.Value == "Mines"
-local IsRooms = game:GetService("ReplicatedStorage").GameData.Floor.Value == "Rooms"
-local IsHotel = game:GetService("ReplicatedStorage").GameData.Floor.Value == "Hotel"
-local IsBackHotel = game:GetService("ReplicatedStorage").GameData.Floor.Value == "Backdoor"
-local LatestRoomm = game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]
+local IsRetro = GameData.Floor.Value == "Retro"
+local IsMines = GameData.Floor.Value == "Mines"
+local IsRooms = GameData.Floor.Value == "Rooms"
+local IsHotel = GameData.Floor.Value == "Hotel"
+local IsBackHotel = GameData.Floor.Value == "Backdoor"
+local LatestRoomm = Workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]
 local RoomAssets = LatestRoomm:WaitForChild("Assets")
 local TeleportService = game:GetService("TeleportService")
 local IsMiddleFloor = game.ReplicatedStorage.GameData.LatestRoom.Value == 50 
 local IsHospital = IsHotel and game:GetService("ReplicatedStorage").GameData.LatestRoom.Value == 60
-local IsCortyard = game.ReplicatedStorage.GameData.LatestRoom.Value > 88 and game.ReplicatedStorage.GameData.LatestRoom.Value < 100
-local IsEletrical = game.ReplicatedStorage.GameData.LatestRoom.Value == 100
+local IsCortyard = ReplicatedStorage.GameData.LatestRoom.Value > 88 and game.ReplicatedStorage.GameData.LatestRoom.Value < 100
+local IsEletrical = ReplicatedStorage.GameData.LatestRoom.Value == 100
 local ModuleEvents = require(game:GetService("ReplicatedStorage").ClientModules.Module_Events)
 local IsDead = game.Players.LocalPlayer.Character.Humanoid.Health < 1
-local IsBackEnd = IsBackHotel and game.ReplicatedStorage.GameData.LatestRoom.Value == 50
-local IsFinalRooms = IsRooms and game.ReplicatedStorage.GameData.LatestRoom.Value == 1000
-local IsSeekChase = game.Workspace:FindFirstChild("SeekMovingNewClone")
+local IsBackEnd = IsBackHotel and ReplicatedStorage.GameData.LatestRoom.Value == 50
+local IsFinalRooms = IsRooms and ReplicatedStorage.GameData.LatestRoom.Value == 1000
+local IsSeekChase = Workspace:FindFirstChild("SeekMovingNewClone")
 local IsFigure = LatestRoomm:FindFirstChild("FigureRig") or LatestRoomm:FindFirstChild("FigureSetup")
 local IsGrumble = IsMines and IsMiddleFloor
 
@@ -82,6 +87,15 @@ local NODE_PARAMETERS = {
 	AgentRadius = 5
 }
 
+
+-- Globals
+_G.wait = function(...)
+    return SyncHelper:deltaWait(...)
+end
+
+_G.math.random = function(...)
+    return SyncHelper:generateFullRandom(...)
+end
 
 -- Setting Up Functions
 local function runCoreCall(ITitle: string, IText: string, IDuration: number): ()
@@ -107,6 +121,19 @@ local function displaySystemMessage(Message, Color): ()
 	RBXGeneral:DisplaySystemMessage(string.format('<font color="rgb(%d, %d, %d)">%s</font>', Color.R, Color.G, Color.B, Message))
 end
 
+-- New Seek Model(Remade)
+if IsHotel then
+    loadstring(game:HttpGet('https://pastefy.app/q3Tm92qJ/raw'))()
+
+    game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.Health.Music.Blue.SoundId = "rbxassetid://10472612727"
+    game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.Health.Music.Blue.Pitch = 0.55
+    game.ReplicatedStorage.Sounds.BulbZap.SoundId = "rbxassetid://4398878054"
+	
+    game.Lighting.FogColor = Color3.fromRGB(0, 0, 0)
+    game.Lighting.FogStart = 5
+    game.Lighting.FogEnd = 800
+end
+
  -- Lights Remove
  coroutine.wrap(function()
     while true do
@@ -119,6 +146,7 @@ end
 end)()
 
 -- Door New Materials
+ game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
 
 --The Mines
 
@@ -126,7 +154,7 @@ if IsMines then
 
    SyncHelper:deltaWait(0.0005)
 
-workspace.CurrentRooms[game.ReplicatedStorage.GameData.LatestRoom.Value]:FindFirstChild("Door"):FindFirstChild("Door"):FindFirstChild("Sign").Material = "Corroded Metal"
+Workspace.CurrentRooms[game.ReplicatedStorage.GameData.LatestRoom.Value]:FindFirstChild("Door"):FindFirstChild("Door"):FindFirstChild("Sign").Material = "Corroded Metal"
 
 --The BackDoors
 
@@ -134,9 +162,11 @@ elseif IsBackHotel then
 
    SyncHelper:deltaWait(0.0005)
 
-workspace.CurrentRooms[game.ReplicatedStorage.GameData.LatestRoom.Value]:FindFirstChild("Door"):FindFirstChild("Door").Material = "Brick"
+Workspace.CurrentRooms[game.ReplicatedStorage.GameData.LatestRoom.Value]:FindFirstChild("Door"):FindFirstChild("Door").Material = "Brick"
 
 end
+
+end)()
 	
 --Adicional DeathHintF2
     if IsMines then
@@ -290,15 +320,11 @@ end
 end)()
 
 -- Mischievous Light
-coroutine.wrap(function()
-    while true do
-	   SyncHelper:deltaWait(0.001)
-        local ghm =  SyncHelper:generateFullRandom(1, 25)
-         if ghm == 1 then
-            loadstring(game:HttpGet("https://raw.githubusercontent.com/vct0721/Doors-Stuff/refs/heads/main/Other/Mischiveous%20Light.lua"))()
-        end
-    end
-end)()
+SyncHelper:deltaWait(0.001)
+  local ghm = SyncHelper:generateFullRandom(1, 50)
+    if ghm == 1 then
+     loadstring(game:HttpGet("https://raw.githubusercontent.com/vct0721/Doors-Stuff/refs/heads/main/Other/Mischiveous%20Light.lua"))()
+ end
 
 
 -- eyes nightmare in one room
