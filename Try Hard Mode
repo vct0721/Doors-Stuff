@@ -133,7 +133,7 @@ end
 		RoomAssets.Chandelier:Destroy()
         RoomAssets.Light_Fixtures:Destroy()
         end
-    end)
+    end
 end)()
 
 -- Door New Materials
