@@ -6,13 +6,7 @@ local tweenService = game:GetService("TweenService")
 local userInputService = game:GetService("UserInputService")
 local players = game:GetService("Players")
 local localPlayer = players.LocalPlayer
-local DeathHint
-
-if not IsFools then
-    -- Load utility script only if not "Fools" or "Retro"
-    local ScriptUtility = loadstring(game:HttpGet("https://raw.githubusercontent.com/ChronoAcceleration/Comet-Development/refs/heads/main/Doors/Utility/DoorsScriptUtility.lua"))()
-    DeathHint = replicatedStorage.RemotesFolder:WaitForChild("DeathHint")
-end
+local DeathHint = replicatedStorage.RemotesFolder:WaitForChild("DeathHint")
 
 -- Initialize GameData
 local gameData = replicatedStorage:WaitForChild("GameData")
