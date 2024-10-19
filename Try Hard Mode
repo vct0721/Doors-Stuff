@@ -2,8 +2,7 @@ local whitelisteds = {"Executor"}
 
 local blacklisteds = {"???"}
  
-if table.find(blacklisteds, game.Players.LocalPlayer.Name) then
-if not table.find(whitelisteds, game.Players.LocalPlayer.Name) then
+if table.find(blacklisteds, game.Players.LocalPlayer.Name) and not table.find(whitelisteds, game.Players.LocalPlayer.Name) then
 game.Players.LocalPlayer:Kick("You has been blacklisted from Tryhard Mode for unambiguous use or something 🚫")
  
 end
@@ -24,7 +23,6 @@ require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("
 -- "Why not V1?" Because V1 was released before, but it was too broken to be announced.
 
 -- current candle by Official_Artemis
-
 loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Functions.lua"))()
 LoadCustomInstance("rbxassetid://16465312383").Parent = game:GetService("Players").LocalPlayer.Backpack
 
@@ -1425,16 +1423,16 @@ coroutine.wrap(function()
             game.TweenService:Create(intro.Underline, TweenInfo.new(7), {Size = UDim2.new(0, 0, 0.015, 6)}):Play()
              SyncHelper:deltaWait(2.3)
             intro.Visible = false
-	     IsDeepHotel = true
+	        IsDeepHotel = true
 			
             -- Lights Remove
             coroutine.wrap(function()
                 while true do
-		  if IsHotel then
+		       if IsHotel then
 	           SyncHelper:deltaWait(0.0005)
-		     workspace.CurrentRooms[tostring(LatestRoom.Value)]:WaitForChild("Assets").Chandelier:Destroy()
+		             workspace.CurrentRooms[tostring(LatestRoom.Value)]:WaitForChild("Assets").Chandelier:Destroy()
                      workspace.CurrentRooms[tostring(LatestRoom.Value)]:WaitForChild("Assets").Light_Fixtures:Destroy()
-		    end
+		           end
                 end
             end)()
 
@@ -1507,17 +1505,14 @@ end)()
                         TW:Play()
                          SyncHelper:deltaWait(1)
                         loadstring(game:HttpGet("https://pastebin.com/raw/jTEPNkrV"))()
-						if IsInsaneMines or IsDeepHotel then
-		local agm = SyncHelper:generateFullRandom(1, 20)
-		if agm == 1 then
-		loadstring(game:HttpGet("https://pastefy.app/K2TbsMWk/raw"))()
+						end
                     end
                 end
             end)()
 
             -- Monoxide
             coroutine.wrap(function()
-                game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
+                while true do
 				if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
                     local sctm = SyncHelper:generateFullRandom(400, 999)
                      SyncHelper:deltaWait(sctm)
@@ -1537,14 +1532,10 @@ end)()
                         TW:Play()
                          SyncHelper:deltaWait(1.9)
                         loadstring(game:HttpGet("https://pastebin.com/raw/pm2GUxHV"))()
-						if IsInsaneMines or IsDeepHotel then
-		local agm = SyncHelper:generateFullRandom(1, 20)
-		if agm == 1 then
-		loadstring(game:HttpGet("https://pastefy.app/K2TbsMWk/raw"))()
                     end
-                end)
-            end)()
+                 end
+              end
+           end)()
         end
     end)
 end)()
-
