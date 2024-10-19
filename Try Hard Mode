@@ -4,15 +4,6 @@ local blacklisteds = {"???"}
  
 if table.find(blacklisteds, game.Players.LocalPlayer.Name) then
 if not table.find(whitelisteds, game.Players.LocalPlayer.Name) then
-
-local spawn_nm = Instance.new("Sound", workspace)
- spawn_nm.SoundId = "rbxassetid://7361392680"
- spawn_nm.Volume = 1
- spawn_nm:Play()
-local spawn_nm2 = Instance.new("Sound", workspace)
- spawn_nm2.SoundId = "rbxassetid://5861249932"
- spawn_nm2.Volume = 1
- spawn_nm2:Play()
 game.Players.LocalPlayer:Kick("You has been blacklisted from Tryhard Mode for unambiguous use or something 🚫")
  
 end
