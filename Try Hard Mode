@@ -662,6 +662,23 @@ coroutine.wrap(function()
     end
 end)()
 
+-- Threat
+coroutine.wrap(function()
+    while true do
+	if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
+        wait(math.random(80, 520))
+        if not IsSeekChase or IsFigure or IsMines then
+            game.ReplicatedStorage.GameData.LatestRoom.Changed:Wait()
+            wait(2)
+            loadstring(game:HttpGet('https://pastefy.app/XE6WcVRT/raw'))()
+			if IsInsaneMines or IsDeepHotel then
+		local agm = math.random(1, 20)
+		if agm == 1 then
+		loadstring(game:HttpGet("https://pastefy.app/K2TbsMWk/raw"))()
+        end
+    end
+end)()
+
 -- Torment
 coroutine.wrap(function()
     while true do
