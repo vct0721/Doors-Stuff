@@ -10,13 +10,14 @@ local function convertToLegacy(Room: Model): ()
     end
 
     local PathfindNodes = Room:WaitForChild("PathfindNodes", 10)
+    local Nodes = Room:WaitForChild("Nodes", 10)
 
-    if not PathfindNodes then
+    if not PathfindNodes or Nodes then
         return -- No PathfindNodes found, exit the function
     end
 
     -- Create a list of new names for the clones
-    local newNames = {"Nodes", "PathfindNodes", "PathNodes"}
+    local newNames = {"Nodes", "PathfindNodes", "PathNodes", "SeekNodes"}
 
     -- Clone the PathfindNodes for each new name
     for _, newName in ipairs(newNames) do
