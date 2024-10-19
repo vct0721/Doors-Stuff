@@ -450,6 +450,8 @@ end
 
 end
 
+end
+
 end)()
 
 -- greed
@@ -616,6 +618,7 @@ coroutine.wrap(function()
         if not IsSeekChase or IsFigure or IsGrumble then
             LatestRoom:GetPropertyChangedSignal("Value"):Wait()
             loadstring(game:HttpGet("https://raw.githubusercontent.com/vct0721/Doors-Stuff/main/DreadEnity"))()
+            end
         end
     end
 end)()
@@ -629,6 +632,7 @@ coroutine.wrap(function()
             LatestRoom:GetPropertyChangedSignal("Value"):Wait()
              SyncHelper:deltaWait(0)
             loadstring(game:HttpGet("https://pastefy.app/AaIrbcZS/raw"))()
+           end
         end
     end
 end)()
@@ -642,6 +646,7 @@ coroutine.wrap(function()
             LatestRoom:GetPropertyChangedSignal("Value"):Wait()
              SyncHelper:deltaWait(0)
             loadstring(game:HttpGet("https://pastefy.app/y4qDfUgC/raw"))()
+           end
         end
     end
 end)()
@@ -654,11 +659,8 @@ coroutine.wrap(function()
         if not IsSeekChase or IsFigure or IsGrumble then
             LatestRoom:GetPropertyChangedSignal("Value"):Wait()
             loadstring(game:HttpGet("https://pastebin.com/raw/q0JC9BAt"))()
-			if IsInsaneMines or IsDeepHotel then
-		local agm = SyncHelper:generateFullRandom(1, 20)
-		if agm == 1 then
-		loadstring(game:HttpGet("https://pastefy.app/K2TbsMWk/raw"))()
-        end
+          end
+       end
     end
 end)()
 
@@ -666,15 +668,12 @@ end)()
 coroutine.wrap(function()
     while true do
 	if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
-        wait(math.random(80, 520))
+        SyncHelper:deltaWait(SyncHelper:generateFullRandom(80, 520))
         if not IsSeekChase or IsFigure or IsMines then
             game.ReplicatedStorage.GameData.LatestRoom.Changed:Wait()
-            wait(2)
+            SyncHelper:deltaWait(2)
             loadstring(game:HttpGet('https://pastefy.app/XE6WcVRT/raw'))()
-			if IsInsaneMines or IsDeepHotel then
-		local agm = math.random(1, 20)
-		if agm == 1 then
-		loadstring(game:HttpGet("https://pastefy.app/K2TbsMWk/raw"))()
+            end
         end
     end
 end)()
@@ -688,10 +687,7 @@ coroutine.wrap(function()
             LatestRoom:GetPropertyChangedSignal("Value"):Wait()
              SyncHelper:deltaWait(0)
             loadstring(game:HttpGet("https://pastefy.app/JOymYI5l/raw"))()
-			if IsInsaneMines or IsDeepHotel then
-		local agm = SyncHelper:generateFullRandom(1, 20)
-		if agm == 1 then
-		loadstring(game:HttpGet("https://pastefy.app/K2TbsMWk/raw"))()
+            end
         end
     end
 end)()
@@ -705,7 +701,7 @@ coroutine.wrap(function()
             LatestRoom:GetPropertyChangedSignal("Value"):Wait()
              SyncHelper:deltaWait(2)
             loadstring(game:HttpGet("https://pastebin.com/raw/uNnkcsGU"))()
-			
+	    end		
         end
     end
 end)()
@@ -718,8 +714,7 @@ coroutine.wrap(function()
         if not IsSeekChase or IsFigure or IsGrumble then
             LatestRoom:GetPropertyChangedSignal("Value"):Wait()
             loadstring(game:HttpGet("https://pastebin.com/raw/JPL5TUtW"))()
-			if IsInsaneMines or IsDeepHotel then
-		local agm = SyncHelper:generateFullRandom(1, 20)
+           end
         end
     end
 end)()
@@ -734,8 +729,7 @@ coroutine.wrap(function()
             LatestRoom:GetPropertyChangedSignal("Value"):Wait()
              SyncHelper:deltaWait(0)
             loadstring(game:HttpGet("https://pastefy.app/S1kL47Q0/raw"))()
-			if IsInsaneMines or IsDeepHotel then
-		local agm = SyncHelper:generateFullRandom(1, 20)
+            end
         end
     end
 end)()
@@ -749,12 +743,10 @@ coroutine.wrap(function()
             LatestRoom:GetPropertyChangedSignal("Value"):Wait()
              SyncHelper:deltaWait(0)
             loadstring(game:HttpGet("https://pastefy.app/6l2QHB8I/raw"))()
-			if IsInsaneMines or IsDeepHotel then
-		local agm = SyncHelper:generateFullRandom(1, 20)
+            end
         end
     end
 end)()
-
 -- Ripper
 coroutine.wrap(function()
     while true do
@@ -764,8 +756,7 @@ coroutine.wrap(function()
             LatestRoom:GetPropertyChangedSignal("Value"):Wait()
              SyncHelper:deltaWait(0)
             loadstring(game:HttpGet("https://pastefy.app/Mfhh3A8M/raw"))()
-			if IsInsaneMines or IsDeepHotel then
-		local agm = SyncHelper:generateFullRandom(1, 20)
+           end
         end
     end
 end)()
@@ -779,8 +770,7 @@ coroutine.wrap(function()
         if not IsSeekChase or IsFigure or IsGrumble then
             LatestRoom:GetPropertyChangedSignal("Value"):Wait()
             loadstring(game:HttpGet("https://pastebin.com/raw/S9KGv5Ce"))()
-						if IsInsaneMines or IsDeepHotel then
-		local agm = SyncHelper:generateFullRandom(1, 20)
+           end
         end
     end
 end)()
@@ -793,8 +783,7 @@ coroutine.wrap(function()
          SyncHelper:deltaWait(sctm)
         if not IsSeekChase or IsFigure or IsGrumble then
             loadstring(game:HttpGet("https://pastefy.app/dNBTYopK/raw"))()
-			if IsInsaneMines or IsDeepHotel then
-		local agm = SyncHelper:generateFullRandom(1, 20)
+           end
         end
     end
 end)()
@@ -824,8 +813,7 @@ coroutine.wrap(function()
              SyncHelper:deltaWait(0.6)
             roast:Destroy()
             loadstring(game:HttpGet("https://pastebin.com/raw/XzuW1A1p"))()
-			if IsInsaneMines or IsDeepHotel then
-		local agm = SyncHelper:generateFullRandom(1, 20)
+           end
         end
     end
 end)()
@@ -924,7 +912,7 @@ SyncHelper:deltaWait(SyncHelper:generateFullRandom(122, 268))
 
 LatestRoom:GetPropertyChangedSignal("Value"):Wait()
 
-loadstring(game:HttpGet("https://raw.githubusercontent.com/DripCapybara/Doors-Mode-Remakes/refs/heads/main/Blink.lua"))()
+loadstring(game:HttpGet("https://github.com/PABMAXICHAC/doors-monsters-scripts/raw/main/blinkcrux"))()
 
 end
 
@@ -952,10 +940,7 @@ coroutine.wrap(function()
         if not IsSeekChase or IsFigure or IsGrumble then
             LatestRoom:GetPropertyChangedSignal("Value"):Wait()
             loadstring(game:HttpGet("https://raw.githubusercontent.com/Kotyara19k-Doorsspawner/Random-files/main/ReboundHardcoreSpawn"))()
-			if IsInsaneMines or IsDeepHotel then
-		local agm = SyncHelper:generateFullRandom(1, 20)
-		if agm == 1 then
-		loadstring(game:HttpGet("https://pastefy.app/K2TbsMWk/raw"))()
+           end
         end
     end
 end)()
@@ -968,6 +953,7 @@ coroutine.wrap(function()
         if not IsSeekChase or IsFigure or IsGrumble then
             LatestRoom:GetPropertyChangedSignal("Value"):Wait()
             loadstring(game:HttpGet("https://pastebin.com/raw/rCTaWAqN"))()
+           end
         end
     end
 end)()
@@ -978,7 +964,8 @@ coroutine.wrap(function()
 	if not IsRooms or IsMines or IsBackHotel then
         if IsMiddleFloor then
             require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption('Be careful!', true)
-            loadstring(game:HttpGet("https://pastefy.app/MQGgb029/raw"))() 
+            loadstring(game:HttpGet("https://pastefy.app/MQGgb029/raw"))()
+           end
         end
     end)
 end)()
@@ -1001,6 +988,7 @@ coroutine.wrap(function()
         if not IsSeekChase or IsFigure or IsMines then
             LatestRoom:GetPropertyChangedSignal("Value"):Wait()
             loadstring(game:HttpGet("https://pastebin.com/raw/d3R357Rk"))()
+           end
         end
     end
 end)()
@@ -1015,6 +1003,7 @@ coroutine.wrap(function()
             LatestRoom:GetPropertyChangedSignal("Value"):Wait()
             require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption('What just happened?!!!', true)
             loadstring(game:HttpGet("https://pastebin.com/raw/JLFyvnp2"))()
+           end
         end
     end
 end)()
@@ -1246,10 +1235,10 @@ end)
  
 end)()
 
--- Insane Mines Room 60 Spawn
+-- Insane Mines
 coroutine.wrap(function()
     game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
-        if game.ReplicatedStorage.GameData.LatestRoom.Value == 60 then
+        if game.ReplicatedStorage.GameData.LatestRoom.Value == 52 then
 		if IsMines then
 
             function GitAud(soundlink, filename)
@@ -1278,7 +1267,7 @@ coroutine.wrap(function()
             Lighting.FogColor = Color3.new(0, 0, 0)
 
             -- Show intro text			
-			local shut = game.Players.LocalPlayer.PlayerGui.MainUI.MainFrame.IntroText
+	    local shut = game.Players.LocalPlayer.PlayerGui.MainUI.MainFrame.IntroText
             local intro = shut:Clone()
             intro.Parent = game.Players.LocalPlayer.PlayerGui.MainUI
             intro.Name = "InsaneMines"
@@ -1295,15 +1284,14 @@ coroutine.wrap(function()
             game.TweenService:Create(intro.Underline, TweenInfo.new(7), {Size = UDim2.new(0, 0, 0.015, 6)}):Play()
              SyncHelper:deltaWait(2.3)
             intro.Visible = false
-			IsInsaneMines = true
+	    IsInsaneMines = true
 
             -- Lights Remove
             coroutine.wrap(function()
                 while true do
-				 SyncHelper:deltaWait(0.0005)
-				game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:WaitForChild("Assets").Chandelier:Destroy()
-                game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:WaitForChild("Assets").Light_Fixtures:Destroy()
-				    end
+		SyncHelper:deltaWait(0.0005)
+		    game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:WaitForChild("Assets").Chandelier:Destroy()
+                    game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:WaitForChild("Assets").Light_Fixtures:Destroy()
                 end
             end)()
 
@@ -1321,44 +1309,39 @@ coroutine.wrap(function()
 			
 -- B-60
 coroutine.wrap(function()
-if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
     while true do
+      if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
          SyncHelper:deltaWait(375)
         LatestRoom:GetPropertyChangedSignal("Value"):Wait()
         loadstring(game:HttpGet("https://pastebin.com/raw/s2jHyGmm"))()
-		if IsInsaneMines or IsDeepHotel then
-		local agm = SyncHelper:generateFullRandom(1, 20)
-		if agm == 1 then
-		loadstring(game:HttpGet("https://pastefy.app/K2TbsMWk/raw"))()
+           end
+        end
     end
 end)()
 
 -- A-10
 coroutine.wrap(function()
-if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
     while true do
+        if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
          SyncHelper:deltaWait(SyncHelper:generateFullRandom(350, 590))
         if not IsSeekChase or IsFigure or IsGrumble then
             LatestRoom:GetPropertyChangedSignal("Value"):Wait()
              SyncHelper:deltaWait(0)
             loadstring(game:HttpGet("https://pastefy.app/rmShikEK/raw"))()
-			if IsInsaneMines or IsDeepHotel then
-		local agm = SyncHelper:generateFullRandom(1, 20)
-		if agm == 1 then
-		loadstring(game:HttpGet("https://pastefy.app/K2TbsMWk/raw"))()
-
+           end
         end
     end
 end)()
 			
 -- Claim
 coroutine.wrap(function()
-if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
     while true do
+         if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
          SyncHelper:deltaWait(SyncHelper:generateFullRandom(100, 550))
         if not IsSeekChase or IsFigure or IsGrumble then
             LatestRoom:GetPropertyChangedSignal("Value"):Wait()
             loadstring(game:HttpGet("https://pastebin.com/raw/d3R357Rk"))()
+           end
         end
     end
 end)()
@@ -1389,14 +1372,14 @@ TW:Play()
 loadstring(game:HttpGet("https://pastebin.com/raw/2LTckSaJ"))()
  
                     end
-                end)
+                end
             end)()
         end
     end)
 end)()
 
 
--- Deep Hotel Room 52 Spawn
+-- Deep Hotel
 coroutine.wrap(function()
     game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
         if game.ReplicatedStorage.GameData.LatestRoom.Value == 52 then
@@ -1446,16 +1429,16 @@ coroutine.wrap(function()
             game.TweenService:Create(intro.Underline, TweenInfo.new(7), {Size = UDim2.new(0, 0, 0.015, 6)}):Play()
              SyncHelper:deltaWait(2.3)
             intro.Visible = false
-			IsDeepHotel = true
+	     IsDeepHotel = true
 			
             -- Lights Remove
             coroutine.wrap(function()
                 while true do
-				if IsHotel then
-				 SyncHelper:deltaWait(0.0005)
-				game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:WaitForChild("Assets").Chandelier:Destroy()
-                game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:WaitForChild("Assets").Light_Fixtures:Destroy()
-				    end
+		  if IsHotel then
+	           SyncHelper:deltaWait(0.0005)
+		     workspace.CurrentRooms[tostring(LatestRoom.Value)]:WaitForChild("Assets").Chandelier:Destroy()
+                     workspace.CurrentRooms[tostring(LatestRoom.Value)]:WaitForChild("Assets").Light_Fixtures:Destroy()
+		    end
                 end
             end)()
 
