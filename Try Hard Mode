@@ -28,9 +28,6 @@ require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("
 loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Functions.lua"))()
 LoadCustomInstance("rbxassetid://16465312383").Parent = game:GetService("Players").LocalPlayer.Backpack
 
--- Setting up echo sound
-game.SoundService.AmbientReverb = "ConcertHall"
-
 -- Setting up Locals
 local Functions  =  loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Functions.lua"))()
 local ScriptUtility = loadstring(game:HttpGet("https://raw.githubusercontent.com/ChronoAcceleration/Comet-Development/refs/heads/main/Doors/Utility/DoorsScriptUtility.lua"))()
@@ -187,6 +184,9 @@ Lighting.FogColor = Color3.new(0, 0, 0)
 -- Setting ambient dark sound
 game.Workspace.Ambience_Dark.SoundId = "rbxassetid://6535784827"
 game.Workspace.Ambience_Dark.PlaybackSpeed = 1
+
+-- Setting up echo sound
+game.SoundService.AmbientReverb = "ConcertHall"
 
 -- Death Sound 
 
