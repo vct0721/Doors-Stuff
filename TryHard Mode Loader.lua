@@ -8,5 +8,5 @@ elseif game:GetService("ReplicatedStorage").GameData.Floor.Value == "Retro" then
         game.Players.LocalPlayer:Kick("No More Retro Mode")
     end)
 else
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/vct0721/Doors-Stuff/main/Try%20Hard%20Mode"))()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/vct0721/Doors-Stuff/refs/heads/main/Try%20Hard%20Mode"))()
 end
