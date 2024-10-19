@@ -124,7 +124,7 @@ end
 local function HasteChaseInit()
     local object = _G.MP
     local player = Players.LocalPlayer
-    local speed = 25
+    local speed = 38
     local chase = true
     while chase do
         local playerPos = player.Character.HumanoidRootPart.Position
