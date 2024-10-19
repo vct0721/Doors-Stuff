@@ -1,6 +1,7 @@
 -- Load external utility script
 local IsFools = game:GetService("ReplicatedStorage").GameData.Floor.Value == "Fools" or game:GetService("ReplicatedStorage").GameData.Floor.Value == "Retro"
 local runService = game:GetService("RunService")
+local workspace = game:GetService("Workspace")
 local replicatedStorage = game:GetService("ReplicatedStorage")
 local tweenService = game:GetService("TweenService")
 local userInputService = game:GetService("UserInputService")
