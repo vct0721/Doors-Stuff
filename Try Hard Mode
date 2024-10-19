@@ -662,23 +662,6 @@ coroutine.wrap(function()
     end
 end)()
 
--- Threat
-coroutine.wrap(function()
-    while true do
-	if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
-         SyncHelper:deltaWait(SyncHelper:generateFullRandom(80, 520))
-        if not IsSeekChase or IsFigure or IsMines then
-            LatestRoom:GetPropertyChangedSignal("Value"):Wait()
-             SyncHelper:deltaWait(2)
-            loadstring(game:HttpGet('https://pastefy.app/XE6WcVRT/raw'))()
-			if IsInsaneMines or IsDeepHotel then
-		local agm = SyncHelper:generateFullRandom(1, 20)
-		if agm == 1 then
-		loadstring(game:HttpGet("https://pastefy.app/K2TbsMWk/raw"))()
-        end
-    end
-end)()
-
 -- Torment
 coroutine.wrap(function()
     while true do
