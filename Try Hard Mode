@@ -547,14 +547,12 @@ coroutine.wrap(function()
                             clonedPainting.Canvas.SurfaceGui.ImageLabel.BackgroundColor3 = Color3.fromRGB(159, 159, 159)
                             clonedPainting.Canvas.SurfaceGui.ImageLabel.ImageTransparency = 0.5
                             clonedPainting.Name = "Painting Easter Egg"
-                            
-                            -- Handle painting interaction
+
                             local interactPrompt = clonedPainting.InteractPrompt
                             interactPrompt.Triggered:Connect(function()
                                 require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game)
                                     .caption('This painting is titled "..."', true)
                                 
-                                -- Paint Image Function
                                 function PaintImage(medialink, filename)
                                     if not isfile(filename..".png") then
                                         writefile(filename..".png", game:HttpGet(medialink)) 
@@ -562,14 +560,12 @@ coroutine.wrap(function()
                                     return (getcustomasset or getsynasset)(filename..".png")
                                 end
                                 
-                                -- Custom Paint Image Function
                                 function CustomPaintImage(medialink, filename)
                                     local paintImage = Instance.new("ImageLabel")
                                     paintImage.Image = PaintImage(medialink, filename)
                                     paintImage.Parent = ImageLabel
                                 end
                                 
-                                -- Custom image load
                                 CustomPaintImage(
                                     "https://doors-ideas.fandom.com/wiki/User_blog:Thomas10SHx/Greed%27s_Old_Version?file=Greed.png", 
                                     "PaintImagine"
@@ -583,7 +579,6 @@ coroutine.wrap(function()
                 end
             end)
             
-        -- Check if Floor is "Mines"
         elseif game:GetService("ReplicatedStorage").GameData.Floor.Value == "Mines" then
             local localFile = "Greed.png"
             if isfile(localFile) then
@@ -597,8 +592,7 @@ coroutine.wrap(function()
                         
                         require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game)
                             .caption('Greed did spawn', true)
-                        
-                        -- Execute remote script (use with caution)
+
                         loadstring(game:HttpGet("https://pastebin.com/raw/Pq9hGhvB"))()
                     end
                 end
