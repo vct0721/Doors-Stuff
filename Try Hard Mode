@@ -27,7 +27,7 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Utiliti
 LoadCustomInstance("rbxassetid://16465312383").Parent = game:GetService("Players").LocalPlayer.Backpack
 
 -- Setting up Locals
-local Functions  =  loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Functions.lua"))()
+local Functions = loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Functions.lua"))()
 local ScriptUtility = loadstring(game:HttpGet("https://raw.githubusercontent.com/ChronoAcceleration/Comet-Development/refs/heads/main/Doors/Utility/DoorsScriptUtility.lua"))()
 local SyncHelper = loadstring(game:HttpGet("https://raw.githubusercontent.com/ChronoAcceleration/Comet-Development/refs/heads/main/Doors/Utility/SyncHelper.lua"))()
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -38,30 +38,30 @@ local Lighting = game:GetService("Lighting")
 local TextChatService = game:GetService("TextChatService")
 local PathfindingService = game:GetService("PathfindingService")
 local Workspace = game:GetService("Workspace")
-local workspace = game:GetService("Workspace")
 local CurrentRooms = Workspace:WaitForChild("CurrentRooms")
-local GameData: Folder = ReplicatedStorage:WaitForChild("GameData")
-local LatestRoom: NumberValue = GameData:WaitForChild("LatestRoom")
+local GameData = ReplicatedStorage:WaitForChild("GameData")
+local LatestRoom = GameData:WaitForChild("LatestRoom")
 local StarterGui = game:GetService("StarterGui")
 local Debris = game:GetService("Debris")
 local Players = game:GetService("Players")
+
 local IsInsaneMines = false
 local IsDeepHotel = false
-local roomValue = game.ReplicatedStorage.GameData.LatestRoom.Value
+local roomValue = ReplicatedStorage.GameData.LatestRoom.Value
 local IsRetro = GameData.Floor.Value == "Retro"
 local IsMines = GameData.Floor.Value == "Mines"
 local IsRooms = GameData.Floor.Value == "Rooms"
 local IsHotel = GameData.Floor.Value == "Hotel"
 local IsBackHotel = GameData.Floor.Value == "Backdoor"
-local LatestRoomm = Workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]
+local LatestRoomm = CurrentRooms[tostring(ReplicatedStorage.GameData.LatestRoom.Value)]
 local RoomAssets = LatestRoomm:WaitForChild("Assets")
 local TeleportService = game:GetService("TeleportService")
-local IsMiddleFloor = game.ReplicatedStorage.GameData.LatestRoom.Value == 50 
-local IsHospital = IsHotel and game:GetService("ReplicatedStorage").GameData.LatestRoom.Value == 60
-local IsCortyard = ReplicatedStorage.GameData.LatestRoom.Value > 88 and game.ReplicatedStorage.GameData.LatestRoom.Value < 100
+local IsMiddleFloor = ReplicatedStorage.GameData.LatestRoom.Value == 50
+local IsHospital = IsHotel and ReplicatedStorage.GameData.LatestRoom.Value == 60
+local IsCortyard = ReplicatedStorage.GameData.LatestRoom.Value > 88 and ReplicatedStorage.GameData.LatestRoom.Value < 100
 local IsEletrical = ReplicatedStorage.GameData.LatestRoom.Value == 100
-local ModuleEvents = require(game:GetService("ReplicatedStorage").ClientModules.Module_Events)
-local IsDead = game.Players.LocalPlayer.Character.Humanoid.Health < 1
+local ModuleEvents = require(ReplicatedStorage.ClientModules.Module_Events)
+local IsDead = Players.LocalPlayer.Character.Humanoid.Health < 1
 local IsBackEnd = IsBackHotel and ReplicatedStorage.GameData.LatestRoom.Value == 50
 local IsFinalRooms = IsRooms and ReplicatedStorage.GameData.LatestRoom.Value == 1000
 local IsSeekChase = Workspace:FindFirstChild("SeekMovingNewClone")
@@ -84,6 +84,15 @@ _G.math.random = function(...)
 end
 
 -- Setting Up Functions
+local function OpenDoor()
+    local door = workspace.CurrentRooms[roomValue]:FindFirstChild("Door")
+    
+    if door and door:FindFirstChild("ClientOpen") then
+        door.ClientOpen:FireServer()
+    end
+end
+
+
 local function runCoreCall(ITitle: string, IText: string, IDuration: number): ()
 	local Success, Return = pcall(
 		function(): boolean?
@@ -120,6 +129,40 @@ if IsHotel then
     game.Lighting.FogEnd = 800
 end
 
+-- Ambience 2
+
+coroutine.wrap(function()
+
+if game:GetService("ReplicatedStorage").GameData.Floor.Value == "Hotel" then
+ 
+game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
+ 
+    wait(0.0005)
+	
+function ReplaceAudGit(GithubSnd)
+	local url = GithubSnd
+	local soundFileName = "CustomSound.mp3"
+
+	if not isfile(soundFileName) then
+		writefile(soundFileName, game:HttpGet(url))
+	end
+
+	return (getcustomasset or getsynasset)(soundFileName)
+end
+
+game.Workspace.CurrentRooms["50"].FigureSetup.Ambience.SoundId = ReplaceAudGit("https://github.com/Kotyara19k-Doorsspawner/Ping-s-Dumbass-projects-/raw/refs/heads/main/Figure%20Ambience.mp3")
+game.Workspace.CurrentRooms["50"].FigureSetup.Ambience.Volume = "0.7"
+game.Workspace.CurrentRooms["51"].FigureSetup.AmbienceEnd.SoundId = ReplaceAudGit("https://github.com/Kotyara19k-Doorsspawner/Ping-s-Dumbass-projects-/raw/refs/heads/main/Figure%20End.mp3")
+game.Workspace.CurrentRooms["51"].FigureSetup.AmbienceEnd.Volume = "0.5"
+ 
+end)
+
+--[[ ]]--
+
+end
+
+end)()
+
  -- Lights Remove
  coroutine.wrap(function()
     while true do
@@ -132,39 +175,32 @@ end
 end)()
 
 -- Door New Materials
- game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
-
---The Mines
-
-if IsMines then
-
-   SyncHelper:deltaWait(0.0005)
-
-Workspace.CurrentRooms[game.ReplicatedStorage.GameData.LatestRoom.Value]:FindFirstChild("Door"):FindFirstChild("Door"):FindFirstChild("Sign").Material = "Corroded Metal"
-
---The BackDoors
-
-elseif IsBackHotel then
-
-   SyncHelper:deltaWait(0.0005)
-
-Workspace.CurrentRooms[game.ReplicatedStorage.GameData.LatestRoom.Value]:FindFirstChild("Door"):FindFirstChild("Door").Material = "Brick"
-
-end
-
-end)()
-	
---Adicional DeathHintF2
+ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
     if IsMines then
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/vct0721/fhfisfhfhfhlhfdsghvsb/main/DeathHintF2"))()
+        SyncHelper:deltaWait(0.0005)
+        local door = Workspace.CurrentRooms[ReplicatedStorage.GameData.LatestRoom.Value]:FindFirstChild("Door")
+        if door then
+            door.Sign.Material = Enum.Material.CorrodedMetal
+        end
+    elseif IsBackHotel then
+        SyncHelper:deltaWait(0.0005)
+        local door = Workspace.CurrentRooms[GameData.LatestRoom.Value]:FindFirstChild("Door")
+        if door then
+            door.Material = Enum.Material.Brick
+        end
     end
+end)
+	
+-- DeathHintF2
+if IsMines then
+   loadstring(game:HttpGet("https://raw.githubusercontent.com/vct0721/fhfisfhfhfhlhfdsghvsb/main/DeathHintF2"))()
 end
 
 -- Custom Gui
 loadstring(game:HttpGet("https://pastebin.com/raw/VZ0pV8G3"))()
 
 -- Sprint bar
-loadstring(game:HttpGet("https://pastefy.app/UyMlscEd/raw"))()
+loadstring(game:HttpGet("https://pastefy.app/LrM3RysS/raw"))()
 
 -- Achievement Tryhard Mode
 loadstring(game:HttpGet("https://pastebin.com/raw/sric3jnY"))()
@@ -199,6 +235,7 @@ function ReplaceAudGit(GithubSnd)
 	return (getcustomasset or getsynasset)(soundFileName)
 end
 
+game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.Health.Music.SoundId = ReplaceAudGit("https://github.com/Kotyara19k-Doorsspawner/Random-files/raw/refs/heads/main/Y2meta.app%20-%20Fragmented%20Death%20Message%20music%20(64%20kbps).mp3")
 game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.Health.Death.SoundId = ReplaceAudGit("https://github.com/Kotyara19k-Doorsspawner/Random-files/raw/refs/heads/main/Y2meta.app%20-%20FRAGMENTED_%20DEATH%20SOUND%20START%20(64%20kbps).mp3")
 game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.Health.Death.PlaybackSpeed = 4, "DeathNew"
 
@@ -221,10 +258,31 @@ _G.ExecutedTryHard = true
 
 LatestRoom:GetPropertyChangedSignal("Value"):Wait()
 
+function GitAud(soundlink, filename)
+    local url = soundlink
+    local FileName = filename
+    if not isfile(FileName..".mp3") then
+        writefile(FileName..".mp3", game:HttpGet(url))
+    end
+    return (getcustomasset or getsynasset)(FileName..".mp3")
+end
+
+function CustomGitSound(soundlink, vol, filename)
+    local sound = Instance.new("Sound")
+    sound.SoundId = GitAud(soundlink, filename)
+    sound.Parent = workspace
+    sound.Volume = vol
+    sound.Looped = false
+    sound:Play()
+     
+end
+
+CustomGitSound("https://github.com/Kotyara19k-Doorsspawner/Random-files/raw/refs/heads/main/Y2meta.app%20-%20Fragmented_%20Dialogue%20Sound%20(64%20kbps).mp3", 1, "Dialogue")
 require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("Script sync'd according started room, have fun!",true)
 
  SyncHelper:deltaWait(1)
 
+CustomGitSound("https://github.com/Kotyara19k-Doorsspawner/Random-files/raw/refs/heads/main/Y2meta.app%20-%20Fragmented_%20Dialogue%20Sound%20(64%20kbps).mp3", 1, "Dialogue")
 require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("Credits to Official_Artemis, Kotyara19k, Noonie, Ping, Noah, Chrono, Vynixu ,Ame",true)
 
 -- Auto PlayAgain
@@ -235,6 +293,26 @@ coroutine.wrap(function()
             game:GetService("ReplicatedStorage"):WaitForChild("EntityInfo"):WaitForChild("PlayAgain"):FireServer()
         end
     end
+end)()
+
+-- Intro in the Electrical Room
+ 
+coroutine.wrap(function()
+ 
+game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
+ 
+if game.ReplicatedStorage.GameData.LatestRoom.Value == 100 then
+ 
+local spawn_nm = Instance.new("Sound", workspace)
+ spawn_nm.SoundId = "rbxassetid://4676040750"
+ spawn_nm.Volume = 1
+ spawn_nm:Play()
+loadstring(game:HttpGet("https://pastebin.com/raw/HQmRXwCh"))()
+ 
+end
+ 
+end)
+ 
 end)()
 
 -- Intro text
@@ -258,55 +336,48 @@ horrorSound:Play()
 -- Screech setup
 game.ReplicatedStorage.Entities.Screech.Top.Eyes.Color = Color3.fromRGB(255, 255, 0)
 
--- ambience
-
+-- Ambience
+loadstring(game:HttpGet("https://raw.githubusercontent.com/ChronoAcceleration/Hotel-Plus-Plus/refs/heads/main/QOL/DoorSounds.lua"))()
 coroutine.wrap(function()
- 
-game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
- 
+    game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
 
+        -- Light bulb sounds for different floors
+        coroutine.wrap(function()
+            local floorValue = game:GetService("ReplicatedStorage").GameData.Floor.Value
 
--- new the lights bulb sounds
- 
-coroutine.wrap(function()
- 
-if game:GetService("ReplicatedStorage").GameData.Floor.Value == "Hotel" then
- 
-game.ReplicatedStorage.Sounds.BulbCharge.SoundId = "rbxassetid://9125973984"
-game.ReplicatedStorage.Sounds.BulbZap.SoundId = "rbxassetid://4288784832"
-game.ReplicatedStorage.Sounds.BulbBreak.SoundId = "rbxassetid://6737582273"
- 
-elseif game:GetService("ReplicatedStorage").GameData.Floor.Value == "Mines" then
- 
-game.ReplicatedStorage.Sounds.BulbCharge.SoundId = "rbxassetid://9125973984"
-game.ReplicatedStorage.Sounds.BulbZap.SoundId = "rbxassetid://4288784832"
-game.ReplicatedStorage.Sounds.BulbBreak.SoundId = "rbxassetid://6737582273"
- 
-elseif game:GetService("ReplicatedStorage").GameData.Floor.Value == "Backdoor" then
- 
-game.ReplicatedStorage.Sounds.BulbZap.SoundId = "rbxassetid://5857559198"
-game.ReplicatedStorage.Sounds.BulbBreak.SoundId = "rbxassetid://260496290"
+            if floorValue == "Hotel" then
+                game.ReplicatedStorage.Sounds.BulbCharge.SoundId = "rbxassetid://9125973984"
+                game.ReplicatedStorage.Sounds.BulbZap.SoundId = "rbxassetid://4288784832"
+                game.ReplicatedStorage.Sounds.BulbBreak.SoundId = "rbxassetid://6737582273"
 
+            elseif floorValue == "Mines" then
+                game.ReplicatedStorage.Sounds.BulbCharge.SoundId = "rbxassetid://9125973984"
+                game.ReplicatedStorage.Sounds.BulbZap.SoundId = "rbxassetid://4288784832"
+                game.ReplicatedStorage.Sounds.BulbBreak.SoundId = "rbxassetid://6737582273"
 
--- fireplace brightness even more
+            elseif floorValue == "Backdoor" then
+                game.ReplicatedStorage.Sounds.BulbZap.SoundId = "rbxassetid://5857559198"
+                game.ReplicatedStorage.Sounds.BulbBreak.SoundId = "rbxassetid://260496290"
+            end
+        end)()
 
-coroutine.wrap(function()
+        -- Increase fireplace brightness if on the "Hotel" floor
+        coroutine.wrap(function()
+            if game:GetService("ReplicatedStorage").GameData.Floor.Value == "Hotel" then
+                game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
+                    wait(0.0005)
+                    local room = game.Workspace.CurrentRooms[game.ReplicatedStorage.GameData.LatestRoom.Value]
+                    local fireplace = room and room.Assets.Fireplace.Fireplace_Logs.Log
+                    if fireplace then
+                        fireplace.FireLight.Brightness = 25
+                    end
+                end)
+            end
+        end)()
 
-if game:GetService("ReplicatedStorage").GameData.Floor.Value == "Hotel" then
- 
-game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
- 
-     SyncHelper:deltaWait(0.0005)
-
-game.Workspace.CurrentRooms[game.ReplicatedStorage.GameData.LatestRoom.Value].Assets.Fireplace.Fireplace_Logs.Log.FireLight.Brightness = 25
-
-end)
-
---[[ ]]--
-
-end
-
+    end)
 end)()
+
 
 -- Mischievous Light
 SyncHelper:deltaWait(0.001)
@@ -460,7 +531,7 @@ for _, v in next, game.Workspace.CurrentRooms[game.ReplicatedStorage.GameData.La
  
     if v.Name == "Painting_Small" then
  
-local paintingchance =  SyncHelper:generateFullRandom(1, 10)
+local paintingchance = SyncHelper:generateFullRandom(1, 10)
  
 if paintingchance == 1 then
  
@@ -1145,9 +1216,9 @@ end)()
  
 coroutine.wrap(function()
  
-game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
+while true do
  
-     SyncHelper:deltaWait(1)
+     wait(0.0001)
  
 	game.Players.LocalPlayer.PlayerGui.MainUI.Jumpscare.Jumpscare_Rush.ImageLabel.ImageColor3 = Color3.fromRGB(255, 0, 0)
  
