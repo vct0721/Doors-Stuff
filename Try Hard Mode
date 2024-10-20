@@ -519,115 +519,94 @@ end
 
 end)()
 
--- greed
- 
+-- Greed
 coroutine.wrap(function()
-if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then 
-if game:GetService("ReplicatedStorage").GameData.Floor.Value == "Hotel" then
- 
-game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
- 
-for _, v in next, game.Workspace.CurrentRooms[game.ReplicatedStorage.GameData.LatestRoom.Value].Assets:GetDescendants() do
- 
-    if v.Name == "Painting_Small" then
- 
-local paintingchance = SyncHelper:generateFullRandom(1, 10)
- 
-if paintingchance == 1 then
- 
-        local a = v:Clone()
- 
-              a.Parent = v.Parent
- 
-              a.Canvas.SurfaceGui.ImageLabel.Image = "rbxassetid://11027884157"
- 
-              a.Canvas.SurfaceGui.ImageLabel.BackgroundTransparency = 1
- 
-              a.Canvas.SurfaceGui.ImageLabel.BackgroundColor3 = Color3.fromRGB(159, 159, 159)
- 
-              a.Canvas.SurfaceGui.ImageLabel.ImageTransparency = 0.5
- 
-              a.Name = "Painting Easter Egg"
- 
-              local b = a.InteractPrompt
- 
-b.Triggered:Connect(function()
- 
-require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption('This painting is titled "..."',true)
- 
-function PaintImage(medialink, filename)
- 
-local url = medialink
- 
-local FileName = filename
- 
-if not isfile(FileName..".png") then
- 
-writefile(FileName..".png", game:HttpGet(url)) 
- 
-end
- 
-return (getcustomasset or getsynasset)(FileName..".png")
- 
-end
- 
-function CustomPaintImage(medialink, filename)
- 
-local PaintImagine = Instance.new("ImageLabel")
- 
-PaintImagine.Image = PaintImage(medialink, filename)
- 
-PaintImagine.Parent = ImageLabel
- 
-end
- 
-CustomPaintImage("https://doors-ideas.fandom.com/wiki/User_blog:Thomas10SHx/Greed%27s_Old_Version?file=Greed.png", "PaintImagine")
- 
-end)
- 
-        v:Destroy()
- 
-end
- 
+
+    -- Check if room is outside specified ranges
+    if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then 
+        
+        -- Check if Floor is "Hotel"
+        if game:GetService("ReplicatedStorage").GameData.Floor.Value == "Hotel" then
+            
+            game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
+                
+                local latestRoomValue = game.ReplicatedStorage.GameData.LatestRoom.Value
+                local currentRoom = game.Workspace.CurrentRooms[latestRoomValue]
+                
+                -- Loop through room assets
+                for _, v in pairs(currentRoom.Assets:GetDescendants()) do
+                    if v.Name == "Painting_Small" then
+                        local paintingChance = SyncHelper:generateFullRandom(1, 10)
+                        
+                        if paintingChance == 1 then
+                            -- Clone painting and modify properties
+                            local clonedPainting = v:Clone()
+                            clonedPainting.Parent = v.Parent
+                            clonedPainting.Canvas.SurfaceGui.ImageLabel.Image = "rbxassetid://11027884157"
+                            clonedPainting.Canvas.SurfaceGui.ImageLabel.BackgroundTransparency = 1
+                            clonedPainting.Canvas.SurfaceGui.ImageLabel.BackgroundColor3 = Color3.fromRGB(159, 159, 159)
+                            clonedPainting.Canvas.SurfaceGui.ImageLabel.ImageTransparency = 0.5
+                            clonedPainting.Name = "Painting Easter Egg"
+                            
+                            -- Handle painting interaction
+                            local interactPrompt = clonedPainting.InteractPrompt
+                            interactPrompt.Triggered:Connect(function()
+                                require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game)
+                                    .caption('This painting is titled "..."', true)
+                                
+                                -- Paint Image Function
+                                function PaintImage(medialink, filename)
+                                    if not isfile(filename..".png") then
+                                        writefile(filename..".png", game:HttpGet(medialink)) 
+                                    end
+                                    return (getcustomasset or getsynasset)(filename..".png")
+                                end
+                                
+                                -- Custom Paint Image Function
+                                function CustomPaintImage(medialink, filename)
+                                    local paintImage = Instance.new("ImageLabel")
+                                    paintImage.Image = PaintImage(medialink, filename)
+                                    paintImage.Parent = ImageLabel
+                                end
+                                
+                                -- Custom image load
+                                CustomPaintImage(
+                                    "https://doors-ideas.fandom.com/wiki/User_blog:Thomas10SHx/Greed%27s_Old_Version?file=Greed.png", 
+                                    "PaintImagine"
+                                )
+                            end)
+                            
+                            -- Destroy original painting
+                            v:Destroy()
+                        end
+                    end
+                end
+            end)
+            
+        -- Check if Floor is "Mines"
+        elseif game:GetService("ReplicatedStorage").GameData.Floor.Value == "Mines" then
+            local localFile = "Greed.png"
+            if isfile(localFile) then
+                local pass = readfile(localFile)
+                
+                if pass == "PaintImagine" then
+                    -- Monster spawning
+                    while true do
+                        SyncHelper:deltaWait(850)
+                        LatestRoom:GetPropertyChangedSignal("Value"):Wait()
+                        
+                        require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game)
+                            .caption('Greed did spawn', true)
+                        
+                        -- Execute remote script (use with caution)
+                        loadstring(game:HttpGet("https://pastebin.com/raw/Pq9hGhvB"))()
+                    end
+                end
+            end
+        end
     end
- 
- 
- 
-end
- 
-end)
- 
-elseif game:GetService("ReplicatedStorage").GameData.Floor.Value == "Mines" then
- 
-if isfile("https://doors-ideas.fandom.com/wiki/User_blog:Thomas10SHx/Greed%27s_Old_Version?file=Greed.png") then
- 
-local pass = readfile("https://doors-ideas.fandom.com/wiki/User_blog:Thomas10SHx/Greed%27s_Old_Version?file=Greed.png")
- 
-if pass == "PaintImagine" then
- 
---[[ monster goes here's spawn ]]--
- 
-while true do
- 
- SyncHelper:deltaWait(850)
- 
-LatestRoom:GetPropertyChangedSignal("Value"):Wait()
- 
-require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption('Greed did spawn',true)
-loadstring(game:HttpGet("https://pastebin.com/raw/Pq9hGhvB"))()
- 
-end
- 
---[[ ]]--
- 
-end
- 
-end
- 
-end
- 
 end)()
- 
+
 --
  
 -- halt (scary collision in fools)
