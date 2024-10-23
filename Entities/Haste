@@ -217,20 +217,30 @@ local function TimerTick(lever)
 end
 
 local function ScriptStart()
-    -- Get the latest room and check if it changed
+    -- Get the latest room number as a string
     local currentRoomValue = ReplicatedStorage.GameData.LatestRoom.Value
 
-    -- If the latest room has changed, allow spawning a new Lever
-    if currentRoomValue ~= latestRoom then
-        latestRoom = currentRoomValue
-        leverSpawned = false  -- Reset lever spawn state for the new room
+    -- Convert the room value to an instance in CurrentRooms
+    local latestRoomInstance = workspace.CurrentRooms:FindFirstChild(currentRoomValue)
 
-        -- Load the current door from the latest room
-        local latestRoomInstance = workspace.CurrentRooms[latestRoom]
-        local door = latestRoomInstance:FindFirstChild("Door")
+    if latestRoomInstance then
+        -- If the latest room has changed, allow spawning a new Lever
+        if currentRoomValue ~= latestRoom then
+            latestRoom = currentRoomValue
+            leverSpawned = false  -- Reset lever spawn state for the new room
 
-        -- Try to spawn the Lever based on the remaining time
-        TrySpawnLeverBasedOnTime(door)
+            -- Get the door inside the latest room
+            local door = latestRoomInstance:FindFirstChild("Door")
+
+            -- Try to spawn the Lever based on the remaining time
+            if door then
+                TrySpawnLeverBasedOnTime(door)
+            else
+                warn("Door not found in the latest room.")
+            end
+        end
+    else
+        warn("Latest room instance not found in CurrentRooms.")
     end
 end
 
