@@ -1,0 +1,174 @@
+-- Caretaker Painting
+-- Credits to [Comet Development] By Chrono
+-- This a edited file is part of the Hotel ++ Project.
+
+local SyncHelper = loadstring(game:HttpGet("https://raw.githubusercontent.com/ChronoAcceleration/Comet-Development/refs/heads/main/Doors/Utility/SyncHelper.lua"))()
+local SyncSeed = SyncHelper:returnSeed()
+local SyncRandom = Random.new(SyncSeed)
+local ScriptUtility = loadstring(game:HttpGet("https://raw.githubusercontent.com/ChronoAcceleration/Comet-Development/refs/heads/main/Doors/Utility/DoorsScriptUtility.lua"))()
+local RoomHook = ScriptUtility.RoomHook:New()
+
+local Players = game:GetService("Players")
+local Player = Players.LocalPlayer
+local Character = Player.Character or Player.CharacterAdded:Wait()
+local PlayerGui = Player.PlayerGui
+local MainUI = PlayerGui.MainUI
+local MainFrame = MainUI.MainFrame
+local RunService = game:GetService("RunService")
+local TweenService = game:GetService("TweenService")
+local NormalPaintingWeight = 50 -- Should be higher than 20
+
+-- Painting names
+local PaintingNames = { "Painting_Small", "Painting_Big", "Painting_VeryBig", "Painting_Tall" }
+
+-- Painting table setup
+local Paintings = {
+	{
+		["ID"]="ActiveCaretaker",
+		["CanBeOn"]={"Painting_Small", "Painting_Big", "Painting_VeryBig", "Painting_Tall"},
+		["PaintingMessage"]="This 'painting' doesn't seem to have a title.",
+		["PaintingMessageDuration"]=5,
+		["PaintingImage"]="https://raw.githubusercontent.com/vct0721/Doors-Stuff/main/Assets/98082709176.png",
+		["Weight"]=1
+	}
+}
+
+-- Load Images
+function GetGithubImage(URL, Name)
+	if not isfile(Name..".png") then
+		writefile(Name..".png", game:HttpGet(URL))
+	end
+	return (getcustomasset or getsynasset)(Name..".png")
+end
+
+for _, PaintingTable in pairs(Paintings) do
+	local PaintingImage = PaintingTable.PaintingImage
+	if string.sub(PaintingImage, 1, 5):lower() == "https" then
+		PaintingTable.PaintingImage = GetGithubImage(PaintingImage, PaintingTable.ID)
+	end
+end
+
+-- Painting weight selection
+function GetPaintingByWeight()
+	local totalWeight, cumulativeWeight = NormalPaintingWeight, 0
+	for _, Painting in pairs(Paintings) do totalWeight = totalWeight + Painting.Weight end
+	local randomWeight = SyncRandom:NextNumber() * totalWeight
+
+	for _, Painting in pairs(Paintings) do
+		cumulativeWeight = cumulativeWeight + Painting.Weight
+		if randomWeight <= cumulativeWeight then return Painting end
+	end
+	return nil
+end
+
+-- Display caption for painting
+function PaintingCaption(Message, Duration)
+	if MainUI:FindFirstChild("LiveCaption") then MainUI:FindFirstChild("LiveCaption"):Destroy() end
+	local CaptionFrame = MainFrame.Caption:Clone()
+	CaptionFrame.Name, CaptionFrame.Visible, CaptionFrame.Text, CaptionFrame.Parent = "LiveCaption", true, Message, MainUI
+	game:GetService("TweenService"):Create(CaptionFrame, TweenInfo.new(Duration or 7, Enum.EasingStyle.Exponential, Enum.EasingDirection.In), {
+		BackgroundTransparency = 1, TextTransparency = 1, TextStrokeTransparency = 2
+	}):Play()
+	game:GetService("TweenService"):Create(CaptionFrame, TweenInfo.new(1.5, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out), {
+		BackgroundColor3 = Color3.new(0, 0, 0)
+	}):Play()
+	game.Debris:AddItem(CaptionFrame, Duration + 10)
+end
+
+-- Function to apply avatar image to painting
+function LoadPaintingTableOnPainting(PaintingModel, PaintingTable)
+	if PaintingModel:GetAttribute("IsCustom") then return end
+	PaintingModel:SetAttribute("IsCustom", true)
+	local Canvas = PaintingModel.Canvas
+	local ImageLabel = Canvas.SurfaceGui:FindFirstChild("ImageLabel") or Instance.new("ImageLabel")
+	ImageLabel.Size, ImageLabel.Parent = UDim2.new(1, 0, 1, 0), Canvas.SurfaceGui
+
+	-- Default painting image
+	ImageLabel.Image = PaintingTable["PaintingImage"]
+
+	-- Trigger proximity effect if player is nearby
+	RunService.Heartbeat:Connect(function()
+		if Character and Character:FindFirstChild("HumanoidRootPart") then
+			local playerPosition = Character.HumanoidRootPart.Position
+			local paintingPosition = PaintingModel.PrimaryPart.Position
+			local distance = (playerPosition - paintingPosition).Magnitude
+
+			-- Check proximity and trigger effect if within 5 studs
+			if distance <= 5 then
+				TriggerPaintingEffect(PaintingModel)
+			end
+		end
+	end)
+end
+
+-- Trigger the effect when the player is close enough to the painting
+function TriggerPaintingEffect(PaintingModel)
+	local humanoid = Character:FindFirstChildOfClass("Humanoid")
+	if not humanoid or humanoid.Health <= 0 then return end
+	
+	local playerAnimation = PaintingModel:FindFirstChild("DeathAnimation")
+	local paintingAnimation = PaintingModel:FindFirstChild("PaintingAnimation")
+
+	-- Set the player's avatar on the painting
+	local Canvas = PaintingModel:FindFirstChild("Canvas")
+	if Canvas then
+		local ImageLabel = Canvas.SurfaceGui:FindFirstChild("ImageLabel")
+		if ImageLabel then
+			ImageLabel.Image = "rbxthumb://type=AvatarHeadShot&id=" .. Player.UserId .. "&w=420&h=420"
+		end
+	end
+
+	if playerAnimation and paintingAnimation then
+		local animator = humanoid:FindFirstChildOfClass("Animator") or humanoid:WaitForChild("Animator")
+		local playerAnimTrack = animator:LoadAnimation(playerAnimation)
+		local paintingAnimTrack = paintingAnimation:Clone()
+		paintingAnimTrack.Parent = PaintingModel
+
+		-- Play both animations simultaneously
+		playerAnimTrack:Play()
+		paintingAnimTrack:Play()
+		
+		-- Tween the player position to the painting's position for "pulling" effect
+		local tweenInfo = TweenInfo.new(1, Enum.EasingStyle.Linear)
+		local tweenGoal = {CFrame = PaintingModel.PrimaryPart.CFrame}
+		local tween = TweenService:Create(Character.HumanoidRootPart, tweenInfo, tweenGoal)
+		tween:Play()
+
+		-- Wait for animations to complete, then kill the player
+		playerAnimTrack.Stopped:Connect(function()
+			humanoid.Health = 0
+		    firesignal(game.ReplicatedStorage.RemotesFolder.DeathHint.OnClientEvent, {"You've died to who you call The Caretaker.","This is a tricky one","Try to stay away from a strange painting."},"Blue")
+		    game:GetService("ReplicatedStorage").GameStats["Player_".. game.Players.LocalPlayer.Name].Total.DeathCause.Value = "The Caretaker"
+		end)
+	else
+		-- If no animations are available, kill the player immediately
+		humanoid.Health = 0
+		firesignal(game.ReplicatedStorage.RemotesFolder.DeathHint.OnClientEvent, {"You've died to who you call The Caretaker.","This is a tricky one","Try to stay away from a strange painting."},"Blue")
+		game:GetService("ReplicatedStorage").GameStats["Player_".. game.Players.LocalPlayer.Name].Total.DeathCause.Value = "The Caretaker"
+	end
+end
+
+-- Check if painting model is valid for custom painting
+function CanLoadPaintingTableOnPaintingModel(t, m)
+	return table.find(t["CanBeOn"], m.Name) ~= nil
+end
+
+function IsPaintingTable(t)
+	return t["ID"] and t["PaintingImage"] and t["PaintingMessage"]
+end
+
+RoomHook:On("ServerRoomChanged", function(Room)
+	repeat task.wait() until Room:FindFirstChild("Assets")
+	local Assets = Room:FindFirstChild("Assets")
+
+	for _, v in Assets:GetChildren() do
+		if table.find(PaintingNames, v.Name) then
+			local Painting = GetPaintingByWeight()
+			if Painting and IsPaintingTable(Painting) and CanLoadPaintingTableOnPaintingModel(Painting, v) then
+				LoadPaintingTableOnPainting(v, Painting)
+			else
+				warn("Could not load painting for ".. v.Name)
+			end
+		end
+	end
+end)
