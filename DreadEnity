@@ -91,7 +91,7 @@ entity.Debug.OnEntityDespawned = function()
     print("Entity has despawned")
 
     ---====== Load achievement giver ======---
-    local achievementGiver = loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Doors/Custom%20Achievements/Source.lua"))()
+    local achievementGiver = loadstring(game:HttpGet("https://raw.githubusercontent.com/vct0721/Doors-Stuff/refs/heads/main/Other/Modifiyed%20Achivements%20Source"))()
 
     ---====== Display achievement ======---
     achievementGiver({
