@@ -1,3 +1,23 @@
+local omg = Instance.new("Model")
+omg.Parent = workspace.CurrentRooms[game.ReplicatedStorage.GameData.LatestRoom.Value]
+omg.Name = "DreadClock"
+
+local currentLoadedRoom=workspace.CurrentRooms[game:GetService("ReplicatedStorage").GameData.LatestRoom.Value]
+local eyes = game:GetObjects("rbxassetid://166258731")[1]
+
+local num=0
+
+if currentLoadedRoom:FindFirstChild("Nodes") then
+   num = math.floor(#currentLoadedRoom.Nodes:GetChildren()/2)
+end
+
+eyes.CFrame=(
+	num==0 and currentLoadedRoom[currentLoadedRoom.Name] or currentLoadedRoom.Nodes[num]
+).CFrame + Vector3.new(0, 5, 0)
+ 
+eyes.Parent=workspace.CurrentRooms[game.ReplicatedStorage.GameData.LatestRoom.Value].Clock
+eyes.Anchored = true
+
 function GitAud(soundlink, filename)
     local url = soundlink
     local FileName = filename
@@ -21,6 +41,8 @@ function CustomGitSound(soundlink, vol, filename, duration)
 end
 
 CustomGitSound("https://github.com/Kotyara19k-Doorsspawner/Random-files/raw/main/ClockSounds.mp3", 1, "DreadClock", 36)
+
+wait(36)
 
 ---====== Define spawner ======---
 
