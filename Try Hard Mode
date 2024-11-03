@@ -11,12 +11,6 @@ if _G.ExecutedTryHard then
 	return
 end
 
---Setting Up GetGenvs
-if getgenv().isTrollface == nil then
-	getgenv().isTrollface = false
-end
-
-
 game.TextChatService.TextChannels.RBXSystem:DisplaySystemMessage("Wait 3-5 or few seconds this loading and/or to open the door!")
 
 local caption = game.Players.LocalPlayer:WaitForChild("PlayerGui").MainUI.MainFrame.Caption
@@ -27,7 +21,7 @@ caption.TextColor3 = Color3.fromRGB(255, 222, 189)
 -- "Why not V1?" Because V1 was released before, but it was too broken to be announced.
 
 -- Flashlight
- loadstring(game:HttpGet("https://raw.githubusercontent.com/thelostw3r/Scripts/refs/heads/main/Normal%20flashlight"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/thelostw3r/Scripts/refs/heads/main/Normal%20flashlight"))()
 
 -- Setting up Locals
 local ScriptUtility = loadstring(game:HttpGet("https://raw.githubusercontent.com/ChronoAcceleration/Comet-Development/refs/heads/main/Doors/Utility/DoorsScriptUtility.lua"))()
@@ -127,51 +121,51 @@ coroutine.wrap(function()
 end)()
 
 -- light's shatter in the library and the dam
- 
+
 coroutine.wrap(function()
- 
-if game:GetService("ReplicatedStorage").GameData.Floor.Value == "Hotel" then
- 
-game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
- 
-if game.ReplicatedStorage.GameData.LatestRoom.Value == 50 then
- 
-game.Workspace.Ambience_Dark:Play()
- 
-wait(6.4941)
- 
-local currentrooms = game.Workspace.CurrentRooms[game.ReplicatedStorage.GameData.LatestRoom.Value]
- 
-require(game.ReplicatedStorage.ClientModules.Module_Events).shatter(currentrooms)
- 
-end
- 
-end)
- 
-elseif game:GetService("ReplicatedStorage").GameData.Floor.Value == "Mines" then
- 
-game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
- 
-if game.ReplicatedStorage.GameData.LatestRoom.Value == 100 then
- 
-wait(1)
- 
-local currentrooms = game.Workspace.CurrentRooms[game.ReplicatedStorage.GameData.LatestRoom.Value]
- 
-require(game.ReplicatedStorage.ClientModules.Module_Events).shatter(currentrooms)
- 
-end
- 
-end)
- 
---[[ ]]--
- 
-end
- 
+
+	if game:GetService("ReplicatedStorage").GameData.Floor.Value == "Hotel" then
+
+		game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
+
+			if game.ReplicatedStorage.GameData.LatestRoom.Value == 50 then
+
+				game.Workspace.Ambience_Dark:Play()
+
+				wait(6.4941)
+
+				local currentrooms = game.Workspace.CurrentRooms[game.ReplicatedStorage.GameData.LatestRoom.Value]
+
+				require(game.ReplicatedStorage.ClientModules.Module_Events).shatter(currentrooms)
+
+			end
+
+		end)
+
+	elseif game:GetService("ReplicatedStorage").GameData.Floor.Value == "Mines" then
+
+		game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
+
+			if game.ReplicatedStorage.GameData.LatestRoom.Value == 100 then
+
+				wait(1)
+
+				local currentrooms = game.Workspace.CurrentRooms[game.ReplicatedStorage.GameData.LatestRoom.Value]
+
+				require(game.ReplicatedStorage.ClientModules.Module_Events).shatter(currentrooms)
+
+			end
+
+		end)
+
+		--[[ ]]--
+
+	end
+
 end)()
 
 -- Key New Sounds
- 
+
 loadstring(game:HttpGet("https://pastebin.com/raw/b1cQKBB2"))()
 
 -- Door New Materials
@@ -298,48 +292,48 @@ horrorSound.Looped = true
 horrorSound:Play()
 
 -- Screech setup
- 
+
 coroutine.wrap(function()
- 
-if game:GetService("ReplicatedStorage").GameData.Floor.Value == "Hotel" then
- 
-while true do
- 
-wait(0.1)
- 
-game.ReplicatedStorage.Entities.Screech.Top.Eyes.Color = Color3.fromRGB(255, 255, 0)
-game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.RemoteListener.Modules.Screech.Caught.SoundId = "rbxassetid://7492033495"
-game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.RemoteListener.Modules.Screech.Caught.PlaybackSpeed = 1.6
-game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.RemoteListener.Modules.Screech.Scary.SoundId = "rbxassetid://7492033495"
-game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.RemoteListener.Modules.Screech.Scary.PlaybackSpeed = 1.6
-game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.RemoteListener.Modules.Screech.Attack.SoundId = "rbxassetid://8080941676"
- 
-end
- 
-elseif game:GetService("ReplicatedStorage").GameData.Floor.Value == "Mines" then
- 
-while true do
- 
-wait(0.1)
- 
-game.ReplicatedStorage.Entities.Screech.Top.Eyes.Color = Color3.fromRGB(255, 255, 0)
-game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.RemoteListener.Modules.Screech.Caught.SoundId = "rbxassetid://7492033495"
-game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.RemoteListener.Modules.Screech.Caught.PlaybackSpeed = 1.6
-game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.RemoteListener.Modules.Screech.Scary.SoundId = "rbxassetid://7492033495"
-game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.RemoteListener.Modules.Screech.Scary.PlaybackSpeed = 1.6
-game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.RemoteListener.Modules.Screech.Attack.SoundId = "rbxassetid://8080941676"
- 
-end
- 
-elseif game:GetService("ReplicatedStorage").GameData.Floor.Value == "Fools" then
- 
-game.ReplicatedStorage.Entities.Screech.Top.Eyes.Color = Color3.fromRGB(255, 255, 0)
-game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.RemoteListener.Modules.Screech.Attack.SoundId = "rbxassetid://8080941676"
- 
---[[ ]]--
- 
-end
- 
+
+	if game:GetService("ReplicatedStorage").GameData.Floor.Value == "Hotel" then
+
+		while true do
+
+			wait(0.1)
+
+			game.ReplicatedStorage.Entities.Screech.Top.Eyes.Color = Color3.fromRGB(255, 255, 0)
+			game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.RemoteListener.Modules.Screech.Caught.SoundId = "rbxassetid://7492033495"
+			game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.RemoteListener.Modules.Screech.Caught.PlaybackSpeed = 1.6
+			game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.RemoteListener.Modules.Screech.Scary.SoundId = "rbxassetid://7492033495"
+			game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.RemoteListener.Modules.Screech.Scary.PlaybackSpeed = 1.6
+			game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.RemoteListener.Modules.Screech.Attack.SoundId = "rbxassetid://8080941676"
+
+		end
+
+	elseif game:GetService("ReplicatedStorage").GameData.Floor.Value == "Mines" then
+
+		while true do
+
+			wait(0.1)
+
+			game.ReplicatedStorage.Entities.Screech.Top.Eyes.Color = Color3.fromRGB(255, 255, 0)
+			game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.RemoteListener.Modules.Screech.Caught.SoundId = "rbxassetid://7492033495"
+			game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.RemoteListener.Modules.Screech.Caught.PlaybackSpeed = 1.6
+			game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.RemoteListener.Modules.Screech.Scary.SoundId = "rbxassetid://7492033495"
+			game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.RemoteListener.Modules.Screech.Scary.PlaybackSpeed = 1.6
+			game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.RemoteListener.Modules.Screech.Attack.SoundId = "rbxassetid://8080941676"
+
+		end
+
+	elseif game:GetService("ReplicatedStorage").GameData.Floor.Value == "Fools" then
+
+		game.ReplicatedStorage.Entities.Screech.Top.Eyes.Color = Color3.fromRGB(255, 255, 0)
+		game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.RemoteListener.Modules.Screech.Attack.SoundId = "rbxassetid://8080941676"
+
+		--[[ ]]--
+
+	end
+
 end)()
 
 -- Ambience
@@ -440,1823 +434,1944 @@ end)()
 
 -- Entities Section
 
-	--Snare Other Floors
+--Snare Other Floors
 
-	coroutine.wrap(function()
-
-		while true do
-
-			if IsMines or IsRooms or IsBackHotel then
-
-				SyncHelper:deltaWait(SyncHelper:generateFullRandom(5, 16))
-
-				loadstring(game:HttpGet("https://raw.githubusercontent.com/DripCapybara/Test/refs/heads/main/Doors/SnareSpawner.lua"))()
-
-			end
-
-		end
-
-	end)()
-
-	--Giggle in Hotel
-
-	coroutine.wrap(function()
-
-		while true do
-
-			if IsHotel then
-
-				SyncHelper:deltaWait(SyncHelper:generateFullRandom(1, 5))
-
-				getgenv().GIGGLE_SPAWN_CONFIG = {
-					Damage = 6,
-					AttackingTime =  SyncHelper:generateFullRandom(7, 10), -- The time giggle will be attacking for.
-					FallSpeed =  SyncHelper:generateFullRandom(2, 3),        -- Speed for when giggle spawns, can be mininum 2 and how high you want
-
-					Stunnable = true,    -- If set to true, Giggle will be stunnable with glowstick
-					StunTime = 5, -- The time giggle will be stun for
-
-					RagdollThrowForce = 50,    -- The Ragdoll's Force when its thrown
-					RagdollDissapears = true,  -- If set to true the ragdoll will dissapear once giggle finishes attacking.
-
-					RoomSpawning = {
-						Enabled = true   -- If set to false, giggle will spawn around the player.
-					},
-
-					PlayerSpawning = { -- This table will be used if Room Spawning is Disabled
-						MinRadius = -20,  -- The minimum distance giggle can spawn from the player.
-						MaxRadius = 20.  --  The maximum distance giggle can spawn from the player.
-					},
-
-					SpawningKey = { -- Key for Spawning
-						Enabled = false,  -- If enabled once the key is pressed, giggle will spawn.
-						Key = "G"    -- Key that is used for spawning giggle
-					}
-				}
-
-				loadstring(game:HttpGet("https://raw.githubusercontent.com/DripCapybara/Test/refs/heads/main/Doors/GiggleSpawn.lua"))()
-
-
-			end
-
-		end
-
-	end)()
-
-	-- depth
-
-	coroutine.wrap(function()
-
-		while true do
-
-			if not IsSeekChase or IsFigure or IsGrumble then
-				if IsMines then
-					SyncHelper:deltaWait(SyncHelper:generateFullRandom(290, 330))
-					LatestRoom:GetPropertyChangedSignal("Value"):Wait()
-
-					local cue2 = Instance.new("Sound")
-					cue2.Parent = game.Workspace
-					cue2.Name = "Spawn"
-					cue2.SoundId = "rbxassetid://8627516764"
-					cue2.Volume = 1
-					cue2.PlaybackSpeed = 1
-					cue2:Play()
-					game.Lighting.MainColorCorrection.TintColor = Color3.fromRGB(0, 100, 255)
-					game.Lighting.MainColorCorrection.Contrast = 5
-					local tween = game:GetService("TweenService")
-					tween:Create(game.Lighting.MainColorCorrection, TweenInfo.new(2.5), {Contrast = 0}):Play()
-					local TweenService = game:GetService("TweenService")
-					local TW = TweenService:Create(game.Lighting.MainColorCorrection, TweenInfo.new(5),{TintColor = Color3.fromRGB(255, 255, 255)})
-					TW:Play()
-					loadstring(game:HttpGet("https://pastebin.com/raw/uyYe9bZQ"))()
-
-				end
-
-			end
-
-		end
-
-	end)()
-
--- Stare
- 
 coroutine.wrap(function()
- 
-if IsMines then
- 
-while true do
- 
-local sctm = SyncHelper:generateFullRandom(170,205)
- 
-SyncHelper:deltaWait(sctm)
- 
-game.ReplicatedStorage.GameData.LatestRoom.Changed:Wait()
- 
-loadstring(game:HttpGet("https://pastebin.com/raw/VUHT2JL5"))()
- 
-end
- 
---[[ ]]--
- 
-end
- 
+
+	while true do
+
+		if IsMines or IsRooms or IsBackHotel then
+
+			SyncHelper:deltaWait(SyncHelper:generateFullRandom(5, 16))
+
+			loadstring(game:HttpGet("https://raw.githubusercontent.com/DripCapybara/Test/refs/heads/main/Doors/SnareSpawner.lua"))()
+
+		end
+
+	end
+
 end)()
 
-	-- blackout
+--Giggle in Hotel
 
-	coroutine.wrap(function()
+coroutine.wrap(function()
 
-		if IsMines then
+	while true do
 
-			while true do
+		if IsHotel then
 
-				SyncHelper:deltaWait(SyncHelper:generateFullRandom(790, 1290))
+			SyncHelper:deltaWait(SyncHelper:generateFullRandom(1, 5))
 
-				loadstring(game:HttpGet("https://raw.githubusercontent.com/Jahani-john/mayhem-mode/main/mayhemmode-main/ObfuscatedEntities/Blackout-obfuscated.lua"))()
+			getgenv().GIGGLE_SPAWN_CONFIG = {
+				Damage = 6,
+				AttackingTime =  SyncHelper:generateFullRandom(7, 10), -- The time giggle will be attacking for.
+				FallSpeed =  SyncHelper:generateFullRandom(2, 3),        -- Speed for when giggle spawns, can be mininum 2 and how high you want
+
+				Stunnable = true,    -- If set to true, Giggle will be stunnable with glowstick
+				StunTime = 5, -- The time giggle will be stun for
+
+				RagdollThrowForce = 50,    -- The Ragdoll's Force when its thrown
+				RagdollDissapears = true,  -- If set to true the ragdoll will dissapear once giggle finishes attacking.
+
+				RoomSpawning = {
+					Enabled = true   -- If set to false, giggle will spawn around the player.
+				},
+
+				PlayerSpawning = { -- This table will be used if Room Spawning is Disabled
+					MinRadius = -20,  -- The minimum distance giggle can spawn from the player.
+					MaxRadius = 20.  --  The maximum distance giggle can spawn from the player.
+				},
+
+				SpawningKey = { -- Key for Spawning
+					Enabled = false,  -- If enabled once the key is pressed, giggle will spawn.
+					Key = "G"    -- Key that is used for spawning giggle
+				}
+			}
+
+			loadstring(game:HttpGet("https://raw.githubusercontent.com/DripCapybara/Test/refs/heads/main/Doors/GiggleSpawn.lua"))()
+
+
+		end
+
+	end
+
+end)()
+
+-- depth
+
+coroutine.wrap(function()
+
+	while true do
+
+		if not IsSeekChase or IsFigure or IsGrumble then
+			if IsMines then
+				SyncHelper:deltaWait(SyncHelper:generateFullRandom(290, 330))
+				LatestRoom:GetPropertyChangedSignal("Value"):Wait()
+
+				local cue2 = Instance.new("Sound")
+				cue2.Parent = game.Workspace
+				cue2.Name = "Spawn"
+				cue2.SoundId = "rbxassetid://8627516764"
+				cue2.Volume = 1
+				cue2.PlaybackSpeed = 1
+				cue2:Play()
+				game.Lighting.MainColorCorrection.TintColor = Color3.fromRGB(0, 100, 255)
+				game.Lighting.MainColorCorrection.Contrast = 5
+				local tween = game:GetService("TweenService")
+				tween:Create(game.Lighting.MainColorCorrection, TweenInfo.new(2.5), {Contrast = 0}):Play()
+				local TweenService = game:GetService("TweenService")
+				local TW = TweenService:Create(game.Lighting.MainColorCorrection, TweenInfo.new(5),{TintColor = Color3.fromRGB(255, 255, 255)})
+				TW:Play()
+				loadstring(game:HttpGet("https://pastebin.com/raw/uyYe9bZQ"))()
 
 			end
 
 		end
 
-	end)()
+	end
 
-	-- Dread (FG)
-	coroutine.wrap(function()
+end)()
+
+-- Stare
+
+coroutine.wrap(function()
+
+	if IsMines then
+
 		while true do
-			if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
-				SyncHelper:deltaWait(SyncHelper:generateFullRandom(90, 130))
-				if not IsSeekChase or IsFigure or IsGrumble then
-					LatestRoom:GetPropertyChangedSignal("Value"):Wait()
-					loadstring(game:HttpGet("https://raw.githubusercontent.com/vct0721/Doors-Stuff/main/DreadEnity"))()
+
+			local sctm = SyncHelper:generateFullRandom(170,205)
+
+			SyncHelper:deltaWait(sctm)
+
+			game.ReplicatedStorage.GameData.LatestRoom.Changed:Wait()
+
+			loadstring(game:HttpGet("https://pastebin.com/raw/VUHT2JL5"))()
+
+		end
+
+		--[[ ]]--
+
+	end
+
+end)()
+
+-- blackout
+
+coroutine.wrap(function()
+
+	if IsMines then
+
+		while true do
+
+			SyncHelper:deltaWait(SyncHelper:generateFullRandom(790, 1290))
+
+			loadstring(game:HttpGet("https://raw.githubusercontent.com/Jahani-john/mayhem-mode/main/mayhemmode-main/ObfuscatedEntities/Blackout-obfuscated.lua"))()
+
+		end
+
+	end
+
+end)()
+
+-- Dread (FG)
+coroutine.wrap(function()
+	while true do
+		if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
+			SyncHelper:deltaWait(SyncHelper:generateFullRandom(90, 130))
+			if not IsSeekChase or IsFigure or IsGrumble then
+				LatestRoom:GetPropertyChangedSignal("Value"):Wait()
+				loadstring(game:HttpGet("https://raw.githubusercontent.com/vct0721/Doors-Stuff/main/DreadEnity"))()
+			end
+		end
+	end
+end)()
+
+-- Dreadfestation (OG Dread)
+coroutine.wrap(function()
+	while true do
+		if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
+			SyncHelper:deltaWait(SyncHelper:generateFullRandom(90, 130))
+			if not IsSeekChase or IsFigure or IsGrumble then
+				spawn(function()
+					require(game:GetService("Players").LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.RemoteListener.Modules.Dread)(require(game:GetService("Players").LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game))
+				end)
+				repeat SyncHelper:deltaWait() until game:GetService("Players").LocalPlayer.PlayerGui.MainUI.MainFrame.DreadVignette.Visible == true
+				wait(1)
+				repeat SyncHelper:deltaWait() until game:GetService("Players").LocalPlayer.PlayerGui.MainUI.MainFrame.DreadVignette.ImageColor3 ~= Color3.fromRGB(0,0,0) or not workspace:FindFirstChild('Dread')
+				if not workspace:FindFirstChild("Dread") then
+					return
 				end
+				game:GetService("ReplicatedStorage") .GameStats["Player_".. game.Players.LocalPlayer.Name].Total.DeathCause.Value = "Dread"
+				spawn(function()
+					require(game:GetService("Players").LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.RemoteListener.Jumpscares.Dread) (require(game:GetService("Players").LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game))
+				end)
+				wait(1)
+				pcall(function()
+					firesignal(game.ReplicatedStorage.RemotesFolder.DeathHint.OnClientEvent, {"Hello, it's me again", "You died to one more of the Dread Variations", "This one, they call it Dreadfestation..", "Try not to stall. Keep moving!"}, "Yellow")
+				end)
+				wait(1)
+				game.Players.LocalPlayer.Character.Humanoid:TakeDamage(1000)
 			end
 		end
-	end)()
-	
-	-- Dreadfestation (OG Dread)
-	coroutine.wrap(function()
-		while true do
-			if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
-				SyncHelper:deltaWait(SyncHelper:generateFullRandom(90, 130))
-				if not IsSeekChase or IsFigure or IsGrumble then
-                spawn(function()
-                require(game:GetService("Players").LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.RemoteListener.Modules.Dread)(require(game:GetService("Players").LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game))
-                end)
-                repeat SyncHelper:deltaWait() until game:GetService("Players").LocalPlayer.PlayerGui.MainUI.MainFrame.DreadVignette.Visible == true
-                wait(1)
-                repeat SyncHelper:deltaWait() until game:GetService("Players").LocalPlayer.PlayerGui.MainUI.MainFrame.DreadVignette.ImageColor3 ~= Color3.fromRGB(0,0,0) or not workspace:FindFirstChild('Dread')
-                if not workspace:FindFirstChild("Dread") then
-                return
-                end
-                 game:GetService("ReplicatedStorage") .GameStats["Player_".. game.Players.LocalPlayer.Name].Total.DeathCause.Value = "Dread"
-                 spawn(function()
-                 require(game:GetService("Players").LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.RemoteListener.Jumpscares.Dread) (require(game:GetService("Players").LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game))
-                 end)
-                 wait(1)
-                 pcall(function()
-                   firesignal(game.ReplicatedStorage.RemotesFolder.DeathHint.OnClientEvent, {"Hello, it's me again", "You died to one more of the Dread Variations", "This one, they call it Dreadfestation..", "Try not to stall. Keep moving!"}, "Yellow")
-                 end)
-                 wait(1)
-                 game.Players.LocalPlayer.Character.Humanoid:TakeDamage(1000)
-				end
-			end
-		end
-	end)()
+	end
+end)()
 
-	-- Cease
-	coroutine.wrap(function()
-		while true do
-			if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
-				SyncHelper:deltaWait(SyncHelper:generateFullRandom(150, 230))
-				if not IsSeekChase or IsFigure or IsMines then
-					LatestRoom:GetPropertyChangedSignal("Value"):Wait()
-					SyncHelper:deltaWait(0)
-					loadstring(game:HttpGet("https://pastefy.app/AaIrbcZS/raw"))()
-				end
+-- Cease
+coroutine.wrap(function()
+	while true do
+		if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
+			SyncHelper:deltaWait(SyncHelper:generateFullRandom(150, 230))
+			if not IsSeekChase or IsFigure or IsMines then
+				LatestRoom:GetPropertyChangedSignal("Value"):Wait()
+				SyncHelper:deltaWait(0)
+				loadstring(game:HttpGet("https://pastefy.app/AaIrbcZS/raw"))()
 			end
 		end
-	end)()
+	end
+end)()
 
-	-- Frostbite
-	coroutine.wrap(function()
-		while true do
-			if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
-				SyncHelper:deltaWait(SyncHelper:generateFullRandom(150, 250))
-				if not IsSeekChase or IsFigure or IsMines then
-					LatestRoom:GetPropertyChangedSignal("Value"):Wait()
-					SyncHelper:deltaWait(0)
-					loadstring(game:HttpGet("https://raw.githubusercontent.com/huyhoanggphuc/Entity-obfuscate/refs/heads/main/Frostbite.lua"))()
-				end
+-- Frostbite
+coroutine.wrap(function()
+	while true do
+		if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
+			SyncHelper:deltaWait(SyncHelper:generateFullRandom(150, 250))
+			if not IsSeekChase or IsFigure or IsMines then
+				LatestRoom:GetPropertyChangedSignal("Value"):Wait()
+				SyncHelper:deltaWait(0)
+				loadstring(game:HttpGet("https://raw.githubusercontent.com/huyhoanggphuc/Entity-obfuscate/refs/heads/main/Frostbite.lua"))()
 			end
 		end
-	end)()
+	end
+end)()
 
-	-- A-60
-	coroutine.wrap(function()
-		while true do
-			if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
-				SyncHelper:deltaWait(SyncHelper:generateFullRandom(250, 380))
-				if not IsSeekChase or IsFigure or IsGrumble then
-					LatestRoom:GetPropertyChangedSignal("Value"):Wait()
-					loadstring(game:HttpGet("https://pastebin.com/raw/q0JC9BAt"))()
-				end
+-- A-60
+coroutine.wrap(function()
+	while true do
+		if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
+			SyncHelper:deltaWait(SyncHelper:generateFullRandom(250, 380))
+			if not IsSeekChase or IsFigure or IsGrumble then
+				LatestRoom:GetPropertyChangedSignal("Value"):Wait()
+				loadstring(game:HttpGet("https://pastebin.com/raw/q0JC9BAt"))()
 			end
 		end
-	end)()
+	end
+end)()
 
-	-- A-60(HC)
-	coroutine.wrap(function()
-		while true do
-			if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
-				SyncHelper:deltaWait(SyncHelper:generateFullRandom(350, 680))
-				if not IsSeekChase or IsFigure or IsGrumble then
-					LatestRoom:GetPropertyChangedSignal("Value"):Wait()
-					loadstring(game:HttpGet("https://raw.githubusercontent.com/huyhoanggphuc/Entity-obfuscate/refs/heads/main/A-60%20Hardcore.lua"))()
-				end
+-- A-60(HC)
+coroutine.wrap(function()
+	while true do
+		if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
+			SyncHelper:deltaWait(SyncHelper:generateFullRandom(350, 680))
+			if not IsSeekChase or IsFigure or IsGrumble then
+				LatestRoom:GetPropertyChangedSignal("Value"):Wait()
+				loadstring(game:HttpGet("https://raw.githubusercontent.com/huyhoanggphuc/Entity-obfuscate/refs/heads/main/A-60%20Hardcore.lua"))()
 			end
 		end
-	end)()
+	end
+end)()
 
-	-- Threat
-	coroutine.wrap(function()
-		while true do
-			if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
-				SyncHelper:deltaWait(SyncHelper:generateFullRandom(80, 520))
-				if not IsSeekChase or IsFigure or IsMines then
-					LatestRoom:GetPropertyChangedSignal("Value"):Wait()
-					SyncHelper:deltaWait(2)
-					loadstring(game:HttpGet("https://raw.githubusercontent.com/huyhoanggphuc/Entity-obfuscate/refs/heads/main/Threat.lua"))()
-				end
+-- Threat
+coroutine.wrap(function()
+	while true do
+		if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
+			SyncHelper:deltaWait(SyncHelper:generateFullRandom(80, 520))
+			if not IsSeekChase or IsFigure or IsMines then
+				LatestRoom:GetPropertyChangedSignal("Value"):Wait()
+				SyncHelper:deltaWait(2)
+				loadstring(game:HttpGet("https://raw.githubusercontent.com/huyhoanggphuc/Entity-obfuscate/refs/heads/main/Threat.lua"))()
 			end
 		end
-	end)()
+	end
+end)()
 
-	-- Twister
-	coroutine.wrap(function()
-		while true do
-		   if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
+-- Twister
+coroutine.wrap(function()
+	while true do
+		if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
 			SyncHelper:deltaWait(SyncHelper:generateFullRandom(30, 80))
 			if not IsSeekChase or IsFigure then
 				LatestRoom:GetPropertyChangedSignal("Value"):Wait()
 				loadstring(game:HttpGet("https://raw.githubusercontent.com/huyhoanggphuc/Entity-obfuscate/refs/heads/main/Twister.lua"))()
-			   end
 			end
 		end
-	end)()
+	end
+end)()
 
-	-- Torment
-	coroutine.wrap(function()
-		while true do
-			if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
-				SyncHelper:deltaWait(SyncHelper:generateFullRandom(250, 400))
-				if not IsSeekChase or IsFigure or IsGrumble then
-					LatestRoom:GetPropertyChangedSignal("Value"):Wait()
-					SyncHelper:deltaWait(0)
-					loadstring(game:HttpGet("https://pastefy.app/JOymYI5l/raw"))()
-				end
+-- Torment
+coroutine.wrap(function()
+	while true do
+		if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
+			SyncHelper:deltaWait(SyncHelper:generateFullRandom(250, 400))
+			if not IsSeekChase or IsFigure or IsGrumble then
+				LatestRoom:GetPropertyChangedSignal("Value"):Wait()
+				SyncHelper:deltaWait(0)
+				loadstring(game:HttpGet("https://pastefy.app/JOymYI5l/raw"))()
 			end
 		end
-	end)()
+	end
+end)()
 
-	-- Silence
-	coroutine.wrap(function()
-		while true do
-			if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
-				SyncHelper:deltaWait(SyncHelper:generateFullRandom(450, 890))
-				if not IsSeekChase or IsFigure or IsMines then
-					LatestRoom:GetPropertyChangedSignal("Value"):Wait()
-					SyncHelper:deltaWait(2)
-					loadstring(game:HttpGet("https://pastebin.com/raw/uNnkcsGU"))()
-				end		
+-- Silence
+coroutine.wrap(function()
+	while true do
+		if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
+			SyncHelper:deltaWait(SyncHelper:generateFullRandom(450, 890))
+			if not IsSeekChase or IsFigure or IsMines then
+				LatestRoom:GetPropertyChangedSignal("Value"):Wait()
+				SyncHelper:deltaWait(2)
+				loadstring(game:HttpGet("https://pastebin.com/raw/uNnkcsGU"))()
+			end		
+		end
+	end
+end)()
+
+-- Hungered
+coroutine.wrap(function()
+	while true do
+		if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
+			SyncHelper:deltaWait(SyncHelper:generateFullRandom(693, 780))
+			if not IsSeekChase or IsFigure or IsGrumble then
+				LatestRoom:GetPropertyChangedSignal("Value"):Wait()
+				loadstring(game:HttpGet("https://pastebin.com/raw/JPL5TUtW"))()
 			end
 		end
-	end)()
+	end
+end)()
 
-	-- Hungered
-	coroutine.wrap(function()
-		while true do
-			if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
-				SyncHelper:deltaWait(SyncHelper:generateFullRandom(693, 780))
-				if not IsSeekChase or IsFigure or IsGrumble then
-					LatestRoom:GetPropertyChangedSignal("Value"):Wait()
-					loadstring(game:HttpGet("https://pastebin.com/raw/JPL5TUtW"))()
-				end
-			end
-		end
-	end)()
-
-	-- The Watcher
-	coroutine.wrap(function()
-		while true do
-			if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
-				SyncHelper:deltaWait(SyncHelper:generateFullRandom(199, 390))
-				if IsMines then
-					if not IsSeekChase or IsFigure or IsGrumble then
-						LatestRoom:GetPropertyChangedSignal("Value"):Wait()
-						SyncHelper:deltaWait(0)
-						loadstring(game:HttpGet("https://pastefy.app/S1kL47Q0/raw"))()
-					end
-				end
-			end
-		end
-	end)()
-
-	-- A-25
-	coroutine.wrap(function()
-		while true do
+-- The Watcher
+coroutine.wrap(function()
+	while true do
+		if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
+			SyncHelper:deltaWait(SyncHelper:generateFullRandom(199, 390))
 			if IsMines then
-				SyncHelper:deltaWait(SyncHelper:generateFullRandom(250, 490))
 				if not IsSeekChase or IsFigure or IsGrumble then
 					LatestRoom:GetPropertyChangedSignal("Value"):Wait()
 					SyncHelper:deltaWait(0)
-					loadstring(game:HttpGet("https://pastefy.app/6l2QHB8I/raw"))()
+					loadstring(game:HttpGet("https://pastefy.app/S1kL47Q0/raw"))()
 				end
 			end
 		end
-	end)()
+	end
+end)()
 
-	-- Ripper
-	coroutine.wrap(function()
-		while true do
-			if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
-				SyncHelper:deltaWait(SyncHelper:generateFullRandom(100, 210))
-				if not IsSeekChase or IsFigure or IsGrumble then
-					LatestRoom:GetPropertyChangedSignal("Value"):Wait()
-					SyncHelper:deltaWait(0)
-					loadstring(game:HttpGet("https://pastefy.app/Mfhh3A8M/raw"))()
-				end
+-- A-25
+coroutine.wrap(function()
+	while true do
+		if IsMines then
+			SyncHelper:deltaWait(SyncHelper:generateFullRandom(250, 490))
+			if not IsSeekChase or IsFigure or IsGrumble then
+				LatestRoom:GetPropertyChangedSignal("Value"):Wait()
+				SyncHelper:deltaWait(0)
+				loadstring(game:HttpGet("https://pastefy.app/6l2QHB8I/raw"))()
 			end
 		end
-	end)()
+	end
+end)()
 
-	-- A-120
-	coroutine.wrap(function()
-		while true do
-			if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
-				local sctm =  SyncHelper:generateFullRandom(190, 350)
-				SyncHelper:deltaWait(sctm)
-				if not IsSeekChase or IsFigure or IsGrumble then
-					LatestRoom:GetPropertyChangedSignal("Value"):Wait()
-					loadstring(game:HttpGet("https://pastebin.com/raw/S9KGv5Ce"))()
-				end
+-- Ripper
+coroutine.wrap(function()
+	while true do
+		if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
+			SyncHelper:deltaWait(SyncHelper:generateFullRandom(100, 210))
+			if not IsSeekChase or IsFigure or IsGrumble then
+				LatestRoom:GetPropertyChangedSignal("Value"):Wait()
+				SyncHelper:deltaWait(0)
+				loadstring(game:HttpGet("https://pastefy.app/Mfhh3A8M/raw"))()
 			end
 		end
-	end)()
-	
-	-- A-200
-	coroutine.wrap(function()
-		while true do
-			if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
-				local sctm =  SyncHelper:generateFullRandom(290, 450)
-				SyncHelper:deltaWait(sctm)
-				if not IsSeekChase or IsFigure or IsGrumble then
-					LatestRoom:GetPropertyChangedSignal("Value"):Wait()
-					loadstring(game:HttpGet("https://pastebin.com/raw/S9KGv5Ce"))()
-				end
+	end
+end)()
+
+-- A-120
+coroutine.wrap(function()
+	while true do
+		if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
+			local sctm =  SyncHelper:generateFullRandom(190, 350)
+			SyncHelper:deltaWait(sctm)
+			if not IsSeekChase or IsFigure or IsGrumble then
+				LatestRoom:GetPropertyChangedSignal("Value"):Wait()
+				loadstring(game:HttpGet("https://pastebin.com/raw/S9KGv5Ce"))()
 			end
 		end
-	end)()
+	end
+end)()
 
-	-- TryHard Blitz
-	coroutine.wrap(function()
-		while true do
-			if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
-				local sctm =  SyncHelper:generateFullRandom(50, 250)
-				SyncHelper:deltaWait(sctm)
-				if not IsSeekChase or IsFigure or IsGrumble then
-					loadstring(game:HttpGet("https://pastefy.app/XyEFOSsV/raw"))()
-				end
+-- A-200
+coroutine.wrap(function()
+	while true do
+		if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
+			local sctm =  SyncHelper:generateFullRandom(290, 450)
+			SyncHelper:deltaWait(sctm)
+			if not IsSeekChase or IsFigure or IsGrumble then
+				LatestRoom:GetPropertyChangedSignal("Value"):Wait()
+				loadstring(game:HttpGet("https://pastebin.com/raw/S9KGv5Ce"))()
 			end
 		end
-	end)()
+	end
+end)()
 
-	-- Matcher
-	coroutine.wrap(function()
-		while true do
-			if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
-				local sctm =  SyncHelper:generateFullRandom(50, 150)
-				SyncHelper:deltaWait(sctm)
-				if not IsSeekChase or IsFigure or IsGrumble then
-					LatestRoom:GetPropertyChangedSignal("Value"):Wait()
-					SyncHelper:deltaWait(0.3)
-					game.Lighting.MainColorCorrection.TintColor = Color3.fromRGB(212, 255, 212)
-					game.Lighting.MainColorCorrection.Contrast = 0.3
-					local tween = game:GetService("TweenService"):Create(game.Lighting.MainColorCorrection, TweenInfo.new(0.5), {Contrast = 0})
-					tween:Play()
-					local TW = game:GetService("TweenService"):Create(game.Lighting.MainColorCorrection, TweenInfo.new(0.5), {TintColor = Color3.fromRGB(255, 255, 255)})
-					TW:Play()
-					local roast = Instance.new("Sound")
-					roast.Parent = workspace
-					roast.Name = "roast"
-					roast.SoundId = "rbxassetid://9125936117"
-					roast.Volume = 0.5
-					roast.Pitch = 3
-					roast:Play()
-					SyncHelper:deltaWait(0.6)
-					roast:Destroy()
-					loadstring(game:HttpGet("https://pastebin.com/raw/XzuW1A1p"))()
-				end
+-- TryHard Blitz
+coroutine.wrap(function()
+	while true do
+		if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
+			local sctm =  SyncHelper:generateFullRandom(50, 250)
+			SyncHelper:deltaWait(sctm)
+			if not IsSeekChase or IsFigure or IsGrumble then
+				loadstring(game:HttpGet("https://pastefy.app/XyEFOSsV/raw"))()
 			end
 		end
-	end)()
+	end
+end)()
 
-	-- Shocker 
-	coroutine.wrap(function()
-		while true do
-			wait(math.random(6,50))
-			local Players = game:GetService("Players")
-			local Workspace = game:GetService("Workspace")
+-- Matcher
+coroutine.wrap(function()
+	while true do
+		if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
+			local sctm =  SyncHelper:generateFullRandom(50, 150)
+			SyncHelper:deltaWait(sctm)
+			if not IsSeekChase or IsFigure or IsGrumble then
+				LatestRoom:GetPropertyChangedSignal("Value"):Wait()
+				SyncHelper:deltaWait(0.3)
+				game.Lighting.MainColorCorrection.TintColor = Color3.fromRGB(212, 255, 212)
+				game.Lighting.MainColorCorrection.Contrast = 0.3
+				local tween = game:GetService("TweenService"):Create(game.Lighting.MainColorCorrection, TweenInfo.new(0.5), {Contrast = 0})
+				tween:Play()
+				local TW = game:GetService("TweenService"):Create(game.Lighting.MainColorCorrection, TweenInfo.new(0.5), {TintColor = Color3.fromRGB(255, 255, 255)})
+				TW:Play()
+				local roast = Instance.new("Sound")
+				roast.Parent = workspace
+				roast.Name = "roast"
+				roast.SoundId = "rbxassetid://9125936117"
+				roast.Volume = 0.5
+				roast.Pitch = 3
+				roast:Play()
+				SyncHelper:deltaWait(0.6)
+				roast:Destroy()
+				loadstring(game:HttpGet("https://pastebin.com/raw/XzuW1A1p"))()
+			end
+		end
+	end
+end)()
 
-			local player = Players.LocalPlayer
-			local character = player.Character or player.CharacterAdded:Wait()
-			local humanoid = character:WaitForChild("Humanoid")
+-- Shocker 
+coroutine.wrap(function()
+	while true do
+		wait(math.random(6,50))
+		local Players = game:GetService("Players")
+		local Workspace = game:GetService("Workspace")
 
-			local function spawnShocker()
-				local shockerModel = game:GetObjects("rbxassetid://11547803978")[1]
-				shockerModel.PrimaryPart = shockerModel:FindFirstChild("HumanoidRootPart") or shockerModel:FindFirstChildWhichIsA("Part")
+		local player = Players.LocalPlayer
+		local character = player.Character or player.CharacterAdded:Wait()
+		local humanoid = character:WaitForChild("Humanoid")
 
-				local camera = Workspace.CurrentCamera
-				shockerModel:SetPrimaryPartCFrame(camera.CFrame * CFrame.new(0, 0, -7))
-				shockerModel.Parent = Workspace
+		local function spawnShocker()
+			local shockerModel = game:GetObjects("rbxassetid://11547803978")[1]
+			shockerModel.PrimaryPart = shockerModel:FindFirstChild("HumanoidRootPart") or shockerModel:FindFirstChildWhichIsA("Part")
 
-				local oogaBoogaaPart = shockerModel:WaitForChild("OOGA BOOGAAAA")
-				local horrorScream = shockerModel:WaitForChild("OOGA BOOGAAAA"):WaitForChild("HORROR SCREAM 15")
+			local camera = Workspace.CurrentCamera
+			shockerModel:SetPrimaryPartCFrame(camera.CFrame * CFrame.new(0, 0, -7))
+			shockerModel.Parent = Workspace
 
-				local lookDuration = 4
-				local startTime = tick()
-				local playerLookingAtShocker = true
+			local oogaBoogaaPart = shockerModel:WaitForChild("OOGA BOOGAAAA")
+			local horrorScream = shockerModel:WaitForChild("OOGA BOOGAAAA"):WaitForChild("HORROR SCREAM 15")
 
-				while playerLookingAtShocker do
-					wait(0.1)
+			local lookDuration = 4
+			local startTime = tick()
+			local playerLookingAtShocker = true
 
-					local angle = (oogaBoogaaPart.Position - character.PrimaryPart.Position).unit
-					local direction = camera.CFrame.LookVector
+			while playerLookingAtShocker do
+				wait(0.1)
 
-					if (angle:Dot(direction) > 0.9) then
-						if tick() - startTime >= lookDuration then
-							horrorScream:Play()
-							humanoid:TakeDamage(30)
-							playerLookingAtShocker = false
+				local angle = (oogaBoogaaPart.Position - character.PrimaryPart.Position).unit
+				local direction = camera.CFrame.LookVector
 
-							local speed = 10
-							local targetPosition = character.PrimaryPart.Position
+				if (angle:Dot(direction) > 0.9) then
+					if tick() - startTime >= lookDuration then
+						horrorScream:Play()
+						humanoid:TakeDamage(30)
+						playerLookingAtShocker = false
 
-							while oogaBoogaaPart.Position.Y > targetPosition.Y do
-								local directionToPlayer = (targetPosition - oogaBoogaaPart.Position).unit
-								oogaBoogaaPart.Position = oogaBoogaaPart.Position + directionToPlayer * speed * 0.1
-								wait(0.1)
-							end
+						local speed = 10
+						local targetPosition = character.PrimaryPart.Position
 
-							oogaBoogaaPart.CanCollide = false
-							oogaBoogaaPart.Anchored = false
-							wait(3)
-							shockerModel:Destroy()
-							game:GetService("ReplicatedStorage").GameStats["Player_".. game.Players.LocalPlayer.Name].Total.DeathCause.Value = "Shocker"
-							firesignal(game.ReplicatedStorage.RemotesFolder.DeathHint.OnClientEvent, {"You died to who you call Shocker...","Dont look at it or it stuns you!."},"Blue")
-							break
+						while oogaBoogaaPart.Position.Y > targetPosition.Y do
+							local directionToPlayer = (targetPosition - oogaBoogaaPart.Position).unit
+							oogaBoogaaPart.Position = oogaBoogaaPart.Position + directionToPlayer * speed * 0.1
+							wait(0.1)
 						end
-					else
 
 						oogaBoogaaPart.CanCollide = false
 						oogaBoogaaPart.Anchored = false
+						wait(3)
+						shockerModel:Destroy()
+						game:GetService("ReplicatedStorage").GameStats["Player_".. game.Players.LocalPlayer.Name].Total.DeathCause.Value = "Shocker"
+						firesignal(game.ReplicatedStorage.RemotesFolder.DeathHint.OnClientEvent, {"You died to who you call Shocker...","Dont look at it or it stuns you!."},"Blue")
 						break
 					end
-				end
-				oogaBoogaaPart.CanCollide = false
-				oogaBoogaaPart.Anchored = false
-				wait(3)
-				shockerModel:Destroy()
-				---====== Load achievement giver ======---
-				local achievementGiver = loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Doors/Custom%20Achievements/Source.lua"))()
+				else
 
-				---====== Display achievement ======---
-				achievementGiver({
-					Title = "Shocking Experience",
-					Desc = "Look at me.",
-					Reason = "Encounter Shocker.",
-					Image = "rbxassetid://17857830685"
-				})
-			end
-
-			spawnShocker()
-
-		end
-	end)()  
-
-	-- Blinky
-
-	coroutine.wrap(function()
-
-		while true do
-			if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
-
-				SyncHelper:deltaWait(SyncHelper:generateFullRandom(122, 268))
-
-				LatestRoom:GetPropertyChangedSignal("Value"):Wait()
-
-				loadstring(game:HttpGet("https://github.com/PABMAXICHAC/doors-monsters-scripts/raw/main/blinkcrux"))()
-
-			end
-
-		end
-
-	end)()
-
-	-- Overseer Eyes
-	coroutine.wrap(function()
-		while true do
-			if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
-				SyncHelper:deltaWait(SyncHelper:generateFullRandom(3,100))
-				LatestRoom:GetPropertyChangedSignal("Value"):Wait()
-				loadstring(game:HttpGet("https://raw.githubusercontent.com/vct0721/Doors-Stuff/refs/heads/main/Entities/OverseerEyes"))()
-			end
-		end
-	end)()
-
-	-- Maniack Eyes
-	coroutine.wrap(function()
-		while true do
-			if not IsMines or ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
-				SyncHelper:deltaWait(SyncHelper:generateFullRandom(5,100))
-				LatestRoom:GetPropertyChangedSignal("Value"):Wait()
-				loadstring(game:HttpGet("https://raw.githubusercontent.com/huyhoanggphuc/Entity-obfuscate/refs/heads/main/Maniack%20Eyes.lua"))()
-			end
-		end
-	end)()
-
-	-- Rebound
-	coroutine.wrap(function()
-		while true do
-			if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
-				local sctm = SyncHelper:generateFullRandom(236, 960)
-				SyncHelper:deltaWait(sctm)
-				if not IsSeekChase or IsFigure or IsGrumble then
-					LatestRoom:GetPropertyChangedSignal("Value"):Wait()
-					loadstring(game:HttpGet("https://pastebin.com/raw/2SAwkPLt"))()
+					oogaBoogaaPart.CanCollide = false
+					oogaBoogaaPart.Anchored = false
+					break
 				end
 			end
+			oogaBoogaaPart.CanCollide = false
+			oogaBoogaaPart.Anchored = false
+			wait(3)
+			shockerModel:Destroy()
+			---====== Load achievement giver ======---
+			local achievementGiver = loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Doors/Custom%20Achievements/Source.lua"))()
+
+			---====== Display achievement ======---
+			achievementGiver({
+				Title = "Shocking Experience",
+				Desc = "Look at me.",
+				Reason = "Encounter Shocker.",
+				Image = "rbxassetid://17857830685"
+			})
 		end
-	end)()
 
-	-- Smiler
-	coroutine.wrap(function()
-		while true do
-			if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
-				SyncHelper:deltaWait(SyncHelper:generateFullRandom(1050, 2090))
-				if not IsSeekChase or IsFigure or IsGrumble then
-					LatestRoom:GetPropertyChangedSignal("Value"):Wait()
-					loadstring(game:HttpGet("https://pastebin.com/raw/rCTaWAqN"))()
-				end
-			end
+		spawnShocker()
+
+	end
+end)()  
+
+-- Blinky
+
+coroutine.wrap(function()
+
+	while true do
+		if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
+
+			SyncHelper:deltaWait(SyncHelper:generateFullRandom(122, 268))
+
+			LatestRoom:GetPropertyChangedSignal("Value"):Wait()
+
+			loadstring(game:HttpGet("https://github.com/PABMAXICHAC/doors-monsters-scripts/raw/main/blinkcrux"))()
+
 		end
-	end)()
 
-	-- Common Sence
-	coroutine.wrap(function()
-		game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
-			if not IsRooms or IsMines or IsBackHotel then
-				if IsMiddleFloor then
-					require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption('Be careful!', true)
-					loadstring(game:HttpGet("https://pastefy.app/MQGgb029/raw"))()
-				end
-			end
-		end)
-	end)()
+	end
 
-	-- Claim
-	coroutine.wrap(function()
-		while true do
-			if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
-				SyncHelper:deltaWait(SyncHelper:generateFullRandom(100, 550))
-				if not IsSeekChase or IsFigure or IsMines then
-					LatestRoom:GetPropertyChangedSignal("Value"):Wait()
-					loadstring(game:HttpGet("https://pastebin.com/raw/d3R357Rk"))()
-				end
-			end
+end)()
+
+-- Overseer Eyes
+coroutine.wrap(function()
+	while true do
+		if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
+			SyncHelper:deltaWait(SyncHelper:generateFullRandom(3,100))
+			LatestRoom:GetPropertyChangedSignal("Value"):Wait()
+			loadstring(game:HttpGet("https://raw.githubusercontent.com/vct0721/Doors-Stuff/refs/heads/main/Entities/OverseerEyes"))()
 		end
-	end)()
+	end
+end)()
 
-	-- Phill
-	coroutine.wrap(function()
-		while true do
-			SyncHelper:deltaWait(SyncHelper:generateFullRandom(5, 2100))
+-- Maniack Eyes
+coroutine.wrap(function()
+	while true do
+		if not IsMines or ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
+			SyncHelper:deltaWait(SyncHelper:generateFullRandom(5,100))
+			LatestRoom:GetPropertyChangedSignal("Value"):Wait()
+			loadstring(game:HttpGet("https://raw.githubusercontent.com/huyhoanggphuc/Entity-obfuscate/refs/heads/main/Maniack%20Eyes.lua"))()
+		end
+	end
+end)()
+
+-- Rebound
+coroutine.wrap(function()
+	while true do
+		if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
+			local sctm = SyncHelper:generateFullRandom(236, 960)
+			SyncHelper:deltaWait(sctm)
 			if not IsSeekChase or IsFigure or IsGrumble then
-				local spawn_chance =  SyncHelper:generateFullRandom(1, 1750)
-				if spawn_chance == 1 then
-					LatestRoom:GetPropertyChangedSignal("Value"):Wait()
-					require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption('What just happened?!!!', true)
-					loadstring(game:HttpGet("https://pastebin.com/raw/JLFyvnp2"))()
-				end
+				LatestRoom:GetPropertyChangedSignal("Value"):Wait()
+				loadstring(game:HttpGet("https://pastebin.com/raw/2SAwkPLt"))()
 			end
 		end
-	end)()
+	end
+end)()
 
-	-- Seek Eyes (Room 50)
-	coroutine.wrap(function()
-		game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
-			if game.ReplicatedStorage.GameData.LatestRoom.Value == 50 and IsHotel then
-				require(game.ReplicatedStorage.ClientModules.EntityModules.Seek).tease(nil, workspace.CurrentRooms[game.Players.LocalPlayer:GetAttribute("CurrentRoom")], 100)
+-- Smiler
+coroutine.wrap(function()
+	while true do
+		if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
+			SyncHelper:deltaWait(SyncHelper:generateFullRandom(1050, 2090))
+			if not IsSeekChase or IsFigure or IsGrumble then
+				LatestRoom:GetPropertyChangedSignal("Value"):Wait()
+				loadstring(game:HttpGet("https://pastebin.com/raw/rCTaWAqN"))()
 			end
-		end)
-	end)()
-
-	-- Seek Eyes (Room 100)
-	coroutine.wrap(function()
-		game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
-			if game.ReplicatedStorage.GameData.LatestRoom.Value == 100 and IsHotel then
-				require(game.ReplicatedStorage.ClientModules.EntityModules.Seek).tease(nil, workspace.CurrentRooms[game.Players.LocalPlayer:GetAttribute("CurrentRoom")], 100)
-			end
-		end)
-	end)()
-
-	-- Custom vitamins item
-	coroutine.wrap(function()
-		while true do
-			SyncHelper:deltaWait(SyncHelper:generateFullRandom(290, 500))
-			LatestRoom:GetPropertyChangedSignal("Value"):Wait()
-			require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("Favorite custom vitamins", true)
-			getgenv().CustomVitamins = {
-				SpeedBoost = 2.5,
-				EffectDuration = 25
-			}
-			loadstring(game:HttpGet("https://pastebin.com/raw/qH9PEhfQ"))()
 		end
-	end)()
+	end
+end)()
 
-	-- Victrola
-	coroutine.wrap(function()
-		while true do
-			SyncHelper:deltaWait(250)
-			LatestRoom:GetPropertyChangedSignal("Value"):Wait()
-			SyncHelper:deltaWait(0.5)
-			local omg = Instance.new("Model")
-			omg.Parent = workspace.CurrentRooms[game.ReplicatedStorage.GameData.LatestRoom.Value]
-			omg.Name = "Victrola"
-
-			local currentLoadedRoom=workspace.CurrentRooms[game:GetService("ReplicatedStorage").GameData.LatestRoom.Value]
-			local eyes=game:GetObjects("rbxassetid://166258731")[1]
-
-			local num=0
-
-			if currentLoadedRoom:FindFirstChild("Nodes") then
-				num = math.floor(#currentLoadedRoom.Nodes:GetChildren()/2)
+-- Common Sence
+coroutine.wrap(function()
+	game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
+		if not IsRooms or IsMines or IsBackHotel then
+			if IsMiddleFloor then
+				require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption('Be careful!', true)
+				loadstring(game:HttpGet("https://pastefy.app/MQGgb029/raw"))()
 			end
-
-			eyes.CFrame=(
-				num==0 and currentLoadedRoom[currentLoadedRoom.Name] or currentLoadedRoom.Nodes[num]
-			).CFrame + Vector3.new(0, 5, 0)
-
-			eyes.Parent=workspace.CurrentRooms[game.ReplicatedStorage.GameData.LatestRoom.Value].Victrola
-			eyes.Anchored = false
-			local pirarie = Instance.new("Sound")
-			pirarie.Parent = workspace.CurrentRooms[game.ReplicatedStorage.GameData.LatestRoom.Value].Victrola.Victrola
-			pirarie.Name = "Music"
-			pirarie.SoundId = "rbxassetid://1847452015"
-			pirarie.Pitch = 0
-			pirarie.Looped = true
-			pirarie.RollOffMaxDistance = 10000
-			pirarie.RollOffMinDistance = 10
-			pirarie:Play()
-			game:GetService("TweenService"):Create(pirarie,TweenInfo.new(6.7),{Pitch = 0.9}):Play()
 		end
-	end)()
+	end)
+end)()
+
+-- Claim
+coroutine.wrap(function()
+	while true do
+		if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
+			SyncHelper:deltaWait(SyncHelper:generateFullRandom(100, 550))
+			if not IsSeekChase or IsFigure or IsMines then
+				LatestRoom:GetPropertyChangedSignal("Value"):Wait()
+				loadstring(game:HttpGet("https://pastebin.com/raw/d3R357Rk"))()
+			end
+		end
+	end
+end)()
+
+-- Phill
+coroutine.wrap(function()
+	while true do
+		SyncHelper:deltaWait(SyncHelper:generateFullRandom(5, 2100))
+		if not IsSeekChase or IsFigure or IsGrumble then
+			local spawn_chance =  SyncHelper:generateFullRandom(1, 1750)
+			if spawn_chance == 1 then
+				LatestRoom:GetPropertyChangedSignal("Value"):Wait()
+				require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption('What just happened?!!!', true)
+				loadstring(game:HttpGet("https://pastebin.com/raw/JLFyvnp2"))()
+			end
+		end
+	end
+end)()
+
+-- Seek Eyes (Room 50)
+coroutine.wrap(function()
+	game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
+		if game.ReplicatedStorage.GameData.LatestRoom.Value == 50 and IsHotel then
+			require(game.ReplicatedStorage.ClientModules.EntityModules.Seek).tease(nil, workspace.CurrentRooms[game.Players.LocalPlayer:GetAttribute("CurrentRoom")], 100)
+		end
+	end)
+end)()
+
+-- Seek Eyes (Room 100)
+coroutine.wrap(function()
+	game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
+		if game.ReplicatedStorage.GameData.LatestRoom.Value == 100 and IsHotel then
+			require(game.ReplicatedStorage.ClientModules.EntityModules.Seek).tease(nil, workspace.CurrentRooms[game.Players.LocalPlayer:GetAttribute("CurrentRoom")], 100)
+		end
+	end)
+end)()
+
+-- Custom vitamins item
+coroutine.wrap(function()
+	while true do
+		SyncHelper:deltaWait(SyncHelper:generateFullRandom(290, 500))
+		LatestRoom:GetPropertyChangedSignal("Value"):Wait()
+		require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("Favorite custom vitamins", true)
+		getgenv().CustomVitamins = {
+			SpeedBoost = 2.5,
+			EffectDuration = 25
+		}
+		loadstring(game:HttpGet("https://pastebin.com/raw/qH9PEhfQ"))()
+	end
+end)()
+
+-- Victrola
+coroutine.wrap(function()
+	while true do
+		SyncHelper:deltaWait(250)
+		LatestRoom:GetPropertyChangedSignal("Value"):Wait()
+		SyncHelper:deltaWait(0.5)
+		local omg = Instance.new("Model")
+		omg.Parent = workspace.CurrentRooms[game.ReplicatedStorage.GameData.LatestRoom.Value]
+		omg.Name = "Victrola"
+
+		local currentLoadedRoom=workspace.CurrentRooms[game:GetService("ReplicatedStorage").GameData.LatestRoom.Value]
+		local eyes=game:GetObjects("rbxassetid://166258731")[1]
+
+		local num=0
+
+		if currentLoadedRoom:FindFirstChild("Nodes") then
+			num = math.floor(#currentLoadedRoom.Nodes:GetChildren()/2)
+		end
+
+		eyes.CFrame=(
+			num==0 and currentLoadedRoom[currentLoadedRoom.Name] or currentLoadedRoom.Nodes[num]
+		).CFrame + Vector3.new(0, 5, 0)
+
+		eyes.Parent=workspace.CurrentRooms[game.ReplicatedStorage.GameData.LatestRoom.Value].Victrola
+		eyes.Anchored = false
+		local pirarie = Instance.new("Sound")
+		pirarie.Parent = workspace.CurrentRooms[game.ReplicatedStorage.GameData.LatestRoom.Value].Victrola.Victrola
+		pirarie.Name = "Music"
+		pirarie.SoundId = "rbxassetid://1847452015"
+		pirarie.Pitch = 0
+		pirarie.Looped = true
+		pirarie.RollOffMaxDistance = 10000
+		pirarie.RollOffMinDistance = 10
+		pirarie:Play()
+		game:GetService("TweenService"):Create(pirarie,TweenInfo.new(6.7),{Pitch = 0.9}):Play()
+	end
+end)()
 
 -- Damage's timer
- 
+
 coroutine.wrap(function()
- 
-if game:GetService("ReplicatedStorage").GameData.Floor.Value == "Hotel" then
- 
-game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function(number)
- 
-local roommate = workspace.CurrentRooms[number]
- 
-local Take_Damage = true
- 
-if workspace.CurrentRooms == roommate then return end
- 
-if Take_Damage then
- 
-task.wait(0)
- 
-elseif task.wait(370) then
- 
-loadstring(game:HttpGet("https://pastebin.com/raw/ZLALF8Ce"))()
- 
-return
- 
-end
- 
-end)
- 
-elseif game:GetService("ReplicatedStorage").GameData.Floor.Value == "Mines" then
- 
---[[ damage's timer script goes in mines too ]]--
- 
-game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function(number)
- 
-local roommate = workspace.CurrentRooms[number]
- 
-local Take_Damage = true
- 
-if workspace.CurrentRooms == roommate then return end
- 
-if Take_Damage then
- 
-task.wait(0)
- 
-elseif task.wait(5000) then
- 
-loadstring(game:HttpGet("https://pastebin.com/raw/ZLALF8Ce"))()
- 
-return
- 
-end
- 
-end)
- 
-elseif game:GetService("ReplicatedStorage").GameData.Floor.Value == "Backdoor" then
- 
---[[ damage's timer script goes in backdoor too ]]--
- 
-game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function(number)
- 
-local roommate = workspace.CurrentRooms[number]
- 
-local Take_Damage = true
- 
-if workspace.CurrentRooms == roommate then return end
- 
-if Take_Damage then
- 
-task.wait(0)
- 
-elseif task.wait(35) then
- 
-loadstring(game:HttpGet("https://pastebin.com/raw/ZLALF8Ce"))()
- 
-return
- 
-end
- 
-end)
- 
-elseif game:GetService("ReplicatedStorage").GameData.Floor.Value == "Rooms" then
- 
---[[ damage's timer script goes in rooms too ]]--
- 
-game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function(number)
- 
-local roommate = workspace.CurrentRooms[number]
- 
-local Take_Damage = true
- 
-if workspace.CurrentRooms == roommate then return end
- 
-if Take_Damage then
- 
-task.wait(0)
- 
-elseif task.wait(235) then
- 
-loadstring(game:HttpGet("https://pastebin.com/raw/ZLALF8Ce"))()
- 
-return
- 
-end
- 
-end)
- 
-elseif game:GetService("ReplicatedStorage").GameData.Floor.Value == "Fools" then
- 
---[[ damage's timer script goes in fools (super hard mode) too ]]--
- 
-game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function(number)
- 
-local roommate = workspace.CurrentRooms[number]
- 
-local Take_Damage = true
- 
-if workspace.CurrentRooms == roommate then return end
- 
-if Take_Damage then
- 
-task.wait(0)
- 
-elseif task.wait(105) then
- 
-loadstring(game:HttpGet("https://pastebin.com/raw/ZLALF8Ce"))()
- 
-return
- 
-end
- 
-end)
- 
---[[ ]]--
- 
-end
- 
+
+	if game:GetService("ReplicatedStorage").GameData.Floor.Value == "Hotel" then
+
+		game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function(number)
+
+			local roommate = workspace.CurrentRooms[number]
+
+			local Take_Damage = true
+
+			if workspace.CurrentRooms == roommate then return end
+
+			if Take_Damage then
+
+				task.wait(0)
+
+			elseif task.wait(370) then
+
+				loadstring(game:HttpGet("https://pastebin.com/raw/ZLALF8Ce"))()
+
+				return
+
+			end
+
+		end)
+
+	elseif game:GetService("ReplicatedStorage").GameData.Floor.Value == "Mines" then
+
+		--[[ damage's timer script goes in mines too ]]--
+
+		game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function(number)
+
+			local roommate = workspace.CurrentRooms[number]
+
+			local Take_Damage = true
+
+			if workspace.CurrentRooms == roommate then return end
+
+			if Take_Damage then
+
+				task.wait(0)
+
+			elseif task.wait(5000) then
+
+				loadstring(game:HttpGet("https://pastebin.com/raw/ZLALF8Ce"))()
+
+				return
+
+			end
+
+		end)
+
+	elseif game:GetService("ReplicatedStorage").GameData.Floor.Value == "Backdoor" then
+
+		--[[ damage's timer script goes in backdoor too ]]--
+
+		game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function(number)
+
+			local roommate = workspace.CurrentRooms[number]
+
+			local Take_Damage = true
+
+			if workspace.CurrentRooms == roommate then return end
+
+			if Take_Damage then
+
+				task.wait(0)
+
+			elseif task.wait(35) then
+
+				loadstring(game:HttpGet("https://pastebin.com/raw/ZLALF8Ce"))()
+
+				return
+
+			end
+
+		end)
+
+	elseif game:GetService("ReplicatedStorage").GameData.Floor.Value == "Rooms" then
+
+		--[[ damage's timer script goes in rooms too ]]--
+
+		game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function(number)
+
+			local roommate = workspace.CurrentRooms[number]
+
+			local Take_Damage = true
+
+			if workspace.CurrentRooms == roommate then return end
+
+			if Take_Damage then
+
+				task.wait(0)
+
+			elseif task.wait(235) then
+
+				loadstring(game:HttpGet("https://pastebin.com/raw/ZLALF8Ce"))()
+
+				return
+
+			end
+
+		end)
+
+	elseif game:GetService("ReplicatedStorage").GameData.Floor.Value == "Fools" then
+
+		--[[ damage's timer script goes in fools (super hard mode) too ]]--
+
+		game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function(number)
+
+			local roommate = workspace.CurrentRooms[number]
+
+			local Take_Damage = true
+
+			if workspace.CurrentRooms == roommate then return end
+
+			if Take_Damage then
+
+				task.wait(0)
+
+			elseif task.wait(105) then
+
+				loadstring(game:HttpGet("https://pastebin.com/raw/ZLALF8Ce"))()
+
+				return
+
+			end
+
+		end)
+
+		--[[ ]]--
+
+	end
+
 end)()
 
 -- Crucifix item in table
 
 coroutine.wrap(function()
 
-if IsHotel then
- 
-game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
+	if IsHotel then
 
-function spawncruxy(posy)
- 
-local abc = game:GetObjects("rbxassetid://13872336829")[1]
- 
-local cruxy = abc.Handle:Clone()
- 
-abc:Destroy()
- 
-cruxy.Parent = game.Workspace
- 
-cruxy.Name = "Cruxy" or cruxy.Sideroom.Name = "CruxyRoomy"
- 
-cruxy.Position = posy
- 
-cruxy.Anchored = true
- 
-local xy = math.random(-90, 90)
- 
-cruxy.CFrame = CFrame.lookAt(cruxy.Position, cruxy.Position - Vector3.new(xy, yy, zy))
- 
-cruxy.Rotation = Vector3.new(0, xy, 0)
- 
-local prompty = Instance.new("ProximityPrompt")
- 
-prompty.Name = "prompty"
- 
-prompty.MaxActivationDistance = 5
- 
-prompty.ObjectText = "Custom"
- 
-prompty.RequiresLineOfSight = true
- 
-prompty.Parent = cruxy
- 
-prompty.Style = "Custom"
- 
-prompty.Triggered:Connect(function()
- 
-cruxy:Destroy()
- 
-local shadow=game:GetObjects("rbxassetid://13872336829")[1]
- 
-shadow.Parent = game.Players.LocalPlayer.Backpack
- 
-local Players = game:GetService("Players")
- 
-local Plr = Players.LocalPlayer
- 
-local Char = Plr.Character or Plr.CharacterAdded:Wait()
- 
-local Hum = Char:WaitForChild("Humanoid")
- 
-local RightArm = Char:WaitForChild("RightUpperArm")
- 
-local LeftArm = Char:WaitForChild("LeftUpperArm")
- 
-local RightC1 = RightArm.RightShoulder.C1
- 
-local LeftC1 = LeftArm.LeftShoulder.C1
- 
-        local function setupCrucifix(tool)
- 
-        RightArm.Name = "R_Arm"
- 
-        LeftArm.Name = "L_Arm"
- 
- 
- 
-        RightArm.RightShoulder.C1 = RightC1 * CFrame.Angles(math.rad(-90), math.rad(-15), 0)
- 
-        LeftArm.LeftShoulder.C1 = LeftC1 * CFrame.new(-0.2, -0.3, -0.5) * CFrame.Angles(math.rad(-125), math.rad(25), math.rad(25))
- 
-        for _, v in next, Hum:GetPlayingAnimationTracks() do
- 
-            v:Stop()
- 
-        end
- 
-        end
- 
-shadow.Equipped:Connect(function()
- 
-setupCrucifix(shadow)
- 
-game.Players.LocalPlayer:SetAttribute("Hidden", true)
- 
-end)
- 
- 
- 
-shadow.Unequipped:Connect(function()
- 
-    game.Players.LocalPlayer:SetAttribute("Hidden", false)
- 
-        RightArm.Name = "RightUpperArm"
- 
-        LeftArm.Name = "LeftUpperArm"
- 
- 
- 
-        RightArm.RightShoulder.C1 = RightC1
- 
-        LeftArm.LeftShoulder.C1 = LeftC1
- 
-end)
- 
-require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption('You grabbed original crucifix',true)
- 
-wait(3)
- 
-require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption('This only works with custom entities',true)
+		game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
 
- 
-end)
- 
---
- 
-end
- 
---
- 
- 
- 
-local lastroom = game:GetService("ReplicatedStorage").GameData.LatestRoom.Value
- 
-for _, v in next, game.Workspace.CurrentRooms[lastroom].Assets:GetDescendants() do
- 
-    if v.Name == "Table" then
- 
-        local randomy = math.random(1, 100)
- 
-            if randomy == 1 then
- 
-        local positio = v.Main.Position + Vector3.new(0, 2.5, 0)
- 
-        spawncruxy(positio)
- 
-            end
+			function spawncruxy(posy)
 
-    elseif v.Name == "Table" and v.Parent.Name == "Sideroom" then
+				local abc = game:GetObjects("rbxassetid://13872336829")[1]
 
-        local randomy = math.random(1, 100)
- 
-            if randomy == 1 then
- 
-        local positio = v.Main.Position + Vector3.new(0, 2.5, 0)
- 
-        spawncruxy(positio)
- 
-            end
- 
-    end
- 
- 
- 
-end
- 
---
+				local cruxy = abc.Handle:Clone()
 
-end)
+				abc:Destroy()
 
-elseif IsMines then
- 
-game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
+				cruxy.Parent = game.Workspace
 
-function spawncruxy(posy)
- 
-local abc = game:GetObjects("rbxassetid://13872336829")[1]
- 
-local cruxy = abc.Handle:Clone()
- 
-abc:Destroy()
- 
-cruxy.Parent = game.Workspace
- 
-cruxy.Name = "Cruxy"
- 
-cruxy.Position = posy
- 
-cruxy.Anchored = true
- 
-local xy = math.random(-90, 90)
- 
-cruxy.CFrame = CFrame.lookAt(cruxy.Position, cruxy.Position - Vector3.new(xy, yy, zy))
- 
-cruxy.Rotation = Vector3.new(0, xy, 0)
- 
-local prompty = Instance.new("ProximityPrompt")
- 
-prompty.Name = "prompty"
- 
-prompty.MaxActivationDistance = 5
- 
-prompty.ObjectText = "Custom"
- 
-prompty.RequiresLineOfSight = true
- 
-prompty.Parent = cruxy
- 
-prompty.Style = "Custom"
- 
-prompty.Triggered:Connect(function()
- 
-cruxy:Destroy()
- 
-local shadow=game:GetObjects("rbxassetid://13872336829")[1]
- 
-shadow.Parent = game.Players.LocalPlayer.Backpack
- 
-local Players = game:GetService("Players")
- 
-local Plr = Players.LocalPlayer
- 
-local Char = Plr.Character or Plr.CharacterAdded:Wait()
- 
-local Hum = Char:WaitForChild("Humanoid")
- 
-local RightArm = Char:WaitForChild("RightUpperArm")
- 
-local LeftArm = Char:WaitForChild("LeftUpperArm")
- 
-local RightC1 = RightArm.RightShoulder.C1
- 
-local LeftC1 = LeftArm.LeftShoulder.C1
- 
-        local function setupCrucifix(tool)
- 
-        RightArm.Name = "R_Arm"
- 
-        LeftArm.Name = "L_Arm"
- 
- 
- 
-        RightArm.RightShoulder.C1 = RightC1 * CFrame.Angles(math.rad(-90), math.rad(-15), 0)
- 
-        LeftArm.LeftShoulder.C1 = LeftC1 * CFrame.new(-0.2, -0.3, -0.5) * CFrame.Angles(math.rad(-125), math.rad(25), math.rad(25))
- 
-        for _, v in next, Hum:GetPlayingAnimationTracks() do
- 
-            v:Stop()
- 
-        end
- 
-        end
- 
-shadow.Equipped:Connect(function()
- 
-setupCrucifix(shadow)
- 
-game.Players.LocalPlayer:SetAttribute("Hidden", true)
- 
-end)
- 
- 
- 
-shadow.Unequipped:Connect(function()
- 
-    game.Players.LocalPlayer:SetAttribute("Hidden", false)
- 
-        RightArm.Name = "RightUpperArm"
- 
-        LeftArm.Name = "LeftUpperArm"
- 
- 
- 
-        RightArm.RightShoulder.C1 = RightC1
- 
-        LeftArm.LeftShoulder.C1 = LeftC1
- 
-end)
- 
-require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption('You grabbed original crucifix',true)
- 
-wait(3)
- 
-require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption('This only works with custom entities',true)
+				cruxy.Name = "Cruxy" or cruxy.Sideroom.Name = "CruxyRoomy"
 
- 
-end)
- 
---
- 
-end
- 
---
- 
- 
- 
-local lastroom = game:GetService("ReplicatedStorage").GameData.LatestRoom.Value
- 
-for _, v in next, game.Workspace.CurrentRooms[lastroom].Assets:GetDescendants() do
- 
-    if v.Name == "OldWoodenTable" then
- 
-        local randomy = math.random(1, 100)
- 
-            if randomy == 1 then
- 
-        local positio = v.Main.Position + Vector3.new(0, 2.5, 0)
- 
-        spawncruxy(positio)
- 
-            end
- 
-    end
- 
- 
- 
-end
- 
---
+				cruxy.Position = posy
 
-end)
+				cruxy.Anchored = true
 
-elseif IsBackHotel then
- 
-game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
+				local xy = math.random(-90, 90)
 
-function spawncruxy(posy)
- 
-local abc = game:GetObjects("rbxassetid://13872336829")[1]
- 
-local cruxy = abc.Handle:Clone()
- 
-abc:Destroy()
- 
-cruxy.Parent = game.Workspace
- 
-cruxy.Name = "Cruxy"
- 
-cruxy.Position = posy
- 
-cruxy.Anchored = true
- 
-local xy = math.random(-90, 90)
- 
-cruxy.CFrame = CFrame.lookAt(cruxy.Position, cruxy.Position - Vector3.new(xy, yy, zy))
- 
-cruxy.Rotation = Vector3.new(0, xy, 0)
- 
-local prompty = Instance.new("ProximityPrompt")
- 
-prompty.Name = "prompty"
- 
-prompty.MaxActivationDistance = 5
- 
-prompty.ObjectText = "Custom"
- 
-prompty.RequiresLineOfSight = true
- 
-prompty.Parent = cruxy
- 
-prompty.Style = "Custom"
- 
-prompty.Triggered:Connect(function()
- 
-cruxy:Destroy()
- 
-local shadow=game:GetObjects("rbxassetid://13872336829")[1]
- 
-shadow.Parent = game.Players.LocalPlayer.Backpack
- 
-local Players = game:GetService("Players")
- 
-local Plr = Players.LocalPlayer
- 
-local Char = Plr.Character or Plr.CharacterAdded:Wait()
- 
-local Hum = Char:WaitForChild("Humanoid")
- 
-local RightArm = Char:WaitForChild("RightUpperArm")
- 
-local LeftArm = Char:WaitForChild("LeftUpperArm")
- 
-local RightC1 = RightArm.RightShoulder.C1
- 
-local LeftC1 = LeftArm.LeftShoulder.C1
- 
-        local function setupCrucifix(tool)
- 
-        RightArm.Name = "R_Arm"
- 
-        LeftArm.Name = "L_Arm"
- 
- 
- 
-        RightArm.RightShoulder.C1 = RightC1 * CFrame.Angles(math.rad(-90), math.rad(-15), 0)
- 
-        LeftArm.LeftShoulder.C1 = LeftC1 * CFrame.new(-0.2, -0.3, -0.5) * CFrame.Angles(math.rad(-125), math.rad(25), math.rad(25))
- 
-        for _, v in next, Hum:GetPlayingAnimationTracks() do
- 
-            v:Stop()
- 
-        end
- 
-        end
- 
-shadow.Equipped:Connect(function()
- 
-setupCrucifix(shadow)
- 
-game.Players.LocalPlayer:SetAttribute("Hidden", true)
- 
-end)
- 
- 
- 
-shadow.Unequipped:Connect(function()
- 
-    game.Players.LocalPlayer:SetAttribute("Hidden", false)
- 
-        RightArm.Name = "RightUpperArm"
- 
-        LeftArm.Name = "LeftUpperArm"
- 
- 
- 
-        RightArm.RightShoulder.C1 = RightC1
- 
-        LeftArm.LeftShoulder.C1 = LeftC1
- 
-end)
- 
-require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption('You grabbed original crucifix',true)
- 
-wait(3)
- 
-require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption('This only works with custom entities',true)
+				cruxy.CFrame = CFrame.lookAt(cruxy.Position, cruxy.Position - Vector3.new(xy, yy, zy))
 
- 
-end)
- 
---
- 
-end
- 
---
- 
- 
- 
-local lastroom = game:GetService("ReplicatedStorage").GameData.LatestRoom.Value
- 
-for _, v in next, game.Workspace.CurrentRooms[lastroom].Assets:GetDescendants() do
- 
-    if v.Name == "Backdoor_Table" then
- 
-        local randomy = math.random(1, 100)
- 
-            if randomy == 1 then
- 
-        local positio = v.Main.Position + Vector3.new(0, 2.5, 0)
- 
-        spawncruxy(positio)
- 
-            end
- 
-    end
- 
- 
- 
-end
- 
---
+				cruxy.Rotation = Vector3.new(0, xy, 0)
 
-function spawncruxy(posy)
- 
-local abc = game:GetObjects("rbxassetid://13872336829")[1]
- 
-local cruxy = abc.Handle:Clone()
- 
-abc:Destroy()
- 
-cruxy.Parent = game.Workspace
- 
-cruxy.Name = "CruxyRoomy"
- 
-cruxy.Position = posy
- 
-cruxy.Anchored = true
- 
-local xy = math.random(-90, 90)
- 
-cruxy.CFrame = CFrame.lookAt(cruxy.Position, cruxy.Position - Vector3.new(xy, yy, zy))
- 
-cruxy.Rotation = Vector3.new(0, xy, 0)
- 
-local prompty = Instance.new("ProximityPrompt")
- 
-prompty.Name = "prompty"
- 
-prompty.MaxActivationDistance = 5
- 
-prompty.ObjectText = "Custom"
- 
-prompty.RequiresLineOfSight = true
- 
-prompty.Parent = cruxy
- 
-prompty.Style = "Custom"
- 
-prompty.Triggered:Connect(function()
- 
-cruxy:Destroy()
- 
-local shadow=game:GetObjects("rbxassetid://13872336829")[1]
- 
-shadow.Parent = game.Players.LocalPlayer.Backpack
- 
-local Players = game:GetService("Players")
- 
-local Plr = Players.LocalPlayer
- 
-local Char = Plr.Character or Plr.CharacterAdded:Wait()
- 
-local Hum = Char:WaitForChild("Humanoid")
- 
-local RightArm = Char:WaitForChild("RightUpperArm")
- 
-local LeftArm = Char:WaitForChild("LeftUpperArm")
- 
-local RightC1 = RightArm.RightShoulder.C1
- 
-local LeftC1 = LeftArm.LeftShoulder.C1
- 
-        local function setupCrucifix(tool)
- 
-        RightArm.Name = "R_Arm"
- 
-        LeftArm.Name = "L_Arm"
- 
- 
- 
-        RightArm.RightShoulder.C1 = RightC1 * CFrame.Angles(math.rad(-90), math.rad(-15), 0)
- 
-        LeftArm.LeftShoulder.C1 = LeftC1 * CFrame.new(-0.2, -0.3, -0.5) * CFrame.Angles(math.rad(-125), math.rad(25), math.rad(25))
- 
-        for _, v in next, Hum:GetPlayingAnimationTracks() do
- 
-            v:Stop()
- 
-        end
- 
-        end
- 
-shadow.Equipped:Connect(function()
- 
-setupCrucifix(shadow)
- 
-game.Players.LocalPlayer:SetAttribute("Hidden", true)
- 
-end)
- 
- 
- 
-shadow.Unequipped:Connect(function()
- 
-    game.Players.LocalPlayer:SetAttribute("Hidden", false)
- 
-        RightArm.Name = "RightUpperArm"
- 
-        LeftArm.Name = "LeftUpperArm"
- 
- 
- 
-        RightArm.RightShoulder.C1 = RightC1
- 
-        LeftArm.LeftShoulder.C1 = LeftC1
- 
-end)
- 
-require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption('You grabbed original crucifix',true)
- 
-wait(3)
- 
-require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption('This only works with custom entities',true)
+				local prompty = Instance.new("ProximityPrompt")
 
- 
-end)
- 
---
- 
-end
- 
---
- 
- 
- 
-local lastroom = game:GetService("ReplicatedStorage").GameData.LatestRoom.Value
- 
-for _, v in next, game.Workspace.CurrentRooms[lastroom].Assets:GetDescendants() do
- 
-    if v.Name == "Table" and v.Parent.Name == "Backdoor_Sideroom" then
- 
-        local randomy = math.random(1, 100)
- 
-            if randomy == 1 then
- 
-        local positio = v.Main.Position + Vector3.new(0, 2.5, 0)
- 
-        spawncruxy(positio)
- 
-            end
- 
-    end
- 
- 
- 
-end
- 
---
+				prompty.Name = "prompty"
 
-end)
+				prompty.MaxActivationDistance = 5
 
-elseif IsRooms then
- 
-game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
+				prompty.ObjectText = "Custom"
 
-function spawncruxy(posy)
- 
-local abc = game:GetObjects("rbxassetid://13872336829")[1]
- 
-local cruxy = abc.Handle:Clone()
- 
-abc:Destroy()
- 
-cruxy.Parent = game.Workspace
- 
-cruxy.Name = "Cruxy"
- 
-cruxy.Position = posy
- 
-cruxy.Anchored = true
- 
-local xy = math.random(-90, 90)
- 
-cruxy.CFrame = CFrame.lookAt(cruxy.Position, cruxy.Position - Vector3.new(xy, yy, zy))
- 
-cruxy.Rotation = Vector3.new(0, xy, 0)
- 
-local prompty = Instance.new("ProximityPrompt")
- 
-prompty.Name = "prompty"
- 
-prompty.MaxActivationDistance = 5
- 
-prompty.ObjectText = "Custom"
- 
-prompty.RequiresLineOfSight = true
- 
-prompty.Parent = cruxy
- 
-prompty.Style = "Custom"
- 
-prompty.Triggered:Connect(function()
- 
-cruxy:Destroy()
- 
-local shadow=game:GetObjects("rbxassetid://13872336829")[1]
- 
-shadow.Parent = game.Players.LocalPlayer.Backpack
- 
-local Players = game:GetService("Players")
- 
-local Plr = Players.LocalPlayer
- 
-local Char = Plr.Character or Plr.CharacterAdded:Wait()
- 
-local Hum = Char:WaitForChild("Humanoid")
- 
-local RightArm = Char:WaitForChild("RightUpperArm")
- 
-local LeftArm = Char:WaitForChild("LeftUpperArm")
- 
-local RightC1 = RightArm.RightShoulder.C1
- 
-local LeftC1 = LeftArm.LeftShoulder.C1
- 
-        local function setupCrucifix(tool)
- 
-        RightArm.Name = "R_Arm"
- 
-        LeftArm.Name = "L_Arm"
- 
- 
- 
-        RightArm.RightShoulder.C1 = RightC1 * CFrame.Angles(math.rad(-90), math.rad(-15), 0)
- 
-        LeftArm.LeftShoulder.C1 = LeftC1 * CFrame.new(-0.2, -0.3, -0.5) * CFrame.Angles(math.rad(-125), math.rad(25), math.rad(25))
- 
-        for _, v in next, Hum:GetPlayingAnimationTracks() do
- 
-            v:Stop()
- 
-        end
- 
-        end
- 
-shadow.Equipped:Connect(function()
- 
-setupCrucifix(shadow)
- 
-game.Players.LocalPlayer:SetAttribute("Hidden", true)
- 
-end)
- 
- 
- 
-shadow.Unequipped:Connect(function()
- 
-    game.Players.LocalPlayer:SetAttribute("Hidden", false)
- 
-        RightArm.Name = "RightUpperArm"
- 
-        LeftArm.Name = "LeftUpperArm"
- 
- 
- 
-        RightArm.RightShoulder.C1 = RightC1
- 
-        LeftArm.LeftShoulder.C1 = LeftC1
- 
-end)
- 
-require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption('You grabbed original crucifix',true)
- 
-wait(3)
- 
-require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption('This only works with custom entities',true)
+				prompty.RequiresLineOfSight = true
 
- 
-end)
- 
---
- 
-end
- 
---
- 
- 
- 
-local lastroom = game:GetService("ReplicatedStorage").GameData.LatestRoom.Value
- 
-for _, v in next, game.Workspace.CurrentRooms[lastroom].Assets:GetDescendants() do
- 
-    if v.Name == "Table" then
- 
-        local randomy = math.random(1, 100) -- can spawn in rooms as possible
- 
-            if randomy == 1 then
- 
-        local positio = v.Main.Position + Vector3.new(0, 2.5, 0)
- 
-        spawncruxy(positio)
- 
-            end
- 
-    end
- 
- 
- 
-end
- 
---
+				prompty.Parent = cruxy
 
-end)
+				prompty.Style = "Custom"
 
-elseif game:GetService("ReplicatedStorage").GameData.Floor.Value == "Fools" then
- 
-game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
+				prompty.Triggered:Connect(function()
 
-function spawncruxy(posy)
- 
-local abc = game:GetObjects("rbxassetid://13872336829")[1]
- 
-local cruxy = abc.Handle:Clone()
- 
-abc:Destroy()
- 
-cruxy.Parent = game.Workspace
- 
-cruxy.Name = "Cruxy"
- 
-cruxy.Position = posy
- 
-cruxy.Anchored = true
- 
-local xy = math.random(-90, 90)
- 
-cruxy.CFrame = CFrame.lookAt(cruxy.Position, cruxy.Position - Vector3.new(xy, yy, zy))
- 
-cruxy.Rotation = Vector3.new(0, xy, 0)
- 
-local prompty = Instance.new("ProximityPrompt")
- 
-prompty.Name = "prompty"
- 
-prompty.MaxActivationDistance = 5
- 
-prompty.ObjectText = "Custom"
- 
-prompty.RequiresLineOfSight = true
- 
-prompty.Parent = cruxy
- 
-prompty.Style = "Custom"
- 
-prompty.Triggered:Connect(function()
- 
-cruxy:Destroy()
- 
-local shadow=game:GetObjects("rbxassetid://13872336829")[1]
- 
-shadow.Parent = game.Players.LocalPlayer.Backpack
- 
-local Players = game:GetService("Players")
- 
-local Plr = Players.LocalPlayer
- 
-local Char = Plr.Character or Plr.CharacterAdded:Wait()
- 
-local Hum = Char:WaitForChild("Humanoid")
- 
-local RightArm = Char:WaitForChild("RightUpperArm")
- 
-local LeftArm = Char:WaitForChild("LeftUpperArm")
- 
-local RightC1 = RightArm.RightShoulder.C1
- 
-local LeftC1 = LeftArm.LeftShoulder.C1
- 
-        local function setupCrucifix(tool)
- 
-        RightArm.Name = "R_Arm"
- 
-        LeftArm.Name = "L_Arm"
- 
- 
- 
-        RightArm.RightShoulder.C1 = RightC1 * CFrame.Angles(math.rad(-90), math.rad(-15), 0)
- 
-        LeftArm.LeftShoulder.C1 = LeftC1 * CFrame.new(-0.2, -0.3, -0.5) * CFrame.Angles(math.rad(-125), math.rad(25), math.rad(25))
- 
-        for _, v in next, Hum:GetPlayingAnimationTracks() do
- 
-            v:Stop()
- 
-        end
- 
-        end
- 
-shadow.Equipped:Connect(function()
- 
-setupCrucifix(shadow)
- 
-game.Players.LocalPlayer:SetAttribute("Hidden", true)
- 
-end)
- 
- 
- 
-shadow.Unequipped:Connect(function()
- 
-    game.Players.LocalPlayer:SetAttribute("Hidden", false)
- 
-        RightArm.Name = "RightUpperArm"
- 
-        LeftArm.Name = "LeftUpperArm"
- 
- 
- 
-        RightArm.RightShoulder.C1 = RightC1
- 
-        LeftArm.LeftShoulder.C1 = LeftC1
- 
-end)
- 
-require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption('You grabbed original crucifix',true)
- 
-wait(3)
- 
-require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption('This only works with custom entities',true)
+					cruxy:Destroy()
 
- 
-end)
- 
---
- 
-end
- 
---
- 
- 
- 
-local lastroom = game:GetService("ReplicatedStorage").GameData.LatestRoom.Value
- 
-for _, v in next, game.Workspace.CurrentRooms[lastroom].Assets:GetDescendants() do
- 
-    if v.Name == "Table" then
- 
-        local randomy = math.random(1, 100) -- can spawn in fools
- 
-            if randomy == 1 then
- 
-        local positio = v.Main.Position + Vector3.new(0, 2.5, 0)
- 
-        spawncruxy(positio)
- 
-            end
- 
-    end
- 
- 
- 
-end
- 
---
+					local shadow=game:GetObjects("rbxassetid://13872336829")[1]
 
-end)
+					shadow.Parent = game.Players.LocalPlayer.Backpack
 
---[[ ]]--
+					local Players = game:GetService("Players")
 
-end
+					local Plr = Players.LocalPlayer
+
+					local Char = Plr.Character or Plr.CharacterAdded:Wait()
+
+					local Hum = Char:WaitForChild("Humanoid")
+
+					local RightArm = Char:WaitForChild("RightUpperArm")
+
+					local LeftArm = Char:WaitForChild("LeftUpperArm")
+
+					local RightC1 = RightArm.RightShoulder.C1
+
+					local LeftC1 = LeftArm.LeftShoulder.C1
+
+					local function setupCrucifix(tool)
+
+						RightArm.Name = "R_Arm"
+
+						LeftArm.Name = "L_Arm"
+
+
+
+						RightArm.RightShoulder.C1 = RightC1 * CFrame.Angles(math.rad(-90), math.rad(-15), 0)
+
+						LeftArm.LeftShoulder.C1 = LeftC1 * CFrame.new(-0.2, -0.3, -0.5) * CFrame.Angles(math.rad(-125), math.rad(25), math.rad(25))
+
+						for _, v in next, Hum:GetPlayingAnimationTracks() do
+
+							v:Stop()
+
+						end
+
+					end
+
+					shadow.Equipped:Connect(function()
+
+						setupCrucifix(shadow)
+
+						game.Players.LocalPlayer:SetAttribute("Hidden", true)
+
+					end)
+
+
+
+					shadow.Unequipped:Connect(function()
+
+						game.Players.LocalPlayer:SetAttribute("Hidden", false)
+
+						RightArm.Name = "RightUpperArm"
+
+						LeftArm.Name = "LeftUpperArm"
+
+
+
+						RightArm.RightShoulder.C1 = RightC1
+
+						LeftArm.LeftShoulder.C1 = LeftC1
+
+					end)
+
+					require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption('You grabbed original crucifix',true)
+
+					wait(3)
+
+					require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption('This only works with custom entities',true)
+
+
+				end)
+
+				--
+
+			end
+
+			--
+
+
+
+			local lastroom = game:GetService("ReplicatedStorage").GameData.LatestRoom.Value
+
+			for _, v in next, game.Workspace.CurrentRooms[lastroom].Assets:GetDescendants() do
+
+				if v.Name == "Table" then
+
+					local randomy = math.random(1, 100)
+
+					if randomy == 1 then
+
+						local positio = v.Main.Position + Vector3.new(0, 2.5, 0)
+
+						spawncruxy(positio)
+
+					end
+
+				elseif v.Name == "Table" and v.Parent.Name == "Sideroom" then
+
+					local randomy = math.random(1, 100)
+
+					if randomy == 1 then
+
+						local positio = v.Main.Position + Vector3.new(0, 2.5, 0)
+
+						spawncruxy(positio)
+
+					end
+
+				end
+
+
+
+			end
+
+			--
+
+		end)
+
+	elseif IsMines then
+
+		game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
+
+			function spawncruxy(posy)
+
+				local abc = game:GetObjects("rbxassetid://13872336829")[1]
+
+				local cruxy = abc.Handle:Clone()
+
+				abc:Destroy()
+
+				cruxy.Parent = game.Workspace
+
+				cruxy.Name = "Cruxy"
+
+				cruxy.Position = posy
+
+				cruxy.Anchored = true
+
+				local xy = math.random(-90, 90)
+
+				cruxy.CFrame = CFrame.lookAt(cruxy.Position, cruxy.Position - Vector3.new(xy, yy, zy))
+
+				cruxy.Rotation = Vector3.new(0, xy, 0)
+
+				local prompty = Instance.new("ProximityPrompt")
+
+				prompty.Name = "prompty"
+
+				prompty.MaxActivationDistance = 5
+
+				prompty.ObjectText = "Custom"
+
+				prompty.RequiresLineOfSight = true
+
+				prompty.Parent = cruxy
+
+				prompty.Style = "Custom"
+
+				prompty.Triggered:Connect(function()
+
+					cruxy:Destroy()
+
+					local shadow=game:GetObjects("rbxassetid://13872336829")[1]
+
+					shadow.Parent = game.Players.LocalPlayer.Backpack
+
+					local Players = game:GetService("Players")
+
+					local Plr = Players.LocalPlayer
+
+					local Char = Plr.Character or Plr.CharacterAdded:Wait()
+
+					local Hum = Char:WaitForChild("Humanoid")
+
+					local RightArm = Char:WaitForChild("RightUpperArm")
+
+					local LeftArm = Char:WaitForChild("LeftUpperArm")
+
+					local RightC1 = RightArm.RightShoulder.C1
+
+					local LeftC1 = LeftArm.LeftShoulder.C1
+
+					local function setupCrucifix(tool)
+
+						RightArm.Name = "R_Arm"
+
+						LeftArm.Name = "L_Arm"
+
+
+
+						RightArm.RightShoulder.C1 = RightC1 * CFrame.Angles(math.rad(-90), math.rad(-15), 0)
+
+						LeftArm.LeftShoulder.C1 = LeftC1 * CFrame.new(-0.2, -0.3, -0.5) * CFrame.Angles(math.rad(-125), math.rad(25), math.rad(25))
+
+						for _, v in next, Hum:GetPlayingAnimationTracks() do
+
+							v:Stop()
+
+						end
+
+					end
+
+					shadow.Equipped:Connect(function()
+
+						setupCrucifix(shadow)
+
+						game.Players.LocalPlayer:SetAttribute("Hidden", true)
+
+					end)
+
+
+
+					shadow.Unequipped:Connect(function()
+
+						game.Players.LocalPlayer:SetAttribute("Hidden", false)
+
+						RightArm.Name = "RightUpperArm"
+
+						LeftArm.Name = "LeftUpperArm"
+
+
+
+						RightArm.RightShoulder.C1 = RightC1
+
+						LeftArm.LeftShoulder.C1 = LeftC1
+
+					end)
+
+					require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption('You grabbed original crucifix',true)
+
+					wait(3)
+
+					require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption('This only works with custom entities',true)
+
+
+				end)
+
+				--
+
+			end
+
+			--
+
+
+
+			local lastroom = game:GetService("ReplicatedStorage").GameData.LatestRoom.Value
+
+			for _, v in next, game.Workspace.CurrentRooms[lastroom].Assets:GetDescendants() do
+
+				if v.Name == "OldWoodenTable" then
+
+					local randomy = math.random(1, 100)
+
+					if randomy == 1 then
+
+						local positio = v.Main.Position + Vector3.new(0, 2.5, 0)
+
+						spawncruxy(positio)
+
+					end
+
+				end
+
+
+
+			end
+
+			--
+
+		end)
+
+	elseif IsBackHotel then
+
+		game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
+
+			function spawncruxy(posy)
+
+				local abc = game:GetObjects("rbxassetid://13872336829")[1]
+
+				local cruxy = abc.Handle:Clone()
+
+				abc:Destroy()
+
+				cruxy.Parent = game.Workspace
+
+				cruxy.Name = "Cruxy"
+
+				cruxy.Position = posy
+
+				cruxy.Anchored = true
+
+				local xy = math.random(-90, 90)
+
+				cruxy.CFrame = CFrame.lookAt(cruxy.Position, cruxy.Position - Vector3.new(xy, yy, zy))
+
+				cruxy.Rotation = Vector3.new(0, xy, 0)
+
+				local prompty = Instance.new("ProximityPrompt")
+
+				prompty.Name = "prompty"
+
+				prompty.MaxActivationDistance = 5
+
+				prompty.ObjectText = "Custom"
+
+				prompty.RequiresLineOfSight = true
+
+				prompty.Parent = cruxy
+
+				prompty.Style = "Custom"
+
+				prompty.Triggered:Connect(function()
+
+					cruxy:Destroy()
+
+					local shadow=game:GetObjects("rbxassetid://13872336829")[1]
+
+					shadow.Parent = game.Players.LocalPlayer.Backpack
+
+					local Players = game:GetService("Players")
+
+					local Plr = Players.LocalPlayer
+
+					local Char = Plr.Character or Plr.CharacterAdded:Wait()
+
+					local Hum = Char:WaitForChild("Humanoid")
+
+					local RightArm = Char:WaitForChild("RightUpperArm")
+
+					local LeftArm = Char:WaitForChild("LeftUpperArm")
+
+					local RightC1 = RightArm.RightShoulder.C1
+
+					local LeftC1 = LeftArm.LeftShoulder.C1
+
+					local function setupCrucifix(tool)
+
+						RightArm.Name = "R_Arm"
+
+						LeftArm.Name = "L_Arm"
+
+
+
+						RightArm.RightShoulder.C1 = RightC1 * CFrame.Angles(math.rad(-90), math.rad(-15), 0)
+
+						LeftArm.LeftShoulder.C1 = LeftC1 * CFrame.new(-0.2, -0.3, -0.5) * CFrame.Angles(math.rad(-125), math.rad(25), math.rad(25))
+
+						for _, v in next, Hum:GetPlayingAnimationTracks() do
+
+							v:Stop()
+
+						end
+
+					end
+
+					shadow.Equipped:Connect(function()
+
+						setupCrucifix(shadow)
+
+						game.Players.LocalPlayer:SetAttribute("Hidden", true)
+
+					end)
+
+
+
+					shadow.Unequipped:Connect(function()
+
+						game.Players.LocalPlayer:SetAttribute("Hidden", false)
+
+						RightArm.Name = "RightUpperArm"
+
+						LeftArm.Name = "LeftUpperArm"
+
+
+
+						RightArm.RightShoulder.C1 = RightC1
+
+						LeftArm.LeftShoulder.C1 = LeftC1
+
+					end)
+
+					require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption('You grabbed original crucifix',true)
+
+					wait(3)
+
+					require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption('This only works with custom entities',true)
+
+
+				end)
+
+				--
+
+			end
+
+			--
+
+
+
+			local lastroom = game:GetService("ReplicatedStorage").GameData.LatestRoom.Value
+
+			for _, v in next, game.Workspace.CurrentRooms[lastroom].Assets:GetDescendants() do
+
+				if v.Name == "Backdoor_Table" then
+
+					local randomy = math.random(1, 100)
+
+					if randomy == 1 then
+
+						local positio = v.Main.Position + Vector3.new(0, 2.5, 0)
+
+						spawncruxy(positio)
+
+					end
+
+				end
+
+
+
+			end
+
+			--
+
+			function spawncruxy(posy)
+
+				local abc = game:GetObjects("rbxassetid://13872336829")[1]
+
+				local cruxy = abc.Handle:Clone()
+
+				abc:Destroy()
+
+				cruxy.Parent = game.Workspace
+
+				cruxy.Name = "CruxyRoomy"
+
+				cruxy.Position = posy
+
+				cruxy.Anchored = true
+
+				local xy = math.random(-90, 90)
+
+				cruxy.CFrame = CFrame.lookAt(cruxy.Position, cruxy.Position - Vector3.new(xy, yy, zy))
+
+				cruxy.Rotation = Vector3.new(0, xy, 0)
+
+				local prompty = Instance.new("ProximityPrompt")
+
+				prompty.Name = "prompty"
+
+				prompty.MaxActivationDistance = 5
+
+				prompty.ObjectText = "Custom"
+
+				prompty.RequiresLineOfSight = true
+
+				prompty.Parent = cruxy
+
+				prompty.Style = "Custom"
+
+				prompty.Triggered:Connect(function()
+
+					cruxy:Destroy()
+
+					local shadow=game:GetObjects("rbxassetid://13872336829")[1]
+
+					shadow.Parent = game.Players.LocalPlayer.Backpack
+
+					local Players = game:GetService("Players")
+
+					local Plr = Players.LocalPlayer
+
+					local Char = Plr.Character or Plr.CharacterAdded:Wait()
+
+					local Hum = Char:WaitForChild("Humanoid")
+
+					local RightArm = Char:WaitForChild("RightUpperArm")
+
+					local LeftArm = Char:WaitForChild("LeftUpperArm")
+
+					local RightC1 = RightArm.RightShoulder.C1
+
+					local LeftC1 = LeftArm.LeftShoulder.C1
+
+					local function setupCrucifix(tool)
+
+						RightArm.Name = "R_Arm"
+
+						LeftArm.Name = "L_Arm"
+
+
+
+						RightArm.RightShoulder.C1 = RightC1 * CFrame.Angles(math.rad(-90), math.rad(-15), 0)
+
+						LeftArm.LeftShoulder.C1 = LeftC1 * CFrame.new(-0.2, -0.3, -0.5) * CFrame.Angles(math.rad(-125), math.rad(25), math.rad(25))
+
+						for _, v in next, Hum:GetPlayingAnimationTracks() do
+
+							v:Stop()
+
+						end
+
+					end
+
+					shadow.Equipped:Connect(function()
+
+						setupCrucifix(shadow)
+
+						game.Players.LocalPlayer:SetAttribute("Hidden", true)
+
+					end)
+
+
+
+					shadow.Unequipped:Connect(function()
+
+						game.Players.LocalPlayer:SetAttribute("Hidden", false)
+
+						RightArm.Name = "RightUpperArm"
+
+						LeftArm.Name = "LeftUpperArm"
+
+
+
+						RightArm.RightShoulder.C1 = RightC1
+
+						LeftArm.LeftShoulder.C1 = LeftC1
+
+					end)
+
+					require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption('You grabbed original crucifix',true)
+
+					wait(3)
+
+					require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption('This only works with custom entities',true)
+
+
+				end)
+
+				--
+
+			end
+
+			--
+
+
+
+			local lastroom = game:GetService("ReplicatedStorage").GameData.LatestRoom.Value
+
+			for _, v in next, game.Workspace.CurrentRooms[lastroom].Assets:GetDescendants() do
+
+				if v.Name == "Table" and v.Parent.Name == "Backdoor_Sideroom" then
+
+					local randomy = math.random(1, 100)
+
+					if randomy == 1 then
+
+						local positio = v.Main.Position + Vector3.new(0, 2.5, 0)
+
+						spawncruxy(positio)
+
+					end
+
+				end
+
+
+
+			end
+
+			--
+
+		end)
+
+	elseif IsRooms then
+
+		game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
+
+			function spawncruxy(posy)
+
+				local abc = game:GetObjects("rbxassetid://13872336829")[1]
+
+				local cruxy = abc.Handle:Clone()
+
+				abc:Destroy()
+
+				cruxy.Parent = game.Workspace
+
+				cruxy.Name = "Cruxy"
+
+				cruxy.Position = posy
+
+				cruxy.Anchored = true
+
+				local xy = math.random(-90, 90)
+
+				cruxy.CFrame = CFrame.lookAt(cruxy.Position, cruxy.Position - Vector3.new(xy, yy, zy))
+
+				cruxy.Rotation = Vector3.new(0, xy, 0)
+
+				local prompty = Instance.new("ProximityPrompt")
+
+				prompty.Name = "prompty"
+
+				prompty.MaxActivationDistance = 5
+
+				prompty.ObjectText = "Custom"
+
+				prompty.RequiresLineOfSight = true
+
+				prompty.Parent = cruxy
+
+				prompty.Style = "Custom"
+
+				prompty.Triggered:Connect(function()
+
+					cruxy:Destroy()
+
+					local shadow=game:GetObjects("rbxassetid://13872336829")[1]
+
+					shadow.Parent = game.Players.LocalPlayer.Backpack
+
+					local Players = game:GetService("Players")
+
+					local Plr = Players.LocalPlayer
+
+					local Char = Plr.Character or Plr.CharacterAdded:Wait()
+
+					local Hum = Char:WaitForChild("Humanoid")
+
+					local RightArm = Char:WaitForChild("RightUpperArm")
+
+					local LeftArm = Char:WaitForChild("LeftUpperArm")
+
+					local RightC1 = RightArm.RightShoulder.C1
+
+					local LeftC1 = LeftArm.LeftShoulder.C1
+
+					local function setupCrucifix(tool)
+
+						RightArm.Name = "R_Arm"
+
+						LeftArm.Name = "L_Arm"
+
+
+
+						RightArm.RightShoulder.C1 = RightC1 * CFrame.Angles(math.rad(-90), math.rad(-15), 0)
+
+						LeftArm.LeftShoulder.C1 = LeftC1 * CFrame.new(-0.2, -0.3, -0.5) * CFrame.Angles(math.rad(-125), math.rad(25), math.rad(25))
+
+						for _, v in next, Hum:GetPlayingAnimationTracks() do
+
+							v:Stop()
+
+						end
+
+					end
+
+					shadow.Equipped:Connect(function()
+
+						setupCrucifix(shadow)
+
+						game.Players.LocalPlayer:SetAttribute("Hidden", true)
+
+					end)
+
+
+
+					shadow.Unequipped:Connect(function()
+
+						game.Players.LocalPlayer:SetAttribute("Hidden", false)
+
+						RightArm.Name = "RightUpperArm"
+
+						LeftArm.Name = "LeftUpperArm"
+
+
+
+						RightArm.RightShoulder.C1 = RightC1
+
+						LeftArm.LeftShoulder.C1 = LeftC1
+
+					end)
+
+					require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption('You grabbed original crucifix',true)
+
+					wait(3)
+
+					require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption('This only works with custom entities',true)
+
+
+				end)
+
+				--
+
+			end
+
+			--
+
+
+
+			local lastroom = game:GetService("ReplicatedStorage").GameData.LatestRoom.Value
+
+			for _, v in next, game.Workspace.CurrentRooms[lastroom].Assets:GetDescendants() do
+
+				if v.Name == "Table" then
+
+					local randomy = math.random(1, 100) -- can spawn in rooms as possible
+
+					if randomy == 1 then
+
+						local positio = v.Main.Position + Vector3.new(0, 2.5, 0)
+
+						spawncruxy(positio)
+
+					end
+
+				end
+
+
+
+			end
+
+			--
+
+		end)
+
+	elseif game:GetService("ReplicatedStorage").GameData.Floor.Value == "Fools" then
+
+		game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
+
+			function spawncruxy(posy)
+
+				local abc = game:GetObjects("rbxassetid://13872336829")[1]
+
+				local cruxy = abc.Handle:Clone()
+
+				abc:Destroy()
+
+				cruxy.Parent = game.Workspace
+
+				cruxy.Name = "Cruxy"
+
+				cruxy.Position = posy
+
+				cruxy.Anchored = true
+
+				local xy = math.random(-90, 90)
+
+				cruxy.CFrame = CFrame.lookAt(cruxy.Position, cruxy.Position - Vector3.new(xy, yy, zy))
+
+				cruxy.Rotation = Vector3.new(0, xy, 0)
+
+				local prompty = Instance.new("ProximityPrompt")
+
+				prompty.Name = "prompty"
+
+				prompty.MaxActivationDistance = 5
+
+				prompty.ObjectText = "Custom"
+
+				prompty.RequiresLineOfSight = true
+
+				prompty.Parent = cruxy
+
+				prompty.Style = "Custom"
+
+				prompty.Triggered:Connect(function()
+
+					cruxy:Destroy()
+
+					local shadow=game:GetObjects("rbxassetid://13872336829")[1]
+
+					shadow.Parent = game.Players.LocalPlayer.Backpack
+
+					local Players = game:GetService("Players")
+
+					local Plr = Players.LocalPlayer
+
+					local Char = Plr.Character or Plr.CharacterAdded:Wait()
+
+					local Hum = Char:WaitForChild("Humanoid")
+
+					local RightArm = Char:WaitForChild("RightUpperArm")
+
+					local LeftArm = Char:WaitForChild("LeftUpperArm")
+
+					local RightC1 = RightArm.RightShoulder.C1
+
+					local LeftC1 = LeftArm.LeftShoulder.C1
+
+					local function setupCrucifix(tool)
+
+						RightArm.Name = "R_Arm"
+
+						LeftArm.Name = "L_Arm"
+
+
+
+						RightArm.RightShoulder.C1 = RightC1 * CFrame.Angles(math.rad(-90), math.rad(-15), 0)
+
+						LeftArm.LeftShoulder.C1 = LeftC1 * CFrame.new(-0.2, -0.3, -0.5) * CFrame.Angles(math.rad(-125), math.rad(25), math.rad(25))
+
+						for _, v in next, Hum:GetPlayingAnimationTracks() do
+
+							v:Stop()
+
+						end
+
+					end
+
+					shadow.Equipped:Connect(function()
+
+						setupCrucifix(shadow)
+
+						game.Players.LocalPlayer:SetAttribute("Hidden", true)
+
+					end)
+
+
+
+					shadow.Unequipped:Connect(function()
+
+						game.Players.LocalPlayer:SetAttribute("Hidden", false)
+
+						RightArm.Name = "RightUpperArm"
+
+						LeftArm.Name = "LeftUpperArm"
+
+
+
+						RightArm.RightShoulder.C1 = RightC1
+
+						LeftArm.LeftShoulder.C1 = LeftC1
+
+					end)
+
+					require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption('You grabbed original crucifix',true)
+
+					wait(3)
+
+					require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption('This only works with custom entities',true)
+
+
+				end)
+
+				--
+
+			end
+
+			--
+
+
+
+			local lastroom = game:GetService("ReplicatedStorage").GameData.LatestRoom.Value
+
+			for _, v in next, game.Workspace.CurrentRooms[lastroom].Assets:GetDescendants() do
+
+				if v.Name == "Table" then
+
+					local randomy = math.random(1, 100) -- can spawn in fools
+
+					if randomy == 1 then
+
+						local positio = v.Main.Position + Vector3.new(0, 2.5, 0)
+
+						spawncruxy(positio)
+
+					end
+
+				end
+
+
+
+			end
+
+			--
+
+		end)
+
+		--[[ ]]--
+
+	end
 
 end)()
 
 -- Rush & Ambush Catalyst
 
-	coroutine.wrap(function()
+coroutine.wrap(function()
 
-		loadstring(game:HttpGet("https://raw.githubusercontent.com/ChronoAcceleration/Hotel-Plus-Plus/refs/heads/main/QOL/RushingFurtniture.lua"))()
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/ChronoAcceleration/Hotel-Plus-Plus/refs/heads/main/QOL/RushingFurtniture.lua"))()
 
-		workspace.ChildAdded:Connect(function(inst)
-			task.wait(1)
+	workspace.ChildAdded:Connect(function(inst)
+		task.wait(1)
 
-			if inst.Name == "RushMoving" and inst:FindFirstChild("RushNew") and inst.RushNew:FindFirstChild("Attachment") then
-				local BlackTrail = Instance.new("ParticleEmitter")
-				BlackTrail.Name = "BlackTrail"
-				BlackTrail.Texture = "rbxassetid://16812282020"
-				BlackTrail.Parent = inst.RushNew.Attachment
+		if inst.Name == "RushMoving" and inst:FindFirstChild("RushNew") and inst.RushNew:FindFirstChild("Attachment") then
+			local BlackTrail = Instance.new("ParticleEmitter")
+			BlackTrail.Name = "BlackTrail"
+			BlackTrail.Texture = "rbxassetid://16812282020"
+			BlackTrail.Parent = inst.RushNew.Attachment
 
-				local BlackTrail2 = BlackTrail:Clone()
-				BlackTrail2.Name = "BlackTrail2"
-				BlackTrail2.Texture = "rbxassetid://16812299892"
-				BlackTrail2.Parent = inst.RushNew.Attachment
+			local BlackTrail2 = BlackTrail:Clone()
+			BlackTrail2.Name = "BlackTrail2"
+			BlackTrail2.Texture = "rbxassetid://16812299892"
+			BlackTrail2.Parent = inst.RushNew.Attachment
 
-				local BoolValue = Instance.new("BoolValue")
-				BoolValue.Name = "Catalyst"
-				BoolValue.Parent = inst
+			local BoolValue = Instance.new("BoolValue")
+			BoolValue.Name = "Catalyst"
+			BoolValue.Parent = inst
 
-				inst.RushNew.Attachment.ParticleEmitter.Texture = "rbxassetid://16835616258"
-				inst.RushNew.Attachment.ParticleEmitter.Brightness = 5
+			inst.RushNew.Attachment.ParticleEmitter.Texture = "rbxassetid://16835616258"
+			inst.RushNew.Attachment.ParticleEmitter.Brightness = 5
 
-				repeat
-					task.wait()
-				until not inst:FindFirstChild("RushNew")
+			repeat
+				task.wait()
+			until not inst:FindFirstChild("RushNew")
 
-			elseif inst.Name == "AmbushMoving" and inst:FindFirstChild("RushNew") and inst.RushNew:FindFirstChild("Attachment") then
-				local BoolValue = Instance.new("BoolValue")
-				BoolValue.Name = "Catalyst"
-				BoolValue.Parent = inst
+		elseif inst.Name == "AmbushMoving" and inst:FindFirstChild("RushNew") and inst.RushNew:FindFirstChild("Attachment") then
+			local BoolValue = Instance.new("BoolValue")
+			BoolValue.Name = "Catalyst"
+			BoolValue.Parent = inst
 
-				inst.RushNew.Attachment.ParticleEmitter.Texture = "rbxassetid://14985985638"
-				inst.RushNew.Attachment.ParticleEmitter.Brightness = 1
+			inst.RushNew.Attachment.ParticleEmitter.Texture = "rbxassetid://14985985638"
+			inst.RushNew.Attachment.ParticleEmitter.Brightness = 1
 
-				repeat
-					task.wait()
-				until not inst:FindFirstChild("RushNew")
+			repeat
+				task.wait()
+			until not inst:FindFirstChild("RushNew")
+		end
+	end)
+end)()
+
+-- Insane Mines
+coroutine.wrap(function()
+	game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
+		if game.ReplicatedStorage.GameData.LatestRoom.Value == 52 then
+			if IsMines then
+				-- Set up horror atmosphere
+				Lighting.Ambient = Color3.new(0, 0, 0)
+				Lighting.Brightness = 0.1
+				Lighting.FogEnd = 60
+				Lighting.FogColor = Color3.new(0, 0, 0)
+
+				-- Show intro text
+				local shut = game.Players.LocalPlayer.PlayerGui.MainUI.MainFrame.IntroText
+				local intro = shut:Clone()
+				intro.Parent = game.Players.LocalPlayer.PlayerGui.MainUI
+				intro.Name = "InsaneMines"
+				intro.Visible = true
+				intro.Text = "The Insane Mines"
+				intro.TextTransparency = 0
+				local underline = UDim2.new(1.1, 0, 0.015, 6)
+				game.TweenService:Create(intro.Underline, TweenInfo.new(3), {Size = underline}):Play()
+				SyncHelper:deltaWait(7)
+				game.TweenService:Create(intro.Underline, TweenInfo.new(1.3), {Size = UDim2.new(0.95, 0, 0.015, 6)}):Play()
+				SyncHelper:deltaWait(1)
+				game.TweenService:Create(intro.Underline, TweenInfo.new(2), {ImageTransparency = 1}):Play()
+				game.TweenService:Create(intro, TweenInfo.new(2), {TextTransparency = 1}):Play()
+				game.TweenService:Create(intro.Underline, TweenInfo.new(7), {Size = UDim2.new(0, 0, 0.015, 6)}):Play()
+				SyncHelper:deltaWait(2.3)
+				intro.Visible = false
+				IsInsaneMines = true
+
+				-- Lights Remove
+				coroutine.wrap(function()
+					while true do
+						SyncHelper:deltaWait(0.0005)
+						game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:WaitForChild("Assets").Chandelier:Destroy()
+						game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:WaitForChild("Assets").Light_Fixtures:Destroy()
+					end
+				end)()
+
+				-- Paralysis
+				coroutine.wrap(function()
+					while true do
+						SyncHelper:deltaWait(29.50)
+						if not IsSeekChase then
+							LatestRoom:GetPropertyChangedSignal("Value"):Wait()
+							SyncHelper:deltaWait(0)
+							loadstring(game:HttpGet("https://pastefy.app/FI91Bi2f/raw"))()
+						end
+					end
+				end)()
+
+				-- B-60
+				coroutine.wrap(function()
+					while true do
+						if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
+							SyncHelper:deltaWait(375)
+							LatestRoom:GetPropertyChangedSignal("Value"):Wait()
+							loadstring(game:HttpGet("https://pastebin.com/raw/s2jHyGmm"))()
+						end
+					end
+				end)()
+
+				-- A-10
+				coroutine.wrap(function()
+					while true do
+						if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
+							SyncHelper:deltaWait(SyncHelper:generateFullRandom(350, 590))
+							if not IsSeekChase or IsFigure or IsGrumble then
+								LatestRoom:GetPropertyChangedSignal("Value"):Wait()
+								SyncHelper:deltaWait(0)
+								loadstring(game:HttpGet("https://pastefy.app/rmShikEK/raw"))()
+							end
+						end
+					end
+				end)()
+
+				-- Claim
+				coroutine.wrap(function()
+					while true do
+						if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
+							SyncHelper:deltaWait(SyncHelper:generateFullRandom(100, 550))
+							if not IsSeekChase or IsFigure or IsGrumble then
+								LatestRoom:GetPropertyChangedSignal("Value"):Wait()
+								loadstring(game:HttpGet("https://pastebin.com/raw/d3R357Rk"))()
+							end
+						end
+					end
+				end)()
+
+				-- Wh1t3 Remade
+				coroutine.wrap(function()
+					while true do
+						if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
+							if not IsSeekChase or IsFigure or IsGrumble then
+								SyncHelper:deltaWait(SyncHelper:generateFullRandom(500, 1390))
+								LatestRoom:GetPropertyChangedSignal("Value"):Wait()
+								local cuew = Instance.new("Sound")
+								cuew.Parent = game.Workspace
+								cuew.Name = "Spawn"
+								cuew.SoundId = "rbxassetid://3359047385"
+								cuew.Volume = 1
+								cuew.PlaybackSpeed = 1
+								cuew:Play()
+								game.Lighting.MainColorCorrection.TintColor = Color3.fromRGB(0, 255, 0)
+								game.Lighting.MainColorCorrection.Contrast = 25
+								local tween = game:GetService("TweenService"):Create(game.Lighting.MainColorCorrection, TweenInfo.new(9), {Contrast = 0})
+								tween:Play()
+								local TW = game:GetService("TweenService"):Create(game.Lighting.MainColorCorrection, TweenInfo.new(1), {TintColor = Color3.fromRGB(255, 255, 255)})
+								TW:Play()
+								loadstring(game:HttpGet("https://pastebin.com/raw/2LTckSaJ"))()
+							end
+						end
+					end
+				end)()
 			end
-		end)
-	end)()
+		end
+	end)
+end)()   
 
-	-- Insane Mines
-	coroutine.wrap(function()
-		game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
-			if game.ReplicatedStorage.GameData.LatestRoom.Value == 52 then
-				if IsMines then
-					-- Set up horror atmosphere
-					Lighting.Ambient = Color3.new(0, 0, 0)
-					Lighting.Brightness = 0.1
-					Lighting.FogEnd = 60
-					Lighting.FogColor = Color3.new(0, 0, 0)
+-- Deep Hotel
+coroutine.wrap(function()
+	game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
+		if game.ReplicatedStorage.GameData.LatestRoom.Value == 52 then
+			if IsHotel then
+				-- Set up horror atmosphere
+				Lighting.Ambient = Color3.new(0, 0, 0)
+				Lighting.Brightness = 0.1
+				Lighting.FogEnd = 60
+				Lighting.FogColor = Color3.new(0, 0, 0)
 
-					-- Show intro text
+				-- Show intro text
+				if IsHotel then
 					local shut = game.Players.LocalPlayer.PlayerGui.MainUI.MainFrame.IntroText
 					local intro = shut:Clone()
 					intro.Parent = game.Players.LocalPlayer.PlayerGui.MainUI
-					intro.Name = "InsaneMines"
+					intro.Name = "DeepHotel"
 					intro.Visible = true
-					intro.Text = "The Insane Mines"
+					intro.Text = "The Deep Hotel"
 					intro.TextTransparency = 0
 					local underline = UDim2.new(1.1, 0, 0.015, 6)
 					game.TweenService:Create(intro.Underline, TweenInfo.new(3), {Size = underline}):Play()
@@ -2268,244 +2383,123 @@ end)()
 					game.TweenService:Create(intro.Underline, TweenInfo.new(7), {Size = UDim2.new(0, 0, 0.015, 6)}):Play()
 					SyncHelper:deltaWait(2.3)
 					intro.Visible = false
-					IsInsaneMines = true
-
-					-- Lights Remove
-					coroutine.wrap(function()
-						while true do
-							SyncHelper:deltaWait(0.0005)
-							game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:WaitForChild("Assets").Chandelier:Destroy()
-							game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:WaitForChild("Assets").Light_Fixtures:Destroy()
-						end
-					end)()
-
-					-- Paralysis
-					coroutine.wrap(function()
-						while true do
-							SyncHelper:deltaWait(29.50)
-							if not IsSeekChase then
-								LatestRoom:GetPropertyChangedSignal("Value"):Wait()
-								SyncHelper:deltaWait(0)
-								loadstring(game:HttpGet("https://pastefy.app/FI91Bi2f/raw"))()
-							end
-						end
-					end)()
-
-					-- B-60
-					coroutine.wrap(function()
-						while true do
-							if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
-								SyncHelper:deltaWait(375)
-								LatestRoom:GetPropertyChangedSignal("Value"):Wait()
-								loadstring(game:HttpGet("https://pastebin.com/raw/s2jHyGmm"))()
-							end
-						end
-					end)()
-
-					-- A-10
-					coroutine.wrap(function()
-						while true do
-							if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
-								SyncHelper:deltaWait(SyncHelper:generateFullRandom(350, 590))
-								if not IsSeekChase or IsFigure or IsGrumble then
-									LatestRoom:GetPropertyChangedSignal("Value"):Wait()
-									SyncHelper:deltaWait(0)
-									loadstring(game:HttpGet("https://pastefy.app/rmShikEK/raw"))()
-								end
-							end
-						end
-					end)()
-
-					-- Claim
-					coroutine.wrap(function()
-						while true do
-							if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
-								SyncHelper:deltaWait(SyncHelper:generateFullRandom(100, 550))
-								if not IsSeekChase or IsFigure or IsGrumble then
-									LatestRoom:GetPropertyChangedSignal("Value"):Wait()
-									loadstring(game:HttpGet("https://pastebin.com/raw/d3R357Rk"))()
-								end
-							end
-						end
-					end)()
-
-					-- Wh1t3 Remade
-					coroutine.wrap(function()
-						while true do
-							if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
-								if not IsSeekChase or IsFigure or IsGrumble then
-									SyncHelper:deltaWait(SyncHelper:generateFullRandom(500, 1390))
-									LatestRoom:GetPropertyChangedSignal("Value"):Wait()
-									local cuew = Instance.new("Sound")
-									cuew.Parent = game.Workspace
-									cuew.Name = "Spawn"
-									cuew.SoundId = "rbxassetid://3359047385"
-									cuew.Volume = 1
-									cuew.PlaybackSpeed = 1
-									cuew:Play()
-									game.Lighting.MainColorCorrection.TintColor = Color3.fromRGB(0, 255, 0)
-									game.Lighting.MainColorCorrection.Contrast = 25
-									local tween = game:GetService("TweenService"):Create(game.Lighting.MainColorCorrection, TweenInfo.new(9), {Contrast = 0})
-									tween:Play()
-									local TW = game:GetService("TweenService"):Create(game.Lighting.MainColorCorrection, TweenInfo.new(1), {TintColor = Color3.fromRGB(255, 255, 255)})
-									TW:Play()
-									loadstring(game:HttpGet("https://pastebin.com/raw/2LTckSaJ"))()
-								end
-							end
-						end
-					end)()
+					IsDeepHotel = true
 				end
-			end
-		end)
-	end)()   
 
-	-- Deep Hotel
-	coroutine.wrap(function()
-		game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
-			if game.ReplicatedStorage.GameData.LatestRoom.Value == 52 then
-				if IsHotel then
-					-- Set up horror atmosphere
-					Lighting.Ambient = Color3.new(0, 0, 0)
-					Lighting.Brightness = 0.1
-					Lighting.FogEnd = 60
-					Lighting.FogColor = Color3.new(0, 0, 0)
-
-					-- Show intro text
-					if IsHotel then
-						local shut = game.Players.LocalPlayer.PlayerGui.MainUI.MainFrame.IntroText
-						local intro = shut:Clone()
-						intro.Parent = game.Players.LocalPlayer.PlayerGui.MainUI
-						intro.Name = "DeepHotel"
-						intro.Visible = true
-						intro.Text = "The Deep Hotel"
-						intro.TextTransparency = 0
-						local underline = UDim2.new(1.1, 0, 0.015, 6)
-						game.TweenService:Create(intro.Underline, TweenInfo.new(3), {Size = underline}):Play()
-						SyncHelper:deltaWait(7)
-						game.TweenService:Create(intro.Underline, TweenInfo.new(1.3), {Size = UDim2.new(0.95, 0, 0.015, 6)}):Play()
-						SyncHelper:deltaWait(1)
-						game.TweenService:Create(intro.Underline, TweenInfo.new(2), {ImageTransparency = 1}):Play()
-						game.TweenService:Create(intro, TweenInfo.new(2), {TextTransparency = 1}):Play()
-						game.TweenService:Create(intro.Underline, TweenInfo.new(7), {Size = UDim2.new(0, 0, 0.015, 6)}):Play()
-						SyncHelper:deltaWait(2.3)
-						intro.Visible = false
-						IsDeepHotel = true
+				-- Lights Remove
+				coroutine.wrap(function()
+					while IsHotel do
+						SyncHelper:deltaWait(0.0005)
+						workspace.CurrentRooms[tostring(LatestRoom.Value)]:WaitForChild("Assets").Chandelier:Destroy()
+						workspace.CurrentRooms[tostring(LatestRoom.Value)]:WaitForChild("Assets").Light_Fixtures:Destroy()
 					end
+				end)()
 
-					-- Lights Remove
-					coroutine.wrap(function()
-						while IsHotel do
-							SyncHelper:deltaWait(0.0005)
-							workspace.CurrentRooms[tostring(LatestRoom.Value)]:WaitForChild("Assets").Chandelier:Destroy()
-							workspace.CurrentRooms[tostring(LatestRoom.Value)]:WaitForChild("Assets").Light_Fixtures:Destroy()
+				-- A-90
+				coroutine.wrap(function()
+					while true do
+						SyncHelper:deltaWait(SyncHelper:generateFullRandom(10, 29))
+						if not IsSeekChase then
+							LatestRoom:GetPropertyChangedSignal("Value"):Wait()
+							SyncHelper:deltaWait(0)
+							loadstring(game:HttpGet("https://pastefy.app/K2TbsMWk/raw"))()
 						end
-					end)()
+					end
+				end)()
 
-					-- A-90
-					coroutine.wrap(function()
-						while true do
-							SyncHelper:deltaWait(SyncHelper:generateFullRandom(10, 29))
-							if not IsSeekChase then
+				-- Dread HC 
+				coroutine.wrap(function()
+					while true do
+						SyncHelper:deltaWait(SyncHelper:generateFullRandom(29, 63))
+						if not IsSeekChase or IsFigure then
+							LatestRoom:GetPropertyChangedSignal("Value"):Wait()
+							SyncHelper:deltaWait(0)
+							loadstring(game:HttpGet("https://raw.githubusercontent.com/huyhoanggphuc/Entity-obfuscate/refs/heads/main/Dread.lua"))()
+						end
+					end	
+				end)()
+
+				-- Wh1t3 Remade
+				coroutine.wrap(function()
+					while true do
+						if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
+							if not IsSeekChase or IsFigure or IsGrumble then
+								SyncHelper:deltaWait(SyncHelper:generateFullRandom(500, 1390))
 								LatestRoom:GetPropertyChangedSignal("Value"):Wait()
-								SyncHelper:deltaWait(0)
-								loadstring(game:HttpGet("https://pastefy.app/K2TbsMWk/raw"))()
+								local cuew = Instance.new("Sound")
+								cuew.Parent = game.Workspace
+								cuew.Name = "Spawn"
+								cuew.SoundId = "rbxassetid://3359047385"
+								cuew.Volume = 1
+								cuew.PlaybackSpeed = 1
+								cuew:Play()
+								game.Lighting.MainColorCorrection.TintColor = Color3.fromRGB(0, 255, 0)
+								game.Lighting.MainColorCorrection.Contrast = 25
+								local tween = game:GetService("TweenService"):Create(game.Lighting.MainColorCorrection, TweenInfo.new(9), {Contrast = 0})
+								tween:Play()
+								local TW = game:GetService("TweenService"):Create(game.Lighting.MainColorCorrection, TweenInfo.new(1), {TintColor = Color3.fromRGB(255, 255, 255)})
+								TW:Play()
+								loadstring(game:HttpGet("https://pastebin.com/raw/2LTckSaJ"))()
 							end
 						end
-					end)()
+					end
+				end)()
 
-					-- Dread HC 
-					coroutine.wrap(function()
-						while true do
-							SyncHelper:deltaWait(SyncHelper:generateFullRandom(29, 63))
-							if not IsSeekChase or IsFigure then
+				-- Surge
+				coroutine.wrap(function()
+					while true do
+						if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
+							local sctm = SyncHelper:generateFullRandom(900, 2970)
+							SyncHelper:deltaWait(sctm)
+							if not IsSeekChase or IsFigure or IsGrumble then
 								LatestRoom:GetPropertyChangedSignal("Value"):Wait()
-								SyncHelper:deltaWait(0)
-								loadstring(game:HttpGet("https://raw.githubusercontent.com/huyhoanggphuc/Entity-obfuscate/refs/heads/main/Dread.lua"))()
-							end
-						 end	
-					end)()
-
-					-- Wh1t3 Remade
-					coroutine.wrap(function()
-						while true do
-							if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
-								if not IsSeekChase or IsFigure or IsGrumble then
-									SyncHelper:deltaWait(SyncHelper:generateFullRandom(500, 1390))
-									LatestRoom:GetPropertyChangedSignal("Value"):Wait()
-									local cuew = Instance.new("Sound")
-									cuew.Parent = game.Workspace
-									cuew.Name = "Spawn"
-									cuew.SoundId = "rbxassetid://3359047385"
-									cuew.Volume = 1
-									cuew.PlaybackSpeed = 1
-									cuew:Play()
-									game.Lighting.MainColorCorrection.TintColor = Color3.fromRGB(0, 255, 0)
-									game.Lighting.MainColorCorrection.Contrast = 25
-									local tween = game:GetService("TweenService"):Create(game.Lighting.MainColorCorrection, TweenInfo.new(9), {Contrast = 0})
-									tween:Play()
-									local TW = game:GetService("TweenService"):Create(game.Lighting.MainColorCorrection, TweenInfo.new(1), {TintColor = Color3.fromRGB(255, 255, 255)})
-									TW:Play()
-									loadstring(game:HttpGet("https://pastebin.com/raw/2LTckSaJ"))()
-								end
+								local cue2 = Instance.new("Sound")
+								cue2.Parent = game.Workspace
+								cue2.Name = "Spawn"
+								cue2.SoundId = "rbxassetid://3359047385"
+								cue2.Volume = 1
+								cue2.PlaybackSpeed = 1
+								cue2:Play()
+								game.Lighting.MainColorCorrection.TintColor = Color3.fromRGB(0, 255, 0)
+								game.Lighting.MainColorCorrection.Contrast = 25
+								local tween = game:GetService("TweenService"):Create(game.Lighting.MainColorCorrection, TweenInfo.new(9), {Contrast = 0})
+								tween:Play()
+								local TW = game:GetService("TweenService"):Create(game.Lighting.MainColorCorrection, TweenInfo.new(1), {TintColor = Color3.fromRGB(255, 255, 255)})
+								TW:Play()
+								SyncHelper:deltaWait(1)
+								loadstring(game:HttpGet("https://pastebin.com/raw/jTEPNkrV"))()
 							end
 						end
-					end)()
+					end
+				end)()
 
-					-- Surge
-					coroutine.wrap(function()
-						while true do
-							if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
-								local sctm = SyncHelper:generateFullRandom(900, 2970)
-								SyncHelper:deltaWait(sctm)
-								if not IsSeekChase or IsFigure or IsGrumble then
-									LatestRoom:GetPropertyChangedSignal("Value"):Wait()
-									local cue2 = Instance.new("Sound")
-									cue2.Parent = game.Workspace
-									cue2.Name = "Spawn"
-									cue2.SoundId = "rbxassetid://3359047385"
-									cue2.Volume = 1
-									cue2.PlaybackSpeed = 1
-									cue2:Play()
-									game.Lighting.MainColorCorrection.TintColor = Color3.fromRGB(0, 255, 0)
-									game.Lighting.MainColorCorrection.Contrast = 25
-									local tween = game:GetService("TweenService"):Create(game.Lighting.MainColorCorrection, TweenInfo.new(9), {Contrast = 0})
-									tween:Play()
-									local TW = game:GetService("TweenService"):Create(game.Lighting.MainColorCorrection, TweenInfo.new(1), {TintColor = Color3.fromRGB(255, 255, 255)})
-									TW:Play()
-									SyncHelper:deltaWait(1)
-									loadstring(game:HttpGet("https://pastebin.com/raw/jTEPNkrV"))()
-								end
+				-- Monoxide
+				coroutine.wrap(function()
+					while true do
+						if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
+							local sctm = SyncHelper:generateFullRandom(400, 999)
+							SyncHelper:deltaWait(sctm)
+							if not IsSeekChase or IsFigure or IsGrumble then
+								local cue2 = Instance.new("Sound")
+								cue2.Parent = game.Workspace
+								cue2.Name = "Spawn"
+								cue2.SoundId = "rbxassetid://7053083974"
+								cue2.Volume = 1
+								cue2.PlaybackSpeed = 1
+								cue2:Play()
+								game.Lighting.MainColorCorrection.TintColor = Color3.fromRGB(0, 0, 255)
+								game.Lighting.MainColorCorrection.Contrast = 10
+								local tween = game:GetService("TweenService"):Create(game.Lighting.MainColorCorrection, TweenInfo.new(2.5), {Contrast = 0})
+								tween:Play()
+								local TW = game:GetService("TweenService"):Create(game.Lighting.MainColorCorrection, TweenInfo.new(5), {TintColor = Color3.fromRGB(255, 255, 255)})
+								TW:Play()
+								SyncHelper:deltaWait(1.9)
+								loadstring(game:HttpGet("https://pastebin.com/raw/pm2GUxHV"))()
 							end
 						end
-					end)()
-
-					-- Monoxide
-					coroutine.wrap(function()
-						while true do
-							if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
-								local sctm = SyncHelper:generateFullRandom(400, 999)
-								SyncHelper:deltaWait(sctm)
-								if not IsSeekChase or IsFigure or IsGrumble then
-									local cue2 = Instance.new("Sound")
-									cue2.Parent = game.Workspace
-									cue2.Name = "Spawn"
-									cue2.SoundId = "rbxassetid://7053083974"
-									cue2.Volume = 1
-									cue2.PlaybackSpeed = 1
-									cue2:Play()
-									game.Lighting.MainColorCorrection.TintColor = Color3.fromRGB(0, 0, 255)
-									game.Lighting.MainColorCorrection.Contrast = 10
-									local tween = game:GetService("TweenService"):Create(game.Lighting.MainColorCorrection, TweenInfo.new(2.5), {Contrast = 0})
-									tween:Play()
-									local TW = game:GetService("TweenService"):Create(game.Lighting.MainColorCorrection, TweenInfo.new(5), {TintColor = Color3.fromRGB(255, 255, 255)})
-									TW:Play()
-									SyncHelper:deltaWait(1.9)
-									loadstring(game:HttpGet("https://pastebin.com/raw/pm2GUxHV"))()
-								end
-							end
-						end
-					end)()					
-		        end
-		    end 
-	    end)
-   end)()
+					end
+				end)()					
+			end
+		end 
+	end)
+end)()
