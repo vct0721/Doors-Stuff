@@ -1271,7 +1271,7 @@ coroutine.wrap(function()
 
 				cruxy.Parent = game.Workspace
 
-				cruxy.Name = "Cruxy" or cruxy.Sideroom.Name = "CruxyRoomy"
+				cruxy.Name = "Cruxy" or cruxy.Sideroom.Name == "CruxyRoomy"
 
 				cruxy.Position = posy
 
