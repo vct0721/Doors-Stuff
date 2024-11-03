@@ -692,17 +692,6 @@ end)()
 		end
 	end)()
 
-	-- Twister
-	coroutine.wrap(function()
-		while true do
-			SyncHelper:deltaWait(SyncHelper:generateFullRandom(30, 80))
-			if not IsSeekChase or IsFigure then
-				LatestRoom:GetPropertyChangedSignal("Value"):Wait()
-				loadstring(game:HttpGet("https://raw.githubusercontent.com/huyhoanggphuc/Entity-obfuscate/refs/heads/main/Twister.lua"))()
-			end
-		end
-	end)()
-
 	-- Torment
 	coroutine.wrap(function()
 		while true do
