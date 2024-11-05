@@ -111,6 +111,7 @@ while true do
 	local PreviousLatestRoomInstance = CurrentRooms[tostring(LatestRoom - 1)]
 	if PreviousLatestRoomInstance:GetAttribute("BeastRoom") then
 	PreviousLatestRoomInstance.FigureSetup:Destroy()
+	end				
 	end)
     updateBehavior()
     wait(recalculationInterval)
