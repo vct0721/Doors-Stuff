@@ -11,11 +11,17 @@ if _G.ExecutedTryHard then
 	return
 end
 
+--Setting Up GetGenvs
+if getgenv().isTrollface == nil then
+	getgenv().isTrollface = false
+end
+
+
 game.TextChatService.TextChannels.RBXSystem:DisplaySystemMessage("Wait 3-5 or few seconds this loading and/or to open the door!")
 
 local caption = game.Players.LocalPlayer:WaitForChild("PlayerGui").MainUI.MainFrame.Caption
 caption.TextColor3 = Color3.fromRGB(0, 255, 0)
-require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("Tryhard Mode script succesfully executed (version 2.0)",true)
+require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("Tryhard Mode script succesfully executed (version 2.2)",true)
 local caption = game.Players.LocalPlayer:WaitForChild("PlayerGui").MainUI.MainFrame.Caption
 caption.TextColor3 = Color3.fromRGB(255, 222, 189)
 -- "Why not V1?" Because V1 was released before, but it was too broken to be announced.
@@ -48,24 +54,28 @@ local Mischiveous = false
 local IsInsaneMines = false
 local IsDeepHotel = false
 local roomValue = ReplicatedStorage.GameData.LatestRoom.Value
+local deathCause = ReplicatedStorage.GameStats["Player_" .. player.Name].Total.DeathCause
 local IsRetro = GameData.Floor.Value == "Retro"
 local IsMines = GameData.Floor.Value == "Mines"
 local IsRooms = GameData.Floor.Value == "Rooms"
 local IsHotel = GameData.Floor.Value == "Hotel"
 local IsBackHotel = GameData.Floor.Value == "Backdoor"
-local LatestRoomm = CurrentRooms[tostring(ReplicatedStorage.GameData.LatestRoom.Value)]
+local LatestRoomm = CurrentRooms[tostring(roomValue)]
+local NextRoomm = CurrentRooms[tostring(roomValue + 1)]
 local RoomAssets = LatestRoomm:WaitForChild("Assets")
 local TeleportService = game:GetService("TeleportService")
+local QueueTeleport = (syn and syn.queue_on_teleport) or queue_on_teleport or (fluxus and fluxus.queue_on_teleport)
 local IsMiddleFloor = ReplicatedStorage.GameData.LatestRoom.Value == 50
 local IsHospital = IsHotel and ReplicatedStorage.GameData.LatestRoom.Value == 60
 local IsCortyard = ReplicatedStorage.GameData.LatestRoom.Value > 88 and ReplicatedStorage.GameData.LatestRoom.Value < 100
-local IsEletrical = ReplicatedStorage.GameData.LatestRoom.Value == 100
+local IsEletrical = ReplicatedStorage.GameData.LatestRoom.Value == 100 and IsHotel
 local ModuleEvents = require(ReplicatedStorage.ClientModules.Module_Events)
-local IsDead = Players.LocalPlayer.Character.Humanoid.Health < 1
+local IsDead = Players.LocalPlayer.Character.Humanoid.Health <= 0
 local IsBackEnd = IsBackHotel and ReplicatedStorage.GameData.LatestRoom.Value == 50
 local IsFinalRooms = IsRooms and ReplicatedStorage.GameData.LatestRoom.Value == 1000
 local IsSeekChase = Workspace:FindFirstChild("SeekMovingNewClone") or Workspace:FindFirstChild("SeekMoving")
 local IsFigure = LatestRoomm:FindFirstChild("FigureRig") or LatestRoomm:FindFirstChild("FigureSetup")
+local IsHalt = LatestRoomm:GetAttribute("RawName") == "HaltHallway" or NextRoomm:GetAttribute("RawName") == "HaltHallway"
 local IsGrumble = IsMines and IsMiddleFloor
 
 local NODE_PARAMETERS = {
@@ -94,7 +104,7 @@ coroutine.wrap(function()
 
 		game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
 
-			SyncHelper:deltaWait(0.0005)
+			wait(0.0005)
 
 			function ReplaceAudGit(GithubSnd)
 				local url = GithubSnd
@@ -120,15 +130,42 @@ coroutine.wrap(function()
 
 end)()
 
+-- Game Mechanic Changes:
+
+-- The Mines:
+-- Anti-Water
+if IsMines then
+	game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
+		if not workspace:FindFirstChild("1Underwater") then
+			local nowater = Instance.New("BoolValue")
+			nowater.Name = "1Underwater"
+			nowater.Parent = workspace
+		end
+		if workspace:WaitForChild("1Underwater").Value ~= nil then
+			workspace:WaitForChild("1Underwater").Value = true
+			task.wait()
+			repeat
+				ReplicatedStorage.RemotesFolder.Underwater:FireServer(false)
+				task.wait(0.01) until
+			workspace:WaitForChild("1Underwater").Value == false
+		end
+		else
+		    workspace:WaitForChild("1Underwater").Value = false
+		end	
+	end)
+end	
+
+
+
 -- light's shatter in the library and the dam
 
 coroutine.wrap(function()
 
-	if game:GetService("ReplicatedStorage").GameData.Floor.Value == "Hotel" then
+	if IsHotel then
 
 		game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
 
-			if game.ReplicatedStorage.GameData.LatestRoom.Value == 50 then
+			if IsMiddleFloor then
 
 				game.Workspace.Ambience_Dark:Play()
 
@@ -142,11 +179,11 @@ coroutine.wrap(function()
 
 		end)
 
-	elseif game:GetService("ReplicatedStorage").GameData.Floor.Value == "Mines" then
+	elseif IsMines then
 
 		game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
 
-			if game.ReplicatedStorage.GameData.LatestRoom.Value == 100 then
+			if IsEletrical then
 
 				wait(1)
 
@@ -168,22 +205,41 @@ end)()
 
 loadstring(game:HttpGet("https://pastebin.com/raw/b1cQKBB2"))()
 
--- Door New Materials
+-- Door New Stuff
+
+
+-- The 3 Architects Shields
 ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
-	if IsMines then
-		SyncHelper:deltaWait(0.0005)
-		local door = Workspace.CurrentRooms[ReplicatedStorage.GameData.LatestRoom.Value]:FindFirstChild("Door")
-		if door then
-			door.Sign.Material = Enum.Material.CorrodedMetal
-		end
-	elseif IsBackHotel then
-		SyncHelper:deltaWait(0.0005)
-		local door = Workspace.CurrentRooms[GameData.LatestRoom.Value]:FindFirstChild("Door")
-		if door then
-			door.Material = Enum.Material.Brick
-		end
-	end
+    local guidance = Functions.LoadCustomInstance("https://github.com/vct0721/Doors-Stuff/raw/refs/heads/main/Assets/GuidingShield.rbxm")
+    local miscguidance = Functions.LoadCustomInstance("https://github.com/vct0721/Doors-Stuff/raw/refs/heads/main/Assets/MischiveousShield.rbxm")
+    local curious = Functions.LoadCustomInstance("https://github.com/vct0721/Doors-Stuff/raw/refs/heads/main/Assets/CuriousShield.rbxm")
+    local nothing
+
+    local door = LatestRoomm:FindFirstChild("Door")
+    
+    if door then
+        if roomValue == 0 then
+            local choices = {guidance, miscguidance, curious}
+            local selectedItem = choices[math.random(1, #choices)]
+            selectedItem.Parent = door
+            selectedItem.PivotTo(door.GetPivot)
+
+        elseif roomValue ~= 50 and roomValue ~= 100 then
+            local choices = {guidance, miscguidance, curious, nothing}
+            local selectedItem = choices[math.random(1, #choices)]
+            local chance = SyncHelper:generateFullRandom(1, 50)
+            if chance == 2 and selectedItem ~= nothing then
+                selectedItem.Parent = door
+                selectedItem.PivotTo(door.GetPivot)
+            end
+        end
+    end
 end)
+
+-- Queque on Teleport
+if QueueTeleport and not game:GetService("ReplicatedStorage").GameData.Floor.Value == "Fools" then
+QueueTeleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/vct0721/Doors-Stuff/main/Try%20Hard%20Mode'))()")
+end
 
 -- Custom Gui
 loadstring(game:HttpGet("https://pastebin.com/raw/VZ0pV8G3"))()
@@ -248,6 +304,10 @@ caption.TextColor3 = Color3.fromRGB(0, 255, 0)
 require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("Script sync's accordingly for started room",true)
 local caption = game.Players.LocalPlayer:WaitForChild("PlayerGui").MainUI.MainFrame.Caption
 caption.TextColor3 = Color3.fromRGB(255, 222, 189)
+
+SyncHelper:deltaWait(1)
+
+require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("Made By victor072134",true)
 
 SyncHelper:deltaWait(1)
 
@@ -442,7 +502,7 @@ coroutine.wrap(function()
 
 		if IsMines or IsRooms or IsBackHotel then
 
-			SyncHelper:deltaWait(SyncHelper:generateFullRandom(5, 16))
+			wait(math.random(5, 16))
 
 			loadstring(game:HttpGet("https://raw.githubusercontent.com/DripCapybara/Test/refs/heads/main/Doors/SnareSpawner.lua"))()
 
@@ -464,8 +524,8 @@ coroutine.wrap(function()
 
 			getgenv().GIGGLE_SPAWN_CONFIG = {
 				Damage = 6,
-				AttackingTime =  SyncHelper:generateFullRandom(7, 10), -- The time giggle will be attacking for.
-				FallSpeed =  SyncHelper:generateFullRandom(2, 3),        -- Speed for when giggle spawns, can be mininum 2 and how high you want
+				AttackingTime =  math.random(7, 10), -- The time giggle will be attacking for.
+				FallSpeed =  math.random(2, 3),        -- Speed for when giggle spawns, can be mininum 2 and how high you want
 
 				Stunnable = true,    -- If set to true, Giggle will be stunnable with glowstick
 				StunTime = 5, -- The time giggle will be stun for
@@ -503,7 +563,7 @@ coroutine.wrap(function()
 
 	while true do
 
-		if not IsSeekChase or IsFigure or IsGrumble then
+		if not IsSeekChase or IsFigure or IsHalt or IsGrumble then
 			if IsMines then
 				SyncHelper:deltaWait(SyncHelper:generateFullRandom(290, 330))
 				LatestRoom:GetPropertyChangedSignal("Value"):Wait()
@@ -532,28 +592,64 @@ coroutine.wrap(function()
 
 end)()
 
--- Stare
 
+-- Death and Warn Shields
 coroutine.wrap(function()
+    ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
+        local NextIsFigure = NextRoomm:FindFirstChild("FigureRig") or NextRoomm:FindFirstChild("FigureSetup")
+        local warnshield = Functions.LoadCustomInstance("https://github.com/vct0721/Doors-Stuff/raw/refs/heads/main/Assets/WarnShield.rbxm")
+        local deathshield = Functions.LoadCustomInstance("https://github.com/vct0721/Doors-Stuff/raw/refs/heads/main/Assets/DeathShield.rbxm")
+        local nothing
 
-	if IsMines then
+        local choices = {warnshield, deathshield, nothing}
+        local selectedItem = choices[math.random(1, #choices)]
 
-		while true do
+        local door = LatestRoomm:FindFirstChild("Door")
+        if door and selectedItem ~= nothing then
+            local chance = SyncHelper:generateFullRandom(1, 30)
+            if chance == 2 then
+                if selectedItem == warnshield and (NextIsFigure or IsSeekChase) then
+                    warnshield.Parent = door
+                    warnshield.PivotTo(door.GetPivot)
+                elseif selectedItem == deathshield then
+                    deathshield.Parent = door
+                    deathshield.PivotTo(door.GetPivot)
+					
+                    local player = game.Players.LocalPlayer
+                    local character = player.Character or player.CharacterAdded:Wait()
+                    local humanoid = character:WaitForChild("Humanoid")
+                    deathshield.Touched:Connect(function(hit)
+                        if hit.Parent == character then
+                            humanoid.Health = 0
+                            local deathCause = ReplicatedStorage.GameStats["Player_" .. player.Name].Total.DeathCause
+                            deathCause.Value = "Greed"
+                            firesignal(ReplicatedStorage.RemotesFolder.DeathHint.OnClientEvent, {
+                                "TryHard Mode is not an easy deal",
+                                "You died to a Death Shield?",
+                                "Oh, it's another variation of who they call Greed",
+                                "Just don't pass through the door when that is there"
+                            }, "Yellow")
+                        end  
+                    end)
 
-			local sctm = SyncHelper:generateFullRandom(170,205)
+                    local destroyTime = math.random(2, 10)
+                    Debris:AddItem(deathshield, destroyTime)
+                end
+            end
+        end
+    end)
+end)()
 
-			SyncHelper:deltaWait(sctm)
-
-			game.ReplicatedStorage.GameData.LatestRoom.Changed:Wait()
-
-			loadstring(game:HttpGet("https://pastebin.com/raw/VUHT2JL5"))()
-
+-- Paralysis
+coroutine.wrap(function()
+	while true do
+		wait(29.50)
+		if not IsSeekChase then
+			LatestRoom:GetPropertyChangedSignal("Value"):Wait()
+			wait(0)
+			loadstring(game:HttpGet("https://pastefy.app/FI91Bi2f/raw"))()
 		end
-
-		--[[ ]]--
-
 	end
-
 end)()
 
 -- blackout
@@ -579,7 +675,7 @@ coroutine.wrap(function()
 	while true do
 		if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
 			SyncHelper:deltaWait(SyncHelper:generateFullRandom(90, 130))
-			if not IsSeekChase or IsFigure or IsGrumble then
+			if not IsSeekChase or IsFigure or IsHalt or IsGrumble then
 				LatestRoom:GetPropertyChangedSignal("Value"):Wait()
 				loadstring(game:HttpGet("https://raw.githubusercontent.com/vct0721/Doors-Stuff/main/DreadEnity"))()
 			end
@@ -591,8 +687,8 @@ end)()
 coroutine.wrap(function()
 	while true do
 		if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
-			SyncHelper:deltaWait(SyncHelper:generateFullRandom(90, 130))
-			if not IsSeekChase or IsFigure or IsGrumble then
+			wait(math.random(80, 130))
+			if not IsSeekChase or IsFigure or IsHalt or IsGrumble then
 				spawn(function()
 					require(game:GetService("Players").LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.RemoteListener.Modules.Dread)(require(game:GetService("Players").LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game))
 				end)
@@ -650,7 +746,7 @@ coroutine.wrap(function()
 	while true do
 		if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
 			SyncHelper:deltaWait(SyncHelper:generateFullRandom(250, 380))
-			if not IsSeekChase or IsFigure or IsGrumble then
+			if not IsSeekChase or IsFigure or IsHalt or IsGrumble then
 				LatestRoom:GetPropertyChangedSignal("Value"):Wait()
 				loadstring(game:HttpGet("https://pastebin.com/raw/q0JC9BAt"))()
 			end
@@ -663,7 +759,7 @@ coroutine.wrap(function()
 	while true do
 		if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
 			SyncHelper:deltaWait(SyncHelper:generateFullRandom(350, 680))
-			if not IsSeekChase or IsFigure or IsGrumble then
+			if not IsSeekChase or IsFigure or IsHalt or IsGrumble then
 				LatestRoom:GetPropertyChangedSignal("Value"):Wait()
 				loadstring(game:HttpGet("https://raw.githubusercontent.com/huyhoanggphuc/Entity-obfuscate/refs/heads/main/A-60%20Hardcore.lua"))()
 			end
@@ -689,8 +785,8 @@ end)()
 coroutine.wrap(function()
 	while true do
 		if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
-			SyncHelper:deltaWait(SyncHelper:generateFullRandom(30, 80))
-			if not IsSeekChase or IsFigure then
+			SyncHelper:deltaWait(SyncHelper:generateFullRandom(20, 95))
+			if not IsSeekChase or IsFigure or IsHalt then
 				LatestRoom:GetPropertyChangedSignal("Value"):Wait()
 				loadstring(game:HttpGet("https://raw.githubusercontent.com/huyhoanggphuc/Entity-obfuscate/refs/heads/main/Twister.lua"))()
 			end
@@ -703,7 +799,7 @@ coroutine.wrap(function()
 	while true do
 		if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
 			SyncHelper:deltaWait(SyncHelper:generateFullRandom(250, 400))
-			if not IsSeekChase or IsFigure or IsGrumble then
+			if not IsSeekChase or IsFigure or IsHalt or IsGrumble then
 				LatestRoom:GetPropertyChangedSignal("Value"):Wait()
 				SyncHelper:deltaWait(0)
 				loadstring(game:HttpGet("https://pastefy.app/JOymYI5l/raw"))()
@@ -731,7 +827,7 @@ coroutine.wrap(function()
 	while true do
 		if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
 			SyncHelper:deltaWait(SyncHelper:generateFullRandom(693, 780))
-			if not IsSeekChase or IsFigure or IsGrumble then
+			if not IsSeekChase or IsFigure or IsHalt or IsGrumble then
 				LatestRoom:GetPropertyChangedSignal("Value"):Wait()
 				loadstring(game:HttpGet("https://pastebin.com/raw/JPL5TUtW"))()
 			end
@@ -745,10 +841,10 @@ coroutine.wrap(function()
 		if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
 			SyncHelper:deltaWait(SyncHelper:generateFullRandom(199, 390))
 			if IsMines then
-				if not IsSeekChase or IsFigure or IsGrumble then
+				if not IsSeekChase or IsFigure or IsHalt or IsGrumble then
 					LatestRoom:GetPropertyChangedSignal("Value"):Wait()
 					SyncHelper:deltaWait(0)
-					loadstring(game:HttpGet("https://pastefy.app/S1kL47Q0/raw"))()
+					loadstring(game:HttpGet("https://pastefy.app/fQZmOOSq/raw"))()
 				end
 			end
 		end
@@ -760,7 +856,7 @@ coroutine.wrap(function()
 	while true do
 		if IsMines then
 			SyncHelper:deltaWait(SyncHelper:generateFullRandom(250, 490))
-			if not IsSeekChase or IsFigure or IsGrumble then
+			if not IsSeekChase or IsFigure or IsHalt or IsGrumble then
 				LatestRoom:GetPropertyChangedSignal("Value"):Wait()
 				SyncHelper:deltaWait(0)
 				loadstring(game:HttpGet("https://pastefy.app/6l2QHB8I/raw"))()
@@ -774,10 +870,10 @@ coroutine.wrap(function()
 	while true do
 		if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
 			SyncHelper:deltaWait(SyncHelper:generateFullRandom(100, 210))
-			if not IsSeekChase or IsFigure or IsGrumble then
+			if not IsSeekChase or IsFigure or IsHalt or IsGrumble then
 				LatestRoom:GetPropertyChangedSignal("Value"):Wait()
 				SyncHelper:deltaWait(0)
-				loadstring(game:HttpGet("https://pastefy.app/Mfhh3A8M/raw"))()
+				loadstring(game:HttpGet("https://pastefy.app/jncKfAWe/raw"))()
 			end
 		end
 	end
@@ -789,7 +885,7 @@ coroutine.wrap(function()
 		if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
 			local sctm =  SyncHelper:generateFullRandom(190, 350)
 			SyncHelper:deltaWait(sctm)
-			if not IsSeekChase or IsFigure or IsGrumble then
+			if not IsSeekChase or IsFigure or IsHalt or IsGrumble then
 				LatestRoom:GetPropertyChangedSignal("Value"):Wait()
 				loadstring(game:HttpGet("https://pastebin.com/raw/S9KGv5Ce"))()
 			end
@@ -803,7 +899,7 @@ coroutine.wrap(function()
 		if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
 			local sctm =  SyncHelper:generateFullRandom(290, 450)
 			SyncHelper:deltaWait(sctm)
-			if not IsSeekChase or IsFigure or IsGrumble then
+			if not IsSeekChase or IsFigure or IsHalt or IsGrumble then
 				LatestRoom:GetPropertyChangedSignal("Value"):Wait()
 				loadstring(game:HttpGet("https://pastebin.com/raw/S9KGv5Ce"))()
 			end
@@ -817,7 +913,7 @@ coroutine.wrap(function()
 		if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
 			local sctm =  SyncHelper:generateFullRandom(50, 250)
 			SyncHelper:deltaWait(sctm)
-			if not IsSeekChase or IsFigure or IsGrumble then
+			if not IsSeekChase or IsFigure or IsHalt or IsGrumble then
 				loadstring(game:HttpGet("https://pastefy.app/XyEFOSsV/raw"))()
 			end
 		end
@@ -830,7 +926,7 @@ coroutine.wrap(function()
 		if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
 			local sctm =  SyncHelper:generateFullRandom(50, 150)
 			SyncHelper:deltaWait(sctm)
-			if not IsSeekChase or IsFigure or IsGrumble then
+			if not IsSeekChase or IsFigure or IsHalt or IsGrumble then
 				LatestRoom:GetPropertyChangedSignal("Value"):Wait()
 				SyncHelper:deltaWait(0.3)
 				game.Lighting.MainColorCorrection.TintColor = Color3.fromRGB(212, 255, 212)
@@ -844,7 +940,7 @@ coroutine.wrap(function()
 				roast.Name = "roast"
 				roast.SoundId = "rbxassetid://9125936117"
 				roast.Volume = 0.5
-				roast.Pitch = 3
+				roast.PlaybackSpeed = 3
 				roast:Play()
 				SyncHelper:deltaWait(0.6)
 				roast:Destroy()
@@ -984,7 +1080,7 @@ coroutine.wrap(function()
 		if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
 			local sctm = SyncHelper:generateFullRandom(236, 960)
 			SyncHelper:deltaWait(sctm)
-			if not IsSeekChase or IsFigure or IsGrumble then
+			if not IsSeekChase or IsFigure or IsHalt or IsGrumble then
 				LatestRoom:GetPropertyChangedSignal("Value"):Wait()
 				loadstring(game:HttpGet("https://pastebin.com/raw/2SAwkPLt"))()
 			end
@@ -997,7 +1093,7 @@ coroutine.wrap(function()
 	while true do
 		if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
 			SyncHelper:deltaWait(SyncHelper:generateFullRandom(1050, 2090))
-			if not IsSeekChase or IsFigure or IsGrumble then
+			if not IsSeekChase or IsFigure or IsHalt or IsGrumble then
 				LatestRoom:GetPropertyChangedSignal("Value"):Wait()
 				loadstring(game:HttpGet("https://pastebin.com/raw/rCTaWAqN"))()
 			end
@@ -1034,8 +1130,8 @@ end)()
 coroutine.wrap(function()
 	while true do
 		SyncHelper:deltaWait(SyncHelper:generateFullRandom(5, 2100))
-		if not IsSeekChase or IsFigure or IsGrumble then
-			local spawn_chance =  SyncHelper:generateFullRandom(1, 1750)
+		if not IsSeekChase or IsFigure or IsHalt or IsGrumble then
+			local spawn_chance = SyncHelper:generateFullRandom(1, 1750)
 			if spawn_chance == 1 then
 				LatestRoom:GetPropertyChangedSignal("Value"):Wait()
 				require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption('What just happened?!!!', true)
@@ -2197,10 +2293,8 @@ coroutine.wrap(function()
 		task.wait(1)
 
 		if inst.Name == "RushMoving" and inst:FindFirstChild("RushNew") and inst.RushNew:FindFirstChild("Attachment") then
-			local BlackTrail = Instance.new("ParticleEmitter")
-			BlackTrail.Name = "BlackTrail"
+			local BlackTrail = inst.RushNew.Attachment.BlackTrail
 			BlackTrail.Texture = "rbxassetid://16812282020"
-			BlackTrail.Parent = inst.RushNew.Attachment
 
 			local BlackTrail2 = BlackTrail:Clone()
 			BlackTrail2.Name = "BlackTrail2"
@@ -2267,20 +2361,20 @@ coroutine.wrap(function()
 				-- Lights Remove
 				coroutine.wrap(function()
 					while true do
-						SyncHelper:deltaWait(0.0005)
+						wait(0.0005)
 						game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:WaitForChild("Assets").Chandelier:Destroy()
 						game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:WaitForChild("Assets").Light_Fixtures:Destroy()
 					end
 				end)()
 
-				-- Paralysis
+				-- A-90
 				coroutine.wrap(function()
 					while true do
-						SyncHelper:deltaWait(29.50)
+						wait(math.random(10, 29))
 						if not IsSeekChase then
 							LatestRoom:GetPropertyChangedSignal("Value"):Wait()
-							SyncHelper:deltaWait(0)
-							loadstring(game:HttpGet("https://pastefy.app/FI91Bi2f/raw"))()
+							wait(0)
+							loadstring(game:HttpGet("https://pastefy.app/K2TbsMWk/raw"))()
 						end
 					end
 				end)()
@@ -2301,7 +2395,7 @@ coroutine.wrap(function()
 					while true do
 						if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
 							SyncHelper:deltaWait(SyncHelper:generateFullRandom(350, 590))
-							if not IsSeekChase or IsFigure or IsGrumble then
+							if not IsSeekChase or IsFigure or IsHalt or IsGrumble then
 								LatestRoom:GetPropertyChangedSignal("Value"):Wait()
 								SyncHelper:deltaWait(0)
 								loadstring(game:HttpGet("https://pastefy.app/rmShikEK/raw"))()
@@ -2315,7 +2409,7 @@ coroutine.wrap(function()
 					while true do
 						if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
 							SyncHelper:deltaWait(SyncHelper:generateFullRandom(100, 550))
-							if not IsSeekChase or IsFigure or IsGrumble then
+							if not IsSeekChase or IsFigure or IsHalt or IsGrumble then
 								LatestRoom:GetPropertyChangedSignal("Value"):Wait()
 								loadstring(game:HttpGet("https://pastebin.com/raw/d3R357Rk"))()
 							end
@@ -2327,7 +2421,7 @@ coroutine.wrap(function()
 				coroutine.wrap(function()
 					while true do
 						if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
-							if not IsSeekChase or IsFigure or IsGrumble then
+							if not IsSeekChase or IsFigure or IsHalt or IsGrumble then
 								SyncHelper:deltaWait(SyncHelper:generateFullRandom(500, 1390))
 								LatestRoom:GetPropertyChangedSignal("Value"):Wait()
 								local cuew = Instance.new("Sound")
@@ -2389,7 +2483,7 @@ coroutine.wrap(function()
 				-- Lights Remove
 				coroutine.wrap(function()
 					while IsHotel do
-						SyncHelper:deltaWait(0.0005)
+						wait(0.0005)
 						workspace.CurrentRooms[tostring(LatestRoom.Value)]:WaitForChild("Assets").Chandelier:Destroy()
 						workspace.CurrentRooms[tostring(LatestRoom.Value)]:WaitForChild("Assets").Light_Fixtures:Destroy()
 					end
@@ -2398,10 +2492,10 @@ coroutine.wrap(function()
 				-- A-90
 				coroutine.wrap(function()
 					while true do
-						SyncHelper:deltaWait(SyncHelper:generateFullRandom(10, 29))
+						wait(math.random(10, 29))
 						if not IsSeekChase then
 							LatestRoom:GetPropertyChangedSignal("Value"):Wait()
-							SyncHelper:deltaWait(0)
+							wait(0)
 							loadstring(game:HttpGet("https://pastefy.app/K2TbsMWk/raw"))()
 						end
 					end
@@ -2411,7 +2505,7 @@ coroutine.wrap(function()
 				coroutine.wrap(function()
 					while true do
 						SyncHelper:deltaWait(SyncHelper:generateFullRandom(29, 63))
-						if not IsSeekChase or IsFigure then
+						if not IsSeekChase or IsFigure or IsHalt then
 							LatestRoom:GetPropertyChangedSignal("Value"):Wait()
 							SyncHelper:deltaWait(0)
 							loadstring(game:HttpGet("https://raw.githubusercontent.com/huyhoanggphuc/Entity-obfuscate/refs/heads/main/Dread.lua"))()
@@ -2423,7 +2517,7 @@ coroutine.wrap(function()
 				coroutine.wrap(function()
 					while true do
 						if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
-							if not IsSeekChase or IsFigure or IsGrumble then
+							if not IsSeekChase or IsFigure or IsHalt or IsGrumble then
 								SyncHelper:deltaWait(SyncHelper:generateFullRandom(500, 1390))
 								LatestRoom:GetPropertyChangedSignal("Value"):Wait()
 								local cuew = Instance.new("Sound")
@@ -2451,7 +2545,7 @@ coroutine.wrap(function()
 						if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
 							local sctm = SyncHelper:generateFullRandom(900, 2970)
 							SyncHelper:deltaWait(sctm)
-							if not IsSeekChase or IsFigure or IsGrumble then
+							if not IsSeekChase or IsFigure or IsHalt or IsGrumble then
 								LatestRoom:GetPropertyChangedSignal("Value"):Wait()
 								local cue2 = Instance.new("Sound")
 								cue2.Parent = game.Workspace
@@ -2479,7 +2573,7 @@ coroutine.wrap(function()
 						if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
 							local sctm = SyncHelper:generateFullRandom(400, 999)
 							SyncHelper:deltaWait(sctm)
-							if not IsSeekChase or IsFigure or IsGrumble then
+							if not IsSeekChase or IsFigure or IsHalt or IsGrumble then
 								local cue2 = Instance.new("Sound")
 								cue2.Parent = game.Workspace
 								cue2.Name = "Spawn"
@@ -2494,8 +2588,8 @@ coroutine.wrap(function()
 								local TW = game:GetService("TweenService"):Create(game.Lighting.MainColorCorrection, TweenInfo.new(5), {TintColor = Color3.fromRGB(255, 255, 255)})
 								TW:Play()
 								SyncHelper:deltaWait(1.9)
-								loadstring(game:HttpGet("https://pastebin.com/raw/pm2GUxHV"))()
-							end
+								loadstring(game:HttpGet("https://pastebin.com/raw/pm2GUxHV"))()	
+						   end
 						end
 					end
 				end)()					
