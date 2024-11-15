@@ -1,6 +1,6 @@
 loadstring(game:HttpGet("https://raw.githubusercontent.com/vct0721/Doors-Stuff/refs/heads/main/Other/NodesConverter.lua"))()
 
-local Functions = loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Functions.lua"))()
+local Functions = loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Functions:lua"))()
 local SpawnerLibrary = {
 	Tween = function(object, input, studspersecond, offset)
 		local char = game:GetService("Players").LocalPlayer.Character;
@@ -50,7 +50,7 @@ local Entities = {
 			workspace.Ambience_Seek.TimePosition = 0
 			workspace["Ambience_Seek"]:Play()
 
-			local firgur = Functions.LoadCustomInstance("rbxassetid://13623176199")
+			local firgur = Functions:LoadCustomInstance("rbxassetid://13623176199")
 
 			firgur.Figure.Anchored = true
 			firgur.Parent = workspace
@@ -66,7 +66,7 @@ local Entities = {
 			val.Value = early.PathfindNodes["1"].CFrame + Vector3.new(0,5,0)
 
 			local anim = Instance.new("Animation")
-			anim.AnimationId = Functions.LoadCustomInstance("rbxassetid://9896641335")
+			anim.AnimationId = Functions:LoadCustomInstance("rbxassetid://9896641335")
 
 			firgur.SeekRig.AnimationController:LoadAnimation(anim):Play()
 
@@ -78,7 +78,7 @@ local Entities = {
 			firgur.Figure.FootstepsFar:Play()
 
 			local anim = Instance.new("Animation")
-			anim.AnimationId = Functions.LoadCustomInstance("rbxassetid://7758895278")
+			anim.AnimationId = Functions:LoadCustomInstance("rbxassetid://7758895278")
 
 			firgur.SeekRig.AnimationController:LoadAnimation(anim):Play()
 
