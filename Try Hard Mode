@@ -11,12 +11,6 @@ if _G.ExecutedTryHard then
 	return
 end
 
---Setting Up GetGenvs
-if getgenv().isTrollface == nil then
-	getgenv().isTrollface = false
-end
-
-
 game.TextChatService.TextChannels.RBXSystem:DisplaySystemMessage("Wait 3-5 or few seconds this loading and/or to open the door!")
 
 local caption = game.Players.LocalPlayer:WaitForChild("PlayerGui").MainUI.MainFrame.Caption
