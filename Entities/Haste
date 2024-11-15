@@ -30,7 +30,7 @@ local function PlayJumpscare(callback)
     local imageLabel = Instance.new("ImageLabel", screenGui)
     imageLabel.Size = UDim2.new(1, 0, 1, 0)
     imageLabel.Position = UDim2.new(0, 0, 0, 0)
-    imageLabel.Image = "http://www.roblox.com/asset/?id=16854793811"
+    imageLabel.Image = Functions:LoadCustomAsset("http://www.roblox.com/asset/?id=16854793811")
     imageLabel.BackgroundTransparency = 1
     imageLabel.ZIndex = 10
 
@@ -119,7 +119,7 @@ local function SpawnHaste()
     MCC.TintColor = Color3.new(1, 0.5, 0.5)
     rppos = char.HumanoidRootPart.Position
     
-    haste = Functions.LoadCustomAsset("rbxassetid://111998108199298")
+    haste = Functions:LoadCustomInstance("rbxassetid://111998108199298")
     _G.MP = haste
     haste.Parent = workspace
     haste.Name = "HasteMoving"
@@ -155,7 +155,7 @@ local function SpawnLeverNearDoor(door)
     if leverSpawned then return end
 
     -- Load the Lever from the asset
-    local asset = Functions.LoadCustomAsset("rbxassetid://17271863184")
+    local asset = Functions:LoadCustomInstance("rbxassetid://17271863184")
     asset.Parent = workspace
     
     local lever = asset:FindFirstChild("Lever")
