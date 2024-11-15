@@ -44,7 +44,7 @@ local entity = spawner.Create({
 		Values = {1.5, 20, 0.1, 1} -- Magnitude, Roughness, FadeIn, FadeOut
 	},
 	Movement = {
-		Speed = 90,
+		Speed = 99,
 		Delay = 2,
 		Reversed = false
 	},
@@ -69,7 +69,7 @@ local entity = spawner.Create({
 	Death = {
 		Type = "Guiding", -- "Curious"
 		Hints = {"You died to Matcher", "Running will not help, try hiding when you know it's near", "Pay attention for cues that hint it's arrival"},
-		Cause = ""
+		Cause = "Matcher"
 	}
 })
 
