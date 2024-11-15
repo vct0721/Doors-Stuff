@@ -11,6 +11,12 @@ if _G.ExecutedTryHard then
 	return
 end
 
+--Setting Up GetGenvs
+if getgenv().isTrollface == nil then
+	getgenv().isTrollface = false
+end
+
+
 game.TextChatService.TextChannels.RBXSystem:DisplaySystemMessage("Wait 3-5 or few seconds this loading and/or to open the door!")
 
 local caption = game.Players.LocalPlayer:WaitForChild("PlayerGui").MainUI.MainFrame.Caption
@@ -201,42 +207,6 @@ end)()
 -- Key New Sounds
 
 loadstring(game:HttpGet("https://pastebin.com/raw/b1cQKBB2"))()
-
--- Door New Stuff
-
-
--- The 3 Architects Shields
-ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
-    local guidance = Functions.LoadCustomInstance("https://github.com/vct0721/Doors-Stuff/raw/refs/heads/main/Assets/GuidingShield.rbxm")
-    local miscguidance = Functions.LoadCustomInstance("https://github.com/vct0721/Doors-Stuff/raw/refs/heads/main/Assets/MischiveousShield.rbxm")
-    local curious = Functions.LoadCustomInstance("https://github.com/vct0721/Doors-Stuff/raw/refs/heads/main/Assets/CuriousShield.rbxm")
-	local misterious = Functions.LoadCustomInstance("https://github.com/vct0721/Doors-Stuff/raw/refs/heads/main/Assets/MisteriousShield.rbxm")
-    local nothing
-
-    local door = LatestRoomm:FindFirstChild("Door")
-    
-    if door then
-        if roomValue == 0 then
-            local choices = {guidance, miscguidance, curious}
-            local selectedItem = choices[math.random(1, #choices)]
-		    selectedItem.PrimaryPart.CanTouch = true
-			selectedItem.PrimaryPart.CanQuery = true
-            selectedItem.Parent = door
-            selectedItem:SetPrimaryPartCFrame(door:GetPrimaryPartCFrame())
-
-        elseif roomValue ~= 50 and roomValue ~= 100 then
-            local choices = {guidance, miscguidance, curious, misterious, nothing}
-            local selectedItem = choices[math.random(1, #choices)]
-            local chance = SyncHelper:generateFullRandom(1, 50)
-            if chance == 2 and selectedItem ~= nothing then
-			    selectedItem.PrimaryPart.CanTouch = true
-				selectedItem.PrimaryPart.CanQuery = true
-                selectedItem.Parent = door
-                selectedItem:SetPrimaryPartCFrame(door:GetPrimaryPartCFrame())
-            end
-        end
-    end
-end)
 
 -- Queque on Teleport
 if QueueTeleport and not game:GetService("ReplicatedStorage").GameData.Floor.Value == "Fools" then
@@ -592,56 +562,6 @@ coroutine.wrap(function()
 
 	end
 
-end)()
-
-
--- Death and Warn Shields
-coroutine.wrap(function()
-    ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
-        local NextIsFigure = NextRoomm:FindFirstChild("FigureRig") or NextRoomm:FindFirstChild("FigureSetup")
-        local warnshield = Functions.LoadCustomInstance("https://github.com/vct0721/Doors-Stuff/raw/refs/heads/main/Assets/WarnShield.rbxm")
-        local deathshield = Functions.LoadCustomInstance("https://github.com/vct0721/Doors-Stuff/raw/refs/heads/main/Assets/DeathShield.rbxm")
-        local nothing
-
-        local choices = {warnshield, deathshield, nothing}
-        local selectedItem = choices[math.random(1, #choices)]
-
-        local door = LatestRoomm:FindFirstChild("Door")
-        if door and selectedItem ~= nothing then
-            local chance = SyncHelper:generateFullRandom(1, 30)
-            if chance == 2 then
-                if selectedItem == warnshield and (NextIsFigure or IsSeekChase) then
-                    warnshield.Parent = door
-                    warnshield:SetPrimaryPartCFrame(door:GetPrimaryPartCFrame())
-                elseif selectedItem == deathshield then
-				    deathshield.PrimaryPart.CanTouch = true
-					warnshield.PrimaryPart.CanQuery = true
-                    deathshield.Parent = door
-                    deathshield:SetPrimaryPartCFrame(door:GetPrimaryPartCFrame())
-					
-                    local player = game.Players.LocalPlayer
-                    local character = player.Character or player.CharacterAdded:Wait()
-                    local humanoid = character:WaitForChild("Humanoid")
-                    deathshield.Touched:Connect(function(hit)
-                        if hit.Parent == character then
-                            humanoid.Health = 0
-                            local deathCause = ReplicatedStorage.GameStats["Player_" .. player.Name].Total.DeathCause
-                            deathCause.Value = "Greed"
-                            firesignal(ReplicatedStorage.RemotesFolder.DeathHint.OnClientEvent, {
-                                "TryHard Mode is not an easy deal",
-                                "You died to a Death Shield?",
-                                "Oh, it's another variation of who they call Greed",
-                                "Just don't pass through the door when that is there"
-                            }, "Yellow")
-                        end  
-                    end)
-
-                    local destroyTime = math.random(2, 10)
-                    Debris:AddItem(deathshield, destroyTime)
-                end
-            end
-        end
-    end)
 end)()
 
 -- Paralysis
