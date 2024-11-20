@@ -813,7 +813,7 @@ spawner.Run = function(entityTable)
 												warn("Not Use Solara")
 		
 											elseif config.Lights.Repair then -- Repair lights
-												FixRoomLights(room)
+												warn("Not Use Solara")
 											end
 										end
 									end
