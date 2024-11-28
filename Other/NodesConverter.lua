@@ -1,4 +1,4 @@
--- NodeConverter.lua
+ -- NodeConverter.lua
 
 local CurrentRooms = workspace:WaitForChild("CurrentRooms")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -11,13 +11,14 @@ local function convertToLegacy(Room: Model): ()
 
     local PathfindNodes = Room:WaitForChild("PathfindNodes", 10)
     local Nodes = Room:WaitForChild("Nodes", 10)
+    local PathNodes = Room:WaitForChild("PathNodes", 10)
 
     if not PathfindNodes or Nodes then
         return -- No PathfindNodes found, exit the function
     end
 
     -- Create a list of new names for the clones
-    local newNames = {"Nodes", "PathfindNodes", "PathNodes", "SeekNodes"}
+    local newNames = {"Nodes", "PathfindNodes", "PathNodes"}
 
     -- Clone the PathfindNodes for each new name
     for _, newName in ipairs(newNames) do
