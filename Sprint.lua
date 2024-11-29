@@ -1,212 +1,151 @@
--- Sprint script with a toggle button for mobile devices and keyboard support
-local Parent = game.Players.LocalPlayer.PlayerGui
+local Player = game.Players.LocalPlayer
+local Character = Player.Character or Player.CharacterAdded:Wait()
+local Humanoid = Character:WaitForChild("Humanoid")
 
-local Sprint = Instance.new("Frame")
-local ImageLabel = Instance.new("ImageLabel")
-local UICorner = Instance.new("UICorner")
-local UIPadding = Instance.new("UIPadding")
-local Bar = Instance.new("Frame")
-local UICorner_2 = Instance.new("UICorner")
-local UIPadding_2 = Instance.new("UIPadding")
-local Fill = Instance.new("Frame")
-local UICorner_3 = Instance.new("UICorner")
+local Parent = Player.PlayerGui
 
--- GUI properties
+local TweenService = game:GetService("TweenService")
+local RunService = game:GetService("RunService")
+
 local StaminaGui = Instance.new("ScreenGui")
 StaminaGui.Name = "StaminaGui"
-StaminaGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+StaminaGui.Parent = Parent
 StaminaGui.Enabled = true
 StaminaGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 
+-- Sprint Frame
+local Sprint = Instance.new("Frame")
 Sprint.Name = "Sprint"
 Sprint.Parent = StaminaGui
-Sprint.AnchorPoint = Vector2.new(0, 1)
+Sprint.AnchorPoint = Vector2.new(1, 0.5) -- Anchor to the middle right
 Sprint.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-Sprint.BackgroundTransparency = 1.000
-Sprint.Position = UDim2.new(0.931555569, 0, 0.987179458, 0)
-Sprint.Size = UDim2.new(0.0556001104, 0, 0.0756410286, 0)
-Sprint.SizeConstraint = Enum.SizeConstraint.RelativeYY
+Sprint.BackgroundTransparency = 1
+Sprint.Position = UDim2.new(1, -10, 0.5, -Sprint.Size.Y.Offset / 2) -- Middle right position
+Sprint.Size = UDim2.new(0.3, 0, 0.05, 0)
 Sprint.ZIndex = 1005
 
+local ImageLabel = Instance.new("ImageLabel")
 ImageLabel.Parent = Sprint
 ImageLabel.BackgroundColor3 = Color3.fromRGB(255, 222, 189)
 ImageLabel.Size = UDim2.new(1, 0, 1, 0)
-ImageLabel.SizeConstraint = Enum.SizeConstraint.RelativeYY
-ImageLabel.Visible = false
+ImageLabel.BackgroundTransparency = 1
 
-UICorner.CornerRadius = UDim.new(1, 0)
-UICorner.Parent = ImageLabel
-
-UIPadding.Parent = Sprint
-UIPadding.PaddingBottom = UDim.new(0.300000012, -5)
-UIPadding.PaddingLeft = UDim.new(0.0199999996, 0)
-UIPadding.PaddingRight = UDim.new(0.0500000007, -15)
-UIPadding.PaddingTop = UDim.new(0.300000012, -5)
-
+local Bar = Instance.new("Frame")
 Bar.Name = "Bar"
 Bar.Parent = Sprint
-Bar.AnchorPoint = Vector2.new(0, 0.5)
 Bar.BackgroundColor3 = Color3.fromRGB(56, 46, 39)
-Bar.BackgroundTransparency = 0.700
-Bar.Position = UDim2.new(-2.72600269, 0, 0.499999672, 0)
-Bar.Size = UDim2.new(3.60599804, 0, 0.600000083, 0)
+Bar.BackgroundTransparency = 0.7
+Bar.Size = UDim2.new(1, 0, 1, 0)
 Bar.ZIndex = 0
 
-UICorner_2.CornerRadius = UDim.new(0.25, 0)
-UICorner_2.Parent = Bar
-
-UIPadding_2.Parent = Bar
-UIPadding_2.PaddingBottom = UDim.new(0, 4)
-UIPadding_2.PaddingLeft = UDim.new(0, 4)
-UIPadding_2.PaddingRight = UDim.new(0, 4)
-UIPadding_2.PaddingTop = UDim.new(0, 4)
-
+local Fill = Instance.new("Frame")
 Fill.Name = "Fill"
 Fill.Parent = Bar
-Fill.AnchorPoint = Vector2.new(0, 0.5)
 Fill.BackgroundColor3 = Color3.fromRGB(213, 185, 158)
-Fill.Position = UDim2.new(0, 0, 0.5, 0)
 Fill.Size = UDim2.new(1, 0, 1, 0)
 Fill.ZIndex = 2
 
-UICorner_3.CornerRadius = UDim.new(0.25, 0)
-UICorner_3.Parent = Fill
+local Button = Instance.new("TextButton")
+Button.Name = "ConsumeStaminaButton"
+Button.Parent = StaminaGui
+Button.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+Button.Size = UDim2.new(0.1, 0, 0.05, 0)
 
--- Adding the toggle button for sprint
-local SprintButton = Instance.new("TextButton")
-SprintButton.Name = "SprintButton"
-SprintButton.Parent = StaminaGui
-SprintButton.Size = UDim2.new(0.2, 0, 0.1, 0)
-SprintButton.Position = UDim2.new(0.4, 0, 0.85, 0)
-SprintButton.BackgroundColor3 = Color3.fromRGB(50, 200, 50)
-SprintButton.Text = "Sprint: OFF"
-SprintButton.Visible = true
+-- Align button with stamina bar below it
+ -- 2% gap below the sprint frame
+Button.Position = UDim2.new(1, -10, 0.5, 0)
+Button.Text = "Sprint"
+Button.TextColor3 = Color3.fromRGB(255, 255, 255)
+Button.Font = Enum.Font.SourceSans
+Button.TextSize = 20
 
--- Services
-local Players = game:GetService("Players")
-local UIS = game:GetService("UserInputService")
-local TweenService = game:GetService("TweenService")
+-- Stamina Variables
+local maxStamina = 100
+local currentStamina = maxStamina
+local staminaDepletionRate = 10
+local recoveryRate = 5
+local staminaConsumptionActive = false
 
--- Variables
-local Plr = Players.LocalPlayer
-local Char = Plr.Character or Plr.CharacterAdded:Wait()
-local Hum = Char:WaitForChild("Humanoid")
-local stamina, staminaMax = 100, 100
-local sprintTime = 7
-local cooldown = false
-local isSprinting = false
+local function updateStaminaBar()
+    local staminaRatio = currentStamina / maxStamina
+    local targetSize = UDim2.new(staminaRatio, 0, 1, 0)
 
-local VitaminsActivatedConnection, VitaminsDebounce = nil, false -- For Vitamin handling
+    local tweenInfo = TweenInfo.new(0.2, Enum.EasingStyle.Linear, Enum.EasingDirection.InOut)
+    local tween = TweenService:Create(Fill, tweenInfo, {Size = targetSize})
 
-local ModuleScripts = {
-	MainGame = require(Plr.PlayerGui.MainUI.Initiator.Main_Game),
-}
-
--- Hook for adjusting walk speed dynamically
-local nIdx
-nIdx = hookmetamethod(game, "__newindex", newcclosure(function(t, k, v)
-	if k == "WalkSpeed" then
-		if ModuleScripts.MainGame.chase then
-			v = ModuleScripts.MainGame.crouching and 15 or 22
-		elseif ModuleScripts.MainGame.crouching then
-			v = 8
-		else
-			v = isSprinting and 20 or 12
-		end
-	end
-
-	return nIdx(t, k, v)
-end))
-
--- Function to start sprinting
-local function startSprint()
-	if cooldown or ModuleScripts.MainGame.crouching or isSprinting then return end
-	isSprinting = true
-	Hum:SetAttribute("SpeedBoost", 4)
-	TweenService:Create(ImageLabel, TweenInfo.new(0.5), { ImageTransparency = 0 }):Play()
-	while isSprinting and stamina > 0 do
-		stamina = math.max(stamina - 1, 0)
-		Fill.Size = UDim2.new(stamina / staminaMax, 0, 1, 0)
-		task.wait(sprintTime / 100)
-	end
-	if stamina <= 0 then
-		isSprinting = false
-		Hum:SetAttribute("SpeedBoost", 0)
-		cooldown = true
-		wait(5) -- Cooldown period
-		cooldown = false
-	end
+    tween:Play()
 end
 
--- Function to stop sprinting
-local function stopSprint()
-	if not isSprinting then return end
-	isSprinting = false
-	Hum:SetAttribute("SpeedBoost", 0)
-	TweenService:Create(ImageLabel, TweenInfo.new(1), { ImageTransparency = 1 }):Play()
+local function startConsumingStamina()
+    staminaConsumptionActive = true
+    Humanoid.WalkSpeed = 22 -- Set speed to 22 during consumption
+    
+    game:GetService("RunService").Heartbeat:Connect(function()
+        if staminaConsumptionActive and currentStamina > 0 then
+            if currentStamina >= staminaDepletionRate then
+                currentStamina = currentStamina - staminaDepletionRate * (1/60) -- Depletes stamina every frame
+                updateStaminaBar()
+            else
+                currentStamina = 0
+                updateStaminaBar()
+                -- Play exhausted message and sound
+                require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("You're exhausted.",true)
+                local noStaminaSound = Instance.new("Sound", workspace)
+                noStaminaSound.SoundId = "rbxassetid://8258601891"
+                noStaminaSound.Volume = 0.8
+                noStaminaSound:Play()
+                noStaminaSound.Ended:Wait()
+                noStaminaSound:Destroy()
+                
+                Humanoid.WalkSpeed = 16 -- Reset speed to default
+                staminaConsumptionActive = false
+            end
+        end
+    end)
 end
 
--- Toggle sprint on button click
-SprintButton.MouseButton1Click:Connect(function()
-	if isSprinting then
-		stopSprint()
-		SprintButton.Text = "Sprint: OFF"
-		SprintButton.BackgroundColor3 = Color3.fromRGB(200, 50, 50)
-	else
-		startSprint()
-		SprintButton.Text = "Sprint: ON"
-		SprintButton.BackgroundColor3 = Color3.fromRGB(50, 200, 50)
-	end
-end)
+local function stopConsumingStamina()
+    staminaConsumptionActive = false
+    Humanoid.WalkSpeed = 16 -- Reset speed to default
+end
 
--- Toggle sprint with keyboard (PC)
-UIS.InputBegan:Connect(function(key, gameProcessed)
-	if not gameProcessed and key.KeyCode == Enum.KeyCode.Q then
-		if isSprinting then
-			stopSprint()
-		else
-			startSprint()
+local function toggleStaminaConsumption()
+    if staminaConsumptionActive then
+        stopConsumingStamina()
+    else
+        startConsumingStamina()
+    end
+end
+
+local function recoverStamina()
+    while true do
+        if not staminaConsumptionActive and currentStamina < maxStamina then
+            currentStamina = math.min(currentStamina + recoveryRate * (1/60), maxStamina)
+            updateStaminaBar()
+        end
+        RunService.Heartbeat:Wait()
+    end
+end
+
+game:GetService("UserInputService").InputBegan:Connect(function(key, gameProcessed)
+	if gameProcessed then return end
+	if key.KeyCode == Enum.KeyCode.Q then
+           startConsumingStamina()
 		end
 	end
 end)
-
--- Automatically recharge stamina
-game:GetService("RunService").RenderStepped:Connect(function()
-	if not isSprinting and not cooldown and stamina < staminaMax then
-		stamina = math.min(stamina + 1, staminaMax)
-		Fill.Size = UDim2.new(stamina / staminaMax, 0, 1, 0)
+ 
+game:GetService("UserInputService").InputEnded:Connect(function(key, gameProcessed)
+	if gameProcessed then return end
+	if key.KeyCode == Enum.KeyCode.Q then
+           stopConsumingStamina()
 	end
 end)
 
--- Initialize player attributes
-Hum:SetAttribute("SpeedBoost", 0)
-Hum.WalkSpeed = 12
+Button.MouseButton1Click:Connect(toggleStaminaConsumption)
 
--- Vitamin functionality
-Char.ChildAdded:Connect(function(CA)
-	if CA.Name == "Vitamins" then
-		local Tool = Char:FindFirstChild("Vitamins")
+-- Start the stamina recovery coroutine
+coroutine.wrap(recoverStamina)()
 
-		VitaminsActivatedConnection = Tool.Activated:Connect(function()
-			if VitaminsDebounce then
-				return false
-			end
-
-			VitaminsDebounce = true
-
-			-- Restore health and stamina
-			Char.Humanoid.Health = Char.Humanoid.Health + 30
-			stamina = staminaMax
-
-			-- Reset debounce after 10 seconds
-			task.delay(10, function()
-				VitaminsDebounce = false
-			end)
-		end)
-
-		-- Disconnect connection when tool is unequipped
-		Tool.Unequipped:Connect(function()
-			VitaminsActivatedConnection:Disconnect()
-		end)
-	end
-end)
+-- Initial update
+updateStaminaBar()
