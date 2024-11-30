@@ -23,7 +23,9 @@ caption.TextColor3 = Color3.fromRGB(255, 222, 189)
 -- Setting up Locals
 -- local ScriptUtility = loadstring(game:HttpGet("https://raw.githubusercontent.com/ChronoAcceleration/Comet-Development/refs/heads/main/Doors/Utility/DoorsScriptUtility.lua"))()
 -- local SyncHelper: ModuleScript = loadstring(game:HttpGet("https://github.com/ChronoAcceleration/Comet-Development/raw/refs/heads/main/Doors/Utility/SyncHelper.lua"))()
-local Functions = loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Functions.lua"))()
+local selfModules = {
+    functions = loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Functions.lua"))();
+};
 local Mischiveous = false
 local IsInsaneMines = false
 local IsDeepHotel = false
