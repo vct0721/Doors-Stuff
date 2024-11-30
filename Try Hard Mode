@@ -15,7 +15,7 @@ game.TextChatService.TextChannels.RBXSystem:DisplaySystemMessage("Wait a few sec
 
 local caption = game.Players.LocalPlayer:WaitForChild("PlayerGui").MainUI.MainFrame.Caption
 caption.TextColor3 = Color3.fromRGB(0, 255, 0)
-require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("Tryhard Mode script succesfully executed (version 2.2)",true)
+require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("Tryhard Mode script succesfully executed (version 3)",true)
 local caption = game.Players.LocalPlayer:WaitForChild("PlayerGui").MainUI.MainFrame.Caption
 caption.TextColor3 = Color3.fromRGB(255, 222, 189)
 -- "Why not V1?" Because V1 was released before, but it was too broken to be announced.
@@ -47,7 +47,6 @@ local LocalPlayer = Players.LocalPlayer
 local playerGui = LocalPlayer:FindFirstChild("PlayerGui")
 
 local roomValue = ReplicatedStorage.GameData.LatestRoom.Value
-local deathCause = ReplicatedStorage.GameStats["Player_" .. player.Name].Total.DeathCause
 local IsRetro = GameData.Floor.Value == "Retro"
 local IsMines = GameData.Floor.Value == "Mines"
 local IsRooms = GameData.Floor.Value == "Rooms"
@@ -60,7 +59,8 @@ local TeleportService = game:GetService("TeleportService")
 -- local QueueTeleport = (syn and syn.queue_on_teleport) or queue_on_teleport or (fluxus and fluxus.queue_on_teleport)
 local IsMiddleFloor = ReplicatedStorage.GameData.LatestRoom.Value == 50
 local IsHospital = IsHotel and ReplicatedStorage.GameData.LatestRoom.Value == 60
-local IsCortyard = ReplicatedStorage.GameData.LatestRoom.Value > 88 and ReplicatedStorage.GameData.LatestRoom.Value < 100
+local IsCourtyard = ReplicatedStorage.GameData.LatestRoom.Value == 90
+local IsGreenHouse = ReplicatedStorage.GameData.LatestRoom.Value > 90 and ReplicatedStorage.GameData.LatestRoom.Value < 100
 local IsEletrical = ReplicatedStorage.GameData.LatestRoom.Value == 100 and IsHotel
 local ModuleEvents = require(ReplicatedStorage.ClientModules.Module_Events)
 local IsDead = LocalPlayer.Character.Humanoid.Health <= 0
@@ -70,22 +70,6 @@ local IsSeekChase = Workspace:FindFirstChild("SeekMovingNewClone") or Workspace:
 local IsFigure = LatestRoomm:FindFirstChild("FigureRig") or LatestRoomm:FindFirstChild("FigureSetup") or NextRoomm:FindFirstChild("FigureRig") or NextRoomm:FindFirstChild("FigureSetup")
 local IsHalt = LatestRoomm:GetAttribute("RawName") == "HaltHallway" or NextRoomm:GetAttribute("RawName") == "HaltHallway"
 local IsGrumble = IsMines and IsMiddleFloor
-
--- Other
-while true do
-if deathCause.Value == nil and IsDead then
-firesignal(game.ReplicatedStorage.RemotesFolder.DeathHint.OnClientEvent, (
-{
-  "You Died to Unkown",
-  "Let's just get to the point.",
-  "Normally, it wouldn't be an issue But as for now.. you just have to... avoid it.",
-  "Stay as far away from it!"
-},
-"Blue"
-)
-end
-end
-
 
 -- Functions
 function GitPNG(GithubImg,ImageName)
@@ -148,6 +132,35 @@ coroutine.wrap(function()
 
 end)()
 
+--Courtyard Custom Room
+coroutine.wrap(function()
+    game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
+        if roomValue == 53 and Hotel then
+		  local Entrance = LatestRoomm:FindFirstChild("Entrance") or LatestRoomm:FindFirstChild("RoomEntrance") or LatestRoomm:FindFirstChild("RoomStart")
+          local Custom = game:GetObjects("rbxassetid://110852226869313")[1] or nil
+          Custom.Parent = LatestRoomm
+          local Root = Custom:FindFirstChild("Root")
+          Root.CFrame = Entrance.CFrame
+		  repeat Custom.wowie:Destroy() until not Custom:FindFirstChild("wowie") end
+        end
+    end)
+end)()	
+
+--Room 53 Mischievous Pentagram
+coroutine.wrap(function()
+    game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
+        if roomValue == 53 and Hotel then
+		  local Entrance = LatestRoomm:FindFirstChild("Entrance") or LatestRoomm:FindFirstChild("RoomEntrance") or LatestRoomm:FindFirstChild("RoomStart")
+          local Pentagram = game:GetObjects("rbxassetid://110852226869313")[1] or nil
+          Pentagram.Parent = LatestRoomm
+          local Root = Pentagram:FindFirstChild("RoomStart")
+          Root.CFrame = Entrance.CFrame
+        end
+    end)
+end)()	
+  
+ 
+
 -- light's shatter in the library and the dam
 
 coroutine.wrap(function()
@@ -190,124 +203,6 @@ coroutine.wrap(function()
 
 	end
 
-end)()
-
--- fireplace caption for click (made by Kotyara19k)
- 
-coroutine.wrap(function()
- 
-if game:GetService("ReplicatedStorage").GameData.Floor.Value == "Hotel" then
- 
-game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
- 
-for _, v in next, game.Workspace.CurrentRooms[game.ReplicatedStorage.GameData.LatestRoom.Value].Assets:GetDescendants() do
- 
-    if v.Name == "Fireplace_Logs" and v.Parent.Name == "Fireplace" then
- 
-        local a = v:Clone()
- 
-              a.Parent = v.Parent
- 
-              local b = a.ToolEventPrompt
- 
-b.Triggered:Connect(function()
-
-local caption = game.Players.LocalPlayer:WaitForChild("PlayerGui").MainUI.MainFrame.Caption
-caption.TextColor3 = Color3.fromRGB(255, 225, 0)
-require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption('Why do you want to clicking fireplace?',true)
-local caption = game.Players.LocalPlayer:WaitForChild("PlayerGui").MainUI.MainFrame.Caption
-caption.TextColor3 = Color3.fromRGB(255, 222, 189)
-
-local spawningchance = math.random(140, 1400)
-
-if spawningchance == 140 then
-
-local caption = game.Players.LocalPlayer:WaitForChild("PlayerGui").MainUI.MainFrame.Caption
-caption.TextColor3 = Color3.fromRGB(89, 0, 255)
-require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption('Ok, I give you this item',true)
-local caption = game.Players.LocalPlayer:WaitForChild("PlayerGui").MainUI.MainFrame.Caption
-caption.TextColor3 = Color3.fromRGB(255, 222, 189)
-loadstring(game:HttpGet("https://pastebin.com/raw/b7J6gRmE"))()
-
-else
-
----====== Load achievement giver ======---
-local achievementGiver = loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Doors/Custom%20Achievements/Source.lua"))()
- 
----====== Display achievement ======---
-achievementGiver({
-    Title = "Omg!",
-    Desc = "This my custom item from fireplace?",
-    Reason = "Do many clicking from fireplace",
-    Image = "rbxassetid://33336213"
-})
-
-end
-
-while true do
-
-wait(0.313)
-
-if game.Players.LocalPlayer:FindFirstChild("Key") then
-
-require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption(false)
-
-end
-
-end
- 
-end)
- 
-        v:Destroy()
- 
-end
- 
-    end
- 
-
- 
-end)
-
-elseif game:GetService("ReplicatedStorage").GameData.Floor.Value == "Mines" then
-
-game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
-
-if game.ReplicatedStorage.GameData.LatestRoom.Value == 50 then
-
-loadstring(game:HttpGet("https://pastebin.com/raw/b7J6gRmE"))()
-
-end
-
-end)
-
-elseif game:GetService("ReplicatedStorage").GameData.Floor.Value == "Rooms" then
-
-game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
-
-if game.ReplicatedStorage.GameData.LatestRoom.Value == 50 then
-
-loadstring(game:HttpGet("https://pastebin.com/raw/b7J6gRmE"))()
-
-end
-
-end)
-
-elseif game:GetService("ReplicatedStorage").GameData.Floor.Value == "Fools" then
-
-game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
-
-if game.ReplicatedStorage.GameData.LatestRoom.Value == 51 then
-
-loadstring(game:HttpGet("https://pastebin.com/raw/b7J6gRmE"))()
-
-end
-
-end)
- 
---[[ ]]--
- 
-end
- 
 end)()
 
 local anchorableClasses = {
@@ -382,7 +277,7 @@ end
 function ChangeDamModel(room)
     for i, v in pairs(room:GetDescendants()) do
         if v.Name == "True Seek" or v.Name == "TrueSeek" then
-            if game.ReplicatedStorage.GameData.LatestRoom.Value == 100 then
+            if game.ReplicatedStorage.GameData.LatestRoom.Value == 100 and IsMines then
                 local eye = GetDamSeekModel()
                 if eye then
                     for _, className in ipairs(anchorableClasses) do
@@ -398,7 +293,7 @@ function ChangeDamModel(room)
                     end
 					
                     eye.Parent = v.Parent
-                    eye.Name = "True Seek"
+                    eye.Name = v.Name
                     eye:PivotTo(v:GetPivot())
 
                     wait(0.2)
@@ -466,9 +361,9 @@ game:GetService("ReplicatedStorage").GameData.LatestRoom.Changed:Connect(functio
 	end
 end)
 
--- Key New Sounds
+-- Ambience New Sounds
 
-loadstring(game:HttpGet("https://pastebin.com/raw/b1cQKBB2"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/ChronoAcceleration/Hotel-Plus-Plus/refs/heads/main/QOL/Ambient.lua"))()
 
 -- Songs
 local CuriousHumm = getGitSoundId("https://github.com/ChronoAcceleration/Comet-Development/blob/main/Doors/Assets/Horror/Curious%20Humm.mp3?raw=true", "CuriousHumm")
@@ -476,14 +371,20 @@ CuriousHumm.Parent = SoundService
 local MischievousHumm = getGitSoundId("https://github.com/ChronoAcceleration/Hotel-Plus-Plus/blob/main/Assets/MischeviousHum.mp3?raw=true", "MischievousHumm")
 CuriousHumm.Parent = SoundService
 
--- Custom Gui
-loadstring(game:HttpGet("https://pastebin.com/raw/VZ0pV8G3"))()
-
 -- Sprint bar
 loadstring(game:HttpGet("https://raw.githubusercontent.com/vct0721/Doors-Stuff/refs/heads/main/Sprint.lua"))()
 
 -- Achievement Tryhard Mode
-loadstring(game:HttpGet("https://pastebin.com/raw/sric3jnY"))()
+-- ====== Load achievement giver ======
+local achievementGiver = loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Doors/Custom%20Achievements/Source.lua"))()
+
+-- Display achievement upon executing TryHard mode
+achievementGiver({
+    Title = "Try Very Harder",
+    Desc = "TryHard Mode Executed",
+    Reason = "Execute TryHard Mode Successfully",
+    Image = "rbxassetid://22471784"
+})
 
 -- LIGHT STAND NEW
 loadstring(game:HttpGet("https://pastefy.app/W9OhjvdK/raw"))()
@@ -999,6 +900,7 @@ end)()
 coroutine.wrap(function()
 	while true do
 		wait(29.50)
+		if IsBackHotel then
 		if not IsSeekChase or IsFigure then
 			wait(0)
 			loadstring(game:HttpGet("https://pastefy.app/FI91Bi2f/raw"))()
@@ -1539,7 +1441,7 @@ end)()
 -- Seek Eyes (Room 50)
 coroutine.wrap(function()
 	game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
-		if game.ReplicatedStorage.GameData.LatestRoom.Value == 50 and IsHotel then
+		if game.ReplicatedStorage.GameData.LatestRoom.Value == 50 and (IsHotel or IsMines or IsBackHotel) then
 			require(game.ReplicatedStorage.ClientModules.EntityModules.Seek).tease(nil, workspace.CurrentRooms[game.Players.LocalPlayer:GetAttribute("CurrentRoom")], 100)
 		end
 	end)
@@ -1548,10 +1450,32 @@ end)()
 -- Seek Eyes (Room 100)
 coroutine.wrap(function()
 	game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
-		if game.ReplicatedStorage.GameData.LatestRoom.Value == 100 and IsHotel then
+		if game.ReplicatedStorage.GameData.LatestRoom.Value == 100 and (IsHotel or IsMines) then
 			require(game.ReplicatedStorage.ClientModules.EntityModules.Seek).tease(nil, workspace.CurrentRooms[game.Players.LocalPlayer:GetAttribute("CurrentRoom")], 100)
 		end
 	end)
+end)()
+
+-- Seek Eyes 3
+coroutine.wrap(function()
+ 
+if game:GetService("ReplicatedStorage").GameData.Floor.Value == "Hotel" or game:GetService("ReplicatedStorage").GameData.Floor.Value == "Fools" then
+ 
+game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
+ 
+if game.ReplicatedStorage.GameData.LatestRoom.Value == 90 or game.ReplicatedStorage.GameData.LatestRoom.Value == 91 or game.ReplicatedStorage.GameData.LatestRoom.Value == 92 or game.ReplicatedStorage.GameData.LatestRoom.Value ==  93 or game.ReplicatedStorage.GameData.LatestRoom.Value == 94 or game.ReplicatedStorage.GameData.LatestRoom.Value == 95 or game.ReplicatedStorage.GameData.LatestRoom.Value == 96 or game.ReplicatedStorage.GameData.LatestRoom.Value == 97 then
+ 
+    wait(3)
+ 
+local a = game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game
+require(game.ReplicatedStorage.ClientModules.EntityModules.Seek).tease(nil, workspace.CurrentRooms[game.Players.LocalPlayer:GetAttribute("CurrentRoom")], 100)
+ 
+end
+ 
+end)
+ 
+end
+ 
 end)()
 
 -- Custom vitamins item
