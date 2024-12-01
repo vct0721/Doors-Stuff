@@ -1,3 +1,4 @@
+local ExecutedTryHard
 local whitelisteds = {"Executor"}
 
 local blacklisteds = {"???"}
@@ -6,7 +7,7 @@ if table.find(blacklisteds, game.Players.LocalPlayer.Name) and not table.find(wh
 	game.Players.LocalPlayer:Kick("You has been blacklisted from Tryhard Mode for unambiguous use or something 🚫")
 end
 
-if _G.ExecutedTryHard then
+if ExecutedTryHard == true then
 	return
 end
 
@@ -22,9 +23,7 @@ caption.TextColor3 = Color3.fromRGB(255, 222, 189)
 -- Setting up Locals
 -- local ScriptUtility = loadstring(game:HttpGet("https://raw.githubusercontent.com/ChronoAcceleration/Comet-Development/refs/heads/main/Doors/Utility/DoorsScriptUtility.lua"))()
 -- local SyncHelper: ModuleScript = loadstring(game:HttpGet("https://github.com/ChronoAcceleration/Comet-Development/raw/refs/heads/main/Doors/Utility/SyncHelper.lua"))()
-local selfModules = {
-    functions = loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Functions.lua"))();
-};
+local Functions = loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Functions.lua"))()
 local Mischiveous = false
 local IsInsaneMines = false
 local IsDeepHotel = false
@@ -51,8 +50,8 @@ local IsMines = GameData.Floor.Value == "Mines"
 local IsRooms = GameData.Floor.Value == "Rooms"
 local IsHotel = GameData.Floor.Value == "Hotel"
 local IsBackHotel = GameData.Floor.Value == "Backdoor"
-local LatestRoomm = CurrentRooms[tostring(roomValue)]
-local NextRoomm = CurrentRooms[tostring(roomValue + 1)]
+local LatestRoomm = CurrentRooms[game.ReplicatedStorage.GameData.LatestRoom.Value]
+local NextRoomm = CurrentRooms[game.ReplicatedStorage.GameData.LatestRoom.Value + 1]
 local RoomAssets = LatestRoomm:WaitForChild("Assets")
 local TeleportService = game:GetService("TeleportService")
 -- local QueueTeleport = (syn and syn.queue_on_teleport) or queue_on_teleport or (fluxus and fluxus.queue_on_teleport)
@@ -137,10 +136,12 @@ coroutine.wrap(function()
         if IsCourtyard then
 		  local Entrance = LatestRoomm:FindFirstChild("Entrance") or LatestRoomm:FindFirstChild("RoomEntrance") or LatestRoomm:FindFirstChild("RoomStart")
           local Custom = game:GetObjects("rbxassetid://110852226869313")[1] or nil
+		  if Custom then
           Custom.Parent = LatestRoomm
           local Root = Custom:FindFirstChild("Root")
           Root.CFrame = Entrance.CFrame
 		  repeat Custom:FindFirstChild("wowie"):Destroy() until not Custom:FindFirstChild("wowie") end
+		  end
         end
     end)
 end)()	
@@ -151,9 +152,11 @@ coroutine.wrap(function()
         if roomValue == 53 and Hotel then
 		  local Entrance = LatestRoomm:FindFirstChild("Entrance") or LatestRoomm:FindFirstChild("RoomEntrance") or LatestRoomm:FindFirstChild("RoomStart")
           local Pentagram = game:GetObjects("rbxassetid://110852226869313")[1] or nil
+		  if Pentagram then
           Pentagram.Parent = LatestRoomm
           local Root = Pentagram:FindFirstChild("RoomStart")
           Root.CFrame = Entrance.CFrame
+		  end
         end
     end)
 end)()	
@@ -427,7 +430,7 @@ end)()
 
 -- Script Start
 
-_G.ExecutedTryHard = true
+local ExecutedTryHard = true
 
 LatestRoom:GetPropertyChangedSignal("Value"):Wait()
 
@@ -804,7 +807,7 @@ coroutine.wrap(function()
 
 	game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
 
-		wait(1)
+		wait(1.2)
 
 		game.Players.LocalPlayer.PlayerGui.MainUI.Jumpscare.Jumpscare_Eyes.BackgroundColor3 = Color3.fromRGB(255, 0, 55)
 
@@ -1049,7 +1052,7 @@ coroutine.wrap(function()
 	while true do
 		if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
 			wait(math.random(150, 230))
-			if not IsSeekChase or IsFigure or IsHalt or IsMines then
+			if not IsSeekChase or IsFigure or IsHalt then
 				LatestRoom:GetPropertyChangedSignal("Value"):Wait()
 				wait(0)
 				loadstring(game:HttpGet("https://pastefy.app/AaIrbcZS/raw"))()
@@ -2661,6 +2664,15 @@ coroutine.wrap(function()
 			repeat
 				task.wait()
 			until not inst:FindFirstChild("RushNew")
+			
+		if not inst:FindFirstChild("RushNew") then
+			local CeaseChance = math.random(1, 34)
+			if CeaseChance == 1 or CeaseChance == 5 or CeaseChance == 10 then
+				if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
+			       loadstring(game:HttpGet("https://pastefy.app/AaIrbcZS/raw"))()
+	            end
+			end	
+		end	
 
 		elseif inst.Name == "AmbushMoving" and inst:FindFirstChild("RushNew") and inst.RushNew:FindFirstChild("Attachment") then
             LocalPlayer.PlayerGui.MainUI.Jumpscare.Jumpscare_Ambush.ImageLabel.ImageColor3 = Color3.fromRGB(255, 5, 50)		
@@ -2677,7 +2689,7 @@ coroutine.wrap(function()
 			repeat
 				task.wait()
 			until not inst:FindFirstChild("RushNew")
-			
+						
 		elseif inst.Name == "BackdoorRush" and inst:FindFirstChild("Main") and inst.Main:FindFirstChild("Attachment") and inst.Main:FindFirstChild("AttachmentSwitch")  then
 			local BoolValue = Instance.new("BoolValue")
 			BoolValue.Name = "TryHarded"
@@ -2708,7 +2720,7 @@ coroutine.wrap(function()
 			repeat
 				task.wait()
 			until not inst:FindFirstChild("Main")
-			
+						
 		end
 	end)
 end)()
