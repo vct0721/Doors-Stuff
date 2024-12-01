@@ -1,4 +1,3 @@
-local ExecutedTryHard
 local whitelisteds = {"Executor"}
 
 local blacklisteds = {"???"}
@@ -7,7 +6,7 @@ if table.find(blacklisteds, game.Players.LocalPlayer.Name) and not table.find(wh
 	game.Players.LocalPlayer:Kick("You has been blacklisted from Tryhard Mode for unambiguous use or something 🚫")
 end
 
-if ExecutedTryHard == true then
+if _G.ExecutedTryHard then
 	return
 end
 
@@ -430,8 +429,7 @@ end)()
 
 -- Script Start
 
-local ExecutedTryHard = true
-
+_G.ExecutedTryHard = true
 LatestRoom:GetPropertyChangedSignal("Value"):Wait()
 
 local caption = game.Players.LocalPlayer:WaitForChild("PlayerGui").MainUI.MainFrame.Caption
