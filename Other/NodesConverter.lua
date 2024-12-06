@@ -25,13 +25,13 @@ local function convertToLegacy(Room: Model): ()
         local clone = PathfindNodes:Clone()
         clone.Name = newName
         clone.Parent = Room
-     	  local A = room:WaitForChild("RoomEntrance", .5):Clone()
+     	local A = room:WaitForChild("RoomEntrance", .5):Clone()
        	A.Parent = room
-	       A.Name = "RoomStart"
+        A.Name = "RoomStart"
 
-	       local B = room:WaitForChild("RoomExit", .5):Clone()
-	       B.Parent = room
-	       B.Name = "RoomEnd"
+        local B = room:WaitForChild("RoomExit", .5):Clone()
+	B.Parent = room
+	B.Name = "RoomEnd"
     end
 
     -- Tag the room as converted
