@@ -31,15 +31,7 @@ local function convertToLegacy(Room: Model): ()
 
         local B = room:WaitForChild("RoomExit", .5):Clone()
 	B.Parent = room
-	B.Name = "RoomEnd"
-
-     	local C = room:WaitForChild("RoomEntrance", .5):Clone()
-       	A.Parent = room
-        A.Name = "Entrance"
-
-        local D = room:WaitForChild("RoomExit", .5):Clone()
-	B.Parent = room
-	B.Name = "Exit"		
+	B.Name = "RoomEnd"	
     end
 
     -- Tag the room as converted
