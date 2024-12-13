@@ -6,9 +6,15 @@ if table.find(blacklisteds, game.Players.LocalPlayer.Name) and not table.find(wh
 	game.Players.LocalPlayer:Kick("You has been blacklisted from Tryhard Mode for unambiguous use or something 🚫")
 end
 
-if _G.ExecutedTryHard then
-	return
+if game:GetService("ReplicatedStorage"):FindFirstChild("TryHarder") then
+    warn("You have Already Loaded TryHard Mode")
+	game.TextChatService.TextChannels.RBXSystem:DisplaySystemMessage("You have Already Loaded TryHard Mode")
+    return true
 end
+
+local Test = Instance.new("Part")
+Test.Name = "TryHarder"
+Test.Parent = game:GetService("ReplicatedStorage")
 
 game.TextChatService.TextChannels.RBXSystem:DisplaySystemMessage("Wait a few seconds this loading to open the door!")
 
@@ -17,15 +23,14 @@ caption.TextColor3 = Color3.fromRGB(0, 255, 0)
 require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("Tryhard Mode script succesfully executed (version 3)",true)
 local caption = game.Players.LocalPlayer:WaitForChild("PlayerGui").MainUI.MainFrame.Caption
 caption.TextColor3 = Color3.fromRGB(255, 222, 189)
--- "Why not V1?" Because V1 was released before, but it was too broken to be announced.
 
 -- Setting up Locals
 -- local ScriptUtility = loadstring(game:HttpGet("https://raw.githubusercontent.com/ChronoAcceleration/Comet-Development/refs/heads/main/Doors/Utility/DoorsScriptUtility.lua"))()
 -- local SyncHelper: ModuleScript = loadstring(game:HttpGet("https://github.com/ChronoAcceleration/Comet-Development/raw/refs/heads/main/Doors/Utility/SyncHelper.lua"))()
 local Functions = loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Functions.lua"))()
-local Mischiveous = false
 local IsInsaneMines = false
 local IsDeepHotel = false
+local IsGlitched = false
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local RunService = game:GetService("RunService")
 local SoundService = game:GetService("SoundService")
@@ -53,7 +58,7 @@ local LatestRoomm = CurrentRooms[game.ReplicatedStorage.GameData.LatestRoom.Valu
 local NextRoomm = CurrentRooms[game.ReplicatedStorage.GameData.LatestRoom.Value + 1]
 local RoomAssets = LatestRoomm:WaitForChild("Assets")
 local TeleportService = game:GetService("TeleportService")
--- local QueueTeleport = (syn and syn.queue_on_teleport) or queue_on_teleport or (fluxus and fluxus.queue_on_teleport)
+-- local QueueTeleport = (syn and syn.queue_on_teleport) or queue_on_teleport or queueonteleport or (fluxus and fluxus.queue_on_teleport)
 local IsMiddleFloor = ReplicatedStorage.GameData.LatestRoom.Value == 50
 local IsHospital = IsHotel and ReplicatedStorage.GameData.LatestRoom.Value == 60
 local IsCourtyard = ReplicatedStorage.GameData.LatestRoom.Value == 90
@@ -116,10 +121,9 @@ coroutine.wrap(function()
 				return (getcustomasset or getsynasset)(soundFileName)
 			end	
 
-			game.Workspace.CurrentRooms["50"]:FindFirstChild("FigureSetup").Ambience.SoundId = ReplaceAudGit("https://github.com/Kotyara19k-Doorsspawner/Ping-s-Dumbass-projects-/raw/refs/heads/main/Figure%20Ambience.mp3")
-			game.Workspace.CurrentRooms["50"]:FindFirstChild("FigureSetup").Ambience.Volume = "0.7"
-			game.Workspace.CurrentRooms["51"]:FindFirstChild("FigureSetup").AmbienceEnd.SoundId = ReplaceAudGit("https://github.com/Kotyara19k-Doorsspawner/Ping-s-Dumbass-projects-/raw/refs/heads/main/Figure%20End.mp3")
-			game.Workspace.CurrentRooms["51"]:FindFirstChild("FigureSetup").AmbienceEnd.Volume = "0.5"
+			game.Workspace.CurrentRooms["50"].FigureSetup.Ambience.SoundId = getGitSoundId("https://github.com/Sosnen/Ping-s-Dumbass-projects-/raw/main/Figure%20Ambience.mp3?raw=true","NewFigure")
+            game.Workspace.CurrentRooms["50"].FigureSetup.AmbienceEnd.SoundId = getGitSoundId("https://github.com/Sosnen/Ping-s-Dumbass-projects-/blob/main/Figure%20Start.mp3?raw=true","NewFigureStart")
+            game.Workspace.CurrentRooms["50"].FigureSetup.AmbienceStart.SoundId = getGitSoundId("https://github.com/Sosnen/Ping-s-Dumbass-projects-/blob/main/Figure%20End.mp3?raw=true","NewFigureEnd")
 
 		end)
 
@@ -128,39 +132,6 @@ coroutine.wrap(function()
 	end
 
 end)()
-
---Courtyard Custom Room
-coroutine.wrap(function()
-    game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
-        if IsCourtyard then
-		  local Entrance = LatestRoomm:FindFirstChild("Entrance") or LatestRoomm:FindFirstChild("RoomEntrance") or LatestRoomm:FindFirstChild("RoomStart")
-          local Custom = game:GetObjects("rbxassetid://110852226869313")[1] or nil
-		  if Custom then
-          Custom.Parent = LatestRoomm
-          local Root = Custom:FindFirstChild("Root")
-          Root.CFrame = Entrance.CFrame
-		  repeat Custom:FindFirstChild("wowie"):Destroy() until not Custom:FindFirstChild("wowie") end
-		  end
-        end
-    end)
-end)()	
-
---Room 53 Mischievous Pentagram
-coroutine.wrap(function()
-    game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
-        if roomValue == 53 and Hotel then
-		  local Entrance = LatestRoomm:FindFirstChild("Entrance") or LatestRoomm:FindFirstChild("RoomEntrance") or LatestRoomm:FindFirstChild("RoomStart")
-          local Pentagram = game:GetObjects("rbxassetid://110852226869313")[1] or nil
-		  if Pentagram then
-          Pentagram.Parent = LatestRoomm
-          local Root = Pentagram:FindFirstChild("RoomStart")
-          Root.CFrame = Entrance.CFrame
-		  end
-        end
-    end)
-end)()	
-  
- 
 
 -- light's shatter in the library and the dam
 
@@ -224,11 +195,12 @@ local EyeAssetIDs = {
     "rbxassetid://11717372116",
     "rbxassetid://7221790162",
     "rbxassetid://12739517222",
+	"rbxassetid://13493469129",
 }
 
 local function GetRandomEyeModel()
     local randomIndex = math.random(1, #EyeAssetIDs)
-    return game:GetObjects(EyeAssetIDs[randomIndex])[1] or nil
+    return game:GetObjects(EyeAssetIDs[randomIndex])[1]
 end
 
 function ChangeEyeModel(room)
@@ -257,10 +229,10 @@ function ChangeEyeModel(room)
 
                     v:Destroy()
                     for _, className in ipairs(anchorableClasses) do
-                        for _, part in pairs(eye:GetDescendants()) do
-                            if part:IsA(className) then
-                                part.Anchored = true
-                                part.CanCollide = true
+                        for _, part2 in pairs(eye:GetDescendants()) do
+                            if part2:IsA(className) then
+                                part2.Anchored = true
+                                part2.CanCollide = true
                             end
                         end
                     end
@@ -272,7 +244,7 @@ end
 
 --New Dam-Seek
 local function GetDamSeekModel()
-    return game:GetObjects(LoadCustomAsset("https://github.com/vct0721/Doors-Stuff/raw/refs/heads/main/Assets/DamSeek%20New.rbxm"))[1] or nil
+    return game:GetObjects(LoadCustomAsset("https://github.com/vct0721/Doors-Stuff/raw/refs/heads/main/Assets/DamSeek%20New.rbxm"))[1]
 end
 
 function ChangeDamModel(room)
@@ -301,10 +273,10 @@ function ChangeDamModel(room)
 
                     v:Destroy()
                     for _, className in ipairs(anchorableClasses) do
-                        for _, part in pairs(eye:GetDescendants()) do
-                            if part:IsA(className) then
-                                part.Anchored = true
-                                part.CanCollide = true
+                        for _, part2 in pairs(eye:GetDescendants()) do
+                            if part2:IsA(className) then
+                                part2.Anchored = true
+                                part2.CanCollide = true
                             end
                         end
                     end
@@ -325,7 +297,9 @@ local paints = {
 	[2] = {"rbxassetid://11881132745","Odd feline Specimen"},
 	[3] = {"rbxassetid://11881654771","A tryhard..."},
 	[4] = {"rbxassetid://7084794697","Him."},
-    [5] = {"rbxassetid://13714729640","..."}
+	[5] = {"rbxassetid://109718583696589","Not Funny"},
+	[6] = {"rbxassetid://73702240509903","The Scrumble"},
+    [7] = {"rbxassetid://13714729640","..."},
 }
 ---
 --- New Paintings
@@ -375,7 +349,7 @@ local MischievousHumm = getGitSoundId("https://github.com/ChronoAcceleration/Hot
 CuriousHumm.Parent = SoundService
 
 -- Sprint bar
-loadstring(game:HttpGet("https://raw.githubusercontent.com/vct0721/Doors-Stuff/refs/heads/main/Sprint.lua"))()
+loadstring(game:HttpGet("https://pastefy.app/EpqLU3vm/raw"))()
 
 -- Achievement Tryhard Mode
 -- ====== Load achievement giver ======
@@ -386,7 +360,7 @@ achievementGiver({
     Title = "Try Very Harder",
     Desc = "TryHard Mode Executed",
     Reason = "Execute TryHard Mode Successfully",
-    Image = "rbxassetid://22471784"
+    Image = "rbxassetid://12636901995"
 })
 
 -- LIGHT STAND NEW
@@ -502,7 +476,9 @@ game.TweenService:Create(intro.Underline, TweenInfo.new(7), {Size = UDim2.new(0,
 wait(2.3)
 intro.Visible = false
 wait(8)
-intro:Destroy()	
+intro:Destroy()
+		  CustomMusic.Ended:Wait()
+		  CustomMusic:Destroy()
 	
 		elseif game.ReplicatedStorage.GameData.LatestRoom.Value == 50 and IsHotel then
 
@@ -680,23 +656,9 @@ coroutine.wrap(function()
 	end)
 end)()
 
-
--- Mischievous Light
-wait(0.001)
-local ghm = math.random(1, 30)
-if ghm == 1 then
-	local Mischiveous = true
-	loadstring(game:HttpGet("https://raw.githubusercontent.com/ChronoAcceleration/Hotel-Plus-Plus/refs/heads/main/Backend/MischeviousLight.lua"))()
-end
-
 -- Model Variations
 if IsHotel then
 	loadstring(game:HttpGet("https://raw.githubusercontent.com/ChronoAcceleration/Hotel-Plus-Plus/refs/heads/main/QOL/PlantVariants.lua"))()
-end
-
--- DeathHintF2
-if IsMines and not Mischiveous then
-	loadstring(game:HttpGet("https://raw.githubusercontent.com/vct0721/fhfisfhfhfhlhfdsghvsb/main/DeathHintF2"))()
 end
 
 local function convertMiscLight(Light: Part, Music: Sound): ()
@@ -799,45 +761,12 @@ CurrentRooms.DescendantAdded:Connect(
 	end
 )
 
--- Nightmare Eyes
-
-coroutine.wrap(function()
-
-	game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
-
-		wait(1.2)
-
-		game.Players.LocalPlayer.PlayerGui.MainUI.Jumpscare.Jumpscare_Eyes.BackgroundColor3 = Color3.fromRGB(255, 0, 55)
-
-		if game.Workspace:FindFirstChild("Eyes") then
-
-			game.Workspace.Eyes.Core.Attachment.EyesParticle.Color = ColorSequence.new({
-
-				ColorSequenceKeypoint.new(0, Color3.new(1, 0.305881, 0.305881)),
-
-				ColorSequenceKeypoint.new(0.305881, Color3.new(1, 0.305881, 0.305881)),
-
-				ColorSequenceKeypoint.new(0.305881, Color3.new(1, 0.305881, 0.305881)),
-
-				ColorSequenceKeypoint.new(1, Color3.new(1, 0.305881, 0.305881)),
-
-			})
-
-			--
-
-			game.Workspace.Eyes.Core.Ambience.PlaybackSpeed = 0.9
-
-		end
-
-	end)
-end)()	
-
 
 -- Entities Section
 
 -- Whisper
 coroutine.wrap(function()
-	if IsHotel or IsRooms then
+	if not IsBackHotel then
 		loadstring(game:HttpGet("https://pastefy.app/vsJRgRIp/raw"))()
 	end
 end)()
@@ -853,7 +782,7 @@ coroutine.wrap(function()
 			wait(math.random(1, 5))
 
 			getgenv().GIGGLE_SPAWN_CONFIG = {
-				Damage = 6,
+				Damage = math.random(6, 10),
 				AttackingTime =  math.random(7, 10), -- The time giggle will be attacking for.
 				FallSpeed =  math.random(2, 3),        -- Speed for when giggle spawns, can be mininum 2 and how high you want
 
@@ -951,7 +880,7 @@ coroutine.wrap(function()
 		sound.Volume = 5
 		sound:Play()
 
-		if game.Players.LocalPlayer.Character.Humanoid.Health<=0 then
+		if game.Players.LocalPlayer.Character.Humanoid.Health <= 0 then
 			ded = true
 		end
 
@@ -1024,10 +953,10 @@ coroutine.wrap(function()
 
                        ---====== Display achievement ======---
                        achievementGiver({
-                          Title = "Dead Of Night",
+                          Title = "Death Of Night",
                           Desc = "Tick tock goes the another clock...",
                           Reason = "Encounter Dreadfestation",
-                          Image = LoadCustomAsset("https://github.com/vct0721/Doors-Stuff/raw/main/Assets/36426864382.png")
+                          Image = GitPNG("https://github.com/vct0721/Doors-Stuff/raw/main/Assets/36426864382.png","DreadfestBadge")
                        })
 				end
 				game:GetService("ReplicatedStorage") .GameStats["Player_".. game.Players.LocalPlayer.Name].Total.DeathCause.Value = "Dread"
@@ -1067,7 +996,7 @@ coroutine.wrap(function()
 			if not IsSeekChase or IsFigure or IsHalt or IsMines then
 				LatestRoom:GetPropertyChangedSignal("Value"):Wait()
 				wait(0)
-				loadstring(game:HttpGet("https://raw.githubusercontent.com/XiaoFenHG/DOORS/refs/heads/main/Fro.lua"))()
+				loadstring(game:HttpGet("https://pastefy.app/Zb1au2BU/raw"))()
 			end
 		end
 	end
@@ -1167,6 +1096,91 @@ coroutine.wrap(function()
 	end
 end)()
 
+-- Glitched Eyes
+coroutine.wrap(function()
+   while true do
+     if not IsGlitched then
+     wait(math.random(12, 30))
+	 local currentLoadedRoom = workspace.CurrentRooms[game:GetService("ReplicatedStorage").GameData.LatestRoom.Value]
+     local eyes = game:GetObjects("rbxassetid://71139650987794")[1]
+     eyes.Name = "GlitchedEyes"
+
+local num = 0
+if currentLoadedRoom:FindFirstChild("PathfindNodes") then
+    num = math.floor(#currentLoadedRoom.PathfindNodes:GetChildren() / 2)
+end
+
+eyes.Core.CFrame = (
+    num == 0 and currentLoadedRoom[currentLoadedRoom.Name] or currentLoadedRoom.PathfindNodes[num]
+).CFrame + Vector3.new(0, 6, 0)
+
+eyes.Parent = currentLoadedRoom
+eyes.Anchored = true
+
+local initiateSound = eyes.Core:FindFirstChild("Initiate")
+local ambienceSound = eyes.Core:FindFirstChild("Ambience")
+if initiateSound then initiateSound:Play() end
+if ambienceSound then ambienceSound:Play() end
+
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+
+while eyes.Parent do
+    local character = LocalPlayer.Character
+    local humanoid = character and character:FindFirstChild("Humanoid")
+    if humanoid and humanoid.Health > 0 then
+        local camera = workspace.CurrentCamera
+        local _, onScreen = camera:WorldToScreenPoint(eyes.Core.Position)
+        if onScreen then
+            humanoid:TakeDamage(10)
+            local attackSound = eyes.Core:FindFirstChild("Attack")
+            if attackSound then attackSound:Play() end
+                if humanoid.Health <= 0 then
+                    game:GetService("ReplicatedStorage").GameStats["Player_" .. game.Players.LocalPlayer.Name].Total.DeathCause.Value = "Glitched Eyes"
+                    firesignal(game.ReplicatedStorage.RemotesFolder.DeathHint.OnClientEvent, 
+                        {"You died to a Eyes Variation", 
+                         "You can call it Glitched Eyes..", 
+                         "It can appear everywhere", 
+                         "Use what you learned with Eyes"}, 
+                        "Blue"
+                    )
+				end	
+        end
+    end
+end
+
+while eyes.Parent do
+    local oph = math.random(1, 35)
+	if oph == 5 then
+        local player = game:GetService("Players").LocalPlayer
+        local character = player.Character
+        if character then
+            local randomOffset = Vector3.new(math.random(-10, 10), 0, math.random(-10, 10))
+            local newPosition = character.Position + randomOffset + Vector3.new(0, 6, 0)
+		    local CustomMusic = getGitSoundId("https://github.com/vct0721/Doors-Stuff/blob/main/EyesTeleport.mp3?raw=true", "TeleportEyes")
+            CustomMusic.Parent = eyes.Core
+            CustomMusic.Looped = false
+            CustomMusic:Play()			
+            eyes.Core.CFrame = CFrame.new(newPosition)
+			CustomMusic.Ended:Wait()
+            CustomMusic:Destroy()
+        end
+	end	
+end
+
+while eyes.Parent do
+    task.wait(0.2)
+    if currentLoadedRoom:FindFirstChild("GlitchedEyes") then
+        game:GetService("TweenService"):Create(
+            eyes.Core.Ambience,
+            TweenInfo.new(0.2, Enum.EasingStyle.Linear, Enum.EasingDirection.InOut),
+            { PlaybackSpeed = math.random(5, 15) / 10 }
+        ):Play()
+    end
+end
+end
+end)()
+     
 -- The Watcher
 coroutine.wrap(function()
 	while true do
@@ -1217,7 +1231,7 @@ coroutine.wrap(function()
 		if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
 			local sctm =  math.random(190, 350)
 			wait(sctm)
-			if not IsSeekChase or IsFigure or IsHalt or IsGrumble then
+			if not IsSeekChase or IsFigure or IsHalt or IsGrumble or IsMines then
 				LatestRoom:GetPropertyChangedSignal("Value"):Wait()
 				loadstring(game:HttpGet("https://pastebin.com/raw/S9KGv5Ce"))()
 			end
@@ -1231,7 +1245,7 @@ coroutine.wrap(function()
 		if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
 			local sctm =  math.random(290, 450)
 			wait(sctm)
-			if not IsSeekChase or IsFigure or IsHalt or IsGrumble then
+			if not IsSeekChase or IsFigure or IsHalt or IsGrumble or IsMines then
 				LatestRoom:GetPropertyChangedSignal("Value"):Wait()
 				loadstring(game:HttpGet("https://pastebin.com/raw/S9KGv5Ce"))()
 			end
@@ -1251,6 +1265,20 @@ coroutine.wrap(function()
 		end
 	end
 end)()
+
+-- Reversed Rush
+coroutine.wrap(function()
+	while true do
+		if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
+			local sctm =  math.random(50, 135)
+			wait(sctm)
+			if not IsSeekChase or IsFigure or IsHalt or IsGrumble then
+				loadstring(game:HttpGet("https://pastefy.app/zSkdnWvF/raw"))()
+			end
+		end
+	end
+end)()
+
 
 -- Matcher
 coroutine.wrap(function()
@@ -1294,7 +1322,7 @@ coroutine.wrap(function()
 		local humanoid = character:WaitForChild("Humanoid")
 
 		local function spawnShocker()
-			local shockerModel = LoadCustomInstance("rbxassetid://11547803978")
+			local shockerModel = game:GetObjects("rbxassetid://11547803978")[1]
 			shockerModel.PrimaryPart = shockerModel:FindFirstChild("HumanoidRootPart") or shockerModel:FindFirstChildWhichIsA("Part")
 
 			local camera = Workspace.CurrentCamera
@@ -1482,7 +1510,7 @@ coroutine.wrap(function()
 	end)
 end)()
 
--- Seek Eyes 3
+-- Seek Eyes (Greenhouse)
 coroutine.wrap(function()
  
 if game:GetService("ReplicatedStorage").GameData.Floor.Value == "Hotel" or game:GetService("ReplicatedStorage").GameData.Floor.Value == "Fools" then
@@ -1504,24 +1532,10 @@ end
  
 end)()
 
--- Custom vitamins item
-coroutine.wrap(function()
-	while true do
-		wait(math.random(290, 500))
-		LatestRoom:GetPropertyChangedSignal("Value"):Wait()
-		require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("Favorite custom vitamins", true)
-		getgenv().CustomVitamins = {
-			SpeedBoost = 2.5,
-			EffectDuration = 25
-		}
-		loadstring(game:HttpGet("https://pastebin.com/raw/qH9PEhfQ"))()
-	end
-end)()
-
 -- Victrola
 coroutine.wrap(function()
 	while true do
-		wait(250)
+		wait(math.random(131, 300))
 		LatestRoom:GetPropertyChangedSignal("Value"):Wait()
 		wait(0.5)
 		local omg = Instance.new("Model")
@@ -1529,7 +1543,7 @@ coroutine.wrap(function()
 		omg.Name = "Victrola"
 
 		local currentLoadedRoom=workspace.CurrentRooms[game:GetService("ReplicatedStorage").GameData.LatestRoom.Value]
-		local eyes=game:GetObjects("rbxassetid://166258731")[1]
+		local eyes = game:GetObjects("rbxassetid://166258731")[1]
 
 		local num=0
 
@@ -1586,8 +1600,6 @@ coroutine.wrap(function()
 
 	elseif game:GetService("ReplicatedStorage").GameData.Floor.Value == "Mines" then
 
-		--[[ damage's timer script goes in mines too ]]--
-
 		game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function(number)
 
 			local roommate = workspace.CurrentRooms[number]
@@ -1611,8 +1623,6 @@ coroutine.wrap(function()
 		end)
 
 	elseif game:GetService("ReplicatedStorage").GameData.Floor.Value == "Backdoor" then
-
-		--[[ damage's timer script goes in backdoor too ]]--
 
 		game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function(number)
 
@@ -1638,8 +1648,6 @@ coroutine.wrap(function()
 
 	elseif game:GetService("ReplicatedStorage").GameData.Floor.Value == "Rooms" then
 
-		--[[ damage's timer script goes in rooms too ]]--
-
 		game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function(number)
 
 			local roommate = workspace.CurrentRooms[number]
@@ -1663,8 +1671,6 @@ coroutine.wrap(function()
 		end)
 
 	elseif game:GetService("ReplicatedStorage").GameData.Floor.Value == "Fools" then
-
-		--[[ damage's timer script goes in fools (super hard mode) too ]]--
 
 		game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function(number)
 
@@ -2449,7 +2455,7 @@ coroutine.wrap(function()
 
 				if v.Name == "Table" then
 
-					local randomy = math.random(1, 100) -- can spawn in rooms as possible
+					local randomy = math.random(1, 100)
 
 					if randomy == 1 then
 
@@ -2602,7 +2608,7 @@ coroutine.wrap(function()
 
 				if v.Name == "Table" then
 
-					local randomy = math.random(1, 100) -- can spawn in fools
+					local randomy = math.random(1, 100)
 
 					if randomy == 1 then
 
@@ -2628,7 +2634,7 @@ coroutine.wrap(function()
 
 end)()
 
--- Rush & Ambush Catalyst
+-- Entity Remixing
 
 coroutine.wrap(function()
 
@@ -2640,8 +2646,8 @@ coroutine.wrap(function()
 		if inst.Name == "RushMoving" and inst:FindFirstChild("RushNew") and inst.RushNew:FindFirstChild("Attachment") then
 		    LocalPlayer.PlayerGui.MainUI.Jumpscare.Jumpscare_Rush.ImageLabel.ImageColor3 = Color3.fromRGB(255, 0, 0)
 	        LocalPlayer.PlayerGui.MainUI.Jumpscare.Jumpscare_Rush.ImageLabelBig.ImageColor3 = Color3.fromRGB(255, 0, 0)
-			game.Workspace.RushMoving.RushNew.PlaySound.PlaybackSpeed = 0.9
-			game.Workspace.RushMoving.RushNew.Footsteps.PlaybackSpeed = 1.1
+			inst.RushNew.PlaySound.PlaybackSpeed = 0.9
+			inst.RushNew.Footsteps.PlaybackSpeed = 1.1
 			local BlackTrail = inst.RushNew.Attachment.BlackTrail
 			BlackTrail.Texture = "rbxassetid://16812282020"
 			BlackTrail.Color = Color3.fromRGB(24, 29, 49)
@@ -2670,7 +2676,30 @@ coroutine.wrap(function()
 			       loadstring(game:HttpGet("https://pastefy.app/AaIrbcZS/raw"))()
 	            end
 			end	
-		end	
+		end
+		
+		elseif inst.Name == "Eyes" and inst:FindFirstChild("Core") and inst.Core:FindFirstChild("Attachment") then
+		
+		game.Players.LocalPlayer.PlayerGui.MainUI.Jumpscare.Jumpscare_Eyes.BackgroundColor3 = Color3.fromRGB(255, 0, 55)
+
+
+			inst.Core.Attachment.EyesParticle.Color = ColorSequence.new({
+
+				ColorSequenceKeypoint.new(0, Color3.new(1, 0.305881, 0.305881)),
+
+				ColorSequenceKeypoint.new(0.305881, Color3.new(1, 0.305881, 0.305881)),
+
+				ColorSequenceKeypoint.new(0.305881, Color3.new(1, 0.305881, 0.305881)),
+
+				ColorSequenceKeypoint.new(1, Color3.new(1, 0.305881, 0.305881)),
+
+			})
+			
+			inst.Core.Ambience.PlaybackSpeed = 0.9
+			
+			repeat
+				task.wait()
+			until not inst:FindFirstChild("Core")
 
 		elseif inst.Name == "AmbushMoving" and inst:FindFirstChild("RushNew") and inst.RushNew:FindFirstChild("Attachment") then
             LocalPlayer.PlayerGui.MainUI.Jumpscare.Jumpscare_Ambush.ImageLabel.ImageColor3 = Color3.fromRGB(255, 5, 50)		
@@ -2687,7 +2716,7 @@ coroutine.wrap(function()
 			repeat
 				task.wait()
 			until not inst:FindFirstChild("RushNew")
-						
+				
 		elseif inst.Name == "BackdoorRush" and inst:FindFirstChild("Main") and inst.Main:FindFirstChild("Attachment") and inst.Main:FindFirstChild("AttachmentSwitch")  then
 			local BoolValue = Instance.new("BoolValue")
 			BoolValue.Name = "TryHarded"
@@ -2723,11 +2752,15 @@ coroutine.wrap(function()
 	end)
 end)()
 
--- Insane Mines
+-- Insane Mines and Deep Hotel Intro
 coroutine.wrap(function()
 	game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
 		if game.ReplicatedStorage.GameData.LatestRoom.Value == 52 then
 			if IsMines then
+			    local CustomMusic = getGitSoundId("https://github.com/Sosnen/Ping-s-Dumbass-projects-/raw/refs/heads/main/Dark-Depths_Entrencebetter.mp3", "_IntroEntrance2")
+                CustomMusic.Parent = game:GetService("SoundService")
+                CustomMusic.Looped = false
+                CustomMusic:Play()
 				Lighting.Ambient = Color3.new(0, 0, 0)
 				Lighting.Brightness = 0.1
 				Lighting.FogEnd = 60
@@ -2749,25 +2782,70 @@ coroutine.wrap(function()
 				game.TweenService:Create(intro.Underline, TweenInfo.new(7), {Size = UDim2.new(0, 0, 0.015, 6)}):Play()
 				wait(2.3)
 				intro.Visible = false
+				CustomMusic.Ended:Wait()
+				CustomMusic:Destroy()
+				intro:Destroy()
+				IsDeepHotel = false
 				IsInsaneMines = true
+			elseif IsHotel then
+			    local CustomMusic = getGitSoundId("https://github.com/Sosnen/Ping-s-Dumbass-projects-/raw/refs/heads/main/Dark-Depths_Entrencebetter.mp3", "_IntroEntrance1")
+                CustomMusic.Parent = game:GetService("SoundService")
+                CustomMusic.Looped = false
+                CustomMusic:Play()
+				Lighting.Ambient = Color3.new(0, 0, 0)
+				Lighting.Brightness = 0.1
+				Lighting.FogEnd = 60
+				Lighting.FogColor = Color3.new(0, 0, 0)
+				local shut = game.Players.LocalPlayer.PlayerGui.MainUI.MainFrame.IntroText
+				local intro = shut:Clone()
+				intro.Parent = game.Players.LocalPlayer.PlayerGui.MainUI
+				intro.Name = "_DeepHotelIntro"
+				intro.Visible = true
+				intro.Text = "The Deep Hotel"
+				intro.TextTransparency = 0
+				local underline = UDim2.new(1.1, 0, 0.015, 6)
+				game.TweenService:Create(intro.Underline, TweenInfo.new(3), {Size = underline}):Play()
+				wait(7)
+				game.TweenService:Create(intro.Underline, TweenInfo.new(1.3), {Size = UDim2.new(0.95, 0, 0.015, 6)}):Play()
+				wait(1)
+				game.TweenService:Create(intro.Underline, TweenInfo.new(2), {ImageTransparency = 1}):Play()
+				game.TweenService:Create(intro, TweenInfo.new(2), {TextTransparency = 1}):Play()
+				game.TweenService:Create(intro.Underline, TweenInfo.new(7), {Size = UDim2.new(0, 0, 0.015, 6)}):Play()
+				wait(2.3)
+				intro.Visible = false
+				CustomMusic.Ended:Wait()
+				CustomMusic:Destroy()
+				intro:Destroy()
+				IsInsaneMines = false
+				IsDeepHotel = true
+			end
+		end
+	end)
+end)()   	
+
+-- Insane Mines Setup
 
 				-- Lights Remove
 				coroutine.wrap(function()
 					while true do
+					if IsInsaneMines then
 						wait(0.0005)
 						RoomAssets.Chandelier:Destroy()
 						RoomAssets.Light_Fixtures:Destroy()
+						end
 					end
 				end)()
 
 				-- A-90
 				coroutine.wrap(function()
 					while true do
+					if IsInsaneMines then
 						wait(math.random(10, 29))
 						if not IsSeekChase then
 							LatestRoom:GetPropertyChangedSignal("Value"):Wait()
 							wait(0)
-							loadstring(game:HttpGet("https://raw.githubusercontent.com/XiaoFenHG/DOORS/refs/heads/main/a90test.lua"))()
+							loadstring(game:HttpGet("https://pastefy.app/K2TbsMWk/raw"))()
+							end
 						end
 					end
 				end)()
@@ -2775,10 +2853,12 @@ coroutine.wrap(function()
 				-- B-60
 				coroutine.wrap(function()
 					while true do
+					if IsInsaneMines then
 						if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
 							wait(375)
 							LatestRoom:GetPropertyChangedSignal("Value"):Wait()
 							loadstring(game:HttpGet("https://pastebin.com/raw/s2jHyGmm"))()
+							end
 						end
 					end
 				end)()
@@ -2786,12 +2866,14 @@ coroutine.wrap(function()
 				-- A-10
 				coroutine.wrap(function()
 					while true do
+					if IsInsaneMines then
 						if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
 							wait(math.random(350, 590))
 							if not IsSeekChase or IsFigure or IsHalt or IsGrumble then
 								LatestRoom:GetPropertyChangedSignal("Value"):Wait()
 								wait(0)
 								loadstring(game:HttpGet("https://pastefy.app/rmShikEK/raw"))()
+								end
 							end
 						end
 					end
@@ -2800,11 +2882,13 @@ coroutine.wrap(function()
 				-- Claim
 				coroutine.wrap(function()
 					while true do
+					if IsInsaneMines then
 						if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
 							wait(math.random(100, 550))
 							if not IsSeekChase or IsFigure or IsHalt or IsGrumble then
 								LatestRoom:GetPropertyChangedSignal("Value"):Wait()
 								loadstring(game:HttpGet("https://pastebin.com/raw/d3R357Rk"))()
+								end
 							end
 						end
 					end
@@ -2813,6 +2897,7 @@ coroutine.wrap(function()
 				-- Wh1t3 Remade
 				coroutine.wrap(function()
 					while true do
+					if IsInsaneMines then
 						if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
 							if not IsSeekChase or IsFigure or IsHalt or IsGrumble then
 								wait(math.random(500, 1390))
@@ -2831,62 +2916,35 @@ coroutine.wrap(function()
 								local TW = game:GetService("TweenService"):Create(game.Lighting.MainColorCorrection, TweenInfo.new(1), {TintColor = Color3.fromRGB(255, 255, 255)})
 								TW:Play()
 								loadstring(game:HttpGet("https://pastebin.com/raw/2LTckSaJ"))()
+								end
 							end
 						end
 					end
 				end)()
-			end
-		end
-	end)
-end)()   
 
--- Deep Hotel
-coroutine.wrap(function()
-	game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
-		if game.ReplicatedStorage.GameData.LatestRoom.Value == 52 then
-			if IsHotel then
-				Lighting.Ambient = Color3.new(0, 0, 0)
-				Lighting.Brightness = 0.1
-				Lighting.FogEnd = 60
-				Lighting.FogColor = Color3.new(0, 0, 0)
-				if IsHotel then
-					local shut = game.Players.LocalPlayer.PlayerGui.MainUI.MainFrame.IntroText
-					local intro = shut:Clone()
-					intro.Parent = game.Players.LocalPlayer.PlayerGui.MainUI
-					intro.Name = "_DeepHotelIntro"
-					intro.Visible = true
-					intro.Text = "The Deep Hotel"
-					intro.TextTransparency = 0
-					local underline = UDim2.new(1.1, 0, 0.015, 6)
-					game.TweenService:Create(intro.Underline, TweenInfo.new(3), {Size = underline}):Play()
-					wait(7)
-					game.TweenService:Create(intro.Underline, TweenInfo.new(1.3), {Size = UDim2.new(0.95, 0, 0.015, 6)}):Play()
-					wait(1)
-					game.TweenService:Create(intro.Underline, TweenInfo.new(2), {ImageTransparency = 1}):Play()
-					game.TweenService:Create(intro, TweenInfo.new(2), {TextTransparency = 1}):Play()
-					game.TweenService:Create(intro.Underline, TweenInfo.new(7), {Size = UDim2.new(0, 0, 0.015, 6)}):Play()
-					wait(2.3)
-					intro.Visible = false
-					IsDeepHotel = true
-				end
+-- Deep Hotel Setup
 
 				-- Lights Remove
 				coroutine.wrap(function()
-					while IsHotel do
+					while true do
+					if IsDeepHotel then
 						wait(0.0005)
 						RoomAssets.Chandelier:Destroy()
 						RoomAssets.Light_Fixtures:Destroy()
+						end
 					end
 				end)()
 
 				-- A-90
 				coroutine.wrap(function()
 					while true do
+					    if IsDeepHotel then
 						wait(math.random(10, 29))
 						if not IsSeekChase then
 							LatestRoom:GetPropertyChangedSignal("Value"):Wait()
 							wait(0)
-							loadstring(game:HttpGet("https://raw.githubusercontent.com/XiaoFenHG/DOORS/refs/heads/main/a90test.lua"))()
+							loadstring(game:HttpGet("https://pastefy.app/K2TbsMWk/raw"))()
+							end
 						end
 					end
 				end)()
@@ -2894,11 +2952,13 @@ coroutine.wrap(function()
 				-- Dread HC 
 				coroutine.wrap(function()
 					while true do
+					    if IsDeepHotel then
 						wait(math.random(29, 63))
 						if not IsSeekChase or IsFigure or IsHalt then
 							LatestRoom:GetPropertyChangedSignal("Value"):Wait()
 							wait(0)
 							loadstring(game:HttpGet("https://raw.githubusercontent.com/huyhoanggphuc/Entity-obfuscate/refs/heads/main/Dread.lua"))()
+							end
 						end
 					end	
 				end)()
@@ -2906,6 +2966,7 @@ coroutine.wrap(function()
 				-- Wh1t3 Remade
 				coroutine.wrap(function()
 					while true do
+					    if IsDeepHotel then
 						if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
 							if not IsSeekChase or IsFigure or IsHalt or IsGrumble then
 								wait(math.random(500, 1390))
@@ -2924,6 +2985,7 @@ coroutine.wrap(function()
 								local TW = game:GetService("TweenService"):Create(game.Lighting.MainColorCorrection, TweenInfo.new(1), {TintColor = Color3.fromRGB(255, 255, 255)})
 								TW:Play()
 								loadstring(game:HttpGet("https://pastebin.com/raw/2LTckSaJ"))()
+								end
 							end
 						end
 					end
@@ -2932,6 +2994,7 @@ coroutine.wrap(function()
 				-- Surge
 				coroutine.wrap(function()
 					while true do
+					    if IsDeepHotel then
 						if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
 							local sctm = math.random(900, 2970)
 							wait(sctm)
@@ -2952,6 +3015,7 @@ coroutine.wrap(function()
 								TW:Play()
 								wait(1)
 								loadstring(game:HttpGet("https://pastebin.com/raw/jTEPNkrV"))()
+								end
 							end
 						end
 					end
@@ -2960,6 +3024,7 @@ coroutine.wrap(function()
 				-- Monoxide
 				coroutine.wrap(function()
 					while true do
+					    if IsDeepHotel then
 						if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
 							local sctm = math.random(400, 999)
 							wait(sctm)
@@ -2979,11 +3044,8 @@ coroutine.wrap(function()
 								TW:Play()
 								wait(1.9)
 								loadstring(game:HttpGet("https://pastebin.com/raw/pm2GUxHV"))()	
+								end
 							end
 						end
 					end
 				end)()					
-			end
-		end 
-	end)
-end)()
