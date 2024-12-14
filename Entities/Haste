@@ -8,14 +8,12 @@ local lplayer = Players.LocalPlayer
 local char = lplayer.Character
 local rppos
 local MCC = Lighting:WaitForChild("MainColorCorrection")
-local Functions = loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Utilities/refs/heads/main/Functions.lua"))()
-
 local hasteSpawned = false
-local hasteTime = 60 -- Starts at 60 seconds (01:00)
-local maxTime = 120 -- Maximum time allowed (02:00)
+local hasteTime = 60
+local maxTime = 120
 local haste
 local leverSpawned = false
-local latestRoom = nil  -- Keep track of the latest room to avoid respawning Lever in the same room
+local latestRoom = nil 
 
 local function UpdateTextLabel(timerLabel, time)
     local minutes = math.floor(time / 60)
@@ -30,7 +28,7 @@ local function PlayJumpscare(callback)
     local imageLabel = Instance.new("ImageLabel", screenGui)
     imageLabel.Size = UDim2.new(1, 0, 1, 0)
     imageLabel.Position = UDim2.new(0, 0, 0, 0)
-    imageLabel.Image = Functions:LoadCustomAsset("http://www.roblox.com/asset/?id=16854793811")
+    imageLabel.Image = "rbxassetid://16854793811")
     imageLabel.BackgroundTransparency = 1
     imageLabel.ZIndex = 10
 
@@ -50,7 +48,6 @@ local function PlayJumpscare(callback)
             imageLabel.Position = oldpos + UDim2.new(0, math.random(-10, 10), 0, math.random(-10, 10))
         end)
     end
-
     TremorEffect()
     task.spawn(function()
         wait(0.7)
@@ -79,7 +76,7 @@ local function HasteAttack()
     PlayJumpscare(function()
         local humanoid = char:FindFirstChildOfClass("Humanoid")
         if humanoid then
-            humanoid.Health = 0 -- Kill the player
+            humanoid.Health = 0
         end
     end)
 end
@@ -106,7 +103,7 @@ local function HasteChaseInit()
             object.CFrame = object.CFrame + direction * speed * math.min(distance, 1/60)
         else
             chase = false
-            HasteAttack() -- Stun and kill the player when Haste catches up
+            HasteAttack()
         end
         task.wait()
     end
@@ -115,17 +112,15 @@ end
 local function SpawnHaste()
     if hasteSpawned then return end
     hasteSpawned = true
-    
     MCC.TintColor = Color3.new(1, 0.5, 0.5)
     rppos = char.HumanoidRootPart.Position
-    
-    haste = Functions:LoadCustomInstance("rbxassetid://111998108199298")
-    _G.MP = haste
+    haste = game:GetObjects("rbxassetid://111998108199298")[1]
+    local MP = haste
     haste.Parent = workspace
     haste.Name = "HasteMoving"
     haste.Position = rppos + Vector3.new(900, 0, 600)
     haste.CanCollide = false
-    haste.Anchored = false -- Allow it to move
+    haste.Anchored = false
 
     local main = haste:FindFirstChild("Main")
     if main then
@@ -147,21 +142,17 @@ local function SpawnHaste()
     else
         warn("Main not found in Haste model.")
     end
-
-    task.spawn(HasteChaseInit) -- Start chasing the player
+    task.spawn(HasteChaseInit)
 end
 
 local function SpawnLeverNearDoor(door)
     if leverSpawned then return end
-
-    -- Load the Lever from the asset
-    local asset = Functions:LoadCustomInstance("rbxassetid://17271863184")
+    local asset = game:GetObjects("rbxassetid://17271863184")[1]
     asset.Parent = workspace
-    
     local lever = asset:FindFirstChild("Lever")
     if lever then
         local doorPivot = door:GetPivot()
-        local offset = CFrame.new(3, 0, 0) -- Position the lever slightly to the right of the door
+        local offset = CFrame.new(3, 0, 0)
         local leverPosition = doorPivot * offset
         lever:PivotTo(leverPosition)
         leverSpawned = true
@@ -172,9 +163,7 @@ local function SpawnLeverNearDoor(door)
 end
 
 local function TrySpawnLeverBasedOnTime(door)
-    -- Higher chance to spawn the lever when the time is low
-    local chance = math.clamp(1 - (hasteTime / maxTime), 0, 1) -- Higher chance as time decreases
-
+    local chance = math.clamp(1 - (hasteTime / maxTime), 0, 1)
     if math.random() <= chance then
         SpawnLeverNearDoor(door)
     end
@@ -194,20 +183,18 @@ local function TimerTick(lever)
             if timerBeep then
                 timerBeep:Play()
             end
-
             if hasteTime == 0 then
                 SpawnHaste()
             elseif hasteSpawned and hasteTime > 0 then
-                DeleteHaste() -- Delete Haste if timer goes above 00:00
+                DeleteHaste()
             end
         else
-            -- Timer is at 00:00, waiting for player to add time
             if activatePrompt and activatePrompt.Enabled then
                 activatePrompt.Triggered:Connect(function()
                     local addTime = tonumber(takeTimerLabel.Text) or 0
                     hasteTime = math.min(hasteTime + addTime, maxTime)
                     UpdateTextLabel(displayTimerLabel, hasteTime)
-                    activatePrompt.Enabled = false -- Disable prompt for single use
+                    activatePrompt.Enabled = false
                     activatePrompt:Destroy()
                 end)
             end
@@ -217,22 +204,13 @@ local function TimerTick(lever)
 end
 
 local function ScriptStart()
-    -- Get the latest room number as a string
     local currentRoomValue = ReplicatedStorage.GameData.LatestRoom.Value
-
-    -- Convert the room value to an instance in CurrentRooms
     local latestRoomInstance = workspace.CurrentRooms:FindFirstChild(currentRoomValue)
-
     if latestRoomInstance then
-        -- If the latest room has changed, allow spawning a new Lever
         if currentRoomValue ~= latestRoom then
             latestRoom = currentRoomValue
-            leverSpawned = false  -- Reset lever spawn state for the new room
-
-            -- Get the door inside the latest room
+            leverSpawned = false 
             local door = latestRoomInstance:FindFirstChild("Door")
-
-            -- Try to spawn the Lever based on the remaining time
             if door then
                 TrySpawnLeverBasedOnTime(door)
             else
@@ -242,7 +220,5 @@ local function ScriptStart()
     else
         warn("Latest room instance not found in CurrentRooms.")
     end
-end
 
--- Continuously check for room changes
 RunService.RenderStepped:Connect(ScriptStart)
