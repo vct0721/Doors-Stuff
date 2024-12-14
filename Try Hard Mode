@@ -7,8 +7,8 @@ if table.find(blacklisteds, game.Players.LocalPlayer.Name) and not table.find(wh
 end
 
 if game:GetService("ReplicatedStorage"):FindFirstChild("TryHarder") then
-    warn("You have Already Loaded TryHard Mode")
-	game.TextChatService.TextChannels.RBXSystem:DisplaySystemMessage("You have Already Loaded TryHard Mode")
+    warn("You have Already Loaded TryHard Mode /(Returning/)")
+	game.TextChatService.TextChannels.RBXSystem:DisplaySystemMessage("You have Already Loaded TryHard Mode /(Returning/)")
     return true
 end
 
@@ -291,6 +291,8 @@ ChangeDamModel(LatestRoomm)
 ChangeEyeModel(LatestRoomm)
 end)
 
+-- Paintings
+if IsHotel then
 local painters = 1
 local paints = {
 	[1] = {"rbxassetid://11881132074","Despair"},
@@ -298,7 +300,7 @@ local paints = {
 	[3] = {"rbxassetid://11881654771","A tryhard..."},
 	[4] = {"rbxassetid://7084794697","Him."},
 	[5] = {"rbxassetid://109718583696589","Not Funny"},
-	[6] = {"rbxassetid://73702240509903","The Scrumble"},
+	[6] = {"rbxassetid://73702240509903", "Scrumble"},
     [7] = {"rbxassetid://13714729640","..."},
 }
 ---
@@ -337,6 +339,7 @@ game:GetService("ReplicatedStorage").GameData.LatestRoom.Changed:Connect(functio
 		end
 	end
 end)
+end
 
 -- Ambience New Sounds
 
@@ -396,7 +399,6 @@ game.TextChatService.TextChannels.RBXSystem:DisplaySystemMessage("Ok, it's works
 -- Node's Fixings (Credits to Official_Artemis And Chrono)
 
 coroutine.wrap(function()
-
 	loadstring(game:HttpGet("https://raw.githubusercontent.com/vct0721/Doors-Stuff/refs/heads/main/Other/NodesConverter.lua"))()
 end)()
 
@@ -763,6 +765,80 @@ CurrentRooms.DescendantAdded:Connect(
 
 
 -- Entities Section
+
+-- Caretaker
+coroutine.wrap(function()
+if IsHotel then
+local IsCaptured = false
+local CapturedPlayerData = nil
+local KillDistance = 7
+
+local CaretakerImage = "rbxassetid://107332625713352"
+local function updatePainting(painting, player)
+    local canvas = painting:FindFirstChild("Canvas")
+    if canvas and canvas:FindFirstChildOfClass("SurfaceGui") then
+        local imageLabel = canvas:FindFirstChildOfClass("SurfaceGui"):FindFirstChildOfClass("ImageLabel")
+        if imageLabel then
+            if player then
+                imageLabel.Image = "rbxthumb://type=Avatar&id=" .. player.UserId .. "&w=420&h=420"
+            else
+                imageLabel.Image = CaretakerImage
+            end
+        end
+        local title = painting:FindFirstChild("Title")
+        if title then
+            if player then
+                title.Text = "This painting is titled \"" .. player.DisplayName .. "\""
+            else
+                title.Text = "This painting is titled \"The Caretaker\""
+            end
+        end
+    end
+end
+
+local function monitorPaintings()
+    LatestRoom.Changed:Connect(function()
+        if math.random(1, 10) == 1 then
+            local currentRoom = Workspace.CurrentRooms:FindFirstChild(LatestRoom.Value)
+            if currentRoom and currentRoom:FindFirstChild("Assets") then
+                for _, painting in pairs(currentRoom.Assets:GetChildren()) do
+                    if painting.Name:find("Painting") then
+                        updatePainting(painting, nil)
+                        task.spawn(function()
+                            while painting:IsDescendantOf(Workspace) and not IsCaptured do
+                                local localPlayer = Players.LocalPlayer
+                                local character = localPlayer.Character
+                                local humanoidRootPart = character and character:FindFirstChild("HumanoidRootPart")
+                                if humanoidRootPart and (painting.Position - humanoidRootPart.Position).Magnitude <= KillDistance then
+                                    IsCaptured = true
+                                    CapturedPlayerData = localPlayer
+                                    local humanoid = character:FindFirstChildOfClass("Humanoid")
+                                    if humanoid then
+                                        humanoid.Health = 0
+										firesignal(game.ReplicatedStorage.RemotesFolder.DeathHint.OnClientEvent, {"You've died to who you call The Caretaker.","This is a tricky one","Try to stay away from a strange painting."},"Blue")
+		                                game:GetService("ReplicatedStorage").GameStats["Player_".. game.Players.LocalPlayer.Name].Total.DeathCause.Value = "The Caretaker"
+                                    end
+                                    updatePainting(painting, localPlayer)
+                                    humanoidRootPart.CFrame = painting.CFrame
+                                    humanoidRootPart.Anchored = true
+                                    for i = 1, 5 do
+                                        humanoidRootPart.CFrame = humanoidRootPart.CFrame:Lerp(painting.CFrame, 0.2)
+                                        task.wait(0.1)
+                                    end
+                                    humanoidRootPart.Anchored = false
+                                end
+                                task.wait(0.1)
+                            end
+                        end)
+                    end
+                end
+            end
+        end
+    end)
+end
+monitorPaintings()
+end
+end)()
 
 -- Whisper
 coroutine.wrap(function()
