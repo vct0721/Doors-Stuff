@@ -1,6 +1,4 @@
 loadstring(game:HttpGet("https://raw.githubusercontent.com/vct0721/Doors-Stuff/refs/heads/main/Other/NodesConverter.lua"))()
-
-local Functions = loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Functions:lua"))()
 local SpawnerLibrary = {
 	Tween = function(object, input, studspersecond, offset)
 		local char = game:GetService("Players").LocalPlayer.Character;
@@ -29,7 +27,7 @@ local SpawnerLibrary = {
 
 		for _,Room in ipairs(workspace.CurrentRooms:GetChildren()) do
 			t += 1
-			if Room:FindFirstChild("RoomStart") and tonumber(Room.Name) == game.ReplicatedStorage.GameData.LatestRoom.Value then
+			if Room:FindFirstChild("RoomEntrance") and tonumber(Room.Name) == game.ReplicatedStorage.GameData.LatestRoom.Value then
 				Earliest = tonumber(Room.Name)
 				break;
 			end
@@ -50,7 +48,7 @@ local Entities = {
 			workspace.Ambience_Seek.TimePosition = 0
 			workspace["Ambience_Seek"]:Play()
 
-			local firgur = Functions:LoadCustomInstance("rbxassetid://13623176199")
+			local firgur = game:GetObjects("rbxassetid://10829142080")[1]
 
 			firgur.Figure.Anchored = true
 			firgur.Parent = workspace
@@ -66,7 +64,8 @@ local Entities = {
 			val.Value = early.PathfindNodes["1"].CFrame + Vector3.new(0,5,0)
 
 			local anim = Instance.new("Animation")
-			anim.AnimationId = Functions:LoadCustomInstance("rbxassetid://9896641335")
+			anim.AnimationId = "rbxassetid://9896641335"
+			anim.Name = "Cutscene"
 
 			firgur.SeekRig.AnimationController:LoadAnimation(anim):Play()
 
@@ -78,9 +77,10 @@ local Entities = {
 			firgur.Figure.FootstepsFar:Play()
 
 			local anim = Instance.new("Animation")
-			anim.AnimationId = Functions:LoadCustomInstance("rbxassetid://7758895278")
+			anim.AnimationId = "rbxassetid://7758895278"
+			anim.Name = "Run"
 
-			firgur.SeekRig.AnimationController:LoadAnimation(anim):Play()
+			firgur.SeekRig.AnimationController.Animator:LoadAnimation(anim):Play()
 
 			local chase = true
 
@@ -96,17 +96,26 @@ local Entities = {
 			end)()
 
 			if Kill then
-			    game.Players.LocalPlayer.Character.Humanoid:TakeDamage(100)
-                game:GetService("ReplicatedStorage").GameStats["Player_".. game.Players.LocalPlayer.Name].Total.DeathCause.Value = "Seek"
-				firesignal(game.ReplicatedStorage.RemotesFolder.DeathHint.OnClientEvent, {"You died to who you call Seek.","Seek will start chasing you as soon as he spots you.","Just Run away from Seek as fast as possible."},"Blue")
+			   coroutine.wrap(function()
+				   while Kill do
+					   if chase then
+				          local plrmagnitude = (game.Players.LocalPlayer.Character.Position - figur.Figure.Position).magnitude
+				          if plrmagnitude < 14 then 
+			              game.Players.LocalPlayer.Character.Humanoid:TakeDamage(100)
+                          game:GetService("ReplicatedStorage").GameStats["Player_".. game.Players.LocalPlayer.Name].Total.DeathCause.Value = "Seek"
+				          firesignal(game.ReplicatedStorage.RemotesFolder.DeathHint.OnClientEvent, {"You died to who you call Seek.", "Seek will start chasing you as soon as he spots you.", "Just Run away from Seek as fast as possible."}, "Blue")
+			              end
+			           end
+			       end
+			   end)()
 			end
 
 			for i = 1,15 do
 				for i,v in ipairs(workspace.CurrentRooms:GetChildren()) do
 					if tonumber(v.Name) < tonumber(early.Name) then continue end
-					if v:GetAttribute("lol") then continue end
+					if v:GetAttribute("Seeking") then continue end
 					if v:FindFirstChild("PathfindNodes") then
-						v:SetAttribute("lol", true)
+						v:SetAttribute("Seeking", true)
 						require(game:GetService("ReplicatedStorage").ClientModules.EntityModules.Seek).tease(nil, v, 14, 1665596753, true)
 						for i,v in ipairs(v.PathfindNodes:GetChildren()) do
 							SpawnerLibrary.Tween(val, v, 25, CFrame.new(0,5,0))
