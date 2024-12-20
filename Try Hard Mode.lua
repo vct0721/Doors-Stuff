@@ -48,7 +48,8 @@ local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
 local playerGui = LocalPlayer:FindFirstChild("PlayerGui")
 
-local roomValue = ReplicatedStorage.GameData.LatestRoom.Value
+local roomValue = GameData.LatestRoom.Value
+local floorValue = GameData.Floor.Value
 local IsRetro = GameData.Floor.Value == "Retro"
 local IsMines = GameData.Floor.Value == "Mines"
 local IsRooms = GameData.Floor.Value == "Rooms"
@@ -82,6 +83,14 @@ function GitPNG(GithubImg,ImageName)
 	return (getcustomasset or getsynasset)(ImageName..".png")
 end
 
+local function ReplaceAudGit(GithubSnd, SoundName)
+    local url = GithubSnd
+    if not isfile(SoundName .. ".mp3") then
+      writefile(SoundName .. ".mp3", game:HttpGet(url))
+   end
+   return (getcustomasset or getsynasset)(SoundName .. ".mp3")
+end
+
 local function getGitSoundId(GithubSoundPath: string, AssetName: string): Sound
 	local Url = GithubSoundPath
 
@@ -97,7 +106,125 @@ end
 
 -- New Seek Model(Remade)
 if IsHotel or IsMines then
-	loadstring(game:HttpGet("https://pastefy.app/dVfwY1Ts/raw"))()
+	--Ambience
+coroutine.wrap(function()
+game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
+if game.Workspace:FindFirstChild("SeekMovingClone") then
+wait(0.0005)
+game.Workspace.SeekMovingClone.SeekMusic.SoundId = "rbxassetid://1837892736"
+game.Workspace.SeekMovingClone.SeekMusic.Volume = "0.7"
+game.Workspace.SeekMoving.Ambience.SoundId = "rbxassetid://1837892736"
+game.Workspace.SeekMoving.Ambience.Volume = "0.7"
+end
+end)
+end)()
+--
+ 
+-- New Seek music and animation loader
+coroutine.wrap(function()
+    game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
+        wait(0.0005)
+        if game.Workspace:FindFirstChild("SeekMovingNewClone") then
+
+            function ReplaceAudGit(GithubSnd, SoundName)
+                local url = GithubSnd
+                if not isfile(SoundName .. ".mp3") then
+                    writefile(SoundName .. ".mp3", game:HttpGet(url))
+                end
+                return (getcustomasset or getsynasset)(SoundName .. ".mp3")
+            end
+
+            local a = game.Workspace.SeekMovingNewClone
+            a.SeekMusic.SoundId = ReplaceAudGit("https://github.com/huyhoanphuc/hgss/blob/main/km_20240919_720p_12f_20240919_022413.mp3?raw=true", "SeekMusickNewMm")
+        end
+    end)
+end)()
+
+-- NEW SEEK 
+game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function() 
+    wait(3.5) 
+    if not workspace:FindFirstChild("SeekMovingNewClone") then 
+        return  
+    end 
+    local RealSeek = workspace:FindFirstChild("SeekMovingNewClone") 
+    local RealSeekRig = RealSeek:FindFirstChild("SeekRig") 
+    local SeekNew = game:GetObjects("rbxassetid://16893141009")[1]  
+    SeekNew.Name = "seek2" 
+
+    for _, v in pairs(SeekNew.Figure:GetChildren()) do 
+        if v:IsA("Sound") then 
+            v:Stop() 
+        end 
+    end 
+
+    RealSeekRig.Head.Eye:Destroy() 
+    RealSeekRig.Head.Black:Destroy() 
+    SeekNew.Parent = workspace 
+    local SeekRig = SeekNew:FindFirstChild("SeekRig") 
+    SeekRig:FindFirstChild("Root").Anchored = true 
+
+    spawn(function() 
+        while game:GetService("RunService").Heartbeat:Wait() and RealSeek do 
+            if RealSeekRig:FindFirstChild("Root") then 
+                SeekRig:FindFirstChild("Root").CFrame = RealSeekRig:FindFirstChild("Root").CFrame 
+            end 
+            for _, v in pairs(RealSeek.Figure:GetChildren()) do 
+                RealSeek.Figure.Footsteps:Stop() 
+                RealSeek.Figure.FootstepsFar:Stop() 
+            end 
+            for _, v in pairs(RealSeekRig:GetChildren()) do 
+                if v:IsA("BasePart") then 
+                    v.Transparency = 1 
+                    
+                    local sound = a.Ambience
+
+            if sound:IsA("Sound") then
+                sound.Played:Connect(function()
+                    print("YEEEEE WORKING!!!!") 
+                    local model = workspace:WaitForChild("seek2")
+                    local seekRig = model:WaitForChild("SeekRig")
+                    local animationController = seekRig:FindFirstChildOfClass("AnimationController")
+
+                    if animationController then
+                        local anim = seekRig:FindFirstChild("AnimRaise")
+                        
+                        if anim and anim:IsA("Animation") then
+                            local animationTrack = animationController:LoadAnimation(anim)
+                            animationTrack:Play()
+                        else
+                            warn("AnimRaise not found or is not an animation.")
+                        end
+                    else
+                        warn("AnimationController not found in SeekRig.")
+                    end
+                    
+                    wait(8.20)
+
+                    local model = workspace:WaitForChild("seek2")
+                    local seekRig = model:WaitForChild("SeekRig")
+                    local animationController = seekRig:FindFirstChildOfClass("AnimationController")
+
+                    if animationController then
+                        local anim = seekRig:FindFirstChild("AnimRun")
+                        
+                        if anim and anim:IsA("Animation") then
+                            local animationTrack = animationController:LoadAnimation(anim)
+                            animationTrack:Play()
+                        else
+                            warn("AnimRun not found or is not an animation.")
+                        end
+                    else
+                        warn("AnimationController not found in SeekRig.")
+                    end
+                end)
+            else
+                warn("Sound not found or is not an instance of Sound.")
+            end
+                end 
+            end 
+        end 
+    end)
+end)
 end
 
 -- Ambience 2
@@ -383,8 +510,9 @@ function ReplaceAudGit(GithubSnd)
 	return (getcustomasset or getsynasset)(soundFileName)
 end
 
-game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.Health.Death.SoundId = ReplaceAudGit("https://github.com/Kotyara19k-Doorsspawner/Random-files/raw/refs/heads/main/Y2meta.app%20-%20Fragmented%20Death%20Message%20music%20(64%20kbps).mp3")
+game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.Health.Death.SoundId = "rbxassetid://16929745437", "DeathNew"
 game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.Health.Death.PlaybackSpeed = 4, "DeathNew"
+game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.Health.Music.Blue.SoundId = "rbxassetid://10472612727"
 
 wait(0.1)  
 
@@ -398,8 +526,6 @@ end)()
 
 
 -- Script Start
-
-_G.ExecutedTryHard = true
 LatestRoom:GetPropertyChangedSignal("Value"):Wait()
 
 local caption = game.Players.LocalPlayer:WaitForChild("PlayerGui").MainUI.MainFrame.Caption
@@ -414,7 +540,7 @@ require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("
 
 wait(1)
 
-require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("Credits to Official_Artemis, Kotyara19k, Noonie, Ping, Noah, Chrono, Vynixu, Ame, Zavaled",true)
+require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("Credits to Official_Artemis, Kotyara19k, Noonie, huyhoanphuc, Ping, Noah, Chrono, Vynixu, Ame, Zavaled",true)
 
 -- Intro in the Special Rooms
 
@@ -614,11 +740,7 @@ end)()
 loadstring(game:HttpGet("https://raw.githubusercontent.com/ChronoAcceleration/Hotel-Plus-Plus/refs/heads/main/QOL/DoorSounds.lua"))()
 coroutine.wrap(function()
 	game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
-
-		-- Light bulb sounds for different floors
 		coroutine.wrap(function()
-			local floorValue = game:GetService("ReplicatedStorage").GameData.Floor.Value
-
 			if floorValue == "Hotel" then
 				game.ReplicatedStorage.Sounds.BulbCharge.SoundId = "rbxassetid://9125973984"
 				game.ReplicatedStorage.Sounds.BulbZap.SoundId = "rbxassetid://4288784832"
@@ -635,7 +757,7 @@ coroutine.wrap(function()
 			end
 		end)()
 
-		-- Increase fireplace brightness if on the "Hotel" floor
+		-- Increase fireplace brightness if on the Hotel
 		coroutine.wrap(function()
 			if IsHotel then
 				game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
@@ -947,7 +1069,7 @@ coroutine.wrap(function()
 	while true do
 		wait(450)
 		game.ReplicatedStorage.GameData.LatestRoom.Changed:Wait()
-		if IsFigure or IsSeekChase then
+		if IsFigure or IsSeekChase or IsHalt or IsGrumble then
 			return
 		end
 
@@ -966,7 +1088,7 @@ coroutine.wrap(function()
 		game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
 			if gone == false then
 				if ded == false then
-					game.Players.LocalPlayer.Character.Humanoid:TakeDamage(game.Players.LocalPlayer.Character.Humanoid.Health)
+					game.Players.LocalPlayer.Character.Humanoid.Health = 0
 					if game.Players.LocalPlayer.Character.Humanoid.Health <= 0 then 
 						ded = true
 						loadstring(game:HttpGet("https://raw.githubusercontent.com/check78/Jumpscares/main/GreedJumpscare.txt"))()
@@ -1047,7 +1169,7 @@ coroutine.wrap(function()
 					firesignal(game.ReplicatedStorage.RemotesFolder.DeathHint.OnClientEvent, {"Hello, it's me again", "You died to one more of the Dread Variations", "This one, they call it Dreadfestation..", "It can appears out of nowhere", "Try not to stall. Keep moving!"}, "Yellow")
 				end)
 				wait(1)
-				game.Players.LocalPlayer.Character.Humanoid:TakeDamage(LocalPlayer.Character.Humanoid.Health)
+				game.Players.LocalPlayer.Character.Humanoid.Health = 0
 			end
 		end
 	end
@@ -1490,7 +1612,7 @@ end
 
 eyes.Core.CFrame = (
     num == 0 and currentLoadedRoom[currentLoadedRoom.Name] or currentLoadedRoom.PathfindNodes[num]
-).CFrame + Vector3.new(0, 6, 0)
+).CFrame + Vector3.new(0, 7, 0)
 
 eyes.Parent = currentLoadedRoom
 eyes.Anchored = true
@@ -1510,7 +1632,7 @@ while eyes.Parent do
         local camera = workspace.CurrentCamera
         local _, onScreen = camera:WorldToScreenPoint(eyes.Core.Position)
         if onScreen then
-            humanoid:TakeDamage(10)
+            humanoid.Health -= 10
             local attackSound = eyes.Core:FindFirstChild("Attack")
             if attackSound then attackSound:Play() end
                 if humanoid.Health <= 0 then
@@ -1531,10 +1653,10 @@ while eyes.Parent do
     local oph = math.random(1, 35)
 	if oph == 5 then
         local player = game:GetService("Players").LocalPlayer
-        local character = player.Character
-        if character then
+        local characterRoot = player.Character.PrimaryPart
+        if characterRoot then
             local randomOffset = Vector3.new(math.random(-10, 10), 0, math.random(-10, 10))
-            local newPosition = character.Position + randomOffset + Vector3.new(0, 6, 0)
+            local newPosition = characterRoot.CFrame + randomOffset + Vector3.new(0, 6, 0)
 		    local CustomMusic = getGitSoundId("https://github.com/vct0721/Doors-Stuff/blob/main/EyesTeleport.mp3?raw=true", "TeleportEyes")
             CustomMusic.Parent = eyes.Core
             CustomMusic.Looped = false
