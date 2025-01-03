@@ -1,224 +1,345 @@
+-- Services
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Lighting = game:GetService("Lighting")
 local SoundService = game:GetService("SoundService")
 local RunService = game:GetService("RunService")
 
-local lplayer = Players.LocalPlayer
-local char = lplayer.Character
-local rppos
-local MCC = Lighting:WaitForChild("MainColorCorrection")
-local hasteSpawned = false
-local hasteTime = 60
-local maxTime = 120
-local haste
-local leverSpawned = false
-local latestRoom = nil 
+-- Constants
+local HASTE_INITIAL_TIME = 60    -- Starting time (01:00)
+local HASTE_MAX_TIME = 120       -- Maximum time (02:00)
+local HASTE_SPEED = 75          -- Chase speed
+local JUMPSCARE_DURATION = 0.7   -- Duration of jumpscare effect
 
-local function UpdateTextLabel(timerLabel, time)
-    local minutes = math.floor(time / 60)
-    local seconds = time % 60
-    timerLabel.Text = string.format("%02d:%02d", minutes, seconds)
+-- Asset IDs
+local ASSETS = {
+    JUMPSCARE_IMAGE = "16854793811",
+    SCREAM_SOUND = "8628815817",
+    BOOM_SOUND = "6305809364",
+    HASTE_MODEL = "111998108199298",
+    LEVER_MODEL = "17271863184"
+}
+
+-- Configuration
+local Config = {
+    hasteSpawned = false,
+    leverSpawned = false,
+    hasteTime = HASTE_INITIAL_TIME,
+    latestRoom = nil
+}
+
+-- Local References
+local LocalPlayer = Players.LocalPlayer
+local Character = LocalPlayer.Character
+local MainColorCorrection = Lighting:WaitForChild("MainColorCorrection")
+
+-- Utility Functions
+local function formatTime(seconds)
+    return string.format("%02d:%02d", math.floor(seconds / 60), seconds % 60)
 end
 
-local function PlayJumpscare(callback)
-    local screenGui = Instance.new("ScreenGui", lplayer:WaitForChild("PlayerGui"))
-    screenGui.Name = "JumpscareGui"
-    
-    local imageLabel = Instance.new("ImageLabel", screenGui)
-    imageLabel.Size = UDim2.new(1, 0, 1, 0)
-    imageLabel.Position = UDim2.new(0, 0, 0, 0)
-    imageLabel.Image = "rbxassetid://16854793811"
-    imageLabel.BackgroundTransparency = 1
-    imageLabel.ZIndex = 10
-
-    local screamSound = Instance.new("Sound", SoundService)
-    screamSound.SoundId = "rbxassetid://8628815817"
-    screamSound.Volume = 5
-    screamSound:Play()
-    
-    local boomSound = Instance.new("Sound", SoundService)
-    boomSound.SoundId = "rbxassetid://6305809364"
-    boomSound.Volume = 5
-
-    local oldpos = imageLabel.Position
-
-    local function TremorEffect()
-        RunService.RenderStepped:Connect(function()
-            imageLabel.Position = oldpos + UDim2.new(0, math.random(-10, 10), 0, math.random(-10, 10))
-        end)
+local function updateTimerDisplay(label, time)
+    if label then
+        label.Text = formatTime(time)
     end
-    TremorEffect()
-    task.spawn(function()
-        wait(0.7)
-        boomSound:Play()
-        wait(0.1)
-        screamSound:Stop()
-        wait(0.5)
-        screenGui:Destroy()
-        screamSound:Destroy()
-        boomSound:Destroy()
+end
 
-        if callback then
-            callback()
-        end
+local function createSound(id, volume)
+    local sound = Instance.new("Sound")
+    sound.Parent = SoundService
+    sound.SoundId = "rbxassetid://" .. id
+    sound.Volume = volume or 1
+    return sound
+end
+
+-- Core Functions
+local function playJumpscare(callback)
+    local gui = Instance.new("ScreenGui")
+    gui.Name = "JumpscareGui"
+    gui.Parent = LocalPlayer:WaitForChild("PlayerGui")
+
+    local image = Instance.new("ImageLabel")
+    image.Size = UDim2.fromScale(1, 1)
+    image.Position = UDim2.new()
+    image.Image = "rbxassetid://" .. ASSETS.JUMPSCARE_IMAGE
+    image.BackgroundTransparency = 1
+    image.ZIndex = 10
+    image.Parent = gui
+
+    local scream = createSound(ASSETS.SCREAM_SOUND, 5)
+    local boom = createSound(ASSETS.BOOM_SOUND, 5)
+    
+    -- Screen shake effect
+    local basePosition = image.Position
+    local connection = RunService.RenderStepped:Connect(function()
+        image.Position = basePosition + UDim2.fromOffset(
+            math.random(-10, 10),
+            math.random(-10, 10)
+        )
+    end)
+
+    scream:Play()
+    
+    task.delay(JUMPSCARE_DURATION, function()
+        boom:Play()
+        task.wait(0.1)
+        scream:Stop()
+        task.wait(0.5)
+        
+        connection:Disconnect()
+        gui:Destroy()
+        scream:Destroy()
+        boom:Destroy()
+        
+        if callback then callback() end
     end)
 end
 
-local function HasteAttack()
-    char:SetAttribute("Stunned", true)
-
-    firesignal(ReplicatedStorage.RemotesFolder.DeathHint.OnClientEvent, 
-        {"You died to who you call Haste", 
-         "He will appear after the time is over.", 
-         "Don't Hide when this happens it will not work, So the best thing to do is find a lever!"}, "Yellow")
+local function hasteAttack()
+    if not Character then return end
     
-    PlayJumpscare(function()
-        local humanoid = char:FindFirstChildOfClass("Humanoid")
+    Character:SetAttribute("Stunned", true)
+    
+    -- Send death hint
+    if ReplicatedStorage.RemotesFolder and ReplicatedStorage.RemotesFolder.DeathHint then
+        firesignal(ReplicatedStorage.RemotesFolder.DeathHint.OnClientEvent, {
+            "You died to who you call Haste",
+            "He will appear after the time is over.",
+            "Don't Hide when this happens it will not work, So the best thing to do is find a lever!"
+        }, "Yellow")
+    end
+    
+    playJumpscare(function()
+        local humanoid = Character:FindFirstChildOfClass("Humanoid")
         if humanoid then
             humanoid.Health = 0
         end
     end)
 end
 
-local function DeleteHaste()
-    if hasteSpawned and haste then
-        haste:Destroy()
-        hasteSpawned = false
+local function spawnHaste()
+    if Config.hasteSpawned then return end
+    
+    Config.hasteSpawned = true
+    MainColorCorrection.TintColor = Color3.new(1, 0.5, 0.5)
+    
+    -- Load and setup Haste model
+    local success, hasteModel = pcall(function()
+        return game:GetObjects("rbxassetid://" .. ASSETS.HASTE_MODEL)[1]
+    end)
+    
+    if not success or not hasteModel then
+        warn("Failed to load Haste model")
+        return
     end
-end
-
-local function HasteChaseInit()
-    local object = MP
-    local player = Players.LocalPlayer
-    local speed = 75
-    local chase = true
-    while chase do
-        local playerPos = player.Character.HumanoidRootPart.Position
-        local objectPos = object.Position
-        local direction = (playerPos - objectPos).Unit
-        local distance = (playerPos - objectPos).Magnitude
-        
-        if distance > 0.5 then
-            object.CFrame = object.CFrame + direction * speed * math.min(distance, 1/60)
-        else
-            chase = false
-            HasteAttack()
-        end
-        task.wait()
-    end
-end
-
-local function SpawnHaste()
-    if hasteSpawned then return end
-    hasteSpawned = true
-    MCC.TintColor = Color3.new(1, 0.5, 0.5)
-    rppos = char.HumanoidRootPart.Position
-    haste = game:GetObjects("rbxassetid://111998108199298")[1]
-    local MP = haste
-    haste.Parent = workspace
-    haste.Name = "HasteMoving"
-    haste.Position = rppos + Vector3.new(900, 0, 600)
-    haste.CanCollide = false
-    haste.Anchored = false
-
-    local main = haste:FindFirstChild("Main")
+    
+    local rootPart = Character and Character:FindFirstChild("HumanoidRootPart")
+    if not rootPart then return end
+    
+    hasteModel.Parent = workspace
+    hasteModel.Name = "HasteMoving"
+    hasteModel.Position = rootPart.Position + Vector3.new(900, 0, 600)
+    hasteModel.CanCollide = false
+    hasteModel.Anchored = false
+    
+    -- Setup sounds
+    local main = hasteModel:FindFirstChild("Main")
     if main then
-        local footstepsSound = main:FindFirstChild("Footsteps")
-        if footstepsSound then
-            footstepsSound.Looped = true
-            footstepsSound.PlaybackSpeed = 0.5
-            footstepsSound.Volume = 2
-            footstepsSound:Play()
-        end
-        
-        local chaseSound = main:FindFirstChild("ChaseSound")
-        if chaseSound then
-            chaseSound.Looped = true
-            chaseSound.PlaybackSpeed = 0.6
-            chaseSound.Volume = 6.5
-            chaseSound:Play()
-        end
-    else
-        warn("Main not found in Haste model.")
-    end
-    task.spawn(HasteChaseInit)
-end
-
-local function SpawnLeverNearDoor(door)
-    if leverSpawned then return end
-    local asset = game:GetObjects("rbxassetid://17271863184")[1]
-    asset.Parent = workspace
-    local lever = asset:FindFirstChild("Lever")
-    if lever then
-        local doorPivot = door:GetPivot()
-        local offset = CFrame.new(3, 0, 0)
-        local leverPosition = doorPivot * offset
-        lever:PivotTo(leverPosition)
-        leverSpawned = true
-        TimerTick(lever)
-    else
-        warn("Lever not found in the asset.")
-    end
-end
-
-local function TrySpawnLeverBasedOnTime(door)
-    local chance = math.clamp(1 - (hasteTime / maxTime), 0, 1)
-    if math.random() <= chance then
-        SpawnLeverNearDoor(door)
-    end
-end
-
-local function TimerTick(lever)
-    local displayTimer = lever:FindFirstChild("DisplayTimer")
-    local timerBeep = lever:FindFirstChild("DisplayPlate"):FindFirstChild("TimerBeep")
-    local activatePrompt = lever:FindFirstChild("ActivateEventPrompt")
-    local takeTimerLabel = lever:FindFirstChild("TakeTimer"):FindFirstChild("TextLabel")
-    local displayTimerLabel = displayTimer:FindFirstChild("TextLabel")
-
-    RunService.RenderStepped:Connect(function()
-        if hasteTime > 0 then
-            hasteTime = hasteTime - 1
-            UpdateTextLabel(displayTimerLabel, hasteTime)
-            if timerBeep then
-                timerBeep:Play()
-            end
-            if hasteTime == 0 then
-                SpawnHaste()
-            elseif hasteSpawned and hasteTime > 0 then
-                DeleteHaste()
-            end
-        else
-            if activatePrompt and activatePrompt.Enabled then
-                activatePrompt.Triggered:Connect(function()
-                    local addTime = tonumber(takeTimerLabel.Text) or 0
-                    hasteTime = math.min(hasteTime + addTime, maxTime)
-                    UpdateTextLabel(displayTimerLabel, hasteTime)
-                    activatePrompt.Enabled = false
-                    activatePrompt:Destroy()
-                end)
+        for _, soundData in pairs({
+            {name = "Footsteps", speed = 0.5, volume = 2},
+            {name = "ChaseSound", speed = 0.6, volume = 6.5}
+        }) do
+            local sound = main:FindFirstChild(soundData.name)
+            if sound then
+                sound.Looped = true
+                sound.PlaybackSpeed = soundData.speed
+                sound.Volume = soundData.volume
+                sound:Play()
             end
         end
-        wait(1)
+    end
+    
+    _G.MP = hasteModel
+    task.spawn(function()
+        while task.wait() do
+            if not (hasteModel and hasteModel.Parent) then break end
+            
+            local playerPos = rootPart.Position
+            local hastePos = hasteModel.Position
+            local direction = (playerPos - hastePos).Unit
+            local distance = (playerPos - hastePos).Magnitude
+            
+            if distance > 0.5 then
+                hasteModel.CFrame = hasteModel.CFrame + direction * HASTE_SPEED * math.min(distance, 1/60)
+            else
+                hasteAttack()
+                break
+            end
+        end
     end)
 end
 
-local function ScriptStart()
-    local currentRoomValue = ReplicatedStorage.GameData.LatestRoom.Value
-    local latestRoomInstance = workspace.CurrentRooms:FindFirstChild(currentRoomValue)
-    if latestRoomInstance then
-        if currentRoomValue ~= latestRoom then
-            latestRoom = currentRoomValue
-            leverSpawned = false 
-            local door = latestRoomInstance:FindFirstChild("Door")
-            if door then
-                TrySpawnLeverBasedOnTime(door)
-            else
-                warn("Door not found in the latest room.")
-            end
-        end
-    else
-        warn("Latest room instance not found in CurrentRooms.")
+-- Lever Management
+local function deleteLever()
+    local existingLever = workspace:FindFirstChild("Haste_Lever")
+    if existingLever then
+        existingLever:Destroy()
+        Config.leverSpawned = false
+    end
+end
+
+local function spawnLeverNearDoor(door)
+    if Config.leverSpawned then return end
+
+    -- Load lever model
+    local success, leverModel = pcall(function()
+        return game:GetObjects("rbxassetid://" .. ASSETS.LEVER_MODEL)[1]
+    end)
+
+    if not success or not leverModel then
+        warn("Failed to load lever model")
+        return
     end
 
-RunService.RenderStepped:Connect(ScriptStart)
+    leverModel.Name = "Haste_Lever"
+    leverModel.Parent = workspace
+
+    local lever = leverModel:FindFirstChild("Lever")
+    if not lever then
+        warn("Lever component not found in model")
+        leverModel:Destroy()
+        return
+    end
+
+    -- Position lever relative to door
+    local doorPivot = door.Door.CFrame
+    local offsetCFrame = CFrame.new(3, 0, 0)
+    local leverPosition = doorPivot * offsetCFrame
+    lever:PivotTo(leverPosition)
+
+    Config.leverSpawned = true
+    initializeTimer(lever)
+end
+
+local function calculateLeverSpawnChance()
+    if Config.hasteTime <= 0 then
+        return 0.9
+    end
+
+    -- Higher chance to spawn lever when time is running out
+    local timeRatio = math.clamp(Config.hasteTime / HASTE_MAX_TIME, 0, 1)
+    return math.clamp(1 - timeRatio, 0.1, 0.9) -- Ensures minimum 10% and maximum 90% chance
+end
+
+local function trySpawnLeverInRoom(door)
+    if not door then return end
+
+    local spawnChance = calculateLeverSpawnChance()
+    if math.random() <= spawnChance then
+        spawnLeverNearDoor(door)
+    end
+end
+
+-- Timer Management
+local function initializeTimer(lever)
+    local displayTimer = lever:FindFirstChild("DisplayTimer")
+    local displayPlate = lever:FindFirstChild("DisplayPlate")
+    local activatePrompt = lever:FindFirstChild("ActivateEventPrompt")
+    local takeTimer = lever:FindFirstChild("TakeTimer")
+
+    if not (displayTimer and displayPlate and activatePrompt and takeTimer) then
+        warn("Missing required components in lever model")
+        return
+    end
+
+    local timerBeep = displayPlate:FindFirstChild("TimerBeep")
+    local displayLabel = displayTimer:FindFirstChild("TextLabel")
+    local takeTimerLabel = takeTimer:FindFirstChild("TextLabel")
+
+    -- Initialize display
+    if displayLabel then
+        updateTimerDisplay(displayLabel, Config.hasteTime)
+    end
+
+    -- Timer update loop
+    local timerConnection = RunService.RenderStepped:Connect(function()
+        if not (lever and lever.Parent) then
+            timerConnection:Disconnect()
+            return
+        end
+
+        if Config.hasteTime > 0 then
+            Config.hasteTime = Config.hasteTime - 1
+            updateTimerDisplay(displayLabel, Config.hasteTime)
+
+            if timerBeep then
+                timerBeep:Play()
+            end
+
+            -- Handle Haste spawning
+            if Config.hasteTime <= 0 then
+                spawnHaste()
+            elseif Config.hasteSpawned and Config.hasteTime > 0 then
+                local haste = workspace:FindFirstChild("HasteMoving")
+                if haste then
+                    haste:Destroy()
+                    Config.hasteSpawned = false
+                end
+            end
+        end
+
+        task.wait(1)
+    end)
+
+    -- Handle lever activation
+    if activatePrompt then
+        activatePrompt.Triggered:Connect(function()
+            local additionalTime = tonumber(takeTimerLabel.Text) or 0
+            Config.hasteTime = math.min(Config.hasteTime + additionalTime, HASTE_MAX_TIME)
+            updateTimerDisplay(displayLabel, Config.hasteTime)
+            
+            -- Disable prompt after use
+            activatePrompt.Enabled = false
+            activatePrompt:Destroy()
+        end)
+    end
+end
+
+-- Room Management
+local function handleRoomChange()
+    local gameData = ReplicatedStorage:WaitForChild("GameData")
+    local latestRoomValue = gameData:WaitForChild("LatestRoom").Value
+    local currentRooms = workspace:WaitForChild("CurrentRooms")
+
+    -- Check if room has changed
+    if latestRoomValue == Config.latestRoom then return end
+    
+    Config.latestRoom = latestRoomValue
+    Config.leverSpawned = false
+
+    local newRoom = currentRooms:FindFirstChild(tostring(latestRoomValue))
+    if not newRoom then
+        warn("Failed to find new room:", latestRoomValue)
+        return
+    end
+
+    local door = newRoom:FindFirstChild("Door")
+    if door then
+        trySpawnLeverInRoom(door)
+    end
+end
+
+-- Initialize
+local function initialize()
+    -- Setup initial state
+    Config.hasteTime = HASTE_INITIAL_TIME
+    Config.hasteSpawned = false
+    Config.leverSpawned = false
+    Config.latestRoom = nil
+
+    -- Start room monitoring
+    RunService.RenderStepped:Connect(handleRoomChange)
+end
+
+-- Start the system
+initialize()
