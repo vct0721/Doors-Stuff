@@ -170,7 +170,7 @@ local function spawnHaste()
             local distance = (playerPos - hastePos).Magnitude
             
             if distance > 0.5 then
-                hasteModel.CFrame = hasteModel.CFrame + direction * HASTE_SPEED * math.min(distance, 1/60)
+                hasteModel.PrimaryPart.CFrame = hasteModel.PrimaryPart.CFrame + direction * HASTE_SPEED * math.min(distance, 1/60)
             else
                 hasteAttack()
                 break
