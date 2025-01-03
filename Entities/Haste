@@ -82,9 +82,9 @@ local function playJumpscare(callback)
     
     task.delay(JUMPSCARE_DURATION, function()
         boom:Play()
-        task.wait(0.1)
+        wait(0.1)
         scream:Stop()
-        task.wait(0.5)
+        wait(0.5)
         
         connection:Disconnect()
         gui:Destroy()
@@ -139,8 +139,8 @@ local function spawnHaste()
     hasteModel.Parent = workspace
     hasteModel.Name = "HasteMoving"
     hasteModel.PrimaryPart.Position = rootPart.Position + Vector3.new(900, 0, 600)
-    hasteModel.CanCollide = false
-    hasteModel.Anchored = false
+    hasteModel.PrimaryPart.CanCollide = false
+    hasteModel.PrimaryPart.Anchored = false
     
     -- Setup sounds
     local main = hasteModel:FindFirstChild("Main")
@@ -161,11 +161,11 @@ local function spawnHaste()
     
     _G.MP = hasteModel
     task.spawn(function()
-        while task.wait() do
+        while wait() do
             if not (hasteModel and hasteModel.Parent) then break end
             
             local playerPos = rootPart.Position
-            local hastePos = hasteModel.Position
+            local hastePos = hasteModel.PrimaryPart.Position
             local direction = (playerPos - hastePos).Unit
             local distance = (playerPos - hastePos).Magnitude
             
@@ -209,8 +209,8 @@ local function initializeTimer(lever)
         end
 
         if Config.hasteTime > 0 then
-            wait(1)
-            Config.hasteTime = Config.hasteTime - 1
+            
+            Config.hasteTime = Config.hasteTime - 12
             updateTimerDisplay(displayLabel, Config.hasteTime)
 
             if timerBeep then
@@ -229,7 +229,7 @@ local function initializeTimer(lever)
             end
         end
 
-        task.wait(1)
+        wait(1.5)
     end)
 
     -- Handle lever activation
@@ -280,7 +280,7 @@ local function spawnLeverNearDoor(door)
 
     -- Position lever relative to door
     local doorPivot = door.Door.CFrame
-    local offsetCFrame = CFrame.new(3, 0, 0)
+    local offsetCFrame = CFrame.new(3.5, 0, -1)
     local leverPosition = doorPivot * offsetCFrame
     lever:PivotTo(leverPosition)
 
@@ -295,7 +295,7 @@ local function calculateLeverSpawnChance()
 
     -- Higher chance to spawn lever when time is running out
     local timeRatio = math.clamp(Config.hasteTime / HASTE_MAX_TIME, 0, 1)
-    return math.clamp(1 - timeRatio, 0.1, 0.9) -- Ensures minimum 10% and maximum 90% chance
+    return math.clamp(1 - timeRatio, 0.1, 0.7) -- Ensures minimum 10% and maximum 90% chance
 end
 
 local function trySpawnLeverInRoom(door)
