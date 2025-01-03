@@ -179,68 +179,6 @@ local function spawnHaste()
     end)
 end
 
--- Lever Management
-local function deleteLever()
-    local existingLever = workspace:FindFirstChild("Haste_Lever")
-    if existingLever then
-        existingLever:Destroy()
-        Config.leverSpawned = false
-    end
-end
-
-local function spawnLeverNearDoor(door)
-    if Config.leverSpawned then return end
-
-    -- Load lever model
-    local success, leverModel = pcall(function()
-        return game:GetObjects("rbxassetid://" .. ASSETS.LEVER_MODEL)[1]
-    end)
-
-    if not success or not leverModel then
-        warn("Failed to load lever model")
-        return
-    end
-
-    leverModel.Name = "Haste_Lever"
-    leverModel.Parent = workspace
-
-    local lever = leverModel:FindFirstChild("Lever")
-    if not lever then
-        warn("Lever component not found in model")
-        leverModel:Destroy()
-        return
-    end
-
-    -- Position lever relative to door
-    local doorPivot = door.Door.CFrame
-    local offsetCFrame = CFrame.new(3, 0, 0)
-    local leverPosition = doorPivot * offsetCFrame
-    lever:PivotTo(leverPosition)
-
-    Config.leverSpawned = true
-    initializeTimer(lever)
-end
-
-local function calculateLeverSpawnChance()
-    if Config.hasteTime <= 0 then
-        return 0.9
-    end
-
-    -- Higher chance to spawn lever when time is running out
-    local timeRatio = math.clamp(Config.hasteTime / HASTE_MAX_TIME, 0, 1)
-    return math.clamp(1 - timeRatio, 0.1, 0.9) -- Ensures minimum 10% and maximum 90% chance
-end
-
-local function trySpawnLeverInRoom(door)
-    if not door then return end
-
-    local spawnChance = calculateLeverSpawnChance()
-    if math.random() <= spawnChance then
-        spawnLeverNearDoor(door)
-    end
-end
-
--- Timer Management
 local function initializeTimer(lever)
     local displayTimer = lever:FindFirstChild("DisplayTimer")
     local displayPlate = lever:FindFirstChild("DisplayPlate")
@@ -302,6 +240,67 @@ local function initializeTimer(lever)
             activatePrompt.Enabled = false
             activatePrompt:Destroy()
         end)
+    end
+end
+
+-- Lever Management
+local function deleteLever()
+    local existingLever = workspace:FindFirstChild("Haste_Lever")
+    if existingLever then
+        existingLever:Destroy()
+        Config.leverSpawned = false
+    end
+end
+
+local function spawnLeverNearDoor(door)
+    if Config.leverSpawned then return end
+
+    -- Load lever model
+    local success, leverModel = pcall(function()
+        return game:GetObjects("rbxassetid://" .. ASSETS.LEVER_MODEL)[1]
+    end)
+
+    if not success or not leverModel then
+        warn("Failed to load lever model")
+        return
+    end
+
+    leverModel.Name = "Haste_Lever"
+    leverModel.Parent = workspace
+
+    local lever = leverModel:FindFirstChild("Lever")
+    if not lever then
+        warn("Lever component not found in model")
+        leverModel:Destroy()
+        return
+    end
+
+    -- Position lever relative to door
+    local doorPivot = door.Door.CFrame
+    local offsetCFrame = CFrame.new(3, 0, 0)
+    local leverPosition = doorPivot * offsetCFrame
+    lever:PivotTo(leverPosition)
+
+    Config.leverSpawned = true
+    initializeTimer(lever)
+end
+
+local function calculateLeverSpawnChance()
+    if Config.hasteTime <= 0 then
+        return 0.9
+    end
+
+    -- Higher chance to spawn lever when time is running out
+    local timeRatio = math.clamp(Config.hasteTime / HASTE_MAX_TIME, 0, 1)
+    return math.clamp(1 - timeRatio, 0.1, 0.9) -- Ensures minimum 10% and maximum 90% chance
+end
+
+local function trySpawnLeverInRoom(door)
+    if not door then return end
+
+    local spawnChance = calculateLeverSpawnChance()
+    if math.random() <= spawnChance then
+        spawnLeverNearDoor(door)
     end
 end
 
