@@ -15,7 +15,7 @@ eyes.CFrame=(
 	num==0 and currentLoadedRoom[currentLoadedRoom.Name] or currentLoadedRoom.PathfindNodes[num]
 ).CFrame + Vector3.new(0, 5, 0)
  
-eyes.Parent=workspace.CurrentRooms[game.ReplicatedStorage.GameData.LatestRoom.Value].Clock
+eyes.Parent=workspace.CurrentRooms[game.ReplicatedStorage.GameData.LatestRoom.Value].DreadClock
 eyes.Anchored = true
 
 function GitAud(soundlink, filename)
@@ -54,7 +54,7 @@ local Spawner = loadstring(game:HttpGet("https://raw.githubusercontent.com/Regul
 
 local entity = Spawner.createEntity({
     CustomName = "Dread",
-    Model = "rbxassetid://16834807322", -- Your entity's model url here ("rbxassetid://1234567890" or GitHub raw url)
+    Model = "rbxassetid://12329981842", -- Your entity's model url here ("rbxassetid://1234567890" or GitHub raw url)
     Speed = 999999,
     MoveDelay = 1,
     HeightOffset = 0,
