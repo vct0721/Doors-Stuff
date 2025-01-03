@@ -1,253 +1,352 @@
--- Services required
 local Players = game:GetService("Players")
 local TweenService = game:GetService("TweenService")
-local UserInputService = game:GetService("UserInputService")
-local InsertService = game:GetService("InsertService")
+local PathfindingService = game:GetService("PathfindingService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local UserInputService = game:GetService("UserInputService")
 
--- Asset IDs
+-- Constants
 local TRACK_MODEL_ID = "rbxassetid://77274282170734"
 local MINECART_MODEL_ID = "rbxassetid://134508398478924"
-local SITTING_ANIMATION_ID = "rbxassetid://89511002780891"
-local TURN_RIGHT_ANIMATION_ID = "rbxassetid://133886478211062"
-local TURN_LEFT_ANIMATION_ID = "rbxassetid://74584476588827"
-local MOVE_STRAIGHT_ANIMATION_ID = "rbxassetid://132863810915492"
+local ANIMATIONS = {
+    SITTING = "rbxassetid://89511002780891",
+    TURN_RIGHT = "rbxassetid://133886478211062",
+    TURN_LEFT = "rbxassetid://74584476588827",
+    MOVE_STRAIGHT = "rbxassetid://132863810915492"
+}
 
--- Folder to hold generated tracks
-local TRACKS_FOLDER = workspace:FindFirstChild("Tracks") or Instance.new("Folder", workspace)
+local TRACK_DIMENSIONS = Vector3.new(6.258, 0.194, 15.869)
+local TRACKS_FOLDER = workspace:FindFirstChild("Tracks") or Instance.new("Folder")
 TRACKS_FOLDER.Name = "Tracks"
+TRACKS_FOLDER.Parent = workspace
 
--- Animation and track settings
-local BASE_SPEED = 1.2 -- Duration for moving straight
-local TURN_SPEED = 2.4 -- Duration for turning (slower)
-local ACCELERATION = 0.2 -- Acceleration factor
+local GameData = ReplicatedStorage:WaitForChild("GameData")
+local LatestRoom = GameData:WaitForChild("LatestRoom")
 
-local minecart = nil
-local playerInput = nil
+-- Game Config
+local CONFIG = {
+    STRAIGHT_BEFORE_FORK = 8,
+    MIN_EXIT_DISTANCE = TRACK_DIMENSIONS.Z * 4,
+    FORK_ANGLES = {
+        MIN = 20,
+        MAX = 35
+    },
+    SPEEDS = {
+        NORMAL = 1,
+        TURN = 2
+    }
+}
 
--- Function to load a model using InsertService
-local function loadModel(assetId)
-    local model = InsertService:LoadAsset(assetId)
-    local children = model:GetChildren()
-    if #children > 0 then
-        return children[1]
-    else
-        print("Model loading failed. Asset ID:", assetId)
+-- Game State
+local GameState = {
+    minecart = nil,
+    currentTrack = nil,
+    trackCount = 0,
+    playerInput = nil,
+    isMoving = false,
+    animations = {}
+}
+
+-- Utility Functions
+local function getExitDistance(position)
+    local currentRoom = workspace.CurrentRooms:FindFirstChild(tostring(LatestRoom.Value))
+    if not currentRoom then return math.huge end
+    
+    local exit = currentRoom:FindFirstChild("RoomExit")
+    if not exit then return math.huge end
+    
+    return (position - exit.Position).Magnitude
+end
+
+local function loadTrackModel()
+    local success, model = pcall(function()
+        return game:GetObjects(TRACK_MODEL_ID)[1]
+    end)
+    
+    if not success or not model then
+        warn("Failed to load track model")
         return nil
     end
+    
+    return model
 end
 
--- Function to calculate the curve radius based on the distance between tracks
-local function calculateCurveRadius(startCFrame, endCFrame)
-    local distance = (endCFrame.Position - startCFrame.Position).Magnitude
-    return distance / 2  -- A simple calculation for the curve radius
-end
-
--- Function to create a curved track segment
-local function createCurvedTrack(parent, startCFrame, endCFrame)
-    local track = loadModel(TRACK_MODEL_ID)
-    if not track then
-        warn("Failed to load track model.")
-        return nil
-    end
-    local midCFrame = startCFrame:lerp(endCFrame, 0.5)
-    local curveRadius = calculateCurveRadius(startCFrame, endCFrame)
-    local angle = math.deg((endCFrame.Position - startCFrame.Position).Unit:Dot(Vector3.new(1, 0, 0)))
-    local segmentCFrame = midCFrame * CFrame.Angles(0, math.rad(angle), 0) * CFrame.new(0, 0, curveRadius)
-    track:SetPrimaryPartCFrame(segmentCFrame)
-    track.Parent = parent
-    return track
-end
-
--- Smooth transition with tilt
-local function smoothTransition(minecart, startCFrame, endCFrame, duration, incline)
-    local adjustedCFrame = endCFrame * CFrame.Angles(0, 0, math.rad(incline))
-    local tween = TweenService:Create(
-        minecart.PrimaryPart,
-        TweenInfo.new(duration, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut),
-        { CFrame = adjustedCFrame }
-    )
-    tween:Play()
-    return tween
-end
-
--- Generate a track between two points
-local function createTrackBetweenPoints(startPos, endPos)
-    local track = loadModel(TRACK_MODEL_ID)
-    if not track then
-        print("Failed to create track.")
-        return nil
-    end
-    local midCFrame = CFrame.new((startPos + endPos) / 2)
-    track:SetPrimaryPartCFrame(midCFrame)
-    track.Parent = TRACKS_FOLDER
-    return track
-end
-
--- Generate bifurcations for a track
-local function createBifurcation(track, isCorrect)
-    local numBifurcations = math.random(2, 3)
-    local bifurcations = {}
-
-    for i = 1, numBifurcations do
-        local angle = (i - 2) * 30 -- Spread angles for bifurcations
-        local startCFrame = track.PrimaryPart.CFrame
-        local endCFrame = startCFrame * CFrame.new(0, 0, 15) * CFrame.Angles(0, math.rad(angle), 0)
-        local newTrack = createCurvedTrack(track.Parent, startCFrame, endCFrame)
-        if newTrack then
-            table.insert(bifurcations, { track = newTrack, cframe = endCFrame })
-        end
-    end
-
-    -- Mark one track as correct or all as incorrect
-    if isCorrect then
-        bifurcations[math.random(1, numBifurcations)].track.Name = "CorrectTrack"
-    else
-        for _, bifurcation in ipairs(bifurcations) do
-            bifurcation.track.Name = "IncorrectTrack"
-        end
-    end
-
-    return bifurcations
-end
-
--- Generate tracks between rooms
-local function generateTracksBetweenRooms()
-    local rooms = workspace:FindFirstChild("CurrentRooms")
-    if not rooms then
-        print("No rooms found in workspace.CurrentRooms.")
-        return
-    end
-
-    for _, room in ipairs(rooms:GetChildren()) do
-        local nextRoom = rooms:FindFirstChild(tostring(tonumber(room.Name) + 1))
-        if nextRoom then
-            local roomExit = room:FindFirstChild("RoomExit")
-            local nextRoomEntrance = nextRoom:FindFirstChild("RoomEntrance")
-
-            if roomExit and nextRoomEntrance then
-                local track = createTrackBetweenPoints(roomExit.Position, nextRoomEntrance.Position)
-                if track then
-                    createBifurcation(track, true) -- Add bifurcations after each track
-                end
+local function createTrack(startPos, endPos, isCurved)
+    local track = loadTrackModel()
+    if not track then return nil end
+    
+    local direction = (endPos - startPos).Unit
+    local trackCFrame = CFrame.lookAt(startPos, endPos)
+    
+    if isCurved then
+        for _, part in pairs(track:GetChildren()) do
+            if part.Name:lower():find("curve") then
+                track.PrimaryPart = part
+                break
             end
         end
     end
+    
+    track:SetPrimaryPartCFrame(trackCFrame)
+    track.Parent = TRACKS_FOLDER
+    
+    return track
 end
 
--- Move minecart through tracks
-local function moveMinecart(player)
-    local tracks = TRACKS_FOLDER:GetChildren()
-    local inputConnection
+local function createFork(position, direction)
+    local mainTrack = createTrack(position, position + direction * TRACK_DIMENSIONS.Z, false)
+    if not mainTrack then return nil end
+    
+    mainTrack.Name = "MainTrack"
+    mainTrack:SetAttribute("IsFork", true)
+    
+    local leftAngle = math.rad(math.random(CONFIG.FORK_ANGLES.MIN, CONFIG.FORK_ANGLES.MAX))
+    local rightAngle = math.rad(-math.random(CONFIG.FORK_ANGLES.MIN, CONFIG.FORK_ANGLES.MAX))
+    
+    local leftDir = CFrame.fromAxisAngle(Vector3.new(0, 1, 0), leftAngle) * direction
+    local rightDir = CFrame.fromAxisAngle(Vector3.new(0, 1, 0), rightAngle) * direction
+    
+    local forkStart = position + direction * TRACK_DIMENSIONS.Z
+    
+    local leftTrack = createTrack(forkStart, forkStart + leftDir * TRACK_DIMENSIONS.Z, true)
+    local rightTrack = createTrack(forkStart, forkStart + rightDir * TRACK_DIMENSIONS.Z, true)
+    
+    if leftTrack and rightTrack then
+        leftTrack.Name = "LeftTrack"
+        rightTrack.Name = "RightTrack"
 
-    -- Handle player input
-    inputConnection = UserInputService.InputBegan:Connect(function(input)
+        local tracks = {mainTrack, leftTrack, rightTrack}
+        local shortestDist = math.huge
+        local correctTrack = nil
+        
+        for _, track in ipairs(tracks) do
+            local dist = getExitDistance(track.PrimaryPart.Position)
+            if dist < shortestDist then
+                shortestDist = dist
+                correctTrack = track
+            end
+        end
+        
+        -- Marcar trilho correto
+        for _, track in ipairs(tracks) do
+            track:SetAttribute("IsCorrect", track == correctTrack)
+        end
+    end
+    
+    return mainTrack
+end
+
+local function generatePath()
+    local currentRoom = workspace.CurrentRooms:FindFirstChild(tostring(LatestRoom.Value))
+    if not currentRoom then return nil end
+    
+    local entrance = currentRoom:FindFirstChild("RoomEntrance")
+    local exit = currentRoom:FindFirstChild("RoomExit")
+    if not (entrance and exit) then return nil end
+    
+    local path = PathfindingService:CreatePath()
+    local success = pcall(function()
+        path:ComputeAsync(entrance.Position, exit.Position)
+    end)
+    
+    if not success or path.Status ~= Enum.PathStatus.Success then
+        return nil
+    end
+    
+    return path:GetWaypoints()
+end
+
+-- Track Generation and Management
+local function generateTracks()
+    TRACKS_FOLDER:ClearAllChildren()
+    GameState.trackCount = 0
+    
+    local waypoints = generatePath()
+    if not waypoints then return end
+    
+    local lastTrack = nil
+    local lastPos = waypoints[1].Position
+    
+    for i = 2, #waypoints do
+        local currentPos = lastPos
+        local nextPos = waypoints[i].Position
+        local distToExit = getExitDistance(currentPos)
+        
+        -- Decidir se cria bifurcação ou trilho reto
+        if GameState.trackCount >= CONFIG.STRAIGHT_BEFORE_FORK and distToExit > CONFIG.MIN_EXIT_DISTANCE then
+            local direction = (nextPos - currentPos).Unit
+            lastTrack = createFork(currentPos, direction)
+            GameState.trackCount = 0
+        else
+            lastTrack = createTrack(currentPos, nextPos, false)
+            GameState.trackCount = GameState.trackCount + 1
+        end
+        
+        if lastTrack then
+            lastTrack:SetAttribute("TrackNumber", i)
+            lastPos = lastTrack.PrimaryPart.Position + (nextPos - currentPos).Unit * TRACK_DIMENSIONS.Z
+        end
+    end
+end
+
+-- Minecart Controls
+local function setupMinecartControls()
+    UserInputService.InputBegan:Connect(function(input, gameProcessed)
+        if gameProcessed then return end
+        
         if input.KeyCode == Enum.KeyCode.A then
-            playerInput = "A"
+            GameState.playerInput = "Left"
+            if GameState.animations.turnLeft then
+                GameState.animations.turnLeft:Play()
+            end
         elseif input.KeyCode == Enum.KeyCode.D then
-            playerInput = "D"
+            GameState.playerInput = "Right"
+            if GameState.animations.turnRight then
+                GameState.animations.turnRight:Play()
+            end
         end
     end)
-
-    for _, track in ipairs(tracks) do
-        local bifurcations = track:GetChildren()
-        local chosenPath = nil
-        local speed = BASE_SPEED -- Default speed
-
-        -- Handle bifurcations if present
-        if #bifurcations > 1 then
-            if playerInput == "A" then
-                chosenPath = bifurcations[1]
-                speed = TURN_SPEED -- Slower speed for turns
-            elseif playerInput == "D" then
-                chosenPath = bifurcations[2]
-                speed = TURN_SPEED -- Slower speed for turns
-            else
-                -- Automatically choose the incorrect path if no input
-                for _, bifurcation in ipairs(bifurcations) do
-                    if bifurcation.track.Name == "IncorrectTrack" then
-                        chosenPath = bifurcation
-                        break
-                    end
-                end
-                if not chosenPath then
-                    chosenPath = bifurcations[math.random(1, #bifurcations)]
-                end
-                speed = TURN_SPEED
+    
+    UserInputService.InputEnded:Connect(function(input, gameProcessed)
+        if gameProcessed then return end
+        
+        if input.KeyCode == Enum.KeyCode.A or input.KeyCode == Enum.KeyCode.D then
+            GameState.playerInput = nil
+            if GameState.animations.moveStraight then
+                GameState.animations.moveStraight:Play()
             end
-        elseif #bifurcations == 0 then
-            print("No paths available, ejecting player.")
-            break
-        else
-            chosenPath = bifurcations[1]
         end
-
-        smoothTransition(minecart, minecart.PrimaryPart.CFrame, chosenPath.cframe, speed, 0):Completed:Wait()
-
-        if chosenPath.track.Name == "IncorrectTrack" then
-            player.Character.Humanoid.Health = 0 -- Kill player on wrong track
-            break
-        end
-
-        BASE_SPEED = math.min(BASE_SPEED + ACCELERATION, BASE_SPEED * 2)
-    end
-
-    inputConnection:Disconnect()
+    end)
 end
 
--- Attach the player to the minecart
-local function attachPlayerToMinecart(player, minecart)
-    local character = player.Character or player.CharacterAdded:Wait()
-    local rootPart = character:WaitForChild("HumanoidRootPart")
-    local playerCFrame = minecart:FindFirstChild("PlayerCFrame")
-
-    if not playerCFrame then
-        warn("PlayerCFrame not found in minecart!")
-        return
-    end
-
-    rootPart.Anchored = true
-    rootPart.CFrame = playerCFrame.CFrame
-
-    local weld = Instance.new("WeldConstraint")
-    weld.Part0 = rootPart
-    weld.Part1 = minecart.PrimaryPart
-    weld.Parent = rootPart
-end
-
--- Start the minecart game logic
-local function startMinecart()
-    local player = Players.LocalPlayer
-    minecart = loadModel(MINECART_MODEL_ID)
-
-    if not minecart then
-        return
-    end
-
-    minecart.Parent = workspace
-
-    -- Find the latest room and start at RoomEntrance
-    local latestRoomNumber = ReplicatedStorage:WaitForChild("GameData"):WaitForChild("LatestRoom").Value
-    local latestRoom = workspace.CurrentRooms:FindFirstChild(tostring(latestRoomNumber))
-    if latestRoom then
-        local roomEntrance = latestRoom:FindFirstChild("RoomEntrance")
-        if roomEntrance then
-            minecart:SetPrimaryPartCFrame(roomEntrance.CFrame)
-            print("Minecart positioned at RoomEntrance of room:", latestRoomNumber)
-        else
-            warn("RoomEntrance not found in latest room.")
-        end
+local function getNextTrack(currentTrack)
+    if not currentTrack then return nil end
+    
+    if currentTrack:GetAttribute("IsFork") then
+        local trackName = 
+            GameState.playerInput == "Left" and "LeftTrack" or
+            GameState.playerInput == "Right" and "RightTrack" or
+            "MainTrack"
+        
+        return TRACKS_FOLDER:FindFirstChild(trackName)
     else
-        warn("Latest room not found in CurrentRooms.")
+        local currentNumber = currentTrack:GetAttribute("TrackNumber")
+        for _, track in ipairs(TRACKS_FOLDER:GetChildren()) do
+            if track:GetAttribute("TrackNumber") == currentNumber + 1 then
+                return track
+            end
+        end
     end
-
-    -- Attach player to the minecart
-    attachPlayerToMinecart(player, minecart)
-
-    -- Generate tracks and start movement
-    generateTracksBetweenRooms()
-    moveMinecart(player)
+    return nil
 end
 
--- Start the game
-startMinecart()
+local function moveMinecart(nextTrack)
+    if not (GameState.minecart and nextTrack) then return end
+    
+    local tweenInfo = TweenInfo.new(
+        nextTrack:GetAttribute("IsFork") and CONFIG.SPEEDS.TURN or CONFIG.SPEEDS.NORMAL,
+        Enum.EasingStyle.Linear
+    )
+    
+    local tween = TweenService:Create(GameState.minecart.PrimaryPart, tweenInfo, {
+        CFrame = nextTrack.PrimaryPart.CFrame
+    })
+    
+    GameState.isMoving = true
+    tween:Play()
+    
+    tween.Completed:Connect(function()
+        GameState.isMoving = false
+        GameState.currentTrack = nextTrack
+        
+        if not nextTrack:GetAttribute("IsCorrect") then
+            local player = Players.LocalPlayer
+            if player.Character and player.Character:FindFirstChild("Humanoid") then
+                player.Character.Humanoid.Health = 0
+            end
+        end
+    end)
+end
+
+-- Main Game Loop
+local function startMinecartRide()
+    GameState.minecart = game:GetObjects(MINECART_MODEL_ID)[1]
+    if not GameState.minecart then return end
+    
+    GameState.minecart.Parent = workspace
+
+    local firstTrack = TRACKS_FOLDER:FindFirstChild("MainTrack") or TRACKS_FOLDER:GetChildren()[1]
+    if firstTrack then
+        GameState.minecart:SetPrimaryPartCFrame(firstTrack.PrimaryPart.CFrame)
+        GameState.currentTrack = firstTrack
+
+        local player = Players.LocalPlayer
+        if player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+		    local root = player.Character:FindFirstChild("HumanoidRootPart")
+            local humanoid = player.Character:FindFirstChild("Humanoid")
+            if humanoid then	
+                humanoid.PlatformStand = true
+				
+                local playerCFrame = GameState.minecart:FindFirstChild("PlayerCFrame")
+                if playerCFrame then
+				    root.CFrame = playerCFrame.CFrame
+					wait(0.2)
+                    local playerWeld = Instance.new("Weld")
+                    playerWeld.Name = "PlayerWeld"
+                    playerWeld.Part0 = root
+                    playerWeld.Part1 = playerCFrame
+                    playerWeld.C0 = CFrame.new(0, 0, 0)
+                    playerWeld.Parent = root
+                end
+            end
+        end
+    end
+    
+    setupMinecartControls()
+
+    while true do
+        if not GameState.isMoving then
+            local player = Players.LocalPlayer
+            if player.Character and 
+               player.Character:FindFirstChild("HumanoidRootPart") and 
+               player.Character.HumanoidRootPart:FindFirstChild("PlayerWeld") then
+                
+                local nextTrack = getNextTrack(GameState.currentTrack)
+                if nextTrack then
+                    moveMinecart(nextTrack)
+                end
+            end
+        end
+        wait(0.1)
+    end
+end
+
+local function cleanupPlayerWeld()
+    local player = Players.LocalPlayer
+    if player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+        local weld = player.Character.HumanoidRootPart:FindFirstChild("PlayerWeld")
+        if weld then
+            weld:Destroy()
+        end
+        
+        local humanoid = player.Character:FindFirstChild("Humanoid")
+        if humanoid then
+            humanoid.PlatformStand = false
+        end
+    end
+end
+
+local function cleanupMinecart()
+    cleanupPlayerWeld()
+    if GameState.minecart then
+        GameState.minecart:Destroy()
+        GameState.minecart = nil
+    end
+end
+
+cleanupMinecart()
+generateTracks()
+wait(0.2)
+startMinecartRide()
+LatestRoom.Changed:Connect(function()
+    generateTracks()
+end)
