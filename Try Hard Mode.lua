@@ -9,7 +9,7 @@ end
 if game:GetService("ReplicatedStorage"):FindFirstChild("TryHarder") then
 	warn("You have Already Loaded TryHard Mode /(Returning/)")
 	game.TextChatService.TextChannels.RBXSystem:DisplaySystemMessage("You have Already Loaded TryHard Mode /(Returning/)")
-	return true
+	return
 end
 
 local Test = Instance.new("Part")
@@ -44,9 +44,8 @@ local StarterGui = game:GetService("StarterGui")
 local Debris = game:GetService("Debris")
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
-local playerGui = LocalPlayer:FindFirstChild("PlayerGui")
 
-local roomValue = GameData.LatestRoom.Value
+local roomValue = LatestRoom.Value
 local floorValue = GameData.Floor.Value
 local IsRetro = GameData.Floor.Value == "Retro"
 local IsMines = GameData.Floor.Value == "Mines"
@@ -121,11 +120,11 @@ coroutine.wrap(function()
 				return (getcustomasset or getsynasset)(SoundName .. ".mp3")
 			end
 
-
+            if Workspace:FindFirstChild("50") then
 			game.Workspace.CurrentRooms["50"].FigureSetup.Ambience.SoundId = ReplaceAudGit("https://github.com/Sosnen/Ping-s-Dumbass-projects-/raw/main/Figure%20Ambience.mp3?raw=true", "NewFigure")
 			game.Workspace.CurrentRooms["50"].FigureSetup.AmbienceEnd.SoundId = ReplaceAudGit("https://github.com/Sosnen/Ping-s-Dumbass-projects-/blob/main/Figure%20Start.mp3?raw=true", "NewFigureStart")
 			game.Workspace.CurrentRooms["50"].FigureSetup.AmbienceStart.SoundId = ReplaceAudGit("https://github.com/Sosnen/Ping-s-Dumbass-projects-/blob/main/Figure%20End.mp3?raw=true", "NewFigureEnd")
-
+            end
 		end)
 
 		--[[ ]]--
@@ -197,16 +196,12 @@ local EyeAssetIDs = {
 	"rbxassetid://13493469129",
 }
 
-local function GetRandomEyeModel()
-	local randomIndex = math.random(1, #EyeAssetIDs)
-	return game:GetObjects(EyeAssetIDs[randomIndex])[1]
-end
-
 function ChangeEyeModel(room)
 	for i, v in pairs(room:GetDescendants()) do
 		if v.Name == "Eye" then
 			if game.ReplicatedStorage.GameData.LatestRoom.Value < 100 then
-				local eye = GetRandomEyeModel()
+				local randomIndex = math.random(1, #EyeAssetIDs)
+				local eye = game:GetObjects(EyeAssetIDs[randomIndex])[1]
 				if eye then
 					for _, className in ipairs(anchorableClasses) do
 						for _, part in pairs(eye:GetDescendants()) do
@@ -241,16 +236,11 @@ function ChangeEyeModel(room)
 	end
 end
 
---New Dam-Seek
-local function GetDamSeekModel()
-	return LoadCustomInstance("https://github.com/vct0721/Doors-Stuff/raw/refs/heads/main/Assets/DamSeek%20New.rbxm")
-end
-
 function ChangeDamModel(room)
 	for i, v in pairs(room:GetDescendants()) do
 		if v.Name == "True Seek" or v.Name == "TrueSeek" then
 			if game.ReplicatedStorage.GameData.LatestRoom.Value == 100 and IsMines then
-				local eye = GetDamSeekModel()
+				local eye = LoadCustomInstance("https://github.com/vct0721/Doors-Stuff/raw/refs/heads/main/Assets/DamSeek%20New.rbxm")
 				if eye then
 					for _, className in ipairs(anchorableClasses) do
 						for _, part in pairs(eye:GetDescendants()) do
@@ -327,7 +317,7 @@ end)()
 
 
 -- Script Start
-LatestRoom:GetPropertyChangedSignal("Value"):Wait()
+LatestRoom.Changed:Wait()
 
 local caption = game.Players.LocalPlayer:WaitForChild("PlayerGui").MainUI.MainFrame.Caption
 caption.TextColor3 = Color3.fromRGB(0, 255, 0)
@@ -737,7 +727,7 @@ coroutine.wrap(function()
 		if not IsSeekChase or IsFigure or IsHalt or IsGrumble then
 			if IsMines then
 				wait(math.random(290, 330))
-				LatestRoom:GetPropertyChangedSignal("Value"):Wait()
+				LatestRoom.Changed:Wait()
 
 				local cue2 = Instance.new("Sound")
 				cue2.Parent = game.Workspace
@@ -840,7 +830,7 @@ coroutine.wrap(function()
 		if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
 			wait(math.random(90, 130))
 			if not IsSeekChase or IsFigure or IsHalt or IsGrumble then
-				LatestRoom:GetPropertyChangedSignal("Value"):Wait()
+				LatestRoom.Changed:Wait()
 				loadstring(game:HttpGet("https://raw.githubusercontent.com/vct0721/Doors-Stuff/main/DreadEnity"))()
 			end
 		end
@@ -1193,7 +1183,7 @@ coroutine.wrap(function()
 		if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
 			wait(math.random(150, 230))
 			if not IsSeekChase or IsFigure or IsHalt then
-				LatestRoom:GetPropertyChangedSignal("Value"):Wait()
+				LatestRoom.Changed:Wait()
 				wait(0)
 				loadstring(game:HttpGet("https://pastefy.app/AaIrbcZS/raw"))()
 			end
@@ -1207,7 +1197,7 @@ coroutine.wrap(function()
 		if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
 			wait(math.random(150, 250))
 			if not IsSeekChase or IsFigure or IsHalt or IsMines then
-				LatestRoom:GetPropertyChangedSignal("Value"):Wait()
+				LatestRoom.Changed:Wait()
 				wait(0)
 				loadstring(game:HttpGet("https://pastefy.app/Zb1au2BU/raw"))()
 			end
@@ -1221,7 +1211,7 @@ coroutine.wrap(function()
 		if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
 			wait(math.random(250, 380))
 			if not IsSeekChase or IsFigure or IsHalt or IsGrumble then
-				LatestRoom:GetPropertyChangedSignal("Value"):Wait()
+				LatestRoom.Changed:Wait()
 				loadstring(game:HttpGet("https://pastebin.com/raw/q0JC9BAt"))()
 			end
 		end
@@ -1234,7 +1224,7 @@ coroutine.wrap(function()
 		if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
 			wait(math.random(350, 680))
 			if not IsSeekChase or IsFigure or IsHalt or IsGrumble then
-				LatestRoom:GetPropertyChangedSignal("Value"):Wait()
+				LatestRoom.Changed:Wait()
 				loadstring(game:HttpGet("https://raw.githubusercontent.com/huyhoanggphuc/Entity-obfuscate/refs/heads/main/A-60%20Hardcore.lua"))()
 			end
 		end
@@ -1247,7 +1237,7 @@ coroutine.wrap(function()
 		if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
 			wait(math.random(80, 520))
 			if not IsSeekChase or IsFigure or IsHalt or IsMines then
-				LatestRoom:GetPropertyChangedSignal("Value"):Wait()
+				LatestRoom.Changed:Wait()
 				wait(2)
 				loadstring(game:HttpGet("https://raw.githubusercontent.com/huyhoanggphuc/Entity-obfuscate/refs/heads/main/Threat.lua"))()
 			end
@@ -1261,7 +1251,7 @@ coroutine.wrap(function()
 		if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
 			wait(math.random(20, 95))
 			if not IsSeekChase or IsFigure or IsHalt then
-				LatestRoom:GetPropertyChangedSignal("Value"):Wait()
+				LatestRoom.Changed:Wait()
 				loadstring(game:HttpGet("https://raw.githubusercontent.com/huyhoanggphuc/Entity-obfuscate/refs/heads/main/Twister.lua"))()
 			end
 		end
@@ -1274,7 +1264,7 @@ coroutine.wrap(function()
 		if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
 			wait(math.random(250, 400))
 			if not IsSeekChase or IsFigure or IsHalt or IsGrumble then
-				LatestRoom:GetPropertyChangedSignal("Value"):Wait()
+				LatestRoom.Changed:Wait()
 				wait(0)
 				loadstring(game:HttpGet("https://pastefy.app/17nNEGQe/raw"))()
 			end
@@ -1288,7 +1278,7 @@ coroutine.wrap(function()
 		if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
 			wait(math.random(650, 990))
 			if not IsSeekChase or IsFigure or IsHalt then
-				LatestRoom:GetPropertyChangedSignal("Value"):Wait()
+				LatestRoom.Changed:Wait()
 				wait(2)
 				loadstring(game:HttpGet("https://raw.githubusercontent.com/vct0721/Doors-Stuff/refs/heads/main/Entities/Pandemonium.lua"))()
 			end		
@@ -1305,7 +1295,7 @@ coroutine.wrap(function()
 		if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
 			wait(math.random(450, 890))
 			if not IsSeekChase or IsFigure or IsHalt or IsMines then
-				LatestRoom:GetPropertyChangedSignal("Value"):Wait()
+				LatestRoom.Changed:Wait()
 				wait(2)
 				loadstring(game:HttpGet("https://pastebin.com/raw/uNnkcsGU"))()
 			end		
@@ -1319,7 +1309,7 @@ coroutine.wrap(function()
 		if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
 			wait(math.random(693, 780))
 			if not IsSeekChase or IsFigure or IsHalt or IsGrumble then
-				LatestRoom:GetPropertyChangedSignal("Value"):Wait()
+				LatestRoom.Changed:Wait()
 				loadstring(game:HttpGet("https://pastebin.com/raw/JPL5TUtW"))()
 			end
 		end
@@ -1419,7 +1409,7 @@ coroutine.wrap(function()
 			wait(math.random(199, 390))
 			if IsMines then
 				if not IsSeekChase or IsFigure or IsHalt or IsGrumble then
-					LatestRoom:GetPropertyChangedSignal("Value"):Wait()
+					LatestRoom.Changed:Wait()
 					wait(0)
 					loadstring(game:HttpGet("https://pastefy.app/fQZmOOSq/raw"))()
 				end
@@ -1434,7 +1424,7 @@ coroutine.wrap(function()
 		if IsMines then
 			wait(math.random(250, 490))
 			if not IsSeekChase or IsFigure or IsHalt or IsGrumble then
-				LatestRoom:GetPropertyChangedSignal("Value"):Wait()
+				LatestRoom.Changed:Wait()
 				wait(0)
 				loadstring(game:HttpGet("https://pastefy.app/6l2QHB8I/raw"))()
 			end
@@ -1448,7 +1438,7 @@ coroutine.wrap(function()
 		if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
 			wait(math.random(100, 210))
 			if not IsSeekChase or IsFigure or IsHalt or IsGrumble then
-				LatestRoom:GetPropertyChangedSignal("Value"):Wait()
+				LatestRoom.Changed:Wait()
 				wait(0)
 				loadstring(game:HttpGet("https://pastefy.app/jncKfAWe/raw"))()
 			end
@@ -1463,7 +1453,7 @@ coroutine.wrap(function()
 			local sctm =  math.random(190, 350)
 			wait(sctm)
 			if not IsSeekChase or IsFigure or IsHalt or IsGrumble or IsMines then
-				LatestRoom:GetPropertyChangedSignal("Value"):Wait()
+				LatestRoom.Changed:Wait()
 				loadstring(game:HttpGet("https://pastefy.app/dh7c3tm0/raw"))()
 			end
 		end
@@ -1477,7 +1467,7 @@ coroutine.wrap(function()
 			local sctm =  math.random(290, 450)
 			wait(sctm)
 			if not IsSeekChase or IsFigure or IsHalt or IsGrumble or IsMines then
-				LatestRoom:GetPropertyChangedSignal("Value"):Wait()
+				LatestRoom.Changed:Wait()
 				loadstring(game:HttpGet("https://pastebin.com/raw/S9KGv5Ce"))()
 			end
 		end
@@ -1517,7 +1507,7 @@ coroutine.wrap(function()
 			local sctm =  math.random(50, 150)
 			wait(sctm)
 			if not IsSeekChase or IsFigure or IsHalt or IsGrumble then
-				LatestRoom:GetPropertyChangedSignal("Value"):Wait()
+				LatestRoom.Changed:Wait()
 				loadstring(game:HttpGet("https://pastebin.com/raw/XzuW1A1p"))()
 			end
 		end
@@ -1614,7 +1604,7 @@ coroutine.wrap(function()
 
 			wait(math.random(122, 268))
 
-			LatestRoom:GetPropertyChangedSignal("Value"):Wait()
+			LatestRoom.Changed:Wait()
 
 			loadstring(game:HttpGet("https://github.com/PABMAXICHAC/doors-monsters-scripts/raw/main/blinkcrux"))()
 
@@ -1629,7 +1619,7 @@ coroutine.wrap(function()
 	while true do
 		if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
 			wait(math.random(3,100))
-			LatestRoom:GetPropertyChangedSignal("Value"):Wait()
+			LatestRoom.Changed:Wait()
 			loadstring(game:HttpGet("https://raw.githubusercontent.com/DripCapybara/Doors-Mode-Remakes/refs/heads/main/Overseer.lua"))()
 		end
 	end
@@ -1679,7 +1669,7 @@ coroutine.wrap(function()
 			local sctm = math.random(236, 960)
 			wait(sctm)
 			if not IsSeekChase or IsFigure or IsHalt or IsGrumble then
-				LatestRoom:GetPropertyChangedSignal("Value"):Wait()
+				LatestRoom.Changed:Wait()
 				loadstring(game:HttpGet("https://raw.githubusercontent.com/DripCapybara/Doors-Mode-Remakes/refs/heads/main/Rebound.lua"))()
 			end
 		end
@@ -1692,7 +1682,7 @@ coroutine.wrap(function()
 		if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
 			wait(math.random(1050, 2090))
 			if not IsSeekChase or IsFigure or IsHalt or IsGrumble then
-				LatestRoom:GetPropertyChangedSignal("Value"):Wait()
+				LatestRoom.Changed:Wait()
 				loadstring(game:HttpGet("https://pastebin.com/raw/rCTaWAqN"))()
 			end
 		end
@@ -1716,7 +1706,7 @@ coroutine.wrap(function()
 		if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
 			wait(math.random(100, 550))
 			if not IsSeekChase or IsFigure or IsHalt or IsMines then
-				LatestRoom:GetPropertyChangedSignal("Value"):Wait()
+				LatestRoom.Changed:Wait()
 				loadstring(game:HttpGet("https://pastebin.com/raw/d3R357Rk"))()
 			end
 		end
@@ -1730,7 +1720,7 @@ coroutine.wrap(function()
 		if not IsSeekChase or IsFigure or IsHalt or IsGrumble then
 			local spawn_chance = math.random(1, 1750)
 			if spawn_chance == 1 then
-				LatestRoom:GetPropertyChangedSignal("Value"):Wait()
+				LatestRoom.Changed:Wait()
 				require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption('What just happened?!!!', true)
 				loadstring(game:HttpGet("https://pastebin.com/raw/JLFyvnp2"))()
 			end
@@ -1782,7 +1772,7 @@ end)()
 coroutine.wrap(function()
 	while true do
 		wait(math.random(131, 300))
-		LatestRoom:GetPropertyChangedSignal("Value"):Wait()
+		LatestRoom.Changed:Wait()
 		wait(0.5)
 		local omg = Instance.new("Model")
 		omg.Parent = workspace.CurrentRooms[game.ReplicatedStorage.GameData.LatestRoom.Value]
@@ -3058,7 +3048,7 @@ coroutine.wrap(function()
 		if IsInsaneMines then
 			wait(math.random(10, 29))
 			if not IsSeekChase then
-				LatestRoom:GetPropertyChangedSignal("Value"):Wait()
+				LatestRoom.Changed:Wait()
 				wait(0)
 				loadstring(game:HttpGet("https://pastefy.app/K2TbsMWk/raw"))()
 			end
@@ -3072,7 +3062,7 @@ coroutine.wrap(function()
 		if IsInsaneMines then
 			if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
 				wait(375)
-				LatestRoom:GetPropertyChangedSignal("Value"):Wait()
+				LatestRoom.Changed:Wait()
 				loadstring(game:HttpGet("https://pastebin.com/raw/s2jHyGmm"))()
 			end
 		end
@@ -3086,7 +3076,7 @@ coroutine.wrap(function()
 			if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
 				wait(math.random(350, 590))
 				if not IsSeekChase or IsFigure or IsHalt or IsGrumble then
-					LatestRoom:GetPropertyChangedSignal("Value"):Wait()
+					LatestRoom.Changed:Wait()
 					wait(0)
 					loadstring(game:HttpGet("https://pastefy.app/rmShikEK/raw"))()
 				end
@@ -3102,7 +3092,7 @@ coroutine.wrap(function()
 			if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
 				wait(math.random(100, 550))
 				if not IsSeekChase or IsFigure or IsHalt or IsGrumble then
-					LatestRoom:GetPropertyChangedSignal("Value"):Wait()
+					LatestRoom.Changed:Wait()
 					loadstring(game:HttpGet("https://pastebin.com/raw/d3R357Rk"))()
 				end
 			end
@@ -3117,7 +3107,7 @@ coroutine.wrap(function()
 			if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
 				if not IsSeekChase or IsFigure or IsHalt or IsGrumble then
 					wait(math.random(500, 1390))
-					LatestRoom:GetPropertyChangedSignal("Value"):Wait()
+					LatestRoom.Changed:Wait()
 					local cuew = Instance.new("Sound")
 					cuew.Parent = game.Workspace
 					cuew.Name = "Spawn"
@@ -3157,7 +3147,7 @@ coroutine.wrap(function()
 		if IsDeepHotel then
 			wait(math.random(10, 29))
 			if not IsSeekChase then
-				LatestRoom:GetPropertyChangedSignal("Value"):Wait()
+				LatestRoom.Changed:Wait()
 				wait(0)
 				loadstring(game:HttpGet("https://pastefy.app/K2TbsMWk/raw"))()
 			end
@@ -3171,7 +3161,7 @@ coroutine.wrap(function()
 		if IsDeepHotel then
 			wait(math.random(29, 63))
 			if not IsSeekChase or IsFigure or IsHalt then
-				LatestRoom:GetPropertyChangedSignal("Value"):Wait()
+				LatestRoom.Changed:Wait()
 				wait(0)
 				loadstring(game:HttpGet("https://raw.githubusercontent.com/huyhoanggphuc/Entity-obfuscate/refs/heads/main/Dread.lua"))()
 			end
@@ -3186,7 +3176,7 @@ coroutine.wrap(function()
 			if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
 				if not IsSeekChase or IsFigure or IsHalt or IsGrumble then
 					wait(math.random(500, 1390))
-					LatestRoom:GetPropertyChangedSignal("Value"):Wait()
+					LatestRoom.Changed:Wait()
 					local cuew = Instance.new("Sound")
 					cuew.Parent = game.Workspace
 					cuew.Name = "Spawn"
@@ -3215,7 +3205,7 @@ coroutine.wrap(function()
 				local sctm = math.random(900, 2970)
 				wait(sctm)
 				if not IsSeekChase or IsFigure or IsHalt or IsGrumble then
-					LatestRoom:GetPropertyChangedSignal("Value"):Wait()
+					LatestRoom.Changed:Wait()
 					local cue2 = Instance.new("Sound")
 					cue2.Parent = game.Workspace
 					cue2.Name = "Spawn"
