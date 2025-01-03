@@ -16,7 +16,7 @@ eyes.PrimaryPart.CFrame=(
 ).CFrame + Vector3.new(0, 5, 0)
  
 eyes.Parent=workspace.CurrentRooms[game.ReplicatedStorage.GameData.LatestRoom.Value].DreadClock
-eyes.Anchored = true
+eyes.PrimaryPart.Anchored = true
 
 function GitAud(soundlink, filename)
     local url = soundlink
