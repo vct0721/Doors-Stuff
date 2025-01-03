@@ -76,19 +76,12 @@ local function createTrack(startPos, endPos, isCurved)
     
     local direction = (endPos - startPos).Unit
     local trackCFrame = CFrame.lookAt(startPos, endPos)
-    
-    if isCurved then
-        for _, part in pairs(track:GetChildren()) do
-            if part.Name:lower():find("curve") then
-                track.PrimaryPart = part
-                break
-            end
-        end
+        
     end
     
     track:SetPrimaryPartCFrame(trackCFrame)
     track.Parent = TRACKS_FOLDER
-    
+    track.PrimaryPart.Anchored = true
     return track
 end
 
