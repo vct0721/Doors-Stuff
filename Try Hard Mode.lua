@@ -18,6 +18,8 @@ Test.Parent = game:GetService("ReplicatedStorage")
 
 game.TextChatService.TextChannels.RBXSystem:DisplaySystemMessage("Wait a few seconds this loading to open the door!")
 
+require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("Tryhard Mode script succesfully executed (version 3)", true)
+
 -- Setting up Locals
 local Functions = loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Functions.lua"))()
 local IsInsaneMines = false
@@ -63,12 +65,6 @@ local IsSeekChase = Workspace:FindFirstChild("SeekMovingNewClone") or Workspace:
 local IsFigure = LatestRoomm:FindFirstChild("FigureRig") or LatestRoomm:FindFirstChild("FigureSetup") or NextRoomm:FindFirstChild("FigureRig") or NextRoomm:FindFirstChild("FigureSetup")
 local IsHalt = LatestRoomm:GetAttribute("RawName") == "HaltHallway" or NextRoomm:GetAttribute("RawName") == "HaltHallway"
 local IsGrumble = IsMines and IsMiddleFloor
-
-local caption = game.Players.LocalPlayer:WaitForChild("PlayerGui").MainUI.MainFrame.Caption
-caption.TextColor3 = Color3.fromRGB(0, 255, 0)
-require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("Tryhard Mode script succesfully executed (version 3)", true)
-local caption = game.Players.LocalPlayer:WaitForChild("PlayerGui").MainUI.MainFrame.Caption
-caption.TextColor3 = Color3.fromRGB(255, 222, 189)
 
 -- Functions
 function GitPNG(GithubImg,ImageName)
@@ -317,11 +313,9 @@ end)()
 -- Script Start
 LatestRoom.Changed:Wait()
 
-local caption = game.Players.LocalPlayer:WaitForChild("PlayerGui").MainUI.MainFrame.Caption
-caption.TextColor3 = Color3.fromRGB(0, 255, 0)
+wait(0.5)
+
 require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("Script sync's accordingly for started room",true)
-local caption = game.Players.LocalPlayer:WaitForChild("PlayerGui").MainUI.MainFrame.Caption
-caption.TextColor3 = Color3.fromRGB(255, 222, 189)
 
 wait(1)
 
