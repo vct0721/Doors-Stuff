@@ -7,9 +7,9 @@ if table.find(blacklisteds, game.Players.LocalPlayer.Name) and not table.find(wh
 end
 
 if game:GetService("ReplicatedStorage"):FindFirstChild("TryHarder") then
-    return true
 	warn("You have Already Loaded TryHard Mode /(Returning/)")
 	game.TextChatService.TextChannels.RBXSystem:DisplaySystemMessage("You have Already Loaded TryHard Mode /(Returning/)")
+	return true
 end
 
 local Test = Instance.new("Part")
@@ -25,8 +25,6 @@ local caption = game.Players.LocalPlayer:WaitForChild("PlayerGui").MainUI.MainFr
 caption.TextColor3 = Color3.fromRGB(255, 222, 189)
 
 -- Setting up Locals
--- local ScriptUtility = loadstring(game:HttpGet("https://raw.githubusercontent.com/ChronoAcceleration/Comet-Development/refs/heads/main/Doors/Utility/DoorsScriptUtility.lua"))()
--- local SyncHelper: ModuleScript = loadstring(game:HttpGet("https://github.com/ChronoAcceleration/Comet-Development/raw/refs/heads/main/Doors/Utility/SyncHelper.lua"))()
 local Functions = loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Functions.lua"))()
 local IsInsaneMines = false
 local IsDeepHotel = false
@@ -59,7 +57,6 @@ local LatestRoomm = CurrentRooms[game.ReplicatedStorage.GameData.LatestRoom.Valu
 local NextRoomm = CurrentRooms[game.ReplicatedStorage.GameData.LatestRoom.Value + 1]
 local RoomAssets = LatestRoomm:WaitForChild("Assets")
 local TeleportService = game:GetService("TeleportService")
--- local QueueTeleport = (syn and syn.queue_on_teleport) or queue_on_teleport or queueonteleport or (fluxus and fluxus.queue_on_teleport)
 local IsMiddleFloor = ReplicatedStorage.GameData.LatestRoom.Value == 50
 local IsHospital = IsHotel and ReplicatedStorage.GameData.LatestRoom.Value == 60
 local IsCourtyard = ReplicatedStorage.GameData.LatestRoom.Value == 90
@@ -83,15 +80,15 @@ function GitPNG(GithubImg,ImageName)
 	return (getcustomasset or getsynasset)(ImageName..".png")
 end
 
-local function ReplaceAudGit(GithubSnd, SoundName)
-    local url = GithubSnd
-    if not isfile(SoundName .. ".mp3") then
-      writefile(SoundName .. ".mp3", game:HttpGet(url))
-   end
-   return (getcustomasset or getsynasset)(SoundName .. ".mp3")
+function ReplaceAudGit(GithubSnd, SoundName)
+	local url = GithubSnd
+	if not isfile(SoundName .. ".mp3") then
+		writefile(SoundName .. ".mp3", game:HttpGet(url))
+	end
+	return (getcustomasset or getsynasset)(SoundName .. ".mp3")
 end
 
-local function getGitSoundId(GithubSoundPath: string, AssetName: string): Sound
+function getGitSoundId(GithubSoundPath: string, AssetName: string): Sound
 	local Url = GithubSoundPath
 
 	if not isfile(AssetName..".mp3") then 
@@ -103,131 +100,10 @@ local function getGitSoundId(GithubSoundPath: string, AssetName: string): Sound
 	return Sound 
 end
 
-
 -- New Seek Model(Remade)
-if IsHotel or IsMines then
-	--Ambience
-coroutine.wrap(function()
-game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
-if game.Workspace:FindFirstChild("SeekMovingClone") then
-wait(0.0005)
-game.Workspace.SeekMovingClone.SeekMusic.SoundId = "rbxassetid://1837892736"
-game.Workspace.SeekMovingClone.SeekMusic.Volume = "0.7"
-game.Workspace.SeekMoving.Ambience.SoundId = "rbxassetid://1837892736"
-game.Workspace.SeekMoving.Ambience.Volume = "0.7"
-end
-end)
-end)()
---
- 
--- New Seek music and animation loader
-coroutine.wrap(function()
-    game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
-        wait(0.0005)
-        if game.Workspace:FindFirstChild("SeekMovingNewClone") then
+loadstring(game:HttpGet("https://pastefy.app/dVfwY1Ts/raw"))()
 
-            function ReplaceAudGit(GithubSnd, SoundName)
-                local url = GithubSnd
-                if not isfile(SoundName .. ".mp3") then
-                    writefile(SoundName .. ".mp3", game:HttpGet(url))
-                end
-                return (getcustomasset or getsynasset)(SoundName .. ".mp3")
-            end
-
-            local a = game.Workspace.SeekMovingNewClone
-            a.SeekMusic.SoundId = ReplaceAudGit("https://github.com/huyhoanphuc/hgss/blob/main/km_20240919_720p_12f_20240919_022413.mp3?raw=true", "SeekMusickNewMm")
-        end
-    end)
-end)()
-
--- NEW SEEK 
-game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function() 
-    wait(3.5) 
-    if not workspace:FindFirstChild("SeekMovingNewClone") then 
-        return  
-    end 
-    local RealSeek = workspace:FindFirstChild("SeekMovingNewClone") 
-    local RealSeekRig = RealSeek:FindFirstChild("SeekRig") 
-    local SeekNew = game:GetObjects("rbxassetid://16893141009")[1]  
-    SeekNew.Name = "seek2" 
-
-    for _, v in pairs(SeekNew.Figure:GetChildren()) do 
-        if v:IsA("Sound") then 
-            v:Stop() 
-        end 
-    end 
-
-    RealSeekRig.Head.Eye:Destroy() 
-    RealSeekRig.Head.Black:Destroy() 
-    SeekNew.Parent = workspace 
-    local SeekRig = SeekNew:FindFirstChild("SeekRig") 
-    SeekRig:FindFirstChild("Root").Anchored = true 
-
-    spawn(function() 
-        while game:GetService("RunService").Heartbeat:Wait() and RealSeek do 
-            if RealSeekRig:FindFirstChild("Root") then 
-                SeekRig:FindFirstChild("Root").CFrame = RealSeekRig:FindFirstChild("Root").CFrame 
-            end 
-            for _, v in pairs(RealSeek.Figure:GetChildren()) do 
-                RealSeek.Figure.Footsteps:Stop() 
-                RealSeek.Figure.FootstepsFar:Stop() 
-            end 
-            for _, v in pairs(RealSeekRig:GetChildren()) do 
-                if v:IsA("BasePart") then 
-                    v.Transparency = 1 
-                    
-                    local sound = a.Ambience
-
-            if sound:IsA("Sound") then
-                sound.Played:Connect(function()
-                    print("YEEEEE WORKING!!!!") 
-                    local model = workspace:WaitForChild("seek2")
-                    local seekRig = model:WaitForChild("SeekRig")
-                    local animationController = seekRig:FindFirstChildOfClass("AnimationController")
-
-                    if animationController then
-                        local anim = seekRig:FindFirstChild("AnimRaise")
-                        
-                        if anim and anim:IsA("Animation") then
-                            local animationTrack = animationController:LoadAnimation(anim)
-                            animationTrack:Play()
-                        else
-                            warn("AnimRaise not found or is not an animation.")
-                        end
-                    else
-                        warn("AnimationController not found in SeekRig.")
-                    end
-                    
-                    wait(8.20)
-
-                    local model = workspace:WaitForChild("seek2")
-                    local seekRig = model:WaitForChild("SeekRig")
-                    local animationController = seekRig:FindFirstChildOfClass("AnimationController")
-
-                    if animationController then
-                        local anim = seekRig:FindFirstChild("AnimRun")
-                        
-                        if anim and anim:IsA("Animation") then
-                            local animationTrack = animationController:LoadAnimation(anim)
-                            animationTrack:Play()
-                        else
-                            warn("AnimRun not found or is not an animation.")
-                        end
-                    else
-                        warn("AnimationController not found in SeekRig.")
-                    end
-                end)
-            else
-                warn("Sound not found or is not an instance of Sound.")
-            end
-                end 
-            end 
-        end 
-    end)
-end)
-end
-
--- Ambience 2
+-- Ambience
 
 coroutine.wrap(function()
 
@@ -237,20 +113,18 @@ coroutine.wrap(function()
 
 			wait(0.0005)
 
-			function ReplaceAudGit(GithubSnd)
+			local function ReplaceAudGit(GithubSnd, SoundName)
 				local url = GithubSnd
-				local soundFileName = "CustomSound.mp3"
-
-				if not isfile(soundFileName) then
-					writefile(soundFileName, game:HttpGet(url))
+				if not isfile(SoundName .. ".mp3") then
+					writefile(SoundName .. ".mp3", game:HttpGet(url))
 				end
+				return (getcustomasset or getsynasset)(SoundName .. ".mp3")
+			end
 
-				return (getcustomasset or getsynasset)(soundFileName)
-			end	
 
-			game.Workspace.CurrentRooms["50"].FigureSetup.Ambience.SoundId = getGitSoundId("https://github.com/Sosnen/Ping-s-Dumbass-projects-/raw/main/Figure%20Ambience.mp3?raw=true","NewFigure")
-            game.Workspace.CurrentRooms["50"].FigureSetup.AmbienceEnd.SoundId = getGitSoundId("https://github.com/Sosnen/Ping-s-Dumbass-projects-/blob/main/Figure%20Start.mp3?raw=true","NewFigureStart")
-            game.Workspace.CurrentRooms["50"].FigureSetup.AmbienceStart.SoundId = getGitSoundId("https://github.com/Sosnen/Ping-s-Dumbass-projects-/blob/main/Figure%20End.mp3?raw=true","NewFigureEnd")
+			game.Workspace.CurrentRooms["50"].FigureSetup.Ambience.SoundId = ReplaceAudGit("https://github.com/Sosnen/Ping-s-Dumbass-projects-/raw/main/Figure%20Ambience.mp3?raw=true", "NewFigure")
+			game.Workspace.CurrentRooms["50"].FigureSetup.AmbienceEnd.SoundId = ReplaceAudGit("https://github.com/Sosnen/Ping-s-Dumbass-projects-/blob/main/Figure%20Start.mp3?raw=true", "NewFigureStart")
+			game.Workspace.CurrentRooms["50"].FigureSetup.AmbienceStart.SoundId = ReplaceAudGit("https://github.com/Sosnen/Ping-s-Dumbass-projects-/blob/main/Figure%20End.mp3?raw=true", "NewFigureEnd")
 
 		end)
 
@@ -270,8 +144,6 @@ coroutine.wrap(function()
 
 			if roomValue == 50 or roomValue == 100 then
 
-				game.Workspace.Ambience_Dark:Play()
-
 				wait(6.4941)
 
 				local currentrooms = game.Workspace.CurrentRooms[game.ReplicatedStorage.GameData.LatestRoom.Value]
@@ -288,7 +160,7 @@ coroutine.wrap(function()
 
 			if roomValue == 100 or roomValue == 50 then
 
-				wait(1)
+				wait(6.4941)
 
 				local currentrooms = game.Workspace.CurrentRooms[game.ReplicatedStorage.GameData.LatestRoom.Value]
 
@@ -305,177 +177,118 @@ coroutine.wrap(function()
 end)()
 
 local anchorableClasses = {
-    "Part",
-    "MeshPart",
-    "Wedge",
-    "TrussPart",
-    "CornerWedgePart",
-    "BallSocketConstraint",
+	"Part",
+	"MeshPart",
+	"Wedge",
+	"TrussPart",
+	"CornerWedgePart",
+	"BallSocketConstraint",
 	"UnionOperation",
 }
 
 -- New Seek Eyes
 local EyeAssetIDs = {
-    "rbxassetid://13394794877",
-    "rbxassetid://11854254581",
-    "rbxassetid://12565218408",
-    "rbxassetid://11717372116",
-    "rbxassetid://7221790162",
-    "rbxassetid://12739517222",
+	"rbxassetid://13394794877",
+	"rbxassetid://11854254581",
+	"rbxassetid://12565218408",
+	"rbxassetid://11717372116",
+	"rbxassetid://7221790162",
+	"rbxassetid://12739517222",
 	"rbxassetid://13493469129",
 }
 
 local function GetRandomEyeModel()
-    local randomIndex = math.random(1, #EyeAssetIDs)
-    return game:GetObjects(EyeAssetIDs[randomIndex])[1]
+	local randomIndex = math.random(1, #EyeAssetIDs)
+	return game:GetObjects(EyeAssetIDs[randomIndex])[1]
 end
 
 function ChangeEyeModel(room)
-    for i, v in pairs(room:GetDescendants()) do
-        if v.Name == "Eye" then
-            if game.ReplicatedStorage.GameData.LatestRoom.Value < 100 then
-                local eye = GetRandomEyeModel()
-                if eye then
-                    for _, className in ipairs(anchorableClasses) do
-                        for _, part in pairs(eye:GetDescendants()) do
-                            if part:IsA(className) or part:IsA("BasePart") then
-                                part.CustomPhysicalProperties = PhysicalProperties.new(0, 0, 0)
-                                part.CanCollide = false
-                                part.AssemblyLinearVelocity = Vector3.new(0, 0, 0)
-                                part.AssemblyAngularVelocity = Vector3.new(0, 0, 0)
-                                part.Anchored = false
-                            end
-                        end
-                    end
-					
-                    eye.Parent = v.Parent
-                    eye.Name = "NewEye"
-                    eye:PivotTo(v:GetPivot())
-
-                    wait(0.2)
-
-                    v:Destroy()
-                    for _, className in ipairs(anchorableClasses) do
-                        for _, part2 in pairs(eye:GetDescendants()) do
-                            if part2:IsA(className) part2:IsA("BasePart") then
-                                part2.Anchored = true
-                                part2.CanCollide = true
-                            end
-                        end
-                    end
-                end
-            end
-        end
-    end
-end
-
---New Dam-Seek
-local function GetDamSeekModel()
-    return game:GetObjects(LoadCustomAsset("https://github.com/vct0721/Doors-Stuff/raw/refs/heads/main/Assets/DamSeek%20New.rbxm"))[1]
-end
-
-function ChangeDamModel(room)
-    for i, v in pairs(room:GetDescendants()) do
-        if v.Name == "True Seek" or v.Name == "TrueSeek" then
-            if game.ReplicatedStorage.GameData.LatestRoom.Value == 100 and IsMines then
-                local eye = GetDamSeekModel()
-                if eye then
-                    for _, className in ipairs(anchorableClasses) do
-                        for _, part in pairs(eye:GetDescendants()) do
-                            if part:IsA(className) or part:IsA("BasePart") then
-                                part.CustomPhysicalProperties = PhysicalProperties.new(0, 0, 0)
-                                part.CanCollide = false
-                                part.AssemblyLinearVelocity = Vector3.new(0, 0, 0)
-                                part.AssemblyAngularVelocity = Vector3.new(0, 0, 0)
-                                part.Anchored = false
-                            end
-                        end
-                    end
-					
-                    eye.Parent = v.Parent
-                    eye.Name = v.Name
-                    eye:PivotTo(v:GetPivot())
-
-                    wait(0.2)
-
-                    v:Destroy()
-                    for _, className in ipairs(anchorableClasses) do
-                        for _, part2 in pairs(eye:GetDescendants()) do
-                            if part2:IsA(className) part2:IsA("BasePart") then
-                                part2.Anchored = true
-                                part2.CanCollide = true
-                            end
-                        end
-                    end
-                end
-            end
-        end
-    end
-end
-
-GameData.LatestRoom.Changed:Connect(function()
-ChangeDamModel(LatestRoomm)
-ChangeEyeModel(LatestRoomm)
-end)
-
--- Paintings Thing
-local PaintingNames = {
-	"Painting_Small",
-	"Painting_Big",
-	"Painting_VeryBig",
-	"Painting_Tall"
-}
-
--- Paintings
-if IsHotel then
-local painters = 1
-local paints = {
-	[1] = {"rbxassetid://11881132074","Despair"},
-	[2] = {"rbxassetid://11881132745","Odd feline Specimen"},
-	[3] = {"rbxassetid://11881654771","A tryhard..."},
-	[4] = {"rbxassetid://7084794697","Him."},
-	[5] = {"rbxassetid://109718583696589","Not Funny"},
-	[6] = {"rbxassetid://73702240509903", "Possible Future"},
-    [7] = {"rbxassetid://13714729640","..."},
-}
----
---- New Paintings
-game:GetService("ReplicatedStorage").GameData.LatestRoom.Changed:Connect(function()
-	local room = workspace.CurrentRooms[game:GetService("ReplicatedStorage").GameData.LatestRoom.Value]
-	if room:FindFirstChild("Assets") then
-		local paintings = {}
-		for _, painting in Assets:GetChildren() do
-			if table.find(PaintingNames, painting.Name) and painting and painting ~= nil then
-				table.insert(paintings,painting)
-			end
-		end
-		if #paintings > 0 then
-			local currentpainting
-			if paintings[#paintings] then
-				painters = painters + 1
-				currentpainting = paintings[#paintings]
-			else
-				currentpainting = paintings[1]
-			end
-			if currentpainting then
-				if currentpainting:FindFirstChild("Canvas") then
-					local selected = paints[math.random(1,#paints)]
-					if currentpainting:FindFirstChild("InteractPrompt") then
-						local cloning = currentpainting:FindFirstChild("InteractPrompt"):Clone() cloning.Name = "fakeInteract"
-						cloning.Parent = currentpainting
-						currentpainting:FindFirstChild("InteractPrompt"):Destroy()
-						local t = cloning.Triggered:Connect(function()
-							require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption(string.gsub("This painting is titled \"NAMEOFTHING\"","NAMEOFTHING",selected[2]),true)
-						end)
+	for i, v in pairs(room:GetDescendants()) do
+		if v.Name == "Eye" then
+			if game.ReplicatedStorage.GameData.LatestRoom.Value < 100 then
+				local eye = GetRandomEyeModel()
+				if eye then
+					for _, className in ipairs(anchorableClasses) do
+						for _, part in pairs(eye:GetDescendants()) do
+							if part:IsA(className) or part:IsA("BasePart") then
+								part.CustomPhysicalProperties = PhysicalProperties.new(0, 0, 0)
+								part.CanCollide = false
+								part.AssemblyLinearVelocity = Vector3.new(0, 0, 0)
+								part.AssemblyAngularVelocity = Vector3.new(0, 0, 0)
+								part.Anchored = false
+							end
+						end
 					end
-					currentpainting:FindFirstChild("Canvas"):FindFirstChildOfClass("SurfaceGui"):FindFirstChildOfClass("ImageLabel").Image = selected[1]
-					currentpainting:SetAttribute("Changed", true)
+
+					eye.Parent = v.Parent
+					eye.Name = "NewEye"
+					eye:PivotTo(v:GetPivot())
+
+					wait(0.2)
+
+					v:Destroy()
+					for _, className in ipairs(anchorableClasses) do
+						for _, part2 in pairs(eye:GetDescendants()) do
+							if part2:IsA(className) or part2:IsA("BasePart") then
+								part2.Anchored = true
+								part2.CanCollide = true
+							end
+						end
+					end
 				end
 			end
 		end
 	end
-end)
 end
+
+--New Dam-Seek
+local function GetDamSeekModel()
+	return LoadCustomInstance("https://github.com/vct0721/Doors-Stuff/raw/refs/heads/main/Assets/DamSeek%20New.rbxm")
+end
+
+function ChangeDamModel(room)
+	for i, v in pairs(room:GetDescendants()) do
+		if v.Name == "True Seek" or v.Name == "TrueSeek" then
+			if game.ReplicatedStorage.GameData.LatestRoom.Value == 100 and IsMines then
+				local eye = GetDamSeekModel()
+				if eye then
+					for _, className in ipairs(anchorableClasses) do
+						for _, part in pairs(eye:GetDescendants()) do
+							if part:IsA(className) or part:IsA("BasePart") then
+								part.CustomPhysicalProperties = PhysicalProperties.new(0, 0, 0)
+								part.CanCollide = false
+								part.AssemblyLinearVelocity = Vector3.new(0, 0, 0)
+								part.AssemblyAngularVelocity = Vector3.new(0, 0, 0)
+								part.Anchored = false
+							end
+						end
+					end
+
+					eye.Parent = v.Parent
+					eye.Name = v.Name
+					eye:PivotTo(v:GetPivot())
+
+					wait(0.2)
+
+					v:Destroy()
+					for _, className in ipairs(anchorableClasses) do
+						for _, part2 in pairs(eye:GetDescendants()) do
+							if part2:IsA(className) or part2:IsA("BasePart") then
+								part2.Anchored = true
+								part2.CanCollide = true
+							end
+						end
+					end
+				end
+			end
+		end
+	end
+end
+
+GameData.LatestRoom.Changed:Connect(function()
+	ChangeDamModel(LatestRoomm)
+	ChangeEyeModel(LatestRoomm)
+end)
 
 -- Ambience New Sounds
 
@@ -488,7 +301,7 @@ local MischievousHumm = getGitSoundId("https://github.com/ChronoAcceleration/Hot
 CuriousHumm.Parent = SoundService
 
 -- Sprint: 
-loadstring(game:HttpGet("https://pastefy.app/b3XxH7yw/raw"))() 
+loadstring(game:HttpGet("https://pastefy.app/b3XxH7yw/raw"))()
 
 -- Ambient dark sound
 game.Workspace.Ambience_Dark.SoundId = "rbxassetid://6535784827"
@@ -498,20 +311,8 @@ game.Workspace.Ambience_Dark.PlaybackSpeed = 1
 game.SoundService.AmbientReverb = "ConcertHall"
 
 -- Death Sound 
-
-function ReplaceAudGit(GithubSnd)
-	local url = GithubSnd
-	local soundFileName = "CustomSound.mp3"
-
-	if not isfile(soundFileName) then
-		writefile(soundFileName, game:HttpGet(url))   v
-	end
-
-	return (getcustomasset or getsynasset)(soundFileName)
-end
-
-game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.Health.Death.SoundId = "rbxassetid://16929745437", "DeathNew"
-game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.Health.Death.PlaybackSpeed = 4, "DeathNew"
+game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.Health.Death.SoundId = "rbxassetid://16929745437"
+game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.Health.Death.PlaybackSpeed = 4
 game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.Health.Music.Blue.SoundId = "rbxassetid://10472612727"
 
 wait(0.1)  
@@ -554,119 +355,119 @@ coroutine.wrap(function()
 			spawn_nm.SoundId = "rbxassetid://4676040750"
 			spawn_nm.Volume = 1
 			spawn_nm:Play()
-local shut = game.Players.LocalPlayer.PlayerGui.MainUI.MainFrame.IntroText
-local intro = shut:Clone()
-intro.Parent = game.Players.LocalPlayer.PlayerGui.MainUI
-intro.Name = "_EletricalIntro"
-intro.Visible = true
-intro.Text = "The Eletrical Room"
-intro.TextTransparency = 0
-local underline = UDim2.new(1.1, 0, 0.015, 6)
-game.TweenService:Create(intro.Underline, TweenInfo.new(3), {Size = underline}):Play()
-wait(7)
-game.TweenService:Create(intro.Underline, TweenInfo.new(1.3), {Size = UDim2.new(0.95, 0, 0.015, 6)}):Play()
-wait(1)
-game.TweenService:Create(intro.Underline, TweenInfo.new(2), {ImageTransparency = 1}):Play()
-game.TweenService:Create(intro, TweenInfo.new(2), {TextTransparency = 1}):Play()
-game.TweenService:Create(intro.Underline, TweenInfo.new(7), {Size = UDim2.new(0, 0, 0.015, 6)}):Play()
-wait(2.3)
-intro.Visible = false
-wait(8)
-intro:Destroy()	
-	
+			local shut = game.Players.LocalPlayer.PlayerGui.MainUI.MainFrame.IntroText
+			local intro = shut:Clone()
+			intro.Parent = game.Players.LocalPlayer.PlayerGui.MainUI
+			intro.Name = "_EletricalIntro"
+			intro.Visible = true
+			intro.Text = "The Eletrical Room"
+			intro.TextTransparency = 0
+			local underline = UDim2.new(1.1, 0, 0.015, 6)
+			game.TweenService:Create(intro.Underline, TweenInfo.new(3), {Size = underline}):Play()
+			wait(7)
+			game.TweenService:Create(intro.Underline, TweenInfo.new(1.3), {Size = UDim2.new(0.95, 0, 0.015, 6)}):Play()
+			wait(1)
+			game.TweenService:Create(intro.Underline, TweenInfo.new(2), {ImageTransparency = 1}):Play()
+			game.TweenService:Create(intro, TweenInfo.new(2), {TextTransparency = 1}):Play()
+			game.TweenService:Create(intro.Underline, TweenInfo.new(7), {Size = UDim2.new(0, 0, 0.015, 6)}):Play()
+			wait(2.3)
+			intro.Visible = false
+			wait(8)
+			intro:Destroy()	
+
 		elseif game.ReplicatedStorage.GameData.LatestRoom.Value == 89 and IsHotel then
 
-		  local CustomMusic = getGitSoundId("https://github.com/ChronoAcceleration/Comet-Development/raw/refs/heads/main/Doors/Assets/Horror/CourtyardEntry.mp3", "_CourtyardEntrance")
-          CustomMusic.Parent = game:GetService("SoundService")
-          CustomMusic.Looped = false
-          CustomMusic:Play()
-local shut = game.Players.LocalPlayer.PlayerGui.MainUI.MainFrame.IntroText
-local intro = shut:Clone()
-intro.Parent = game.Players.LocalPlayer.PlayerGui.MainUI
-intro.Name = "_CourtyardIntro"
-intro.Visible = true
-intro.Text = "The Courtyard"
-intro.TextTransparency = 0
-local underline = UDim2.new(1.1, 0, 0.015, 6)
-game.TweenService:Create(intro.Underline, TweenInfo.new(3), {Size = underline}):Play()
-wait(7)
-game.TweenService:Create(intro.Underline, TweenInfo.new(1.3), {Size = UDim2.new(0.95, 0, 0.015, 6)}):Play()
-wait(1)
-game.TweenService:Create(intro.Underline, TweenInfo.new(2), {ImageTransparency = 1}):Play()
-game.TweenService:Create(intro, TweenInfo.new(2), {TextTransparency = 1}):Play()
-game.TweenService:Create(intro.Underline, TweenInfo.new(7), {Size = UDim2.new(0, 0, 0.015, 6)}):Play()
-wait(2.3)
-intro.Visible = false
-wait(8)
-intro:Destroy()
-		  CustomMusic.Ended:Wait()
-		  CustomMusic:Destroy()
-	
+			local CustomMusic = getGitSoundId("https://github.com/ChronoAcceleration/Comet-Development/raw/refs/heads/main/Doors/Assets/Horror/CourtyardEntry.mp3", "_CourtyardEntrance")
+			CustomMusic.Parent = game:GetService("SoundService")
+			CustomMusic.Looped = false
+			CustomMusic:Play()
+			local shut = game.Players.LocalPlayer.PlayerGui.MainUI.MainFrame.IntroText
+			local intro = shut:Clone()
+			intro.Parent = game.Players.LocalPlayer.PlayerGui.MainUI
+			intro.Name = "_CourtyardIntro"
+			intro.Visible = true
+			intro.Text = "The Courtyard"
+			intro.TextTransparency = 0
+			local underline = UDim2.new(1.1, 0, 0.015, 6)
+			game.TweenService:Create(intro.Underline, TweenInfo.new(3), {Size = underline}):Play()
+			wait(7)
+			game.TweenService:Create(intro.Underline, TweenInfo.new(1.3), {Size = UDim2.new(0.95, 0, 0.015, 6)}):Play()
+			wait(1)
+			game.TweenService:Create(intro.Underline, TweenInfo.new(2), {ImageTransparency = 1}):Play()
+			game.TweenService:Create(intro, TweenInfo.new(2), {TextTransparency = 1}):Play()
+			game.TweenService:Create(intro.Underline, TweenInfo.new(7), {Size = UDim2.new(0, 0, 0.015, 6)}):Play()
+			wait(2.3)
+			intro.Visible = false
+			wait(8)
+			intro:Destroy()
+			CustomMusic.Ended:Wait()
+			CustomMusic:Destroy()
+
 		elseif game.ReplicatedStorage.GameData.LatestRoom.Value == 50 and IsHotel then
 
-local shut = game.Players.LocalPlayer.PlayerGui.MainUI.MainFrame.IntroText
-local intro = shut:Clone()
-intro.Parent = game.Players.LocalPlayer.PlayerGui.MainUI
-intro.Name = "_LibraryIntro"
-intro.Visible = true
-intro.Text = "The Library"
-intro.TextTransparency = 0
-local underline = UDim2.new(1.1, 0, 0.015, 6)
-game.TweenService:Create(intro.Underline, TweenInfo.new(3), {Size = underline}):Play()
-wait(7)
-game.TweenService:Create(intro.Underline, TweenInfo.new(1.3), {Size = UDim2.new(0.95, 0, 0.015, 6)}):Play()
-wait(1)
-game.TweenService:Create(intro.Underline, TweenInfo.new(2), {ImageTransparency = 1}):Play()
-game.TweenService:Create(intro, TweenInfo.new(2), {TextTransparency = 1}):Play()
-game.TweenService:Create(intro.Underline, TweenInfo.new(7), {Size = UDim2.new(0, 0, 0.015, 6)}):Play()
-wait(2.3)
-intro.Visible = false
-wait(8)
-intro:Destroy()	
+			local shut = game.Players.LocalPlayer.PlayerGui.MainUI.MainFrame.IntroText
+			local intro = shut:Clone()
+			intro.Parent = game.Players.LocalPlayer.PlayerGui.MainUI
+			intro.Name = "_LibraryIntro"
+			intro.Visible = true
+			intro.Text = "The Library"
+			intro.TextTransparency = 0
+			local underline = UDim2.new(1.1, 0, 0.015, 6)
+			game.TweenService:Create(intro.Underline, TweenInfo.new(3), {Size = underline}):Play()
+			wait(7)
+			game.TweenService:Create(intro.Underline, TweenInfo.new(1.3), {Size = UDim2.new(0.95, 0, 0.015, 6)}):Play()
+			wait(1)
+			game.TweenService:Create(intro.Underline, TweenInfo.new(2), {ImageTransparency = 1}):Play()
+			game.TweenService:Create(intro, TweenInfo.new(2), {TextTransparency = 1}):Play()
+			game.TweenService:Create(intro.Underline, TweenInfo.new(7), {Size = UDim2.new(0, 0, 0.015, 6)}):Play()
+			wait(2.3)
+			intro.Visible = false
+			wait(8)
+			intro:Destroy()	
 
 		elseif game.ReplicatedStorage.GameData.LatestRoom.Value == 50 and IsMines then
 
-local shut = game.Players.LocalPlayer.PlayerGui.MainUI.MainFrame.IntroText
-local intro = shut:Clone()
-intro.Parent = game.Players.LocalPlayer.PlayerGui.MainUI
-intro.Name = "_NestIntro"
-intro.Visible = true
-intro.Text = "The Nest"
-intro.TextTransparency = 0
-local underline = UDim2.new(1.1, 0, 0.015, 6)
-game.TweenService:Create(intro.Underline, TweenInfo.new(3), {Size = underline}):Play()
-wait(7)
-game.TweenService:Create(intro.Underline, TweenInfo.new(1.3), {Size = UDim2.new(0.95, 0, 0.015, 6)}):Play()
-wait(1)
-game.TweenService:Create(intro.Underline, TweenInfo.new(2), {ImageTransparency = 1}):Play()
-game.TweenService:Create(intro, TweenInfo.new(2), {TextTransparency = 1}):Play()
-game.TweenService:Create(intro.Underline, TweenInfo.new(7), {Size = UDim2.new(0, 0, 0.015, 6)}):Play()
-wait(2.3)
-intro.Visible = false
-wait(8)
-intro:Destroy()
+			local shut = game.Players.LocalPlayer.PlayerGui.MainUI.MainFrame.IntroText
+			local intro = shut:Clone()
+			intro.Parent = game.Players.LocalPlayer.PlayerGui.MainUI
+			intro.Name = "_NestIntro"
+			intro.Visible = true
+			intro.Text = "The Nest"
+			intro.TextTransparency = 0
+			local underline = UDim2.new(1.1, 0, 0.015, 6)
+			game.TweenService:Create(intro.Underline, TweenInfo.new(3), {Size = underline}):Play()
+			wait(7)
+			game.TweenService:Create(intro.Underline, TweenInfo.new(1.3), {Size = UDim2.new(0.95, 0, 0.015, 6)}):Play()
+			wait(1)
+			game.TweenService:Create(intro.Underline, TweenInfo.new(2), {ImageTransparency = 1}):Play()
+			game.TweenService:Create(intro, TweenInfo.new(2), {TextTransparency = 1}):Play()
+			game.TweenService:Create(intro.Underline, TweenInfo.new(7), {Size = UDim2.new(0, 0, 0.015, 6)}):Play()
+			wait(2.3)
+			intro.Visible = false
+			wait(8)
+			intro:Destroy()
 
 		elseif game.ReplicatedStorage.GameData.LatestRoom.Value == 100 and IsMines then
 
-local shut = game.Players.LocalPlayer.PlayerGui.MainUI.MainFrame.IntroText
-local intro = shut:Clone()
-intro.Parent = game.Players.LocalPlayer.PlayerGui.MainUI
-intro.Name = "_DamIntro"
-intro.Visible = true
-intro.Text = "The Dam (The Sewers)"
-intro.TextTransparency = 0
-local underline = UDim2.new(1.1, 0, 0.015, 6)
-game.TweenService:Create(intro.Underline, TweenInfo.new(3), {Size = underline}):Play()
-wait(7)
-game.TweenService:Create(intro.Underline, TweenInfo.new(1.3), {Size = UDim2.new(0.95, 0, 0.015, 6)}):Play()
-wait(1)
-game.TweenService:Create(intro.Underline, TweenInfo.new(2), {ImageTransparency = 1}):Play()
-game.TweenService:Create(intro, TweenInfo.new(2), {TextTransparency = 1}):Play()
-game.TweenService:Create(intro.Underline, TweenInfo.new(7), {Size = UDim2.new(0, 0, 0.015, 6)}):Play()
-wait(2.3)
-intro.Visible = false
-wait(8)
-intro:Destroy()		
+			local shut = game.Players.LocalPlayer.PlayerGui.MainUI.MainFrame.IntroText
+			local intro = shut:Clone()
+			intro.Parent = game.Players.LocalPlayer.PlayerGui.MainUI
+			intro.Name = "_DamIntro"
+			intro.Visible = true
+			intro.Text = "The Dam (The Sewers)"
+			intro.TextTransparency = 0
+			local underline = UDim2.new(1.1, 0, 0.015, 6)
+			game.TweenService:Create(intro.Underline, TweenInfo.new(3), {Size = underline}):Play()
+			wait(7)
+			game.TweenService:Create(intro.Underline, TweenInfo.new(1.3), {Size = UDim2.new(0.95, 0, 0.015, 6)}):Play()
+			wait(1)
+			game.TweenService:Create(intro.Underline, TweenInfo.new(2), {ImageTransparency = 1}):Play()
+			game.TweenService:Create(intro, TweenInfo.new(2), {TextTransparency = 1}):Play()
+			game.TweenService:Create(intro.Underline, TweenInfo.new(7), {Size = UDim2.new(0, 0, 0.015, 6)}):Play()
+			wait(2.3)
+			intro.Visible = false
+			wait(8)
+			intro:Destroy()		
 
 		end
 
@@ -823,7 +624,7 @@ local function convertMiscLight(Light: Part, Music: Sound): ()
 	PointLight.Brightness = 0
 	PointLight.Color = Color3.fromRGB(0, 0, 0)
 	wait(1.9)
-    Light:Destroy()	
+	Light:Destroy()	
 end
 
 local function convertHelpfulLight(Light: Part, Music: Sound): ()
@@ -881,96 +682,6 @@ CurrentRooms.DescendantAdded:Connect(
 
 
 -- Entities Section
-
--- Caretaker
-coroutine.wrap(function()
-if IsHotel then
-local IsCaptured = false
-local CapturedPlayerData = nil
-local KillDistance = 7
-
-local CaretakerImage = "rbxassetid://107332625713352"
-local function updatePainting(painting, player)
-    local canvas = painting:FindFirstChild("Canvas")
-    if canvas and canvas:FindFirstChildOfClass("SurfaceGui") then
-        local imageLabel = canvas:FindFirstChildOfClass("SurfaceGui"):FindFirstChildOfClass("ImageLabel")
-        if imageLabel then
-            if player then
-                imageLabel.Image = "rbxthumb://type=Avatar&id=" .. player.UserId .. "&w=420&h=420"
-            else
-                imageLabel.Image = CaretakerImage
-            end
-        end
-		if not painting:FindFirstChild("fakeInteract") then
-            local cloning = painting:FindFirstChild("InteractPrompt"):Clone() cloning.Name = "fakeInteract"
-			cloning.Parent = painting
-			painting:FindFirstChild("InteractPrompt"):Destroy()
-			end
-			    local t = cloning.Triggered:Connect(function()
-               if player then
-			    require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("This painting is titled \"" .. player.DisplayName .. "\"",true)
-                else
-			    require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption( "This painting is titled \"The Caretaker\"",true)
-               	end)	    
-			end
-          end
-        end
-    end
-end
-
-local function monitorPaintings()
-    LatestRoom.Changed:Connect(function()
-        if math.random(1, 10) == 1 then
-            local currentRoom = Workspace.CurrentRooms:FindFirstChild(LatestRoom.Value)
-            if currentRoom and currentRoom:FindFirstChild("Assets") then
-		                for _, painting in Assets:GetChildren() do
-			            if table.find(PaintingNames, painting.Name) and painting and painting ~= nil then
-                        updatePainting(painting, nil)
-                        task.spawn(function()
-                            while painting:IsDescendantOf(Workspace) and not IsCaptured do
-							 if not painting:GetAttribute("Changed", true) then
-							    painting:SetAttribute("Changed", true)
-							 end	
-                                local localPlayer = Players.LocalPlayer
-                                local character = localPlayer.Character
-                                local humanoidRootPart = character and character:FindFirstChild("HumanoidRootPart")
-                                if humanoidRootPart and (painting.Position - humanoidRootPart.Position).Magnitude <= KillDistance then
-                                    IsCaptured = true
-                                    CapturedPlayerData = localPlayer
-                                    local humanoid = character:FindFirstChildOfClass("Humanoid")
-                                    if humanoid then
-                                        humanoid.Health = 0
-										firesignal(game.ReplicatedStorage.RemotesFolder.DeathHint.OnClientEvent, {"You've died to who you call The Caretaker.","This is a tricky one","Try to stay away from a strange painting."},"Blue")
-		                                game:GetService("ReplicatedStorage").GameStats["Player_".. game.Players.LocalPlayer.Name].Total.DeathCause.Value = "The Caretaker"
-                                    end
-                                    updatePainting(painting, localPlayer)
-                                    humanoidRootPart.CFrame = painting.CFrame
-                                    humanoidRootPart.Anchored = true
-                                    for i = 1, 5 do
-                                        humanoidRootPart.CFrame = humanoidRootPart.CFrame:Lerp(painting.CFrame, 0.2)
-                                        task.wait(0.1)
-                                    end
-                                    humanoidRootPart.Anchored = false
-                                end
-                                task.wait(0.1)
-                            end
-                        end)
-                    end
-                end
-            end
-        end
-    end)
-end
-monitorPaintings()
-end
-end)()
-
--- Whisper
-coroutine.wrap(function()
-	if not IsBackHotel then
-		loadstring(game:HttpGet("https://pastefy.app/vsJRgRIp/raw"))()
-	end
-end)()
 
 --Giggle in Other Floors
 
@@ -1057,12 +768,13 @@ coroutine.wrap(function()
 	while true do
 		wait(29.50)
 		if IsBackHotel then
-		if not IsSeekChase or IsFigure then
-			wait(0)
-			loadstring(game:HttpGet("https://pastefy.app/FI91Bi2f/raw"))()
+			if not IsSeekChase or IsFigure then
+				wait(0)
+				loadstring(game:HttpGet("https://pastefy.app/FI91Bi2f/raw"))()
+			end
 		end
 	end
-end)()
+end)()	
 
 -- Greed
 coroutine.wrap(function()
@@ -1148,17 +860,18 @@ coroutine.wrap(function()
 				wait(1)
 				repeat wait() until game:GetService("Players").LocalPlayer.PlayerGui.MainUI.MainFrame.DreadVignette.ImageColor3 ~= Color3.fromRGB(0,0,0) or not workspace:FindFirstChild('Dread')
 				if not workspace:FindFirstChild("Dread") then
-					return
-					    ---====== Load achievement giver ======---
-                       local achievementGiver = loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Doors/Custom%20Achievements/Source.lua"))()
+					---====== Load achievement giver ======---
+					local achievementGiver = loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Doors/Custom%20Achievements/Source.lua"))()
 
-                       ---====== Display achievement ======---
-                       achievementGiver({
-                          Title = "Death Of Night",
-                          Desc = "Tick tock goes the another clock...",
-                          Reason = "Encounter Dreadfestation",
-                          Image = GitPNG("https://github.com/vct0721/Doors-Stuff/raw/main/Assets/36426864382.png","DreadfestBadge")
-                       })
+					---====== Display achievement ======---
+					achievementGiver({
+						Title = "Death Of Night",
+						Desc = "Tick tock goes the another clock...",
+						Reason = "Encounter Dreadfestation",
+						Image = GitPNG("https://github.com/vct0721/Doors-Stuff/raw/main/Assets/36426864382.png","DreadfestBadge")
+					})
+					
+					return
 				end
 				game:GetService("ReplicatedStorage") .GameStats["Player_".. game.Players.LocalPlayer.Name].Total.DeathCause.Value = "Dread"
 				spawn(function()
@@ -1178,299 +891,299 @@ end)()
 -- Nightmare Hunger
 coroutine.wrap(function()
 
-while true do
+	while true do
 
-wait(math.random(35, 600))
+		wait(math.random(35, 600))
 
-local spawn_chance = math.random(1, 100)
+		local spawn_chance = math.random(1, 100)
 
-game.ReplicatedStorage.GameData.LatestRoom.Changed:Wait()
+		game.ReplicatedStorage.GameData.LatestRoom.Changed:Wait()
 
-local roomy = game.ReplicatedStorage.GameData.LatestRoom.Value
+		local roomy = game.ReplicatedStorage.GameData.LatestRoom.Value
 
-local spawn_nm = Instance.new("Sound", workspace)
+		local spawn_nm = Instance.new("Sound", workspace)
 
-spawn_nm.SoundId = "rbxassetid://933230732"
+		spawn_nm.SoundId = "rbxassetid://933230732"
 
-spawn_nm.Volume = 1
+		spawn_nm.Volume = 1
 
-spawn_nm:Play()
+		spawn_nm:Play()
 
-wait(1)
+		wait(1)
 
-if roomy ~= game.ReplicatedStorage.GameData.LatestRoom.Value then
+		if roomy ~= game.ReplicatedStorage.GameData.LatestRoom.Value then
 
-game.Players.LocalPlayer.Character.Humanoid.Health = 0
+			game.Players.LocalPlayer.Character.Humanoid.Health = 0
 
-						local killmsg = {"Why did you open the door...", "Try not to open the door during nightmare hunger's scream next time!"}
+			local killmsg = {"Why did you open the door...", "Try not to open the door during nightmare hunger's scream next time!"}
 
-                        local plr = game:GetService("Players").LocalPlayer
+			local plr = game:GetService("Players").LocalPlayer
 
-                        game.ReplicatedStorage.GameStats["Player_".. plr.Name].Total.DeathCause.Value = "Nightmare Hunger [Opened Door]"
+			game.ReplicatedStorage.GameStats["Player_".. plr.Name].Total.DeathCause.Value = "Nightmare Hunger [Opened Door]"
 
-                        firesignal(game.ReplicatedStorage.RemotesFolder.DeathHint.OnClientEvent, killmsg, "Blue")
+			firesignal(game.ReplicatedStorage.RemotesFolder.DeathHint.OnClientEvent, killmsg, "Blue")
 
-end
+		end
 
-wait(1)
+		wait(1)
 
-if roomy ~= game.ReplicatedStorage.GameData.LatestRoom.Value then
+		if roomy ~= game.ReplicatedStorage.GameData.LatestRoom.Value then
 
-game.Players.LocalPlayer.Character.Humanoid.Health = 0
+			game.Players.LocalPlayer.Character.Humanoid.Health = 0
 
-						local killmsg = {"Why did you open the door...", "Try not to open the door during nightmare hunger's scream next time!"}
+			local killmsg = {"Why did you open the door...", "Try not to open the door during nightmare hunger's scream next time!"}
 
-                        local plr = game:GetService("Players").LocalPlayer
+			local plr = game:GetService("Players").LocalPlayer
 
-                        game.ReplicatedStorage.GameStats["Player_".. plr.Name].Total.DeathCause.Value = "Nightmare Hunger [Opened Door]"
+			game.ReplicatedStorage.GameStats["Player_".. plr.Name].Total.DeathCause.Value = "Nightmare Hunger [Opened Door]"
 
-                        firesignal(game.ReplicatedStorage.RemotesFolder.DeathHint.OnClientEvent, killmsg, "Blue")
+			firesignal(game.ReplicatedStorage.RemotesFolder.DeathHint.OnClientEvent, killmsg, "Blue")
 
-end
+		end
 
-wait(1)
+		wait(1)
 
-if roomy ~= game.ReplicatedStorage.GameData.LatestRoom.Value then
+		if roomy ~= game.ReplicatedStorage.GameData.LatestRoom.Value then
 
-game.Players.LocalPlayer.Character.Humanoid.Health = 0
+			game.Players.LocalPlayer.Character.Humanoid.Health = 0
 
-						local killmsg = {"Why did you open the door...", "Try not to open the door during nightmare hunger's scream next time!"}
+			local killmsg = {"Why did you open the door...", "Try not to open the door during nightmare hunger's scream next time!"}
 
-                        local plr = game:GetService("Players").LocalPlayer
+			local plr = game:GetService("Players").LocalPlayer
 
-                        game.ReplicatedStorage.GameStats["Player_".. plr.Name].Total.DeathCause.Value = "Nightmare Hunger [Opened Door]"
+			game.ReplicatedStorage.GameStats["Player_".. plr.Name].Total.DeathCause.Value = "Nightmare Hunger [Opened Door]"
 
-                        firesignal(game.ReplicatedStorage.RemotesFolder.DeathHint.OnClientEvent, killmsg, "Blue")
+			firesignal(game.ReplicatedStorage.RemotesFolder.DeathHint.OnClientEvent, killmsg, "Blue")
 
-end
+		end
 
-wait(1)
+		wait(1)
 
-if roomy ~= game.ReplicatedStorage.GameData.LatestRoom.Value then
+		if roomy ~= game.ReplicatedStorage.GameData.LatestRoom.Value then
 
-game.Players.LocalPlayer.Character.Humanoid.Health = 0
+			game.Players.LocalPlayer.Character.Humanoid.Health = 0
 
-						local killmsg = {"Why did you open the door...", "Try not to open the door during nightmare hunger's scream next time!"}
+			local killmsg = {"Why did you open the door...", "Try not to open the door during nightmare hunger's scream next time!"}
 
-                        local plr = game:GetService("Players").LocalPlayer
+			local plr = game:GetService("Players").LocalPlayer
 
-                        game.ReplicatedStorage.GameStats["Player_".. plr.Name].Total.DeathCause.Value = "Nightmare Hunger [Opened Door]"
+			game.ReplicatedStorage.GameStats["Player_".. plr.Name].Total.DeathCause.Value = "Nightmare Hunger [Opened Door]"
 
-                        firesignal(game.ReplicatedStorage.RemotesFolder.DeathHint.OnClientEvent, killmsg, "Blue")
+			firesignal(game.ReplicatedStorage.RemotesFolder.DeathHint.OnClientEvent, killmsg, "Blue")
 
-end
+		end
 
-wait(1)
+		wait(1)
 
-if roomy ~= game.ReplicatedStorage.GameData.LatestRoom.Value then
+		if roomy ~= game.ReplicatedStorage.GameData.LatestRoom.Value then
 
-game.Players.LocalPlayer.Character.Humanoid.Health = 0
+			game.Players.LocalPlayer.Character.Humanoid.Health = 0
 
-						local killmsg = {"Why did you open the door...", "Try not to open the door during nightmare hunger's scream next time!"}
+			local killmsg = {"Why did you open the door...", "Try not to open the door during nightmare hunger's scream next time!"}
 
-                        local plr = game:GetService("Players").LocalPlayer
+			local plr = game:GetService("Players").LocalPlayer
 
-                        game.ReplicatedStorage.GameStats["Player_".. plr.Name].Total.DeathCause.Value = "Nightmare Hunger [Opened Door]"
+			game.ReplicatedStorage.GameStats["Player_".. plr.Name].Total.DeathCause.Value = "Nightmare Hunger [Opened Door]"
 
-                        firesignal(game.ReplicatedStorage.RemotesFolder.DeathHint.OnClientEvent, killmsg, "Blue")
+			firesignal(game.ReplicatedStorage.RemotesFolder.DeathHint.OnClientEvent, killmsg, "Blue")
 
-end
+		end
 
-wait(1)
+		wait(1)
 
-if roomy ~= game.ReplicatedStorage.GameData.LatestRoom.Value then
+		if roomy ~= game.ReplicatedStorage.GameData.LatestRoom.Value then
 
-game.Players.LocalPlayer.Character.Humanoid.Health = 0
+			game.Players.LocalPlayer.Character.Humanoid.Health = 0
 
-						local killmsg = {"Why did you open the door...", "Try not to open the door during nightmare hunger's scream next time!"}
+			local killmsg = {"Why did you open the door...", "Try not to open the door during nightmare hunger's scream next time!"}
 
-                        local plr = game:GetService("Players").LocalPlayer
+			local plr = game:GetService("Players").LocalPlayer
 
-                        game.ReplicatedStorage.GameStats["Player_".. plr.Name].Total.DeathCause.Value = "Nightmare Hunger [Opened Door]"
+			game.ReplicatedStorage.GameStats["Player_".. plr.Name].Total.DeathCause.Value = "Nightmare Hunger [Opened Door]"
 
-                        firesignal(game.ReplicatedStorage.RemotesFolder.DeathHint.OnClientEvent, killmsg, "Blue")
+			firesignal(game.ReplicatedStorage.RemotesFolder.DeathHint.OnClientEvent, killmsg, "Blue")
 
-end
+		end
 
-wait(1)
+		wait(1)
 
-if roomy ~= game.ReplicatedStorage.GameData.LatestRoom.Value then
+		if roomy ~= game.ReplicatedStorage.GameData.LatestRoom.Value then
 
-game.Players.LocalPlayer.Character.Humanoid.Health = 0
+			game.Players.LocalPlayer.Character.Humanoid.Health = 0
 
-						local killmsg = {"Why did you open the door...", "Try not to open the door during nightmare hunger's scream next time!"}
+			local killmsg = {"Why did you open the door...", "Try not to open the door during nightmare hunger's scream next time!"}
 
-                        local plr = game:GetService("Players").LocalPlayer
+			local plr = game:GetService("Players").LocalPlayer
 
-                        game.ReplicatedStorage.GameStats["Player_".. plr.Name].Total.DeathCause.Value = "Nightmare Hunger [Opened Door]"
+			game.ReplicatedStorage.GameStats["Player_".. plr.Name].Total.DeathCause.Value = "Nightmare Hunger [Opened Door]"
 
-                        firesignal(game.ReplicatedStorage.RemotesFolder.DeathHint.OnClientEvent, killmsg, "Blue")
+			firesignal(game.ReplicatedStorage.RemotesFolder.DeathHint.OnClientEvent, killmsg, "Blue")
 
-end
+		end
 
-wait(1)
+		wait(1)
 
-if roomy ~= game.ReplicatedStorage.GameData.LatestRoom.Value then
+		if roomy ~= game.ReplicatedStorage.GameData.LatestRoom.Value then
 
-game.Players.LocalPlayer.Character.Humanoid.Health = 0
+			game.Players.LocalPlayer.Character.Humanoid.Health = 0
 
-						local killmsg = {"Why did you open the door...", "Try not to open the door during nightmare hunger's scream next time!"}
+			local killmsg = {"Why did you open the door...", "Try not to open the door during nightmare hunger's scream next time!"}
 
-                        local plr = game:GetService("Players").LocalPlayer
+			local plr = game:GetService("Players").LocalPlayer
 
-                        game.ReplicatedStorage.GameStats["Player_".. plr.Name].Total.DeathCause.Value = "Nightmare Hunger [Opened Door]"
+			game.ReplicatedStorage.GameStats["Player_".. plr.Name].Total.DeathCause.Value = "Nightmare Hunger [Opened Door]"
 
-                        firesignal(game.ReplicatedStorage.RemotesFolder.DeathHint.OnClientEvent, killmsg, "Blue")
+			firesignal(game.ReplicatedStorage.RemotesFolder.DeathHint.OnClientEvent, killmsg, "Blue")
 
-end
+		end
 
-wait(1)
+		wait(1)
 
-if roomy ~= game.ReplicatedStorage.GameData.LatestRoom.Value then
+		if roomy ~= game.ReplicatedStorage.GameData.LatestRoom.Value then
 
-game.Players.LocalPlayer.Character.Humanoid.Health = 0
+			game.Players.LocalPlayer.Character.Humanoid.Health = 0
 
-						local killmsg = {"Why did you open the door...", "Try not to open the door during nightmare hunger's scream next time!"}
+			local killmsg = {"Why did you open the door...", "Try not to open the door during nightmare hunger's scream next time!"}
 
-                        local plr = game:GetService("Players").LocalPlayer
+			local plr = game:GetService("Players").LocalPlayer
 
-                        game.ReplicatedStorage.GameStats["Player_".. plr.Name].Total.DeathCause.Value = "Nightmare Hunger [Opened Door]"
+			game.ReplicatedStorage.GameStats["Player_".. plr.Name].Total.DeathCause.Value = "Nightmare Hunger [Opened Door]"
 
-                        firesignal(game.ReplicatedStorage.RemotesFolder.DeathHint.OnClientEvent, killmsg, "Blue")
+			firesignal(game.ReplicatedStorage.RemotesFolder.DeathHint.OnClientEvent, killmsg, "Blue")
 
-end
+		end
 
-wait(1)
+		wait(1)
 
-if roomy ~= game.ReplicatedStorage.GameData.LatestRoom.Value then
+		if roomy ~= game.ReplicatedStorage.GameData.LatestRoom.Value then
 
-game.Players.LocalPlayer.Character.Humanoid.Health = 0
+			game.Players.LocalPlayer.Character.Humanoid.Health = 0
 
-						local killmsg = {"Why did you open the door...", "Try not to open the door during nightmare hunger's scream next time!"}
+			local killmsg = {"Why did you open the door...", "Try not to open the door during nightmare hunger's scream next time!"}
 
-                        local plr = game:GetService("Players").LocalPlayer
+			local plr = game:GetService("Players").LocalPlayer
 
-                        game.ReplicatedStorage.GameStats["Player_".. plr.Name].Total.DeathCause.Value = "Nightmare Hunger [Opened Door]"
+			game.ReplicatedStorage.GameStats["Player_".. plr.Name].Total.DeathCause.Value = "Nightmare Hunger [Opened Door]"
 
-                        firesignal(game.ReplicatedStorage.RemotesFolder.DeathHint.OnClientEvent, killmsg, "Blue")
+			firesignal(game.ReplicatedStorage.RemotesFolder.DeathHint.OnClientEvent, killmsg, "Blue")
 
-end
+		end
 
-wait(1)
+		wait(1)
 
-if roomy ~= game.ReplicatedStorage.GameData.LatestRoom.Value then
+		if roomy ~= game.ReplicatedStorage.GameData.LatestRoom.Value then
 
-game.Players.LocalPlayer.Character.Humanoid.Health = 0
+			game.Players.LocalPlayer.Character.Humanoid.Health = 0
 
-						local killmsg = {"Why did you open the door...", "Try not to open the door during nightmare hunger's scream next time!"}
+			local killmsg = {"Why did you open the door...", "Try not to open the door during nightmare hunger's scream next time!"}
 
-                        local plr = game:GetService("Players").LocalPlayer
+			local plr = game:GetService("Players").LocalPlayer
 
-                        game.ReplicatedStorage.GameStats["Player_".. plr.Name].Total.DeathCause.Value = "Nightmare Hunger [Opened Door]"
+			game.ReplicatedStorage.GameStats["Player_".. plr.Name].Total.DeathCause.Value = "Nightmare Hunger [Opened Door]"
 
-                        firesignal(game.ReplicatedStorage.RemotesFolder.DeathHint.OnClientEvent, killmsg, "Blue")
+			firesignal(game.ReplicatedStorage.RemotesFolder.DeathHint.OnClientEvent, killmsg, "Blue")
 
-end
+		end
 
-wait(1)
+		wait(1)
 
-if roomy ~= game.ReplicatedStorage.GameData.LatestRoom.Value then
+		if roomy ~= game.ReplicatedStorage.GameData.LatestRoom.Value then
 
-game.Players.LocalPlayer.Character.Humanoid.Health = 0
+			game.Players.LocalPlayer.Character.Humanoid.Health = 0
 
-						local killmsg = {"Why did you open the door...", "Try not to open the door during nightmare hunger's scream next time!"}
+			local killmsg = {"Why did you open the door...", "Try not to open the door during nightmare hunger's scream next time!"}
 
-                        local plr = game:GetService("Players").LocalPlayer
+			local plr = game:GetService("Players").LocalPlayer
 
-                        game.ReplicatedStorage.GameStats["Player_".. plr.Name].Total.DeathCause.Value = "Nightmare Hunger [Opened Door]"
+			game.ReplicatedStorage.GameStats["Player_".. plr.Name].Total.DeathCause.Value = "Nightmare Hunger [Opened Door]"
 
-                        firesignal(game.ReplicatedStorage.RemotesFolder.DeathHint.OnClientEvent, killmsg, "Blue")
+			firesignal(game.ReplicatedStorage.RemotesFolder.DeathHint.OnClientEvent, killmsg, "Blue")
 
-end
+		end
 
-wait(1)
+		wait(1)
 
-if roomy ~= game.ReplicatedStorage.GameData.LatestRoom.Value then
+		if roomy ~= game.ReplicatedStorage.GameData.LatestRoom.Value then
 
-game.Players.LocalPlayer.Character.Humanoid.Health = 0
+			game.Players.LocalPlayer.Character.Humanoid.Health = 0
 
-						local killmsg = {"Why did you open the door...", "Try not to open the door during nightmare hunger's scream next time!"}
+			local killmsg = {"Why did you open the door...", "Try not to open the door during nightmare hunger's scream next time!"}
 
-                        local plr = game:GetService("Players").LocalPlayer
+			local plr = game:GetService("Players").LocalPlayer
 
-                        game.ReplicatedStorage.GameStats["Player_".. plr.Name].Total.DeathCause.Value = "Nightmare Hunger [Opened Door]"
+			game.ReplicatedStorage.GameStats["Player_".. plr.Name].Total.DeathCause.Value = "Nightmare Hunger [Opened Door]"
 
-                        firesignal(game.ReplicatedStorage.RemotesFolder.DeathHint.OnClientEvent, killmsg, "Blue")
+			firesignal(game.ReplicatedStorage.RemotesFolder.DeathHint.OnClientEvent, killmsg, "Blue")
 
-end
+		end
 
-wait(1)
+		wait(1)
 
-if roomy ~= game.ReplicatedStorage.GameData.LatestRoom.Value then
+		if roomy ~= game.ReplicatedStorage.GameData.LatestRoom.Value then
 
-game.Players.LocalPlayer.Character.Humanoid.Health = 0
+			game.Players.LocalPlayer.Character.Humanoid.Health = 0
 
-						local killmsg = {"Why did you open the door...", "Try not to open the door during nightmare hunger's scream next time!"}
+			local killmsg = {"Why did you open the door...", "Try not to open the door during nightmare hunger's scream next time!"}
 
-                        local plr = game:GetService("Players").LocalPlayer
+			local plr = game:GetService("Players").LocalPlayer
 
-                        game.ReplicatedStorage.GameStats["Player_".. plr.Name].Total.DeathCause.Value = "Nightmare Hunger [Opened Door]"
+			game.ReplicatedStorage.GameStats["Player_".. plr.Name].Total.DeathCause.Value = "Nightmare Hunger [Opened Door]"
 
-                        firesignal(game.ReplicatedStorage.RemotesFolder.DeathHint.OnClientEvent, killmsg, "Blue")
+			firesignal(game.ReplicatedStorage.RemotesFolder.DeathHint.OnClientEvent, killmsg, "Blue")
 
-end
+		end
 
-wait(1)
+		wait(1)
 
-if roomy ~= game.ReplicatedStorage.GameData.LatestRoom.Value then
+		if roomy ~= game.ReplicatedStorage.GameData.LatestRoom.Value then
 
-game.Players.LocalPlayer.Character.Humanoid.Health = 0
+			game.Players.LocalPlayer.Character.Humanoid.Health = 0
 
-						local killmsg = {"Why did you open the door...", "Try not to open the door during nightmare hunger's scream next time!"}
+			local killmsg = {"Why did you open the door...", "Try not to open the door during nightmare hunger's scream next time!"}
 
-                        local plr = game:GetService("Players").LocalPlayer
+			local plr = game:GetService("Players").LocalPlayer
 
-                        game.ReplicatedStorage.GameStats["Player_".. plr.Name].Total.DeathCause.Value = "Nightmare Hunger [Opened Door]"
+			game.ReplicatedStorage.GameStats["Player_".. plr.Name].Total.DeathCause.Value = "Nightmare Hunger [Opened Door]"
 
-                        firesignal(game.ReplicatedStorage.RemotesFolder.DeathHint.OnClientEvent, killmsg, "Blue")
+			firesignal(game.ReplicatedStorage.RemotesFolder.DeathHint.OnClientEvent, killmsg, "Blue")
 
-end
+		end
 
-wait(1)
+		wait(1)
 
-if roomy ~= game.ReplicatedStorage.GameData.LatestRoom.Value then
+		if roomy ~= game.ReplicatedStorage.GameData.LatestRoom.Value then
 
-game.Players.LocalPlayer.Character.Humanoid.Health = 0
+			game.Players.LocalPlayer.Character.Humanoid.Health = 0
 
-						local killmsg = {"Why did you open the door...", "Try not to open the door during nightmare hunger's scream next time!"}
+			local killmsg = {"Why did you open the door...", "Try not to open the door during nightmare hunger's scream next time!"}
 
-                        local plr = game:GetService("Players").LocalPlayer
+			local plr = game:GetService("Players").LocalPlayer
 
-                        game.ReplicatedStorage.GameStats["Player_".. plr.Name].Total.DeathCause.Value = "Nightmare Hunger [Opened Door]"
+			game.ReplicatedStorage.GameStats["Player_".. plr.Name].Total.DeathCause.Value = "Nightmare Hunger [Opened Door]"
 
-                        firesignal(game.ReplicatedStorage.RemotesFolder.DeathHint.OnClientEvent, killmsg, "Blue")
+			firesignal(game.ReplicatedStorage.RemotesFolder.DeathHint.OnClientEvent, killmsg, "Blue")
 
-end
+		end
 
-wait(.5)
+		wait(.5)
 
-if roomy ~= game.ReplicatedStorage.GameData.LatestRoom.Value then
+		if roomy ~= game.ReplicatedStorage.GameData.LatestRoom.Value then
 
-game.Players.LocalPlayer.Character.Humanoid.Health = 0
+			game.Players.LocalPlayer.Character.Humanoid.Health = 0
 
-						local killmsg = {"Why did you open the door...", "Try not to open the door during nightmare hunger's scream next time!"}
+			local killmsg = {"Why did you open the door...", "Try not to open the door during nightmare hunger's scream next time!"}
 
-                        local plr = game:GetService("Players").LocalPlayer
+			local plr = game:GetService("Players").LocalPlayer
 
-                        game.ReplicatedStorage.GameStats["Player_".. plr.Name].Total.DeathCause.Value = "Nightmare Hunger [Opened Door]"
+			game.ReplicatedStorage.GameStats["Player_".. plr.Name].Total.DeathCause.Value = "Nightmare Hunger [Opened Door]"
 
-                        firesignal(game.ReplicatedStorage.RemotesFolder.DeathHint.OnClientEvent, killmsg, "Blue")
+			firesignal(game.ReplicatedStorage.RemotesFolder.DeathHint.OnClientEvent, killmsg, "Blue")
 
-end
+		end
 
-loadstring(game:HttpGet("https://github.com/PABMAXICHAC/doors-monsters-scripts/raw/main/HUNGERcrux"))()
+		loadstring(game:HttpGet("https://github.com/PABMAXICHAC/doors-monsters-scripts/raw/main/HUNGERcrux"))()
 
-end
+	end
 
 end)()
 
@@ -1569,7 +1282,24 @@ coroutine.wrap(function()
 	end
 end)()
 
--- Silence
+-- Pandemonium
+coroutine.wrap(function()
+	while true do
+		if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
+			wait(math.random(650, 990))
+			if not IsSeekChase or IsFigure or IsHalt then
+				LatestRoom:GetPropertyChangedSignal("Value"):Wait()
+				wait(2)
+				loadstring(game:HttpGet("https://raw.githubusercontent.com/vct0721/Doors-Stuff/refs/heads/main/Entities/Pandemonium.lua"))()
+			end		
+		end
+	end
+end)()
+
+-- Silence (EDM)
+loadstring(game:HttpGet("https://raw.githubusercontent.com/check78/Entities/main/SilenceEndless.txt"))()
+
+-- Silence (HC)
 coroutine.wrap(function()
 	while true do
 		if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
@@ -1598,89 +1328,90 @@ end)()
 
 -- Glitched Eyes
 coroutine.wrap(function()
-   while true do
-     if not IsGlitched then
-     wait(math.random(12, 30))
-	 local currentLoadedRoom = workspace.CurrentRooms[game:GetService("ReplicatedStorage").GameData.LatestRoom.Value]
-     local eyes = game:GetObjects("rbxassetid://71139650987794")[1]
-     eyes.Name = "GlitchedEyes"
+	while true do
+		if not IsGlitched then
+			wait(math.random(12, 30))
+			local currentLoadedRoom = workspace.CurrentRooms[game:GetService("ReplicatedStorage").GameData.LatestRoom.Value]
+			local eyes = game:GetObjects("rbxassetid://71139650987794")[1]
+			eyes.Name = "GlitchedEyes"
 
-local num = 0
-if currentLoadedRoom:FindFirstChild("PathfindNodes") then
-    num = math.floor(#currentLoadedRoom.PathfindNodes:GetChildren() / 2)
-end
+			local num = 0
+			if currentLoadedRoom:FindFirstChild("PathfindNodes") then
+				num = math.floor(#currentLoadedRoom.PathfindNodes:GetChildren() / 2)
+			end
 
-eyes.Core.CFrame = (
-    num == 0 and currentLoadedRoom[currentLoadedRoom.Name] or currentLoadedRoom.PathfindNodes[num]
-).CFrame + Vector3.new(0, 7, 0)
+			eyes.Core.CFrame = ( 
+				num == 0 and currentLoadedRoom[currentLoadedRoom.Name] or currentLoadedRoom.PathfindNodes[num]
+			).CFrame + Vector3.new(0, 7, 0)
 
-eyes.Parent = currentLoadedRoom
-eyes.Anchored = true
+			eyes.Parent = currentLoadedRoom
+			eyes.Anchored = true
 
-local initiateSound = eyes.Core:FindFirstChild("Initiate")
-local ambienceSound = eyes.Core:FindFirstChild("Ambience")
-if initiateSound then initiateSound:Play() end
-if ambienceSound then ambienceSound:Play() end
+			local initiateSound = eyes.Core:FindFirstChild("Initiate")
+			local ambienceSound = eyes.Core:FindFirstChild("Ambience")
+			if initiateSound then initiateSound:Play() end
+			if ambienceSound then ambienceSound:Play() end
 
-local Players = game:GetService("Players")
-local LocalPlayer = Players.LocalPlayer
+			local Players = game:GetService("Players")
+			local LocalPlayer = Players.LocalPlayer
 
-while eyes.Parent do
-    local character = LocalPlayer.Character
-    local humanoid = character and character:FindFirstChild("Humanoid")
-    if humanoid and humanoid.Health > 0 then
-        local camera = workspace.CurrentCamera
-        local _, onScreen = camera:WorldToScreenPoint(eyes.Core.Position)
-        if onScreen then
-            humanoid.Health -= 10
-            local attackSound = eyes.Core:FindFirstChild("Attack")
-            if attackSound then attackSound:Play() end
-                if humanoid.Health <= 0 then
-                    game:GetService("ReplicatedStorage").GameStats["Player_" .. game.Players.LocalPlayer.Name].Total.DeathCause.Value = "Glitched Eyes"
-                    firesignal(game.ReplicatedStorage.RemotesFolder.DeathHint.OnClientEvent, 
-                        {"You died to a Eyes Variation", 
-                         "You can call it Glitched Eyes..", 
-                         "It can appear everywhere", 
-                         "Use what you learned with Eyes"}, 
-                        "Blue"
-                    )
+			while eyes.Parent do
+				local character = LocalPlayer.Character
+				local humanoid = character and character:FindFirstChild("Humanoid")
+				if humanoid and humanoid.Health > 0 then
+					local camera = workspace.CurrentCamera
+					local _, onScreen = camera:WorldToScreenPoint(eyes.Core.Position)
+					if onScreen then
+						humanoid.Health -= 10
+						local attackSound = eyes.Core:FindFirstChild("Attack")
+						if attackSound then attackSound:Play() end
+						if humanoid.Health <= 0 then
+							game:GetService("ReplicatedStorage").GameStats["Player_" .. game.Players.LocalPlayer.Name].Total.DeathCause.Value = "Glitched Eyes"
+							firesignal(game.ReplicatedStorage.RemotesFolder.DeathHint.OnClientEvent, 
+								{"You died to a Eyes Variation", 
+									"You can call it Glitched Eyes..", 
+									"It can appear everywhere", 
+									"Use what you learned with Eyes"}, 
+								"Blue"
+							)
+						end	
+					end
+				end
+			end
+
+			while eyes.Parent do
+				local oph = math.random(1, 35)
+				if oph == 5 then
+					local player = game:GetService("Players").LocalPlayer
+					local characterRoot = player.Character.PrimaryPart
+					if characterRoot then
+						local randomOffset = Vector3.new(math.random(-10, 10), 0, math.random(-10, 10))
+						local newPosition = characterRoot.CFrame + randomOffset + Vector3.new(0, 7, 0)
+						local CustomMusic = getGitSoundId("https://github.com/vct0721/Doors-Stuff/blob/main/EyesTeleport.mp3?raw=true", "TeleportEyes")
+						CustomMusic.Parent = eyes.Core
+						CustomMusic.Looped = false
+						CustomMusic:Play()			
+						eyes.Core.CFrame = CFrame.new(newPosition)
+						CustomMusic.Ended:Wait()
+						CustomMusic:Destroy()
+					end
 				end	
-        end
-    end
-end
+			end
 
-while eyes.Parent do
-    local oph = math.random(1, 35)
-	if oph == 5 then
-        local player = game:GetService("Players").LocalPlayer
-        local characterRoot = player.Character.PrimaryPart
-        if characterRoot then
-            local randomOffset = Vector3.new(math.random(-10, 10), 0, math.random(-10, 10))
-            local newPosition = characterRoot.CFrame + randomOffset + Vector3.new(0, 6, 0)
-		    local CustomMusic = getGitSoundId("https://github.com/vct0721/Doors-Stuff/blob/main/EyesTeleport.mp3?raw=true", "TeleportEyes")
-            CustomMusic.Parent = eyes.Core
-            CustomMusic.Looped = false
-            CustomMusic:Play()			
-            eyes.Core.CFrame = CFrame.new(newPosition)
-			CustomMusic.Ended:Wait()
-            CustomMusic:Destroy()
-        end
-	end	
-end
+			while eyes.Parent do
+				task.wait(0.2)
+				if currentLoadedRoom:FindFirstChild("GlitchedEyes") then
+					game:GetService("TweenService"):Create(
+						eyes.Core.Ambience,
+						TweenInfo.new(0.2, Enum.EasingStyle.Linear, Enum.EasingDirection.InOut),
+						{ PlaybackSpeed = math.random(5, 15) / 10 }
+					):Play()
+				end
+			end
+		end
+	end
+end)()	
 
-while eyes.Parent do
-    task.wait(0.2)
-    if currentLoadedRoom:FindFirstChild("GlitchedEyes") then
-        game:GetService("TweenService"):Create(
-            eyes.Core.Ambience,
-            TweenInfo.new(0.2, Enum.EasingStyle.Linear, Enum.EasingDirection.InOut),
-            { PlaybackSpeed = math.random(5, 15) / 10 }
-        ):Play()
-    end
-end
-end
-end)()
-     
 -- The Watcher
 coroutine.wrap(function()
 	while true do
@@ -1733,7 +1464,7 @@ coroutine.wrap(function()
 			wait(sctm)
 			if not IsSeekChase or IsFigure or IsHalt or IsGrumble or IsMines then
 				LatestRoom:GetPropertyChangedSignal("Value"):Wait()
-				loadstring(game:HttpGet("https://pastebin.com/raw/S9KGv5Ce"))()
+				loadstring(game:HttpGet("https://pastefy.app/dh7c3tm0/raw"))()
 			end
 		end
 	end
@@ -1779,7 +1510,6 @@ coroutine.wrap(function()
 	end
 end)()
 
-
 -- Matcher
 coroutine.wrap(function()
 	while true do
@@ -1788,22 +1518,6 @@ coroutine.wrap(function()
 			wait(sctm)
 			if not IsSeekChase or IsFigure or IsHalt or IsGrumble then
 				LatestRoom:GetPropertyChangedSignal("Value"):Wait()
-				wait(0.3)
-				game.Lighting.MainColorCorrection.TintColor = Color3.fromRGB(212, 255, 212)
-				game.Lighting.MainColorCorrection.Contrast = 0.3
-				local tween = game:GetService("TweenService"):Create(game.Lighting.MainColorCorrection, TweenInfo.new(0.5), {Contrast = 0})
-				tween:Play()
-				local TW = game:GetService("TweenService"):Create(game.Lighting.MainColorCorrection, TweenInfo.new(0.5), {TintColor = Color3.fromRGB(255, 255, 255)})
-				TW:Play()
-				local roast = Instance.new("Sound")
-				roast.Parent = workspace
-				roast.Name = "roast"
-				roast.SoundId = "rbxassetid://9125936117"
-				roast.Volume = 0.5
-				roast.PlaybackSpeed = 3
-				roast:Play()
-				wait(0.6)
-				roast:Destroy()
 				loadstring(game:HttpGet("https://pastebin.com/raw/XzuW1A1p"))()
 			end
 		end
@@ -1887,9 +1601,7 @@ coroutine.wrap(function()
 				Image = "rbxassetid://17857830685"
 			})
 		end
-
 		spawnShocker()
-
 	end
 end)()  
 
@@ -1918,9 +1630,46 @@ coroutine.wrap(function()
 		if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
 			wait(math.random(3,100))
 			LatestRoom:GetPropertyChangedSignal("Value"):Wait()
-			loadstring(game:HttpGet("https://raw.githubusercontent.com/huyhoanggphuc/Entity-obfuscate/refs/heads/main/EndlessDoors/Entity/obfuscate/Oversser.txt.lua"))()
+			loadstring(game:HttpGet("https://raw.githubusercontent.com/DripCapybara/Doors-Mode-Remakes/refs/heads/main/Overseer.lua"))()
 		end
 	end
+
+	-- No Overseer in Lever Room
+	workspace.CurrentRooms[game.ReplicatedStorage.GameData.LatestRoom.Value].Assets.ChildAdded:Connect(function(eye)
+		if eye.Name == "LeverForGate" then
+			wait(0.6)
+			if workspace:FindFirstChild("Overseer") then
+				workspace.Overseer:Destroy()
+			end
+		else
+
+		end
+	end)
+
+	-- No Overseer in Seek Chase
+	workspace.ChildAdded:Connect(function(seek)
+		if seek.Name == "SeekMoving" or seek.Name == "SeekMovingNewClone" then
+			wait(0.6)
+			if workspace:FindFirstChild("Overseer") then
+				workspace.Overseer:Destroy()
+			end
+		else
+
+		end
+	end)
+
+	-- No Overseer and Normal Eyes Combo
+	workspace.ChildAdded:Connect(function(seek)
+		if seek.Name == "Eyes" then
+			wait(0.6)
+			if workspace:FindFirstChild("Overseer") then
+				workspace.Overseer:Destroy()
+			end
+		else
+
+		end
+	end)	
+
 end)()
 
 -- Rebound
@@ -1931,7 +1680,7 @@ coroutine.wrap(function()
 			wait(sctm)
 			if not IsSeekChase or IsFigure or IsHalt or IsGrumble then
 				LatestRoom:GetPropertyChangedSignal("Value"):Wait()
-				loadstring(game:HttpGet("https://pastebin.com/raw/2SAwkPLt"))()
+				loadstring(game:HttpGet("https://raw.githubusercontent.com/DripCapybara/Doors-Mode-Remakes/refs/heads/main/Rebound.lua"))()
 			end
 		end
 	end
@@ -2009,24 +1758,24 @@ end)()
 
 -- Seek Eyes (Greenhouse)
 coroutine.wrap(function()
- 
-if game:GetService("ReplicatedStorage").GameData.Floor.Value == "Hotel" or game:GetService("ReplicatedStorage").GameData.Floor.Value == "Fools" then
- 
-game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
- 
-if game.ReplicatedStorage.GameData.LatestRoom.Value == 90 or game.ReplicatedStorage.GameData.LatestRoom.Value == 91 or game.ReplicatedStorage.GameData.LatestRoom.Value == 92 or game.ReplicatedStorage.GameData.LatestRoom.Value ==  93 or game.ReplicatedStorage.GameData.LatestRoom.Value == 94 or game.ReplicatedStorage.GameData.LatestRoom.Value == 95 or game.ReplicatedStorage.GameData.LatestRoom.Value == 96 or game.ReplicatedStorage.GameData.LatestRoom.Value == 97 then
- 
-    wait(3)
- 
-local a = game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game
-require(game.ReplicatedStorage.ClientModules.EntityModules.Seek).tease(nil, workspace.CurrentRooms[game.Players.LocalPlayer:GetAttribute("CurrentRoom")], 100)
- 
-end
- 
-end)
- 
-end
- 
+
+	if game:GetService("ReplicatedStorage").GameData.Floor.Value == "Hotel" or game:GetService("ReplicatedStorage").GameData.Floor.Value == "Fools" then
+
+		game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
+
+			if game.ReplicatedStorage.GameData.LatestRoom.Value == 90 or game.ReplicatedStorage.GameData.LatestRoom.Value == 91 or game.ReplicatedStorage.GameData.LatestRoom.Value == 92 or game.ReplicatedStorage.GameData.LatestRoom.Value ==  93 or game.ReplicatedStorage.GameData.LatestRoom.Value == 94 or game.ReplicatedStorage.GameData.LatestRoom.Value == 95 or game.ReplicatedStorage.GameData.LatestRoom.Value == 96 or game.ReplicatedStorage.GameData.LatestRoom.Value == 97 then
+
+				wait(3)
+
+				local a = game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game
+				require(game.ReplicatedStorage.ClientModules.EntityModules.Seek).tease(nil, workspace.CurrentRooms[game.Players.LocalPlayer:GetAttribute("CurrentRoom")], 100)
+
+			end
+
+		end)
+
+	end
+
 end)()
 
 -- Victrola
@@ -3139,10 +2888,10 @@ coroutine.wrap(function()
 
 	workspace.ChildAdded:Connect(function(inst)
 		task.wait(1)
-		
+
 		if inst.Name == "RushMoving" and inst:FindFirstChild("RushNew") and inst.RushNew:FindFirstChild("Attachment") then
-		    LocalPlayer.PlayerGui.MainUI.Jumpscare.Jumpscare_Rush.ImageLabel.ImageColor3 = Color3.fromRGB(255, 0, 0)
-	        LocalPlayer.PlayerGui.MainUI.Jumpscare.Jumpscare_Rush.ImageLabelBig.ImageColor3 = Color3.fromRGB(255, 0, 0)
+			LocalPlayer.PlayerGui.MainUI.Jumpscare.Jumpscare_Rush.ImageLabel.ImageColor3 = Color3.fromRGB(255, 0, 0)
+			LocalPlayer.PlayerGui.MainUI.Jumpscare.Jumpscare_Rush.ImageLabelBig.ImageColor3 = Color3.fromRGB(255, 0, 0)
 			inst.RushNew.PlaySound.PlaybackSpeed = 0.9
 			inst.RushNew.Footsteps.PlaybackSpeed = 1.1
 			local BlackTrail = inst.RushNew.Attachment.BlackTrail
@@ -3165,19 +2914,20 @@ coroutine.wrap(function()
 			repeat
 				task.wait()
 			until not inst:FindFirstChild("RushNew")
-			
-		if not inst:FindFirstChild("RushNew") then
-			local CeaseChance = math.random(1, 34)
-			if CeaseChance == 1 or CeaseChance == 5 or CeaseChance == 10 then
-				if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
-			       loadstring(game:HttpGet("https://pastefy.app/AaIrbcZS/raw"))()
-	            end
-			end	
-		end
-		
+
+			if not inst:FindFirstChild("RushNew") then
+				wait(0.5)
+				local CeaseChance = math.random(1, 34)
+				if CeaseChance == 1 or CeaseChance == 5 or CeaseChance == 10 then
+					if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
+						loadstring(game:HttpGet("https://pastefy.app/AaIrbcZS/raw"))()
+					end
+				end	
+			end
+
 		elseif inst.Name == "Eyes" and inst:FindFirstChild("Core") and inst.Core:FindFirstChild("Attachment") then
-		
-		game.Players.LocalPlayer.PlayerGui.MainUI.Jumpscare.Jumpscare_Eyes.BackgroundColor3 = Color3.fromRGB(255, 0, 55)
+
+			game.Players.LocalPlayer.PlayerGui.MainUI.Jumpscare.Jumpscare_Eyes.BackgroundColor3 = Color3.fromRGB(255, 0, 55)
 
 
 			inst.Core.Attachment.EyesParticle.Color = ColorSequence.new({
@@ -3191,15 +2941,15 @@ coroutine.wrap(function()
 				ColorSequenceKeypoint.new(1, Color3.new(1, 0.305881, 0.305881)),
 
 			})
-			
+
 			inst.Core.Ambience.PlaybackSpeed = 0.9
-			
+
 			repeat
 				task.wait()
 			until not inst:FindFirstChild("Core")
 
 		elseif inst.Name == "AmbushMoving" and inst:FindFirstChild("RushNew") and inst.RushNew:FindFirstChild("Attachment") then
-            LocalPlayer.PlayerGui.MainUI.Jumpscare.Jumpscare_Ambush.ImageLabel.ImageColor3 = Color3.fromRGB(255, 5, 50)		
+			LocalPlayer.PlayerGui.MainUI.Jumpscare.Jumpscare_Ambush.ImageLabel.ImageColor3 = Color3.fromRGB(255, 5, 50)		
 			game.Workspace.AmbushMoving.Ambience.PlaybackSpeed = 1.1		
 			game.Workspace.AmbushMoving.RushNew.PlaySound.PlaybackSpeed = 0.9
 			game.Workspace.AmbushMoving.RushNew.Footsteps.PlaybackSpeed = 1.1
@@ -3213,38 +2963,7 @@ coroutine.wrap(function()
 			repeat
 				task.wait()
 			until not inst:FindFirstChild("RushNew")
-				
-		elseif inst.Name == "BackdoorRush" and inst:FindFirstChild("Main") and inst.Main:FindFirstChild("Attachment") and inst.Main:FindFirstChild("AttachmentSwitch")  then
-			local BoolValue = Instance.new("BoolValue")
-			BoolValue.Name = "TryHarded"
-			BoolValue.Parent = inst
-        game.Workspace.BackdoorRush.Main.Attachment.BlackTrail.Color = ColorSequence.new({
- 
-            ColorSequenceKeypoint.new(0, Color3.new(1, 0, 0)),
- 
-            ColorSequenceKeypoint.new(0, Color3.new(1, 0, 1)),
- 
-            ColorSequenceKeypoint.new(1, Color3.new(1, 0, 0))
- 
-        })
- 
-        game.Workspace.BackdoorRush.Main.Attachment.ParticleEmitter.Color = ColorSequence.new({
- 
-            ColorSequenceKeypoint.new(0, Color3.new(1, 0, 0)),
- 
-            ColorSequenceKeypoint.new(0, Color3.new(1, 0, 1)),
- 
-            ColorSequenceKeypoint.new(1, Color3.new(1, 0, 0))
- 
-        })
- 
-		game.Workspace.BackdoorRush.Main.PlaySound.PlaybackSpeed = 0.05
-		game.Workspace.BackdoorRush.Main.Footsteps.PlaybackSpeed = 0.1
 
-			repeat
-				task.wait()
-			until not inst:FindFirstChild("Main")
-						
 		end
 	end)
 end)()
@@ -3254,10 +2973,10 @@ coroutine.wrap(function()
 	game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
 		if game.ReplicatedStorage.GameData.LatestRoom.Value == 52 then
 			if IsMines then
-			    local CustomMusic = getGitSoundId("https://github.com/Sosnen/Ping-s-Dumbass-projects-/raw/refs/heads/main/Dark-Depths_Entrencebetter.mp3", "_IntroEntrance2")
-                CustomMusic.Parent = game:GetService("SoundService")
-                CustomMusic.Looped = false
-                CustomMusic:Play()
+				local CustomMusic = getGitSoundId("https://github.com/Sosnen/Ping-s-Dumbass-projects-/raw/refs/heads/main/Dark-Depths_Entrencebetter.mp3", "_IntroEntrance2")
+				CustomMusic.Parent = game:GetService("SoundService")
+				CustomMusic.Looped = false
+				CustomMusic:Play()
 				Lighting.Ambient = Color3.new(0, 0, 0)
 				Lighting.Brightness = 0.1
 				Lighting.FogEnd = 60
@@ -3285,10 +3004,10 @@ coroutine.wrap(function()
 				IsDeepHotel = false
 				IsInsaneMines = true
 			elseif IsHotel then
-			    local CustomMusic = getGitSoundId("https://github.com/Sosnen/Ping-s-Dumbass-projects-/raw/refs/heads/main/Dark-Depths_Entrencebetter.mp3", "_IntroEntrance1")
-                CustomMusic.Parent = game:GetService("SoundService")
-                CustomMusic.Looped = false
-                CustomMusic:Play()
+				local CustomMusic = getGitSoundId("https://github.com/Sosnen/Ping-s-Dumbass-projects-/raw/refs/heads/main/Dark-Depths_Entrencebetter.mp3", "_IntroEntrance1")
+				CustomMusic.Parent = game:GetService("SoundService")
+				CustomMusic.Looped = false
+				CustomMusic:Play()
 				Lighting.Ambient = Color3.new(0, 0, 0)
 				Lighting.Brightness = 0.1
 				Lighting.FogEnd = 60
@@ -3322,227 +3041,227 @@ end)()
 
 -- Insane Mines Setup
 
-				-- Lights Remove
-				coroutine.wrap(function()
-					while true do
-					if IsInsaneMines then
-						wait(0.0005)
-						RoomAssets.Chandelier:Destroy()
-						RoomAssets.Light_Fixtures:Destroy()
-						end
-					end
-				end)()
+-- Lights Remove
+coroutine.wrap(function()
+	while true do
+		if IsInsaneMines then
+			wait(0.0005)
+			RoomAssets.Chandelier:Destroy()
+			RoomAssets.Light_Fixtures:Destroy()
+		end
+	end
+end)()
 
-				-- A-90
-				coroutine.wrap(function()
-					while true do
-					if IsInsaneMines then
-						wait(math.random(10, 29))
-						if not IsSeekChase then
-							LatestRoom:GetPropertyChangedSignal("Value"):Wait()
-							wait(0)
-							loadstring(game:HttpGet("https://pastefy.app/K2TbsMWk/raw"))()
-							end
-						end
-					end
-				end)()
+-- A-90
+coroutine.wrap(function()
+	while true do
+		if IsInsaneMines then
+			wait(math.random(10, 29))
+			if not IsSeekChase then
+				LatestRoom:GetPropertyChangedSignal("Value"):Wait()
+				wait(0)
+				loadstring(game:HttpGet("https://pastefy.app/K2TbsMWk/raw"))()
+			end
+		end
+	end
+end)()
 
-				-- B-60
-				coroutine.wrap(function()
-					while true do
-					if IsInsaneMines then
-						if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
-							wait(375)
-							LatestRoom:GetPropertyChangedSignal("Value"):Wait()
-							loadstring(game:HttpGet("https://pastebin.com/raw/s2jHyGmm"))()
-							end
-						end
-					end
-				end)()
+-- B-60
+coroutine.wrap(function()
+	while true do
+		if IsInsaneMines then
+			if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
+				wait(375)
+				LatestRoom:GetPropertyChangedSignal("Value"):Wait()
+				loadstring(game:HttpGet("https://pastebin.com/raw/s2jHyGmm"))()
+			end
+		end
+	end
+end)()
 
-				-- A-10
-				coroutine.wrap(function()
-					while true do
-					if IsInsaneMines then
-						if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
-							wait(math.random(350, 590))
-							if not IsSeekChase or IsFigure or IsHalt or IsGrumble then
-								LatestRoom:GetPropertyChangedSignal("Value"):Wait()
-								wait(0)
-								loadstring(game:HttpGet("https://pastefy.app/rmShikEK/raw"))()
-								end
-							end
-						end
-					end
-				end)()
+-- A-10
+coroutine.wrap(function()
+	while true do
+		if IsInsaneMines then
+			if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
+				wait(math.random(350, 590))
+				if not IsSeekChase or IsFigure or IsHalt or IsGrumble then
+					LatestRoom:GetPropertyChangedSignal("Value"):Wait()
+					wait(0)
+					loadstring(game:HttpGet("https://pastefy.app/rmShikEK/raw"))()
+				end
+			end
+		end
+	end
+end)()
 
-				-- Claim
-				coroutine.wrap(function()
-					while true do
-					if IsInsaneMines then
-						if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
-							wait(math.random(100, 550))
-							if not IsSeekChase or IsFigure or IsHalt or IsGrumble then
-								LatestRoom:GetPropertyChangedSignal("Value"):Wait()
-								loadstring(game:HttpGet("https://pastebin.com/raw/d3R357Rk"))()
-								end
-							end
-						end
-					end
-				end)()
+-- Claim
+coroutine.wrap(function()
+	while true do
+		if IsInsaneMines then
+			if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
+				wait(math.random(100, 550))
+				if not IsSeekChase or IsFigure or IsHalt or IsGrumble then
+					LatestRoom:GetPropertyChangedSignal("Value"):Wait()
+					loadstring(game:HttpGet("https://pastebin.com/raw/d3R357Rk"))()
+				end
+			end
+		end
+	end
+end)()
 
-				-- Wh1t3 Remade
-				coroutine.wrap(function()
-					while true do
-					if IsInsaneMines then
-						if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
-							if not IsSeekChase or IsFigure or IsHalt or IsGrumble then
-								wait(math.random(500, 1390))
-								LatestRoom:GetPropertyChangedSignal("Value"):Wait()
-								local cuew = Instance.new("Sound")
-								cuew.Parent = game.Workspace
-								cuew.Name = "Spawn"
-								cuew.SoundId = "rbxassetid://3359047385"
-								cuew.Volume = 1
-								cuew.PlaybackSpeed = 1
-								cuew:Play()
-								game.Lighting.MainColorCorrection.TintColor = Color3.fromRGB(0, 255, 0)
-								game.Lighting.MainColorCorrection.Contrast = 25
-								local tween = game:GetService("TweenService"):Create(game.Lighting.MainColorCorrection, TweenInfo.new(9), {Contrast = 0})
-								tween:Play()
-								local TW = game:GetService("TweenService"):Create(game.Lighting.MainColorCorrection, TweenInfo.new(1), {TintColor = Color3.fromRGB(255, 255, 255)})
-								TW:Play()
-								loadstring(game:HttpGet("https://pastebin.com/raw/2LTckSaJ"))()
-								end
-							end
-						end
-					end
-				end)()
+-- Wh1t3 Remade
+coroutine.wrap(function()
+	while true do
+		if IsInsaneMines then
+			if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
+				if not IsSeekChase or IsFigure or IsHalt or IsGrumble then
+					wait(math.random(500, 1390))
+					LatestRoom:GetPropertyChangedSignal("Value"):Wait()
+					local cuew = Instance.new("Sound")
+					cuew.Parent = game.Workspace
+					cuew.Name = "Spawn"
+					cuew.SoundId = "rbxassetid://3359047385"
+					cuew.Volume = 1
+					cuew.PlaybackSpeed = 1
+					cuew:Play()
+					game.Lighting.MainColorCorrection.TintColor = Color3.fromRGB(0, 255, 0)
+					game.Lighting.MainColorCorrection.Contrast = 25
+					local tween = game:GetService("TweenService"):Create(game.Lighting.MainColorCorrection, TweenInfo.new(9), {Contrast = 0})
+					tween:Play()
+					local TW = game:GetService("TweenService"):Create(game.Lighting.MainColorCorrection, TweenInfo.new(1), {TintColor = Color3.fromRGB(255, 255, 255)})
+					TW:Play()
+					loadstring(game:HttpGet("https://pastebin.com/raw/2LTckSaJ"))()
+				end
+			end
+		end
+	end
+end)()
 
 -- Deep Hotel Setup
 
-				-- Lights Remove
-				coroutine.wrap(function()
-					while true do
-					if IsDeepHotel then
-						wait(0.0005)
-						RoomAssets.Chandelier:Destroy()
-						RoomAssets.Light_Fixtures:Destroy()
-						end
-					end
-				end)()
+-- Lights Remove
+coroutine.wrap(function()
+	while true do
+		if IsDeepHotel then
+			wait(0.0005)
+			RoomAssets.Chandelier:Destroy()
+			RoomAssets.Light_Fixtures:Destroy()
+		end
+	end
+end)()
 
-				-- A-90
-				coroutine.wrap(function()
-					while true do
-					    if IsDeepHotel then
-						wait(math.random(10, 29))
-						if not IsSeekChase then
-							LatestRoom:GetPropertyChangedSignal("Value"):Wait()
-							wait(0)
-							loadstring(game:HttpGet("https://pastefy.app/K2TbsMWk/raw"))()
-							end
-						end
-					end
-				end)()
+-- A-90
+coroutine.wrap(function()
+	while true do
+		if IsDeepHotel then
+			wait(math.random(10, 29))
+			if not IsSeekChase then
+				LatestRoom:GetPropertyChangedSignal("Value"):Wait()
+				wait(0)
+				loadstring(game:HttpGet("https://pastefy.app/K2TbsMWk/raw"))()
+			end
+		end
+	end
+end)()
 
-				-- Dread HC 
-				coroutine.wrap(function()
-					while true do
-					    if IsDeepHotel then
-						wait(math.random(29, 63))
-						if not IsSeekChase or IsFigure or IsHalt then
-							LatestRoom:GetPropertyChangedSignal("Value"):Wait()
-							wait(0)
-							loadstring(game:HttpGet("https://raw.githubusercontent.com/huyhoanggphuc/Entity-obfuscate/refs/heads/main/Dread.lua"))()
-							end
-						end
-					end	
-				end)()
+-- Dread HC 
+coroutine.wrap(function()
+	while true do
+		if IsDeepHotel then
+			wait(math.random(29, 63))
+			if not IsSeekChase or IsFigure or IsHalt then
+				LatestRoom:GetPropertyChangedSignal("Value"):Wait()
+				wait(0)
+				loadstring(game:HttpGet("https://raw.githubusercontent.com/huyhoanggphuc/Entity-obfuscate/refs/heads/main/Dread.lua"))()
+			end
+		end
+	end	
+end)()
 
-				-- Wh1t3 Remade
-				coroutine.wrap(function()
-					while true do
-					    if IsDeepHotel then
-						if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
-							if not IsSeekChase or IsFigure or IsHalt or IsGrumble then
-								wait(math.random(500, 1390))
-								LatestRoom:GetPropertyChangedSignal("Value"):Wait()
-								local cuew = Instance.new("Sound")
-								cuew.Parent = game.Workspace
-								cuew.Name = "Spawn"
-								cuew.SoundId = "rbxassetid://3359047385"
-								cuew.Volume = 1
-								cuew.PlaybackSpeed = 1
-								cuew:Play()
-								game.Lighting.MainColorCorrection.TintColor = Color3.fromRGB(0, 255, 0)
-								game.Lighting.MainColorCorrection.Contrast = 25
-								local tween = game:GetService("TweenService"):Create(game.Lighting.MainColorCorrection, TweenInfo.new(9), {Contrast = 0})
-								tween:Play()
-								local TW = game:GetService("TweenService"):Create(game.Lighting.MainColorCorrection, TweenInfo.new(1), {TintColor = Color3.fromRGB(255, 255, 255)})
-								TW:Play()
-								loadstring(game:HttpGet("https://pastebin.com/raw/2LTckSaJ"))()
-								end
-							end
-						end
-					end
-				end)()
+-- Wh1t3 Remade
+coroutine.wrap(function()
+	while true do
+		if IsDeepHotel then
+			if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
+				if not IsSeekChase or IsFigure or IsHalt or IsGrumble then
+					wait(math.random(500, 1390))
+					LatestRoom:GetPropertyChangedSignal("Value"):Wait()
+					local cuew = Instance.new("Sound")
+					cuew.Parent = game.Workspace
+					cuew.Name = "Spawn"
+					cuew.SoundId = "rbxassetid://3359047385"
+					cuew.Volume = 1
+					cuew.PlaybackSpeed = 1
+					cuew:Play()
+					game.Lighting.MainColorCorrection.TintColor = Color3.fromRGB(0, 255, 0)
+					game.Lighting.MainColorCorrection.Contrast = 25
+					local tween = game:GetService("TweenService"):Create(game.Lighting.MainColorCorrection, TweenInfo.new(9), {Contrast = 0})
+					tween:Play()
+					local TW = game:GetService("TweenService"):Create(game.Lighting.MainColorCorrection, TweenInfo.new(1), {TintColor = Color3.fromRGB(255, 255, 255)})
+					TW:Play()
+					loadstring(game:HttpGet("https://pastebin.com/raw/2LTckSaJ"))()
+				end
+			end
+		end
+	end
+end)()
 
-				-- Surge
-				coroutine.wrap(function()
-					while true do
-					    if IsDeepHotel then
-						if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
-							local sctm = math.random(900, 2970)
-							wait(sctm)
-							if not IsSeekChase or IsFigure or IsHalt or IsGrumble then
-								LatestRoom:GetPropertyChangedSignal("Value"):Wait()
-								local cue2 = Instance.new("Sound")
-								cue2.Parent = game.Workspace
-								cue2.Name = "Spawn"
-								cue2.SoundId = "rbxassetid://3359047385"
-								cue2.Volume = 1
-								cue2.PlaybackSpeed = 1
-								cue2:Play()
-								game.Lighting.MainColorCorrection.TintColor = Color3.fromRGB(0, 255, 0)
-								game.Lighting.MainColorCorrection.Contrast = 25
-								local tween = game:GetService("TweenService"):Create(game.Lighting.MainColorCorrection, TweenInfo.new(9), {Contrast = 0})
-								tween:Play()
-								local TW = game:GetService("TweenService"):Create(game.Lighting.MainColorCorrection, TweenInfo.new(1), {TintColor = Color3.fromRGB(255, 255, 255)})
-								TW:Play()
-								wait(1)
-								loadstring(game:HttpGet("https://pastebin.com/raw/jTEPNkrV"))()
-								end
-							end
-						end
-					end
-				end)()
+-- Surge
+coroutine.wrap(function()
+	while true do
+		if IsDeepHotel then
+			if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
+				local sctm = math.random(900, 2970)
+				wait(sctm)
+				if not IsSeekChase or IsFigure or IsHalt or IsGrumble then
+					LatestRoom:GetPropertyChangedSignal("Value"):Wait()
+					local cue2 = Instance.new("Sound")
+					cue2.Parent = game.Workspace
+					cue2.Name = "Spawn"
+					cue2.SoundId = "rbxassetid://3359047385"
+					cue2.Volume = 1
+					cue2.PlaybackSpeed = 1
+					cue2:Play()
+					game.Lighting.MainColorCorrection.TintColor = Color3.fromRGB(0, 255, 0)
+					game.Lighting.MainColorCorrection.Contrast = 25
+					local tween = game:GetService("TweenService"):Create(game.Lighting.MainColorCorrection, TweenInfo.new(9), {Contrast = 0})
+					tween:Play()
+					local TW = game:GetService("TweenService"):Create(game.Lighting.MainColorCorrection, TweenInfo.new(1), {TintColor = Color3.fromRGB(255, 255, 255)})
+					TW:Play()
+					wait(1)
+					loadstring(game:HttpGet("https://pastebin.com/raw/jTEPNkrV"))()
+				end
+			end
+		end
+	end
+end)()
 
-				-- Monoxide
-				coroutine.wrap(function()
-					while true do
-					    if IsDeepHotel then
-						if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
-							local sctm = math.random(400, 999)
-							wait(sctm)
-							if not IsSeekChase or IsFigure or IsHalt or IsGrumble then
-								local cue2 = Instance.new("Sound")
-								cue2.Parent = game.Workspace
-								cue2.Name = "Spawn"
-								cue2.SoundId = "rbxassetid://7053083974"
-								cue2.Volume = 1
-								cue2.PlaybackSpeed = 1
-								cue2:Play()
-								game.Lighting.MainColorCorrection.TintColor = Color3.fromRGB(0, 0, 255)
-								game.Lighting.MainColorCorrection.Contrast = 10
-								local tween = game:GetService("TweenService"):Create(game.Lighting.MainColorCorrection, TweenInfo.new(2.5), {Contrast = 0})
-								tween:Play()
-								local TW = game:GetService("TweenService"):Create(game.Lighting.MainColorCorrection, TweenInfo.new(5), {TintColor = Color3.fromRGB(255, 255, 255)})
-								TW:Play()
-								wait(1.9)
-								loadstring(game:HttpGet("https://pastebin.com/raw/pm2GUxHV"))()	
-								end
-							end
-						end
-					end
-				end)()					
+-- Monoxide
+coroutine.wrap(function()
+	while true do
+		if IsDeepHotel then
+			if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
+				local sctm = math.random(400, 999)
+				wait(sctm)
+				if not IsSeekChase or IsFigure or IsHalt or IsGrumble then
+					local cue2 = Instance.new("Sound")
+					cue2.Parent = game.Workspace
+					cue2.Name = "Spawn"
+					cue2.SoundId = "rbxassetid://7053083974"
+					cue2.Volume = 1
+					cue2.PlaybackSpeed = 1
+					cue2:Play()
+					game.Lighting.MainColorCorrection.TintColor = Color3.fromRGB(0, 0, 255)
+					game.Lighting.MainColorCorrection.Contrast = 10
+					local tween = game:GetService("TweenService"):Create(game.Lighting.MainColorCorrection, TweenInfo.new(2.5), {Contrast = 0})
+					tween:Play()
+					local TW = game:GetService("TweenService"):Create(game.Lighting.MainColorCorrection, TweenInfo.new(5), {TintColor = Color3.fromRGB(255, 255, 255)})
+					TW:Play()
+					wait(1.9)
+					loadstring(game:HttpGet("https://pastebin.com/raw/pm2GUxHV"))()	
+				end
+			end
+		end
+	end
+end)()					
