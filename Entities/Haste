@@ -138,7 +138,7 @@ local function spawnHaste()
     
     hasteModel.Parent = workspace
     hasteModel.Name = "HasteMoving"
-    hasteModel.Position = rootPart.Position + Vector3.new(900, 0, 600)
+    hasteModel.PrimaryPart.Position = rootPart.Position + Vector3.new(900, 0, 600)
     hasteModel.CanCollide = false
     hasteModel.Anchored = false
     
@@ -184,6 +184,8 @@ local function initializeTimer(lever)
     local displayPlate = lever.Timer:FindFirstChild("DisplayPlate")
     local activatePrompt = lever:FindFirstChild("ActivateEventPrompt")
     local takeTimer = lever:FindFirstChild("TakeTimer")
+    
+    activatePrompt.RequiresLineOfSight = false
 
     if not (displayTimer and displayPlate and activatePrompt and takeTimer) then
         warn("Missing required components in lever model")
@@ -207,6 +209,7 @@ local function initializeTimer(lever)
         end
 
         if Config.hasteTime > 0 then
+            wait(1)
             Config.hasteTime = Config.hasteTime - 1
             updateTimerDisplay(displayLabel, Config.hasteTime)
 
