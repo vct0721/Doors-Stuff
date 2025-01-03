@@ -3,7 +3,7 @@ omg.Parent = workspace.CurrentRooms[game.ReplicatedStorage.GameData.LatestRoom.V
 omg.Name = "DreadClock"
 
 local currentLoadedRoom = workspace.CurrentRooms[game:GetService("ReplicatedStorage").GameData.LatestRoom.Value]
-local eyes = game:GetObjects("rbxassetid://166258731")[1]
+local eyes = game:GetObjects("rbxassetid://15033250482")[1]
 
 local num=0
 
@@ -36,15 +36,12 @@ function CustomGitSound(soundlink, vol, filename, duration)
     DreadSound:Play()
 	
 	wait(duration)
-	DreadSound:Stop() 
     DreadSound:Destroy()  
 end
 
 CustomGitSound("https://github.com/Kotyara19k-Doorsspawner/Random-files/raw/main/ClockSounds.mp3", 1, "DreadClock", 35)
 
 wait(35)
-DreadSound:Stop() 
-DreadSound:Destroy()  
 
 ---====== Define spawner ======---
 
