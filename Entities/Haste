@@ -181,7 +181,7 @@ end
 
 local function initializeTimer(lever)
     local displayTimer = lever:FindFirstChild("DisplayTimer")
-    local displayPlate = lever:FindFirstChild("DisplayPlate")
+    local displayPlate = lever.Timer:FindFirstChild("DisplayPlate")
     local activatePrompt = lever:FindFirstChild("ActivateEventPrompt")
     local takeTimer = lever:FindFirstChild("TakeTimer")
 
