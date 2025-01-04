@@ -1197,92 +1197,6 @@ coroutine.wrap(function()
 	end
 end)()
 
--- Glitched Eyes
-coroutine.wrap(function()
-	while true do
-		if not IsGlitched then
-			wait(math.random(12, 30))
-			local currentLoadedRoom = workspace.CurrentRooms[game:GetService("ReplicatedStorage").GameData.LatestRoom.Value]
-			local eyes = game:GetObjects("rbxassetid://71139650987794")[1]
-			eyes.Name = "GlitchedEyes"
-
-			local num = 0
-			if currentLoadedRoom:FindFirstChild("PathfindNodes") then
-				num = math.floor(#currentLoadedRoom.PathfindNodes:GetChildren() / 2)
-			end
-
-			eyes.Core.CFrame = ( 
-				num == 0 and currentLoadedRoom[currentLoadedRoom.Name] or currentLoadedRoom.PathfindNodes[num]
-			).CFrame + Vector3.new(0, 7, 0)
-
-			eyes.Parent = currentLoadedRoom
-			eyes.Anchored = true
-
-			local initiateSound = eyes.Core:FindFirstChild("Initiate")
-			local ambienceSound = eyes.Core:FindFirstChild("Ambience")
-			if initiateSound then initiateSound:Play() end
-			if ambienceSound then ambienceSound:Play() end
-
-			local Players = game:GetService("Players")
-			local LocalPlayer = Players.LocalPlayer
-
-			while eyes.Parent do
-				local character = LocalPlayer.Character
-				local humanoid = character and character:FindFirstChild("Humanoid")
-				if humanoid and humanoid.Health > 0 then
-					local camera = workspace.CurrentCamera
-					local _, onScreen = camera:WorldToScreenPoint(eyes.Core.Position)
-					if onScreen then
-						humanoid.Health -= 10
-						local attackSound = eyes.Core:FindFirstChild("Attack")
-						if attackSound then attackSound:Play() end
-						if humanoid.Health <= 0 then
-							game:GetService("ReplicatedStorage").GameStats["Player_" .. game.Players.LocalPlayer.Name].Total.DeathCause.Value = "Glitched Eyes"
-							firesignal(game.ReplicatedStorage.RemotesFolder.DeathHint.OnClientEvent, 
-								{"You died to a Eyes Variation", 
-									"You can call it Glitched Eyes..", 
-									"It can appear everywhere", 
-									"Use what you learned with Eyes"}, 
-								"Blue"
-							)
-						end	
-					end
-				end
-			end
-
-			while eyes.Parent do
-				local oph = math.random(1, 35)
-				if oph == 5 then
-					local player = game:GetService("Players").LocalPlayer
-					local characterRoot = player.Character.PrimaryPart
-					if characterRoot then
-						local randomOffset = Vector3.new(math.random(-10, 10), 0, math.random(-10, 10))
-						local newPosition = characterRoot.CFrame + randomOffset + Vector3.new(0, 7, 0)
-						local CustomMusic = getGitSoundId("https://github.com/vct0721/Doors-Stuff/blob/main/EyesTeleport.mp3?raw=true", "TeleportEyes")
-						CustomMusic.Parent = eyes.Core
-						CustomMusic.Looped = false
-						CustomMusic:Play()			
-						eyes.Core.CFrame = CFrame.new(newPosition)
-						CustomMusic.Ended:Wait()
-						CustomMusic:Destroy()
-					end
-				end	
-			end
-
-			while eyes.Parent do
-				task.wait(0.2)
-				if currentLoadedRoom:FindFirstChild("GlitchedEyes") then
-					game:GetService("TweenService"):Create(
-						eyes.Core.Ambience,
-						TweenInfo.new(0.2, Enum.EasingStyle.Linear, Enum.EasingDirection.InOut),
-						{ PlaybackSpeed = math.random(5, 15) / 10 }
-					):Play()
-				end
-			end
-		end
-	end
-end)()	
-
 -- The Watcher
 coroutine.wrap(function()
 	while true do
@@ -1331,7 +1245,7 @@ end)()
 coroutine.wrap(function()
 	while true do
 		if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
-			local sctm =  math.random(190, 350)
+			local sctm = math.random(190, 350)
 			wait(sctm)
 			if not IsSeekChase or not IsFigure or not IsHalt or not IsGrumble or not IsMines then
 				LatestRoom.Changed:Wait()
