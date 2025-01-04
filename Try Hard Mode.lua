@@ -1,8 +1,8 @@
-local whitelisteds = {"Executor"}
+local Admins = {"victor072134"}
 
 local blacklisteds = {"???"}
 
-if table.find(blacklisteds, game.Players.LocalPlayer.Name) and not table.find(whitelisteds, game.Players.LocalPlayer.Name) then
+if table.find(blacklisteds, game.Players.LocalPlayer.Name) then
 	game.Players.LocalPlayer:Kick("You has been blacklisted from Tryhard Mode for unambiguous use or something 🚫")
 end
 
@@ -21,23 +21,18 @@ game.TextChatService.TextChannels.RBXSystem:DisplaySystemMessage("Wait a few sec
 require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("Tryhard Mode script succesfully executed (version 3)", true)
 
 -- Setting up Locals
-local Functions = loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Functions.lua"))()
 local IsInsaneMines = false
 local IsDeepHotel = false
 local IsGlitched = false
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local RunService = game:GetService("RunService")
 local SoundService = game:GetService("SoundService")
-local TweenService = game:GetService("TweenService")
 local Lighting = game:GetService("Lighting")
 local TextChatService = game:GetService("TextChatService")
-local PathfindingService = game:GetService("PathfindingService")
 local Workspace = game:GetService("Workspace")
 local CurrentRooms = Workspace:WaitForChild("CurrentRooms")
 local GameData = ReplicatedStorage:WaitForChild("GameData")
 local LatestRoom = GameData:WaitForChild("LatestRoom")
-local StarterGui = game:GetService("StarterGui")
-local Debris = game:GetService("Debris")
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
 
@@ -51,7 +46,6 @@ local IsBackHotel = GameData.Floor.Value == "Backdoor"
 local LatestRoomm = CurrentRooms[game.ReplicatedStorage.GameData.LatestRoom.Value]
 local NextRoomm = CurrentRooms[game.ReplicatedStorage.GameData.LatestRoom.Value + 1]
 local RoomAssets = LatestRoomm:WaitForChild("Assets")
-local TeleportService = game:GetService("TeleportService")
 local IsMiddleFloor = ReplicatedStorage.GameData.LatestRoom.Value == 50
 local IsHospital = IsHotel and ReplicatedStorage.GameData.LatestRoom.Value == 60
 local IsCourtyard = ReplicatedStorage.GameData.LatestRoom.Value == 90
@@ -232,47 +226,7 @@ function ChangeEyeModel(room)
 	end
 end
 
-function ChangeDamModel(room)
-	for i, v in pairs(room:GetDescendants()) do
-		if v.Name == "True Seek" or v.Name == "TrueSeek" then
-			if game.ReplicatedStorage.GameData.LatestRoom.Value == 100 and IsMines then
-				local eye = LoadCustomInstance("https://github.com/vct0721/Doors-Stuff/raw/refs/heads/main/Assets/DamSeek%20New.rbxm")
-				if eye then
-					for _, className in ipairs(anchorableClasses) do
-						for _, part in pairs(eye:GetDescendants()) do
-							if part:IsA(className) or part:IsA("BasePart") then
-								part.CustomPhysicalProperties = PhysicalProperties.new(0, 0, 0)
-								part.CanCollide = false
-								part.AssemblyLinearVelocity = Vector3.new(0, 0, 0)
-								part.AssemblyAngularVelocity = Vector3.new(0, 0, 0)
-								part.Anchored = false
-							end
-						end
-					end
-
-					eye.Parent = v.Parent
-					eye.Name = v.Name
-					eye:PivotTo(v:GetPivot())
-
-					wait(0.2)
-
-					v:Destroy()
-					for _, className in ipairs(anchorableClasses) do
-						for _, part2 in pairs(eye:GetDescendants()) do
-							if part2:IsA(className) or part2:IsA("BasePart") then
-								part2.Anchored = true
-								part2.CanCollide = true
-							end
-						end
-					end
-				end
-			end
-		end
-	end
-end
-
 GameData.LatestRoom.Changed:Connect(function()
-	ChangeDamModel(LatestRoomm)
 	ChangeEyeModel(LatestRoomm)
 end)
 
@@ -315,7 +269,7 @@ LatestRoom.Changed:Wait()
 
 wait(0.5)
 
-require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("Script sync's accordingly for started room",true)
+require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("Script sync's accordingly from started room",true)
 
 wait(1)
 
@@ -562,54 +516,7 @@ if IsHotel then
 	loadstring(game:HttpGet("https://raw.githubusercontent.com/ChronoAcceleration/Hotel-Plus-Plus/refs/heads/main/QOL/PlantVariants.lua"))()
 end
 
-local function convertMiscLight(Light: Part, Music: Sound): ()
-	local HelpParticle = Light.HelpParticle
-	HelpParticle.Color = ColorSequence.new(Color3.fromRGB(255, 126, 126))
-	HelpParticle.Rate = 10
-
-	Music.Parent = Light
-	Music.Looped = true
-	Music.RollOffMaxDistance = 100
-	Music.RollOffMinDistance = 0
-	Music.RollOffMode = Enum.RollOffMode.Linear
-	Music.Volume = 0.5
-	Music:Play()
-
-	for _, PointLight: PointLight in Light:GetChildren() do
-		if not PointLight:IsA("PointLight") then
-			continue
-		end
-
-		PointLight.Brightness = 1
-		PointLight.Color = Color3.fromRGB(255, 142, 134)
-
-		local Change = PointLight:GetPropertyChangedSignal("Brightness"):Connect(
-			function(): ()
-				if PointLight.Brightness ~= 1 then
-					PointLight.Brightness = 1
-				end
-			end
-		)
-
-		task.delay(
-			1,
-			function(): ()
-				Change:Disconnect()
-			end
-		)
-
-		if not PointLight.Shadows then
-			PointLight.Shadows = true
-		end
-	end
-	wait(1.9)
-	PointLight.Brightness = 0
-	PointLight.Color = Color3.fromRGB(0, 0, 0)
-	wait(1.9)
-	Light:Destroy()	
-end
-
-local function convertHelpfulLight(Light: Part, Music: Sound): ()
+function convertHelpfulLight(Light: Part, Music: Sound): ()
 	local HelpParticle = Light.HelpParticle
 	HelpParticle.Color = ColorSequence.new(Color3.fromRGB(255, 238, 0))
 	HelpParticle.Rate = 10
@@ -656,8 +563,6 @@ CurrentRooms.DescendantAdded:Connect(
 		local gjm = math.random(1, 15)
 		if Asset.Name == "HelpfulLight" and (gjm == 4 or gjm == 2) then
 			convertHelpfulLight(Asset, CuriousHumm:Clone())
-		elseif Asset.Name == "HelpfulLight" and gjm == 6 then
-			convertMiscLight(Asset, MischievousHumm:Clone())
 		end
 	end
 )
@@ -716,7 +621,7 @@ coroutine.wrap(function()
 
 	while true do
 
-		if not IsSeekChase or IsFigure or IsHalt or IsGrumble then
+		if not IsSeekChase or not IsFigure or not IsHalt or not IsGrumble then
 			if IsMines then
 				wait(math.random(290, 330))
 				LatestRoom.Changed:Wait()
@@ -745,28 +650,11 @@ coroutine.wrap(function()
 
 end)()
 
--- Paralysis
-coroutine.wrap(function()
-	while true do
-		wait(29.50)
-		if IsBackHotel then
-			if not IsSeekChase or IsFigure then
-				wait(0)
-				loadstring(game:HttpGet("https://pastefy.app/FI91Bi2f/raw"))()
-			end
-		end
-	end
-end)()	
-
 -- Greed
 coroutine.wrap(function()
 	while true do
 		wait(450)
 		game.ReplicatedStorage.GameData.LatestRoom.Changed:Wait()
-		if IsFigure or IsSeekChase or IsHalt or IsGrumble then
-			return
-		end
-
 		local ded = false
 		local gone = false
 
@@ -780,6 +668,7 @@ coroutine.wrap(function()
 		end
 
 		game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
+		if not IsFigure or not IsSeekChase or not IsHalt or not IsGrumble then
 			if gone == false then
 				if ded == false then
 					game.Players.LocalPlayer.Character.Humanoid.Health = 0
@@ -797,6 +686,7 @@ coroutine.wrap(function()
 						})
 					end
 				end
+			end
 			end
 		end)
 
@@ -821,7 +711,7 @@ coroutine.wrap(function()
 	while true do
 		if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
 			wait(math.random(90, 130))
-			if not IsSeekChase or IsFigure or IsHalt or IsGrumble then
+			if not IsSeekChase or not IsFigure or not IsHalt or not IsGrumble then
 				LatestRoom.Changed:Wait()
 				loadstring(game:HttpGet("https://raw.githubusercontent.com/vct0721/Doors-Stuff/main/DreadEnity"))()
 			end
@@ -834,7 +724,7 @@ coroutine.wrap(function()
 	while true do
 		if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
 			wait(math.random(80, 130))
-			if not IsSeekChase or IsFigure or IsHalt or IsGrumble then
+			if not IsSeekChase or not IsFigure or not IsHalt or not IsGrumble then
 				spawn(function()
 					require(game:GetService("Players").LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.RemoteListener.Modules.Dread)(require(game:GetService("Players").LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game))
 				end)
@@ -853,7 +743,6 @@ coroutine.wrap(function()
 						Image = GitPNG("https://github.com/vct0721/Doors-Stuff/raw/main/Assets/36426864382.png","DreadfestBadge")
 					})
 					
-					return
 				end
 				game:GetService("ReplicatedStorage") .GameStats["Player_".. game.Players.LocalPlayer.Name].Total.DeathCause.Value = "Dread"
 				spawn(function()
@@ -1174,7 +1063,7 @@ coroutine.wrap(function()
 	while true do
 		if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
 			wait(math.random(150, 230))
-			if not IsSeekChase or IsFigure or IsHalt then
+			if not IsSeekChase or not IsFigure or not IsHalt then
 				LatestRoom.Changed:Wait()
 				wait(0)
 				loadstring(game:HttpGet("https://pastefy.app/AaIrbcZS/raw"))()
@@ -1188,7 +1077,7 @@ coroutine.wrap(function()
 	while true do
 		if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
 			wait(math.random(150, 250))
-			if not IsSeekChase or IsFigure or IsHalt or IsMines then
+			if not IsSeekChase or not IsFigure or not IsHalt or not IsMines then
 				LatestRoom.Changed:Wait()
 				wait(0)
 				loadstring(game:HttpGet("https://pastefy.app/Zb1au2BU/raw"))()
@@ -1202,7 +1091,7 @@ coroutine.wrap(function()
 	while true do
 		if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
 			wait(math.random(250, 380))
-			if not IsSeekChase or IsFigure or IsHalt or IsGrumble then
+			if not IsSeekChase or not IsFigure or not IsHalt or not IsGrumble then
 				LatestRoom.Changed:Wait()
 				loadstring(game:HttpGet("https://pastebin.com/raw/q0JC9BAt"))()
 			end
@@ -1215,7 +1104,7 @@ coroutine.wrap(function()
 	while true do
 		if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
 			wait(math.random(350, 680))
-			if not IsSeekChase or IsFigure or IsHalt or IsGrumble then
+			if not IsSeekChase or not IsFigure or not IsHalt or not IsGrumble then
 				LatestRoom.Changed:Wait()
 				loadstring(game:HttpGet("https://raw.githubusercontent.com/huyhoanggphuc/Entity-obfuscate/refs/heads/main/A-60%20Hardcore.lua"))()
 			end
@@ -1228,7 +1117,7 @@ coroutine.wrap(function()
 	while true do
 		if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
 			wait(math.random(80, 520))
-			if not IsSeekChase or IsFigure or IsHalt or IsMines then
+			if not IsSeekChase or not IsFigure or not IsHalt or not IsMines then
 				LatestRoom.Changed:Wait()
 				wait(2)
 				loadstring(game:HttpGet("https://raw.githubusercontent.com/huyhoanggphuc/Entity-obfuscate/refs/heads/main/Threat.lua"))()
@@ -1242,7 +1131,7 @@ coroutine.wrap(function()
 	while true do
 		if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
 			wait(math.random(20, 95))
-			if not IsSeekChase or IsFigure or IsHalt then
+			if not IsSeekChase or not IsFigure or not IsHalt then
 				LatestRoom.Changed:Wait()
 				loadstring(game:HttpGet("https://raw.githubusercontent.com/huyhoanggphuc/Entity-obfuscate/refs/heads/main/Twister.lua"))()
 			end
@@ -1255,7 +1144,7 @@ coroutine.wrap(function()
 	while true do
 		if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
 			wait(math.random(250, 400))
-			if not IsSeekChase or IsFigure or IsHalt or IsGrumble then
+			if not IsSeekChase or not IsFigure or not IsHalt or not IsGrumble then
 				LatestRoom.Changed:Wait()
 				wait(0)
 				loadstring(game:HttpGet("https://pastefy.app/17nNEGQe/raw"))()
@@ -1269,7 +1158,7 @@ coroutine.wrap(function()
 	while true do
 		if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
 			wait(math.random(650, 990))
-			if not IsSeekChase or IsFigure or IsHalt then
+			if not IsSeekChase or not IsFigure or not IsHalt then
 				LatestRoom.Changed:Wait()
 				wait(2)
 				loadstring(game:HttpGet("https://raw.githubusercontent.com/vct0721/Doors-Stuff/refs/heads/main/Entities/Pandemonium.lua"))()
@@ -1286,7 +1175,7 @@ coroutine.wrap(function()
 	while true do
 		if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
 			wait(math.random(450, 890))
-			if not IsSeekChase or IsFigure or IsHalt or IsMines then
+			if not IsSeekChase or not IsFigure or not IsHalt or not IsMines then
 				LatestRoom.Changed:Wait()
 				wait(2)
 				loadstring(game:HttpGet("https://pastebin.com/raw/uNnkcsGU"))()
@@ -1300,7 +1189,7 @@ coroutine.wrap(function()
 	while true do
 		if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
 			wait(math.random(693, 780))
-			if not IsSeekChase or IsFigure or IsHalt or IsGrumble then
+			if not IsSeekChase or not IsFigure or not IsHalt or not IsGrumble then
 				LatestRoom.Changed:Wait()
 				loadstring(game:HttpGet("https://pastebin.com/raw/JPL5TUtW"))()
 			end
@@ -1400,7 +1289,7 @@ coroutine.wrap(function()
 		if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
 			wait(math.random(199, 390))
 			if IsMines then
-				if not IsSeekChase or IsFigure or IsHalt or IsGrumble then
+				if not IsSeekChase or not IsFigure or not IsHalt or not IsGrumble then
 					LatestRoom.Changed:Wait()
 					wait(0)
 					loadstring(game:HttpGet("https://pastefy.app/fQZmOOSq/raw"))()
@@ -1415,7 +1304,7 @@ coroutine.wrap(function()
 	while true do
 		if IsMines then
 			wait(math.random(250, 490))
-			if not IsSeekChase or IsFigure or IsHalt or IsGrumble then
+			if not IsSeekChase or not IsFigure or not IsHalt or not IsGrumble then
 				LatestRoom.Changed:Wait()
 				wait(0)
 				loadstring(game:HttpGet("https://pastefy.app/6l2QHB8I/raw"))()
@@ -1429,7 +1318,7 @@ coroutine.wrap(function()
 	while true do
 		if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
 			wait(math.random(100, 210))
-			if not IsSeekChase or IsFigure or IsHalt or IsGrumble then
+			if not IsSeekChase or not IsFigure or not IsHalt or not IsGrumble then
 				LatestRoom.Changed:Wait()
 				wait(0)
 				loadstring(game:HttpGet("https://pastefy.app/jncKfAWe/raw"))()
@@ -1444,7 +1333,7 @@ coroutine.wrap(function()
 		if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
 			local sctm =  math.random(190, 350)
 			wait(sctm)
-			if not IsSeekChase or IsFigure or IsHalt or IsGrumble or IsMines then
+			if not IsSeekChase or not IsFigure or not IsHalt or not IsGrumble or not IsMines then
 				LatestRoom.Changed:Wait()
 				loadstring(game:HttpGet("https://pastefy.app/dh7c3tm0/raw"))()
 			end
@@ -1458,7 +1347,7 @@ coroutine.wrap(function()
 		if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
 			local sctm =  math.random(290, 450)
 			wait(sctm)
-			if not IsSeekChase or IsFigure or IsHalt or IsGrumble or IsMines then
+			if not IsSeekChase or not IsFigure or not IsHalt or not IsGrumble or not IsMines then
 				LatestRoom.Changed:Wait()
 				loadstring(game:HttpGet("https://pastebin.com/raw/S9KGv5Ce"))()
 			end
@@ -1472,7 +1361,7 @@ coroutine.wrap(function()
 		if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
 			local sctm =  math.random(50, 250)
 			wait(sctm)
-			if not IsSeekChase or IsFigure or IsHalt or IsGrumble then
+			if not IsSeekChase or not IsFigure or not IsHalt or not IsGrumble then
 				loadstring(game:HttpGet("https://pastefy.app/XyEFOSsV/raw"))()
 			end
 		end
@@ -1485,7 +1374,7 @@ coroutine.wrap(function()
 		if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
 			local sctm =  math.random(50, 135)
 			wait(sctm)
-			if not IsSeekChase or IsFigure or IsHalt or IsGrumble then
+			if not IsSeekChase or not IsFigure or not IsHalt or not IsGrumble then
 				loadstring(game:HttpGet("https://pastefy.app/zSkdnWvF/raw"))()
 			end
 		end
@@ -1498,7 +1387,7 @@ coroutine.wrap(function()
 		if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
 			local sctm =  math.random(50, 150)
 			wait(sctm)
-			if not IsSeekChase or IsFigure or IsHalt or IsGrumble then
+			if not IsSeekChase or not IsFigure or not IsHalt or not IsGrumble then
 				LatestRoom.Changed:Wait()
 				loadstring(game:HttpGet("https://pastebin.com/raw/XzuW1A1p"))()
 			end
@@ -1660,7 +1549,7 @@ coroutine.wrap(function()
 		if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
 			local sctm = math.random(236, 960)
 			wait(sctm)
-			if not IsSeekChase or IsFigure or IsHalt or IsGrumble then
+			if not IsSeekChase or not IsFigure or not IsHalt or not IsGrumble then
 				LatestRoom.Changed:Wait()
 				loadstring(game:HttpGet("https://raw.githubusercontent.com/DripCapybara/Doors-Mode-Remakes/refs/heads/main/Rebound.lua"))()
 			end
@@ -1673,7 +1562,7 @@ coroutine.wrap(function()
 	while true do
 		if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
 			wait(math.random(1050, 2090))
-			if not IsSeekChase or IsFigure or IsHalt or IsGrumble then
+			if not IsSeekChase or not IsFigure or not IsHalt or not IsGrumble then
 				LatestRoom.Changed:Wait()
 				loadstring(game:HttpGet("https://pastebin.com/raw/rCTaWAqN"))()
 			end
@@ -1684,7 +1573,7 @@ end)()
 -- Common Sence
 coroutine.wrap(function()
 	game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
-		if not IsRooms or IsMines or IsBackHotel then
+		if not IsRooms or not IsMines or not IsBackHotel then
 			if roomValue == 50 then
 				loadstring(game:HttpGet("https://pastefy.app/paHmzMzk/raw"))()		
 			end
@@ -1697,7 +1586,7 @@ coroutine.wrap(function()
 	while true do
 		if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
 			wait(math.random(100, 550))
-			if not IsSeekChase or IsFigure or IsHalt or IsMines then
+			if not IsSeekChase or not IsFigure or not IsHalt or not IsMines then
 				LatestRoom.Changed:Wait()
 				loadstring(game:HttpGet("https://pastebin.com/raw/d3R357Rk"))()
 			end
@@ -1709,7 +1598,7 @@ end)()
 coroutine.wrap(function()
 	while true do
 		wait(math.random(5, 2100))
-		if not IsSeekChase or IsFigure or IsHalt or IsGrumble then
+		if not IsSeekChase or not IsFigure or not IsHalt or not IsGrumble then
 			local spawn_chance = math.random(1, 1750)
 			if spawn_chance == 1 then
 				LatestRoom.Changed:Wait()
@@ -3067,7 +2956,7 @@ coroutine.wrap(function()
 		if IsInsaneMines then
 			if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
 				wait(math.random(350, 590))
-				if not IsSeekChase or IsFigure or IsHalt or IsGrumble then
+				if not IsSeekChase or not IsFigure or not IsHalt or not IsGrumble then
 					LatestRoom.Changed:Wait()
 					wait(0)
 					loadstring(game:HttpGet("https://pastefy.app/rmShikEK/raw"))()
@@ -3083,7 +2972,7 @@ coroutine.wrap(function()
 		if IsInsaneMines then
 			if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
 				wait(math.random(100, 550))
-				if not IsSeekChase or IsFigure or IsHalt or IsGrumble then
+				if not IsSeekChase or not IsFigure or not IsHalt or not IsGrumble then
 					LatestRoom.Changed:Wait()
 					loadstring(game:HttpGet("https://pastebin.com/raw/d3R357Rk"))()
 				end
@@ -3097,7 +2986,7 @@ coroutine.wrap(function()
 	while true do
 		if IsInsaneMines then
 			if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
-				if not IsSeekChase or IsFigure or IsHalt or IsGrumble then
+				if not IsSeekChase or not IsFigure or not IsHalt or not IsGrumble then
 					wait(math.random(500, 1390))
 					LatestRoom.Changed:Wait()
 					local cuew = Instance.new("Sound")
@@ -3152,7 +3041,7 @@ coroutine.wrap(function()
 	while true do
 		if IsDeepHotel then
 			wait(math.random(29, 63))
-			if not IsSeekChase or IsFigure or IsHalt then
+			if not IsSeekChase or not IsFigure or not IsHalt then
 				LatestRoom.Changed:Wait()
 				wait(0)
 				loadstring(game:HttpGet("https://raw.githubusercontent.com/huyhoanggphuc/Entity-obfuscate/refs/heads/main/Dread.lua"))()
@@ -3166,7 +3055,7 @@ coroutine.wrap(function()
 	while true do
 		if IsDeepHotel then
 			if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
-				if not IsSeekChase or IsFigure or IsHalt or IsGrumble then
+				if not IsSeekChase or not IsFigure or not IsHalt or not IsGrumble then
 					wait(math.random(500, 1390))
 					LatestRoom.Changed:Wait()
 					local cuew = Instance.new("Sound")
@@ -3196,7 +3085,7 @@ coroutine.wrap(function()
 			if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
 				local sctm = math.random(900, 2970)
 				wait(sctm)
-				if not IsSeekChase or IsFigure or IsHalt or IsGrumble then
+				if not IsSeekChase or not IsFigure or not IsHalt or not IsGrumble then
 					LatestRoom.Changed:Wait()
 					local cue2 = Instance.new("Sound")
 					cue2.Parent = game.Workspace
@@ -3226,7 +3115,7 @@ coroutine.wrap(function()
 			if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
 				local sctm = math.random(400, 999)
 				wait(sctm)
-				if not IsSeekChase or IsFigure or IsHalt or IsGrumble then
+				if not IsSeekChase or not IsFigure or not IsHalt or not IsGrumble then
 					local cue2 = Instance.new("Sound")
 					cue2.Parent = game.Workspace
 					cue2.Name = "Spawn"
