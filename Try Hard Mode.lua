@@ -18,7 +18,7 @@ Test.Parent = game:GetService("ReplicatedStorage")
 
 game:GetService("TextChatService").TextChannels.RBXSystem:DisplaySystemMessage("Wait a few seconds this loading to open the door!")
 
-require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("Tryhard Mode script succesfully executed (version 3)", true)
+require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("Tryhard Mode script succesfully executed (version 3.5)", true)
 
 -- Setting up Locals
 local IsInsaneMines = false
@@ -227,8 +227,56 @@ function ChangeEyeModel(room)
 	end
 end
 
-GameData.LatestRoom.Changed:Connect(function()
+LatestRoom.Changed:Connect(function()
 	ChangeEyeModel(LatestRoomm)
+end)
+
+local painters = 1
+local paints = {
+	[1] = {"rbxassetid://11881132074","Despair"},
+	[2] = {"rbxassetid://11881132745","Odd feline Specimen"},
+	[3] = {"rbxassetid://11881654771","A tryhard..."},
+	[4] = {"rbxassetid://11706469802","him."},
+	[5] = {"rbxassetid://13714729640","Run From It."},
+	[6] = {"rbxassetid://130612175766384","Not Funny."},
+	[5] = {"rbxassetid://73702240509903","A Possible Future"},
+	[8] = {"rbxassetid://18148044143","...."}
+}
+
+-- New Paintings
+game:GetService("ReplicatedStorage").GameData.LatestRoom.Changed:Connect(function()
+	local room = workspace.CurrentRooms[game:GetService("ReplicatedStorage").GameData.LatestRoom.Value]
+	if room:FindFirstChild("Assets") then
+		local paintings = {}
+		for i,painting in next,room:FindFirstChild("Assets"):GetChildren() do
+			if painting.Name:find("Painting") then
+				table.insert(paintings,painting)
+			end
+		end
+		if #paintings > 0 then
+			local currentpainting
+			if paintings[#paintings] then
+				painters = painters + 1
+				currentpainting = paintings[#paintings]
+			else
+				currentpainting = paintings[1]
+			end
+			if currentpainting then
+				if currentpainting:FindFirstChild("Canvas") then
+					local selected = paints[math.random(1,#paints)]
+					if currentpainting:FindFirstChild("InteractPrompt") then
+						local cloning = currentpainting:FindFirstChild("InteractPrompt"):Clone() cloning.Name = "fakeInteract"
+						cloning.Parent = currentpainting
+						currentpainting:FindFirstChild("InteractPrompt"):Destroy()
+						local t = cloning.Triggered:Connect(function()
+							require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption(string.gsub("This painting is titled \"NAMEOFTHING\"","NAMEOFTHING",selected[2]), true)
+						end)
+					end
+					currentpainting:FindFirstChild("Canvas"):FindFirstChildOfClass("SurfaceGui"):FindFirstChildOfClass("ImageLabel").Image = selected[1]
+				end
+			end
+		end
+	end
 end)
 
 -- Ambience New Sounds
@@ -238,23 +286,23 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/ChronoAcceleration/Ho
 -- Songs
 local CuriousHumm = getGitSoundId("https://github.com/ChronoAcceleration/Comet-Development/blob/main/Doors/Assets/Horror/Curious%20Humm.mp3?raw=true", "CuriousHumm")
 CuriousHumm.Parent = SoundService
-local MischievousHumm = getGitSoundId("https://github.com/ChronoAcceleration/Hotel-Plus-Plus/blob/main/Assets/MischeviousHum.mp3?raw=true", "MischievousHumm")
-CuriousHumm.Parent = SoundService
 
 -- Sprint: 
 loadstring(game:HttpGet("https://pastefy.app/b3XxH7yw/raw"))()
 
 -- Ambient dark sound
-game.Workspace.Ambience_Dark.SoundId = "rbxassetid://6535784827"
-game.Workspace.Ambience_Dark.PlaybackSpeed = 1
+Workspace.Ambience_Dark.SoundId = "rbxassetid://6535784827"
+Workspace.Ambience_Dark.PlaybackSpeed = 1
 
 -- Echo sound
-game.SoundService.AmbientReverb = "ConcertHall"
-
+SoundService.AmbientReverb = "ConcertHall"
+		
 -- Death Sound 
 game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.Health.Music.Blue.SoundId = "rbxassetid://10472612727"
 
-wait(0.1)  
+wait(0.2)  
+
+require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("TryHard Mode Loaded", true)
 
 TextChatService.TextChannels.RBXSystem:DisplaySystemMessage("Ok, it's works now, you can finally open the door!")
 
@@ -263,7 +311,6 @@ TextChatService.TextChannels.RBXSystem:DisplaySystemMessage("Ok, it's works now,
 coroutine.wrap(function()
 	loadstring(game:HttpGet("https://raw.githubusercontent.com/vct0721/Doors-Stuff/refs/heads/main/Other/NodesConverter.lua"))()
 end)()
-
 
 -- Script Start
 LatestRoom:GetPropertyChangedSignal("Value"):Wait()
@@ -278,7 +325,7 @@ require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("
 
 wait(1)
 
-require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("Credits to Official_Artemis, Kotyara19k, Noonie, huyhoanphuc, Ping, Noah, Chrono, Vynixu, Ame, Zavaled",true)
+require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("Credits to Official_Artemis, Kotyara19k, Noonie, huyhoanphuc, Ping, Noah, Chrono, Vynixu, Ame, Zavaled, localplayerr, DripCapybara",true)
 
 -- Intro in the Special Rooms
 
@@ -337,8 +384,6 @@ coroutine.wrap(function()
 			intro.Visible = false
 			wait(8)
 			intro:Destroy()
-			CustomMusic.Ended:Wait()
-			CustomMusic:Destroy()
 
 		elseif game.ReplicatedStorage.GameData.LatestRoom.Value == 50 and IsHotel then
 
@@ -510,6 +555,8 @@ end)()
 -- Model Variations
 if IsHotel then
 	loadstring(game:HttpGet("https://raw.githubusercontent.com/ChronoAcceleration/Hotel-Plus-Plus/refs/heads/main/QOL/PlantVariants.lua"))()
+	
+	
 end
 
 function convertHelpfulLight(Light: Part, Music: Sound): ()
@@ -612,42 +659,21 @@ coroutine.wrap(function()
 end)()
 
 -- Depth
-
 coroutine.wrap(function()
-
 	while true do
-
 		if not IsSeekChase or not IsFigure or not IsHalt or not IsGrumble then
 			if IsMines then
 				wait(SyncHelper:generateFullRandom(290, 330, LatestRoom.Value))
 				LatestRoom:GetPropertyChangedSignal("Value"):Wait()
-
-				local cue2 = Instance.new("Sound")
-				cue2.Parent = game.Workspace
-				cue2.Name = "Spawn"
-				cue2.SoundId = "rbxassetid://8627516764"
-				cue2.Volume = 1
-				cue2.PlaybackSpeed = 1
-				cue2:Play()
-				game.Lighting.MainColorCorrection.TintColor = Color3.fromRGB(0, 100, 255)
-				game.Lighting.MainColorCorrection.Contrast = 5
-				local tween = game:GetService("TweenService")
-				tween:Create(game.Lighting.MainColorCorrection, TweenInfo.new(2.5), {Contrast = 0}):Play()
-				local TweenService = game:GetService("TweenService")
-				local TW = TweenService:Create(game.Lighting.MainColorCorrection, TweenInfo.new(5),{TintColor = Color3.fromRGB(255, 255, 255)})
-				TW:Play()
 				loadstring(game:HttpGet("https://pastebin.com/raw/uyYe9bZQ"))()
-
 			end
-
 		end
-
 	end
-
 end)()
 
 -- Greed
 coroutine.wrap(function()
+    if IsHotel then
 	while true do
 		wait(SyncHelper:generateFullRandom(390, 530, LatestRoom.Value))
 		game.ReplicatedStorage.GameData.LatestRoom:GetPropertyChangedSignal("Value"):Wait()
@@ -704,11 +730,27 @@ coroutine.wrap(function()
 			gone = true
 		end
 	end
+	end
 end)()
 
+-- Darkness
+coroutine.wrap(function()
+    if IsHotel then
+	while true do
+		if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
+			wait(SyncHelper:generateFullRandom(390, 430, LatestRoom.Value))
+			if not IsSeekChase or not IsFigure or not IsHalt then
+				LatestRoom:GetPropertyChangedSignal("Value"):Wait()
+				loadstring(game:HttpGet("https://raw.githubusercontent.com/localplayerr/Doors-stuff/refs/heads/main/Immersive%20mode/Darkness"))()
+			end
+		end
+	end
+	end
+end)()
 
 -- Dread (FG)
 coroutine.wrap(function()
+   if IsHotel then
 	while true do
 		if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
 			wait(SyncHelper:generateFullRandom(90, 130, LatestRoom.Value))
@@ -717,6 +759,7 @@ coroutine.wrap(function()
 				loadstring(game:HttpGet("https://raw.githubusercontent.com/vct0721/Doors-Stuff/main/DreadEnity"))()
 			end
 		end
+	end
 	end
 end)()
 
@@ -1066,7 +1109,7 @@ coroutine.wrap(function()
 			wait(SyncHelper:generateFullRandom(150, 230, LatestRoom.Value))
 			if not IsSeekChase or not IsFigure or not IsHalt then
 				LatestRoom:GetPropertyChangedSignal("Value"):Wait()
-				wait(0)
+				
 				loadstring(game:HttpGet("https://pastefy.app/AaIrbcZS/raw"))()
 			end
 		end
@@ -1080,7 +1123,7 @@ coroutine.wrap(function()
 			wait(SyncHelper:generateFullRandom(150, 250, LatestRoom.Value))
 			if not IsSeekChase or not IsFigure or not IsHalt or not IsMines then
 				LatestRoom:GetPropertyChangedSignal("Value"):Wait()
-				wait(0)
+				
 				loadstring(game:HttpGet("https://pastefy.app/Zb1au2BU/raw"))()
 			end
 		end
@@ -1147,7 +1190,6 @@ coroutine.wrap(function()
 			wait(SyncHelper:generateFullRandom(250, 400, LatestRoom.Value))
 			if not IsSeekChase or not IsFigure or not IsHalt or not IsGrumble then
 				LatestRoom:GetPropertyChangedSignal("Value"):Wait()
-				wait(0)
 				loadstring(game:HttpGet("https://pastefy.app/17nNEGQe/raw"))()
 			end
 		end
@@ -1169,7 +1211,9 @@ coroutine.wrap(function()
 end)()
 
 -- Silence (EDM)
+if IsHotel then
 loadstring(game:HttpGet("https://raw.githubusercontent.com/check78/Entities/main/SilenceEndless.txt"))()
+end
 
 -- Silence (HC)
 coroutine.wrap(function()
@@ -1178,7 +1222,6 @@ coroutine.wrap(function()
 			wait(SyncHelper:generateFullRandom(450, 890, LatestRoom.Value))
 			if not IsSeekChase or not IsFigure or not IsHalt or not IsMines then
 				LatestRoom:GetPropertyChangedSignal("Value"):Wait()
-				wait(2)
 				loadstring(game:HttpGet("https://pastebin.com/raw/uNnkcsGU"))()
 			end		
 		end
@@ -1206,7 +1249,6 @@ coroutine.wrap(function()
 			if IsMines then
 				if not IsSeekChase or not IsFigure or not IsHalt or not IsGrumble then
 					LatestRoom:GetPropertyChangedSignal("Value"):Wait()
-					wait(0)
 					loadstring(game:HttpGet("https://pastefy.app/fQZmOOSq/raw"))()
 				end
 			end
@@ -1221,7 +1263,6 @@ coroutine.wrap(function()
 			wait(SyncHelper:generateFullRandom(250, 490, LatestRoom.Value))
 			if not IsSeekChase or not IsFigure or not IsHalt or not IsGrumble then
 				LatestRoom:GetPropertyChangedSignal("Value"):Wait()
-				wait(0)
 				loadstring(game:HttpGet("https://pastefy.app/6l2QHB8I/raw"))()
 			end
 		end
@@ -1235,7 +1276,6 @@ coroutine.wrap(function()
 			wait(SyncHelper:generateFullRandom(100, 210, LatestRoom.Value))
 			if not IsSeekChase or not IsFigure or not IsHalt or not IsGrumble then
 				LatestRoom:GetPropertyChangedSignal("Value"):Wait()
-				wait(0)
 				loadstring(game:HttpGet("https://raw.githubusercontent.com/vct0721/Doors-Stuff/refs/heads/main/Entities/Ripper"))()
 			end
 		end
@@ -1466,7 +1506,7 @@ coroutine.wrap(function()
 			wait(sctm)
 			if not IsSeekChase or not IsFigure or not IsHalt or not IsGrumble then
 				LatestRoom:GetPropertyChangedSignal("Value"):Wait()
-				loadstring(game:HttpGet("https://raw.githubusercontent.com/DripCapybara/Doors-Mode-Remakes/refs/heads/main/Rebound.lua"))()
+				loadstring(game:HttpGet("https://pastebin.com/raw/2SAwkPLt"))()
 			end
 		end
 	end
@@ -1490,6 +1530,7 @@ coroutine.wrap(function()
 	game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
 		if not IsRooms or not IsMines or not IsBackHotel then
 			if roomValue == 50 then
+				wait(2)
 				loadstring(game:HttpGet("https://pastefy.app/paHmzMzk/raw"))()		
 			end
 		end
@@ -1725,943 +1766,7 @@ coroutine.wrap(function()
 			end
 
 		end)
-
-		--[[ ]]--
-
-	end
-
-end)()
-
--- Crucifix item in table
-
-coroutine.wrap(function()
-
-	if IsHotel then
-
-		game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
-
-			function spawncruxy(posy)
-
-				local abc = game:GetObjects("rbxassetid://13872336829")[1]
-
-				local cruxy = abc.Handle:Clone()
-
-				abc:Destroy()
-
-				cruxy.Parent = game.Workspace
-
-				cruxy.Name = "Cruxy" or cruxy.Sideroom.Name == "CruxyRoomy"
-
-				cruxy.Position = posy
-
-				cruxy.Anchored = true
-
-				local xy = SyncHelper:generateFullRandom(-90, 90, LatestRoom.Value)
-
-				cruxy.CFrame = CFrame.lookAt(cruxy.Position, cruxy.Position - Vector3.new(xy, yy, zy))
-
-				cruxy.Rotation = Vector3.new(0, xy, 0)
-
-				local prompty = Instance.new("ProximityPrompt")
-
-				prompty.Name = "prompty"
-
-				prompty.MaxActivationDistance = 5
-
-				prompty.ObjectText = "Custom"
-
-				prompty.RequiresLineOfSight = true
-
-				prompty.Parent = cruxy
-
-				prompty.Style = "Custom"
-
-				prompty.Triggered:Connect(function()
-
-					cruxy:Destroy()
-
-					local shadow=game:GetObjects("rbxassetid://13872336829")[1]
-
-					shadow.Parent = game.Players.LocalPlayer.Backpack
-
-					local Players = game:GetService("Players")
-
-					local Plr = Players.LocalPlayer
-
-					local Char = Plr.Character or Plr.CharacterAdded:Wait()
-
-					local Hum = Char:WaitForChild("Humanoid")
-
-					local RightArm = Char:WaitForChild("RightUpperArm")
-
-					local LeftArm = Char:WaitForChild("LeftUpperArm")
-
-					local RightC1 = RightArm.RightShoulder.C1
-
-					local LeftC1 = LeftArm.LeftShoulder.C1
-
-					local function setupCrucifix(tool)
-
-						RightArm.Name = "R_Arm"
-
-						LeftArm.Name = "L_Arm"
-
-
-
-						RightArm.RightShoulder.C1 = RightC1 * CFrame.Angles(math.rad(-90), math.rad(-15), 0)
-
-						LeftArm.LeftShoulder.C1 = LeftC1 * CFrame.new(-0.2, -0.3, -0.5) * CFrame.Angles(math.rad(-125), math.rad(25), math.rad(25))
-
-						for _, v in next, Hum:GetPlayingAnimationTracks() do
-
-							v:Stop()
-
-						end
-
-					end
-
-					shadow.Equipped:Connect(function()
-
-						setupCrucifix(shadow)
-
-						game.Players.LocalPlayer:SetAttribute("Hidden", true)
-
-					end)
-
-
-
-					shadow.Unequipped:Connect(function()
-
-						game.Players.LocalPlayer:SetAttribute("Hidden", false)
-
-						RightArm.Name = "RightUpperArm"
-
-						LeftArm.Name = "LeftUpperArm"
-
-
-
-						RightArm.RightShoulder.C1 = RightC1
-
-						LeftArm.LeftShoulder.C1 = LeftC1
-
-					end)
-
-					require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption('You grabbed original crucifix',true)
-
-					wait(3)
-
-					require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption('This only works with custom entities',true)
-
-
-				end)
-
-				--
-
-			end
-
-			--
-
-
-
-			local lastroom = game:GetService("ReplicatedStorage").GameData.LatestRoom.Value
-
-			for _, v in next, game.Workspace.CurrentRooms[lastroom].Assets:GetDescendants() do
-
-				if v.Name == "Table" then
-
-					local randomy = SyncHelper:generateFullRandom(1, 100, LatestRoom.Value)
-
-					if randomy == 1 then
-
-						local positio = v.Main.Position + Vector3.new(0, 2.5, 0)
-
-						spawncruxy(positio)
-
-					end
-
-				elseif v.Name == "Table" and v.Parent.Name == "Sideroom" then
-
-					local randomy = SyncHelper:generateFullRandom(1, 100, LatestRoom.Value)
-
-					if randomy == 1 then
-
-						local positio = v.Main.Position + Vector3.new(0, 2.5, 0)
-
-						spawncruxy(positio)
-
-					end
-
-				end
-
-
-
-			end
-
-			--
-
-		end)
-
-	elseif IsMines then
-
-		game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
-
-			function spawncruxy(posy)
-
-				local abc = game:GetObjects("rbxassetid://13872336829")[1]
-
-				local cruxy = abc.Handle:Clone()
-
-				abc:Destroy()
-
-				cruxy.Parent = game.Workspace
-
-				cruxy.Name = "Cruxy"
-
-				cruxy.Position = posy
-
-				cruxy.Anchored = true
-
-				local xy = SyncHelper:generateFullRandom(-90, 90, LatestRoom.Value)
-
-				cruxy.CFrame = CFrame.lookAt(cruxy.Position, cruxy.Position - Vector3.new(xy, yy, zy))
-
-				cruxy.Rotation = Vector3.new(0, xy, 0)
-
-				local prompty = Instance.new("ProximityPrompt")
-
-				prompty.Name = "prompty"
-
-				prompty.MaxActivationDistance = 5
-
-				prompty.ObjectText = "Custom"
-
-				prompty.RequiresLineOfSight = true
-
-				prompty.Parent = cruxy
-
-				prompty.Style = "Custom"
-
-				prompty.Triggered:Connect(function()
-
-					cruxy:Destroy()
-
-					local shadow=game:GetObjects("rbxassetid://13872336829")[1]
-
-					shadow.Parent = game.Players.LocalPlayer.Backpack
-
-					local Players = game:GetService("Players")
-
-					local Plr = Players.LocalPlayer
-
-					local Char = Plr.Character or Plr.CharacterAdded:Wait()
-
-					local Hum = Char:WaitForChild("Humanoid")
-
-					local RightArm = Char:WaitForChild("RightUpperArm")
-
-					local LeftArm = Char:WaitForChild("LeftUpperArm")
-
-					local RightC1 = RightArm.RightShoulder.C1
-
-					local LeftC1 = LeftArm.LeftShoulder.C1
-
-					local function setupCrucifix(tool)
-
-						RightArm.Name = "R_Arm"
-
-						LeftArm.Name = "L_Arm"
-
-
-
-						RightArm.RightShoulder.C1 = RightC1 * CFrame.Angles(math.rad(-90), math.rad(-15), 0)
-
-						LeftArm.LeftShoulder.C1 = LeftC1 * CFrame.new(-0.2, -0.3, -0.5) * CFrame.Angles(math.rad(-125), math.rad(25), math.rad(25))
-
-						for _, v in next, Hum:GetPlayingAnimationTracks() do
-
-							v:Stop()
-
-						end
-
-					end
-
-					shadow.Equipped:Connect(function()
-
-						setupCrucifix(shadow)
-
-						game.Players.LocalPlayer:SetAttribute("Hidden", true)
-
-					end)
-
-
-
-					shadow.Unequipped:Connect(function()
-
-						game.Players.LocalPlayer:SetAttribute("Hidden", false)
-
-						RightArm.Name = "RightUpperArm"
-
-						LeftArm.Name = "LeftUpperArm"
-
-
-
-						RightArm.RightShoulder.C1 = RightC1
-
-						LeftArm.LeftShoulder.C1 = LeftC1
-
-					end)
-
-					require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption('You grabbed original crucifix',true)
-
-					wait(3)
-
-					require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption('This only works with custom entities',true)
-
-
-				end)
-
-				--
-
-			end
-
-			--
-
-
-
-			local lastroom = game:GetService("ReplicatedStorage").GameData.LatestRoom.Value
-
-			for _, v in next, game.Workspace.CurrentRooms[lastroom].Assets:GetDescendants() do
-
-				if v.Name == "OldWoodenTable" then
-
-					local randomy = SyncHelper:generateFullRandom(1, 100, LatestRoom.Value)
-
-					if randomy == 1 then
-
-						local positio = v.Main.Position + Vector3.new(0, 2.5, 0)
-
-						spawncruxy(positio)
-
-					end
-
-				end
-
-
-
-			end
-
-			--
-
-		end)
-
-	elseif IsBackHotel then
-
-		game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
-
-			function spawncruxy(posy)
-
-				local abc = game:GetObjects("rbxassetid://13872336829")[1]
-
-				local cruxy = abc.Handle:Clone()
-
-				abc:Destroy()
-
-				cruxy.Parent = game.Workspace
-
-				cruxy.Name = "Cruxy"
-
-				cruxy.Position = posy
-
-				cruxy.Anchored = true
-
-				local xy = SyncHelper:generateFullRandom(-90, 90, LatestRoom.Value)
-
-				cruxy.CFrame = CFrame.lookAt(cruxy.Position, cruxy.Position - Vector3.new(xy, yy, zy))
-
-				cruxy.Rotation = Vector3.new(0, xy, 0)
-
-				local prompty = Instance.new("ProximityPrompt")
-
-				prompty.Name = "prompty"
-
-				prompty.MaxActivationDistance = 5
-
-				prompty.ObjectText = "Custom"
-
-				prompty.RequiresLineOfSight = true
-
-				prompty.Parent = cruxy
-
-				prompty.Style = "Custom"
-
-				prompty.Triggered:Connect(function()
-
-					cruxy:Destroy()
-
-					local shadow=game:GetObjects("rbxassetid://13872336829")[1]
-
-					shadow.Parent = game.Players.LocalPlayer.Backpack
-
-					local Players = game:GetService("Players")
-
-					local Plr = Players.LocalPlayer
-
-					local Char = Plr.Character or Plr.CharacterAdded:Wait()
-
-					local Hum = Char:WaitForChild("Humanoid")
-
-					local RightArm = Char:WaitForChild("RightUpperArm")
-
-					local LeftArm = Char:WaitForChild("LeftUpperArm")
-
-					local RightC1 = RightArm.RightShoulder.C1
-
-					local LeftC1 = LeftArm.LeftShoulder.C1
-
-					local function setupCrucifix(tool)
-
-						RightArm.Name = "R_Arm"
-
-						LeftArm.Name = "L_Arm"
-
-
-
-						RightArm.RightShoulder.C1 = RightC1 * CFrame.Angles(math.rad(-90), math.rad(-15), 0)
-
-						LeftArm.LeftShoulder.C1 = LeftC1 * CFrame.new(-0.2, -0.3, -0.5) * CFrame.Angles(math.rad(-125), math.rad(25), math.rad(25))
-
-						for _, v in next, Hum:GetPlayingAnimationTracks() do
-
-							v:Stop()
-
-						end
-
-					end
-
-					shadow.Equipped:Connect(function()
-
-						setupCrucifix(shadow)
-
-						game.Players.LocalPlayer:SetAttribute("Hidden", true)
-
-					end)
-
-
-
-					shadow.Unequipped:Connect(function()
-
-						game.Players.LocalPlayer:SetAttribute("Hidden", false)
-
-						RightArm.Name = "RightUpperArm"
-
-						LeftArm.Name = "LeftUpperArm"
-
-
-
-						RightArm.RightShoulder.C1 = RightC1
-
-						LeftArm.LeftShoulder.C1 = LeftC1
-
-					end)
-
-					require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption('You grabbed original crucifix',true)
-
-					wait(3)
-
-					require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption('This only works with custom entities',true)
-
-
-				end)
-
-				--
-
-			end
-
-			--
-
-
-
-			local lastroom = game:GetService("ReplicatedStorage").GameData.LatestRoom.Value
-
-			for _, v in next, game.Workspace.CurrentRooms[lastroom].Assets:GetDescendants() do
-
-				if v.Name == "Backdoor_Table" then
-
-					local randomy = SyncHelper:generateFullRandom(1, 100, LatestRoom.Value)
-
-					if randomy == 1 then
-
-						local positio = v.Main.Position + Vector3.new(0, 2.5, 0)
-
-						spawncruxy(positio)
-
-					end
-
-				end
-
-
-
-			end
-
-			--
-
-			function spawncruxy(posy)
-
-				local abc = game:GetObjects("rbxassetid://13872336829")[1]
-
-				local cruxy = abc.Handle:Clone()
-
-				abc:Destroy()
-
-				cruxy.Parent = game.Workspace
-
-				cruxy.Name = "CruxyRoomy"
-
-				cruxy.Position = posy
-
-				cruxy.Anchored = true
-
-				local xy = SyncHelper:generateFullRandom(-90, 90, LatestRoom.Value)
-
-				cruxy.CFrame = CFrame.lookAt(cruxy.Position, cruxy.Position - Vector3.new(xy, yy, zy))
-
-				cruxy.Rotation = Vector3.new(0, xy, 0)
-
-				local prompty = Instance.new("ProximityPrompt")
-
-				prompty.Name = "prompty"
-
-				prompty.MaxActivationDistance = 5
-
-				prompty.ObjectText = "Custom"
-
-				prompty.RequiresLineOfSight = true
-
-				prompty.Parent = cruxy
-
-				prompty.Style = "Custom"
-
-				prompty.Triggered:Connect(function()
-
-					cruxy:Destroy()
-
-					local shadow=game:GetObjects("rbxassetid://13872336829")[1]
-
-					shadow.Parent = game.Players.LocalPlayer.Backpack
-
-					local Players = game:GetService("Players")
-
-					local Plr = Players.LocalPlayer
-
-					local Char = Plr.Character or Plr.CharacterAdded:Wait()
-
-					local Hum = Char:WaitForChild("Humanoid")
-
-					local RightArm = Char:WaitForChild("RightUpperArm")
-
-					local LeftArm = Char:WaitForChild("LeftUpperArm")
-
-					local RightC1 = RightArm.RightShoulder.C1
-
-					local LeftC1 = LeftArm.LeftShoulder.C1
-
-					local function setupCrucifix(tool)
-
-						RightArm.Name = "R_Arm"
-
-						LeftArm.Name = "L_Arm"
-
-
-
-						RightArm.RightShoulder.C1 = RightC1 * CFrame.Angles(math.rad(-90), math.rad(-15), 0)
-
-						LeftArm.LeftShoulder.C1 = LeftC1 * CFrame.new(-0.2, -0.3, -0.5) * CFrame.Angles(math.rad(-125), math.rad(25), math.rad(25))
-
-						for _, v in next, Hum:GetPlayingAnimationTracks() do
-
-							v:Stop()
-
-						end
-
-					end
-
-					shadow.Equipped:Connect(function()
-
-						setupCrucifix(shadow)
-
-						game.Players.LocalPlayer:SetAttribute("Hidden", true)
-
-					end)
-
-
-
-					shadow.Unequipped:Connect(function()
-
-						game.Players.LocalPlayer:SetAttribute("Hidden", false)
-
-						RightArm.Name = "RightUpperArm"
-
-						LeftArm.Name = "LeftUpperArm"
-
-
-
-						RightArm.RightShoulder.C1 = RightC1
-
-						LeftArm.LeftShoulder.C1 = LeftC1
-
-					end)
-
-					require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption('You grabbed original crucifix',true)
-
-					wait(3)
-
-					require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption('This only works with custom entities',true)
-
-
-				end)
-
-				--
-
-			end
-
-			--
-
-
-
-			local lastroom = game:GetService("ReplicatedStorage").GameData.LatestRoom.Value
-
-			for _, v in next, game.Workspace.CurrentRooms[lastroom].Assets:GetDescendants() do
-
-				if v.Name == "Table" and v.Parent.Name == "Backdoor_Sideroom" then
-
-					local randomy = SyncHelper:generateFullRandom(1, 100, LatestRoom.Value)
-
-					if randomy == 1 then
-
-						local positio = v.Main.Position + Vector3.new(0, 2.5, 0)
-
-						spawncruxy(positio)
-
-					end
-
-				end
-
-
-
-			end
-
-			--
-
-		end)
-
-	elseif IsRooms then
-
-		game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
-
-			function spawncruxy(posy)
-
-				local abc = game:GetObjects("rbxassetid://13872336829")[1]
-
-				local cruxy = abc.Handle:Clone()
-
-				abc:Destroy()
-
-				cruxy.Parent = game.Workspace
-
-				cruxy.Name = "Cruxy"
-
-				cruxy.Position = posy
-
-				cruxy.Anchored = true
-
-				local xy = SyncHelper:generateFullRandom(-90, 90, LatestRoom.Value)
-
-				cruxy.CFrame = CFrame.lookAt(cruxy.Position, cruxy.Position - Vector3.new(xy, yy, zy))
-
-				cruxy.Rotation = Vector3.new(0, xy, 0)
-
-				local prompty = Instance.new("ProximityPrompt")
-
-				prompty.Name = "prompty"
-
-				prompty.MaxActivationDistance = 5
-
-				prompty.ObjectText = "Custom"
-
-				prompty.RequiresLineOfSight = true
-
-				prompty.Parent = cruxy
-
-				prompty.Style = "Custom"
-
-				prompty.Triggered:Connect(function()
-
-					cruxy:Destroy()
-
-					local shadow=game:GetObjects("rbxassetid://13872336829")[1]
-
-					shadow.Parent = game.Players.LocalPlayer.Backpack
-
-					local Players = game:GetService("Players")
-
-					local Plr = Players.LocalPlayer
-
-					local Char = Plr.Character or Plr.CharacterAdded:Wait()
-
-					local Hum = Char:WaitForChild("Humanoid")
-
-					local RightArm = Char:WaitForChild("RightUpperArm")
-
-					local LeftArm = Char:WaitForChild("LeftUpperArm")
-
-					local RightC1 = RightArm.RightShoulder.C1
-
-					local LeftC1 = LeftArm.LeftShoulder.C1
-
-					local function setupCrucifix(tool)
-
-						RightArm.Name = "R_Arm"
-
-						LeftArm.Name = "L_Arm"
-
-
-
-						RightArm.RightShoulder.C1 = RightC1 * CFrame.Angles(math.rad(-90), math.rad(-15), 0)
-
-						LeftArm.LeftShoulder.C1 = LeftC1 * CFrame.new(-0.2, -0.3, -0.5) * CFrame.Angles(math.rad(-125), math.rad(25), math.rad(25))
-
-						for _, v in next, Hum:GetPlayingAnimationTracks() do
-
-							v:Stop()
-
-						end
-
-					end
-
-					shadow.Equipped:Connect(function()
-
-						setupCrucifix(shadow)
-
-						game.Players.LocalPlayer:SetAttribute("Hidden", true)
-
-					end)
-
-
-
-					shadow.Unequipped:Connect(function()
-
-						game.Players.LocalPlayer:SetAttribute("Hidden", false)
-
-						RightArm.Name = "RightUpperArm"
-
-						LeftArm.Name = "LeftUpperArm"
-
-
-
-						RightArm.RightShoulder.C1 = RightC1
-
-						LeftArm.LeftShoulder.C1 = LeftC1
-
-					end)
-
-					require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption('You grabbed original crucifix',true)
-
-					wait(3)
-
-					require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption('This only works with custom entities',true)
-
-
-				end)
-
-				--
-
-			end
-
-			--
-
-
-
-			local lastroom = game:GetService("ReplicatedStorage").GameData.LatestRoom.Value
-
-			for _, v in next, game.Workspace.CurrentRooms[lastroom].Assets:GetDescendants() do
-
-				if v.Name == "Table" then
-
-					local randomy = SyncHelper:generateFullRandom(1, 100, LatestRoom.Value)
-
-					if randomy == 1 then
-
-						local positio = v.Main.Position + Vector3.new(0, 2.5, 0)
-
-						spawncruxy(positio)
-
-					end
-
-				end
-
-
-
-			end
-
-			--
-
-		end)
-
-	elseif game:GetService("ReplicatedStorage").GameData.Floor.Value == "Fools" then
-
-		game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
-
-			function spawncruxy(posy)
-
-				local abc = game:GetObjects("rbxassetid://13872336829")[1]
-
-				local cruxy = abc.Handle:Clone()
-
-				abc:Destroy()
-
-				cruxy.Parent = game.Workspace
-
-				cruxy.Name = "Cruxy"
-
-				cruxy.Position = posy
-
-				cruxy.Anchored = true
-
-				local xy = SyncHelper:generateFullRandom(-90, 90, LatestRoom.Value)
-
-				cruxy.CFrame = CFrame.lookAt(cruxy.Position, cruxy.Position - Vector3.new(xy, yy, zy))
-
-				cruxy.Rotation = Vector3.new(0, xy, 0)
-
-				local prompty = Instance.new("ProximityPrompt")
-
-				prompty.Name = "prompty"
-
-				prompty.MaxActivationDistance = 5
-
-				prompty.ObjectText = "Custom"
-
-				prompty.RequiresLineOfSight = true
-
-				prompty.Parent = cruxy
-
-				prompty.Style = "Custom"
-
-				prompty.Triggered:Connect(function()
-
-					cruxy:Destroy()
-
-					local shadow=game:GetObjects("rbxassetid://13872336829")[1]
-
-					shadow.Parent = game.Players.LocalPlayer.Backpack
-
-					local Players = game:GetService("Players")
-
-					local Plr = Players.LocalPlayer
-
-					local Char = Plr.Character or Plr.CharacterAdded:Wait()
-
-					local Hum = Char:WaitForChild("Humanoid")
-
-					local RightArm = Char:WaitForChild("RightUpperArm")
-
-					local LeftArm = Char:WaitForChild("LeftUpperArm")
-
-					local RightC1 = RightArm.RightShoulder.C1
-
-					local LeftC1 = LeftArm.LeftShoulder.C1
-
-					local function setupCrucifix(tool)
-
-						RightArm.Name = "R_Arm"
-
-						LeftArm.Name = "L_Arm"
-
-
-
-						RightArm.RightShoulder.C1 = RightC1 * CFrame.Angles(math.rad(-90), math.rad(-15), 0)
-
-						LeftArm.LeftShoulder.C1 = LeftC1 * CFrame.new(-0.2, -0.3, -0.5) * CFrame.Angles(math.rad(-125), math.rad(25), math.rad(25))
-
-						for _, v in next, Hum:GetPlayingAnimationTracks() do
-
-							v:Stop()
-
-						end
-
-					end
-
-					shadow.Equipped:Connect(function()
-
-						setupCrucifix(shadow)
-
-						game.Players.LocalPlayer:SetAttribute("Hidden", true)
-
-					end)
-
-
-
-					shadow.Unequipped:Connect(function()
-
-						game.Players.LocalPlayer:SetAttribute("Hidden", false)
-
-						RightArm.Name = "RightUpperArm"
-
-						LeftArm.Name = "LeftUpperArm"
-
-
-
-						RightArm.RightShoulder.C1 = RightC1
-
-						LeftArm.LeftShoulder.C1 = LeftC1
-
-					end)
-
-					require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption('You grabbed original crucifix',true)
-
-					wait(3)
-
-					require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption('This only works with custom entities',true)
-
-
-				end)
-
-				--
-
-			end
-
-			--
-
-
-
-			local lastroom = game:GetService("ReplicatedStorage").GameData.LatestRoom.Value
-
-			for _, v in next, game.Workspace.CurrentRooms[lastroom].Assets:GetDescendants() do
-
-				if v.Name == "Table" then
-
-					local randomy = SyncHelper:generateFullRandom(1, 100, LatestRoom.Value)
-
-					if randomy == 1 then
-
-						local positio = v.Main.Position + Vector3.new(0, 2.5, 0)
-
-						spawncruxy(positio)
-
-					end
-
-				end
-
-
-
-			end
-
-			--
-
-		end)
-
-		--[[ ]]--
-
+		
 	end
 
 end)()
@@ -2784,11 +1889,10 @@ coroutine.wrap(function()
 				game.TweenService:Create(intro.Underline, TweenInfo.new(7), {Size = UDim2.new(0, 0, 0.015, 6)}):Play()
 				wait(2.3)
 				intro.Visible = false
-				CustomMusic.Ended:Wait()
-				CustomMusic:Destroy()
 				intro:Destroy()
 				IsDeepHotel = false
 				IsInsaneMines = true
+				
 			elseif IsHotel then
 				local CustomMusic = getGitSoundId("https://github.com/Sosnen/Ping-s-Dumbass-projects-/raw/refs/heads/main/Dark-Depths_Entrencebetter.mp3", "_IntroEntrance1")
 				CustomMusic.Parent = game:GetService("SoundService")
@@ -2815,11 +1919,10 @@ coroutine.wrap(function()
 				game.TweenService:Create(intro.Underline, TweenInfo.new(7), {Size = UDim2.new(0, 0, 0.015, 6)}):Play()
 				wait(2.3)
 				intro.Visible = false
-				CustomMusic.Ended:Wait()
-				CustomMusic:Destroy()
 				intro:Destroy()
 				IsInsaneMines = false
 				IsDeepHotel = true
+				
 			end
 		end
 	end)
@@ -2845,7 +1948,6 @@ coroutine.wrap(function()
 			wait(SyncHelper:generateFullRandom(10, 29, LatestRoom.Value))
 			if not IsSeekChase then
 				LatestRoom:GetPropertyChangedSignal("Value"):Wait()
-				wait(0)
 				loadstring(game:HttpGet("https://pastefy.app/K2TbsMWk/raw"))()
 			end
 		end
@@ -2857,7 +1959,7 @@ coroutine.wrap(function()
 	while true do
 		if IsInsaneMines then
 			if not ((roomValue >= 48 and roomValue <= 55) or (roomValue >= 98 and roomValue <= 101)) then
-				wait(375)
+				wait(SyncHelper:generateFullRandom(444, 800, LatestRoom.Value))
 				LatestRoom:GetPropertyChangedSignal("Value"):Wait()
 				loadstring(game:HttpGet("https://pastebin.com/raw/s2jHyGmm"))()
 			end
@@ -2873,7 +1975,6 @@ coroutine.wrap(function()
 				wait(SyncHelper:generateFullRandom(350, 590, LatestRoom.Value))
 				if not IsSeekChase or not IsFigure or not IsHalt or not IsGrumble then
 					LatestRoom:GetPropertyChangedSignal("Value"):Wait()
-					wait(0)
 					loadstring(game:HttpGet("https://pastefy.app/rmShikEK/raw"))()
 				end
 			end
@@ -2944,7 +2045,6 @@ coroutine.wrap(function()
 			wait(SyncHelper:generateFullRandom(10, 29, LatestRoom.Value))
 			if not IsSeekChase then
 				LatestRoom:GetPropertyChangedSignal("Value"):Wait()
-				wait(0)
 				loadstring(game:HttpGet("https://pastefy.app/K2TbsMWk/raw"))()
 			end
 		end
@@ -2958,7 +2058,6 @@ coroutine.wrap(function()
 			wait(SyncHelper:generateFullRandom(29, 63, LatestRoom.Value))
 			if not IsSeekChase or not IsFigure or not IsHalt then
 				LatestRoom:GetPropertyChangedSignal("Value"):Wait()
-				wait(0)
 				loadstring(game:HttpGet("https://raw.githubusercontent.com/huyhoanggphuc/Entity-obfuscate/refs/heads/main/Dread.lua"))()
 			end
 		end
