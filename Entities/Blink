@@ -1,1 +1,93 @@
+local SyncHelper = loadstring(game:HttpGet("https://github.com/ChronoAcceleration/Comet-Development/raw/refs/heads/main/Doors/Utility/SyncHelper.lua"))()
+local LatestRoom = game:GetService("ReplicatedStorage").GameData.LatestRoom
+local LocalPlayer = game:GetService("Players").LocalPlayer
+local Blink = {}
+Blink.Model = game:GetObjects("rbxassetid://12621816107")[1]
+Blink.Model.Name = "Blink"
+if Blink.Model:FindFirstChild("Attachment") then
+    Blink.OpenAttachment = Blink.Model.Attachment:FindFirstChild("Open")
+    Blink.CloseAttachment = Blink.Model.Attachment:FindFirstChild("Close")
+end
 
+Blink.IsEyeOpen = false
+Blink.DetectionRadius = 100
+
+local SpawnSound = Blink.Model:FindFirstChild("Initiate")
+local ChangeSound = Blink.Model:FindFirstChild("Change")
+local ScreamSound = Blink.Model:FindFirstChild("Sound")
+local AttackSound = Blink.Model:FindFirstChild("Attack")
+
+function Blink:ToggleEye(state)
+    if state == "open" then
+        Blink.IsEyeOpen = true
+        Blink.OpenAttachment.Enabled = true
+        Blink.CloseAttachment.Enabled = false
+        if ChangeSound then ChangeSound:Play() end
+    elseif state == "close" then
+        Blink.IsEyeOpen = false
+        Blink.OpenAttachment.Enabled = false
+        Blink.CloseAttachment.Enabled = true
+        if ChangeSound then ChangeSound:Play() end
+    end
+end
+
+function Blink:DetectPlayers()
+    local players = game.Players:GetPlayers()
+    for _, player in pairs(players) do
+        local character = player.Character
+        if character and character:FindFirstChild("HumanoidRootPart") then
+            local distance = (character.HumanoidRootPart.Position - Blink.Model.PrimaryPart.Position).Magnitude
+            if Blink and distance <= Blink.DetectionRadius and Blink.IsEyeOpen then
+                local humanoid = character:FindFirstChild("Humanoid")
+                if humanoid and character.Humanoid.MoveDirection.Magnitude > 0 then
+                    humanoid.Health -= 20
+                    if AttackSound then AttackSound:Play() end
+
+                    if humanoid.Health <= 0 then
+                        firesignal(game:GetService("ReplicatedStorage").RemotesFolder.DeathHint.OnClientEvent, {"You died to who you call Blink","He appears in the middle of the room and starts screaming.","When Blink's eye is closed, you can move around freely, as it can't hurt you", "When Blink's eye is open, don't move even small distance, as it will result in damage."},"Blue")
+                         game:GetService("ReplicatedStorage").GameStats["Player_".. LocalPlayer.Name].Total.DeathCause.Value = "Blink"
+                    end
+                end
+            end
+        end
+    end
+end
+
+function Blink:Spawn()
+    Blink.Model.Parent = workspace
+    local currentLoadedRoom = workspace.CurrentRooms[game:GetService("ReplicatedStorage").GameData.LatestRoom.Value]
+    
+    local num = 0
+
+    if currentLoadedRoom:FindFirstChild("Nodes") then
+        num = math.floor(#currentLoadedRoom.Nodes:GetChildren() / 2)
+    elseif currentLoadedRoom:FindFirstChild("PathfindNodes") then
+        num = math.floor(#currentLoadedRoom.PathfindNodes:GetChildren() / 2)
+    end
+
+    local positionNode = (currentLoadedRoom:FindFirstChild("Nodes") or currentLoadedRoom:FindFirstChild("PathfindNodes")) and (currentLoadedRoom.Nodes[num] or currentLoadedRoom[currentLoadedRoom.Name])
+    Blink.Model.CFrame = (positionNode.CFrame + Vector3.new(0, 9, 0))
+    
+    if ScreamSound then ScreamSound:Play() end
+
+    while workspace:FindFirstChild("Blink") do
+        if Blink.IsEyeOpen then
+            Blink:DetectPlayers()
+        end
+        
+        wait(SyncHelper:generateFullRandom(5, 10, LatestRoom.Value))
+        if Blink.IsEyeOpen then
+            Blink:ToggleEye("close")
+        else
+            Blink:ToggleEye("open")
+        end
+    end
+end
+
+Blink:Spawn()
+
+game.ReplicatedStorage.GameData.LatestRoom.Changed:Connect(function()
+    if workspace:FindFirstChild("Blink") then
+        Blink.Model:Destroy()
+    end
+end)
